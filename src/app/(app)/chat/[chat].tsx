@@ -321,7 +321,7 @@ export default function Page() {
 								</form.Field>
 								<TouchableOpacity
 									onPress={() => {
-										// pickImage();
+										pickImage();
 									}}
 									className="px-2 py-2.5"
 								>
