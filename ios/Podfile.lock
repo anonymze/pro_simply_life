@@ -1521,7 +1521,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-ios-utilities (5.1.2):
+  - react-native-ios-utilities (5.1.5):
     - ComputableLayout (~> 0.7)
     - DGSwiftUtilities (~> 0.46)
     - DoubleConversion
@@ -1538,6 +1538,9 @@ PODS:
     - React-hermes
     - React-ImageManager
     - React-jsi
+    - React-jsinspector
+    - React-jsinspectortracing
+    - React-jsitooling
     - React-NativeModulesApple
     - React-RCTAppDelegate
     - React-RCTFabric
@@ -1574,6 +1577,30 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - react-native-keyboard-controller/common (1.17.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-menu (1.2.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2403,6 +2430,7 @@ DEPENDENCIES:
   - react-native-ios-context-menu (from `../node_modules/react-native-ios-context-menu`)
   - react-native-ios-utilities (from `../node_modules/react-native-ios-utilities`)
   - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
+  - "react-native-menu (from `../node_modules/@react-native-menu/menu`)"
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -2602,6 +2630,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-ios-utilities"
   react-native-keyboard-controller:
     :path: "../node_modules/react-native-keyboard-controller"
+  react-native-menu:
+    :path: "../node_modules/@react-native-menu/menu"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
   react-native-safe-area-context:
@@ -2759,8 +2789,9 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 054f34e9b82f02bd40f09cebd4083828b5b2beb6
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
   react-native-ios-context-menu: 58804cdc253f80878284abe55ac5a050d4cde96a
-  react-native-ios-utilities: b3cf760d44fcc8220fdc0fe832beec7453483962
+  react-native-ios-utilities: 5e0a432d2cb4411df177bf439f7be7d61624d37b
   react-native-keyboard-controller: a1ae8c626dd4accd352e32b980af9c5d9c4ca82b
+  react-native-menu: be9bce4eb201a4d13734744763d36d56e6df8b4a
   react-native-mmkv: d3cc73d2554fafa20dc5b86386359034d1faf8ff
   react-native-safe-area-context: 562163222d999b79a51577eda2ea8ad2c32b4d06
   react-native-webview: 520bcb79c3f2af91e157cdd695732a34ab5f25c8

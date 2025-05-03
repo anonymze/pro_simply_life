@@ -27,11 +27,6 @@ import { MAX_MESSAGES } from "./index";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-// const messageReceivedSchema = z.object({
-// 	type: z.literal("MESSAGE_RECEIVED"),
-// 	message: z.any(),
-// });
-
 export default function Page() {
 	const { chat: chatId } = useLocalSearchParams<{ chat?: string }>();
 	const appUser = React.useMemo(() => getStorageUserInfos(), []);
@@ -279,8 +274,10 @@ export default function Page() {
 								// don't invert on empty list
 								inverted={true}
 								onEndReached={() => {
+									console.log("onEndReached");
 									// add more messages when on end scroll
 									if (!!messages.length && messages.length >= maxMessages) {
+										console.log("add more messages");
 										setMaxMessages((props) => props + 20);
 									}
 								}}

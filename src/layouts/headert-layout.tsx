@@ -14,13 +14,14 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 
 export default function HeaderLayout({ title, sheet, ...props }: HeaderLayoutProps) {
 	return (
-		<View className="flex-row items-center justify-between bg-white p-4">
-			<Link dismissTo href="../">
-				<ArrowLeftIcon size={24} color="#000" />
+		<View className="flex-row items-center justify-between bg-white p-2">
+			<Link className="p-2" dismissTo href="../">
+				<ArrowLeftIcon color="#000" />
 			</Link>
 			<Text className="text-lg font-bold">{title}</Text>
 			{sheet ? (
 				<TouchableOpacity
+					className="p-2"
 					onPress={() => {
 						router.push(sheet.link);
 					}}
@@ -28,7 +29,7 @@ export default function HeaderLayout({ title, sheet, ...props }: HeaderLayoutPro
 					<PlusCircleIcon size={24} color="#000" />
 				</TouchableOpacity>
 			) : (
-				<View className="size-6" />
+				<View className="p-5" />
 			)}
 		</View>
 	);

@@ -27,7 +27,7 @@ export default function AppLayout() {
 					fullScreenGestureEnabled: true,
 					gestureResponseDistance: {
 						start: 0,
-						end: 120,
+						end: 180,
 					},
 				}}
 			>
