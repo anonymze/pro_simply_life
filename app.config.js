@@ -22,9 +22,10 @@ export default {
 			es: "./src/i18n/metadata/ios/es.json",
 		},
 		web: {
-			favicon: "./src/assets/favicon.png",
+			bundler: "metro",
+			output: "static",
+			favicon: "./src/assets/images/icon.png",
 		},
-
 		ios: {
 			supportsTablet: true,
 			bundleIdentifier: "com.anonymze.simplylife",

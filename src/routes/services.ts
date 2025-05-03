@@ -35,7 +35,7 @@ const services: Service[] = [
 		name: "Visionneuse PDF",
 		description: "Accédez à vos documents sécurisés",
 		icon: require("@/assets/images/logo.png"),
-		link: "/login",
+		link: "/pdf",
 		theme: "text-blue-600",
 		pastille: true,
 	},
