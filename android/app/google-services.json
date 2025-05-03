@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "464988917346",
+    "project_id": "simply-life-push-notifications",
+    "storage_bucket": "simply-life-push-notifications.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464988917346:android:f21bd8fdf892b866f80b3b",
+        "android_client_info": {
+          "package_name": "com.anonymze.simplylife"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5-EbUoTmbzoCEmvdNTW-CRryKHb5q7FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

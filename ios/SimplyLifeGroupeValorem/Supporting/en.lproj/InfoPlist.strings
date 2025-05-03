@@ -1,0 +1,6 @@
+CFBundleDisplayName = "Simply Life : Groupe Valorem";
+NSContactsUsageDescription = "Simplify your professional life.";
+NSCameraUsageDescription = "Allow Simply Life to access your camera.";
+NSMicrophoneUsageDescription = "Allow Simply Life to use your microphone.";
+NSPhotoLibraryUsageDescription = "Allow Simply Life to access your photo library.";
+NSSpeechRecognitionUsageDescription = "Allow Simply Life to use speech recognition.";

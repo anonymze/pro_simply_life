@@ -1,0 +1,13 @@
+[
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "com.anonymze.simplylife",
+			"sha256_cert_fingerprints": [
+				"6E:EB:D7:93:91:6C:98:A7:D6:DF:AD:6C:A3:AD:19:CC:AB:88:04:5D:8A:2B:E0:C5:8A:BE:F2:C7:29:81:E6:7B",
+				"97:44:7E:F4:46:CE:A9:6A:58:C4:B8:AE:FF:9D:8F:2D:4D:70:EA:89:67:80:B1:A3:22:15:0D:63:5D:5D:F4:81"
+			]
+		}
+	}
+]
