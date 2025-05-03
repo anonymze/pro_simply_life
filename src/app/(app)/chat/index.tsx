@@ -95,7 +95,7 @@ export default function Page() {
 								<Link
 									href={{
 										pathname: "/chat/[chat]",
-										params: { chat: item.id },
+										params: { chat: item.id, title: item.name },
 									}}
 									className="flex-1"
 								>

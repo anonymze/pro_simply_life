@@ -1,4 +1,4 @@
-import Animated, { useAnimatedStyle, useSharedValue, withTiming, withSpring, withSequence, Easing, } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, withSpring, withSequence, Easing, SharedValue, } from "react-native-reanimated";
 import { createMessageQuery, createMessageWithFilesQuery, getMessagesQuery } from "@/api/queries/message-queries";
 import { View, TextInput, Text, Platform, TouchableOpacity, Pressable, Alert } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
@@ -13,6 +13,7 @@ import { Message, MessageOptimistic } from "@/types/chat";
 import { FlatList } from "react-native-gesture-handler";
 import { getStorageUserInfos } from "@/utils/store";
 import * as ImagePicker from "expo-image-picker";
+import { FlashList } from "@shopify/flash-list";
 // import useWebSocket from "@/hooks/use-websocket";
 import { useForm } from "@tanstack/react-form";
 import { Item } from "@/components/item-chat";
@@ -28,7 +29,8 @@ import { MAX_MESSAGES } from "./index";
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Page() {
-	const { chat: chatId } = useLocalSearchParams<{ chat?: string }>();
+	const { chat: chatId, title } = useLocalSearchParams<{ chat?: string; title?: string }>();
+
 	const appUser = React.useMemo(() => getStorageUserInfos(), []);
 
 	if (!chatId || !appUser) {
@@ -122,10 +124,14 @@ export default function Page() {
 		queryKey: ["messages", chatId, maxMessages],
 		queryFn: getMessagesQuery,
 		placeholderData: (prev) => prev,
+		structuralSharing: false,
 		refetchInterval: () => {
 			// pause refetching while a message is being sent
 			if (mutationMessages.isPending || mutationMessagesFile.isPending) return false;
 			return 6000;
+		},
+		select: (data) => {
+			return data;
 		},
 	});
 
@@ -226,24 +232,18 @@ export default function Page() {
 		});
 	}, [form]);
 
+	console.log("messages");
+
 	return (
 		<SafeAreaView className="flex-1 bg-background" edges={["bottom"]}>
-			<Stack.Screen options={{ title: chatId }} />
-
+			<Title title={title} />
 			<BackgroundLayout className="px-6">
 				{/* <View className={cn("absolute left-4 top-4 size-4 bg-red-500", websocketConnected && "bg-green-500")} /> */}
 				<Animated.View className="flex-1" style={animatedStyle}>
 					<View className="flex-1">
 						{!!messages?.length ? (
-							<FlatList<Message>
-								contentContainerStyle={
-									{
-										// gap: 5,
-										// width: "100%",
-										// needed for list empty
-										// flex: messages?.docs.length ? undefined : 1,
-									}
-								}
+							<FlashList
+								contentContainerStyle={{}}
 								// ListEmptyComponent={() => {
 								// 	return (
 								// 		<View className="flex-1 items-center justify-center">
@@ -251,9 +251,12 @@ export default function Page() {
 								// 		</View>
 								// 	);
 								// }}
+								// drawDistance={300}
 								keyExtractor={(item) => item.id}
 								showsVerticalScrollIndicator={false}
 								data={messages}
+								inverted={true}
+								estimatedItemSize={50}
 								renderItem={({ item, index }) => {
 									const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
 									const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
@@ -272,16 +275,17 @@ export default function Page() {
 									);
 								}}
 								// don't invert on empty list
-								inverted={true}
+								// inverted={true}
+
+								// disableRecycling={true}
 								onEndReached={() => {
-									console.log("onEndReached");
 									// add more messages when on end scroll
 									if (!!messages.length && messages.length >= maxMessages) {
 										console.log("add more messages");
 										setMaxMessages((props) => props + 20);
 									}
 								}}
-								onEndReachedThreshold={0.2}
+								onEndReachedThreshold={0.1}
 							/>
 						) : (
 							<View className="flex-1 items-center justify-center">
@@ -316,29 +320,15 @@ export default function Page() {
 										/>
 									)}
 								</form.Field>
-								<TouchableOpacity
-									onPress={() => {
-										pickImage();
-									}}
-									className="px-2 py-2.5"
-								>
-									<ImageIcon size={18} color={config.theme.extend.colors.primaryLight} />
-								</TouchableOpacity>
-								<TouchableOpacity onPress={() => {}} className="py-2.5 pl-2 pr-2.5">
-									<PaperclipIcon size={17} color={config.theme.extend.colors.primaryLight} />
-								</TouchableOpacity>
+								<Actions pickImage={pickImage} />
 							</View>
-							<AnimatedPressable
-								onPress={handleSubmit}
-								disabled={loadingMessages}
-								style={{
-									opacity: loadingMessages ? 0.5 : opacity,
-									transform: [{ translateX }, { translateY }],
-								}}
-								className={cn("p-1.5 pr-0", Platform.OS === "android" && "mb-3")}
-							>
-								<SendIcon size={20} color={config.theme.extend.colors.primaryLight} />
-							</AnimatedPressable>
+							<SendButton
+								handleSubmit={handleSubmit}
+								loadingMessages={loadingMessages}
+								opacity={opacity}
+								translateX={translateX}
+								translateY={translateY}
+							/>
 						</View>
 					</View>
 				</Animated.View>
@@ -355,3 +345,55 @@ export default function Page() {
 // };
 
 // const websocketConnected = useWebSocket(chatId, onMessageWebsocket);
+
+const SendButton = React.memo(
+	({
+		handleSubmit,
+		loadingMessages,
+		opacity,
+		translateX,
+		translateY,
+	}: {
+		handleSubmit: () => void;
+		loadingMessages: boolean;
+		opacity: SharedValue<number>;
+		translateX: SharedValue<number>;
+		translateY: SharedValue<number>;
+	}) => {
+		return (
+			<AnimatedPressable
+				onPress={handleSubmit}
+				disabled={loadingMessages}
+				style={{
+					opacity: loadingMessages ? 0.5 : opacity,
+					transform: [{ translateX }, { translateY }],
+				}}
+				className={cn("p-1.5 pr-0", Platform.OS === "android" && "mb-3")}
+			>
+				<SendIcon size={20} color={config.theme.extend.colors.primaryLight} />
+			</AnimatedPressable>
+		);
+	},
+);
+
+const Actions = React.memo(({ pickImage }: { pickImage: () => void }) => {
+	return (
+		<>
+			<TouchableOpacity
+				onPress={() => {
+					pickImage();
+				}}
+				className="px-2 py-2.5"
+			>
+				<ImageIcon size={18} color={config.theme.extend.colors.primaryLight} />
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => {}} className="py-2.5 pl-2 pr-2.5">
+				<PaperclipIcon size={17} color={config.theme.extend.colors.primaryLight} />
+			</TouchableOpacity>
+		</>
+	);
+});
+
+const Title = React.memo(({ title }: { title: string | undefined }) => {
+	return <Stack.Screen options={{ title }} />;
+});
