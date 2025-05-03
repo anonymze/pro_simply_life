@@ -4,13 +4,12 @@ import { PaginatedResponse } from "@/types/response";
 import config from "tailwind.config";
 import { View } from "react-native";
 
-
 // HOC pattern
 export function withQueryWrapper<T>(
 	query: {
 		queryKey: QueryKey;
 		queryFn: QueryFunction<PaginatedResponse<T>>;
-		refetchInterval?: number,
+		refetchInterval?: number;
 	},
 	Component: React.ComponentType<{ data: PaginatedResponse<T> }>,
 ) {

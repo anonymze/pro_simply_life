@@ -6,7 +6,6 @@ import { Alert } from "react-native";
 import { clearAllNativeCookies } from "./cookies";
 import { removeStorageUserInfos } from "./store";
 
-
 /**
  * @description logout the user
  */

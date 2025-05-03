@@ -2,9 +2,7 @@ import { SuccessCreateResponse } from "@/types/response";
 import * as ImagePicker from "expo-image-picker";
 import { Media } from "@/types/media";
 
-
 export async function createMediaQuery(assets: ImagePicker.ImagePickerAsset[]) {
-
 	const promises = [];
 
 	for (let asset of assets) {
@@ -23,15 +21,18 @@ const uploadMedia = async (asset: ImagePicker.ImagePickerAsset) => {
 		type: asset.mimeType ?? "image/jpeg",
 	} as any);
 
-	formData.append("_payload", JSON.stringify({
-		alt: asset.fileName ?? "file",
-	}));
+	formData.append(
+		"_payload",
+		JSON.stringify({
+			alt: asset.fileName ?? "file",
+		}),
+	);
 
-  const response = await fetch((process.env.EXPO_PUBLIC_API_URL || "") + "/api/media", {
-    method: "POST",
-    body: formData,
-  });
+	const response = await fetch((process.env.EXPO_PUBLIC_API_URL || "") + "/api/media", {
+		method: "POST",
+		body: formData,
+	});
 
-  if (!response.ok) throw new Error(await response.text());
-  return response.json() as Promise<SuccessCreateResponse<Media>>;
+	if (!response.ok) throw new Error(await response.text());
+	return response.json() as Promise<SuccessCreateResponse<Media>>;
 };

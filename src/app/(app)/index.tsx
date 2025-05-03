@@ -4,7 +4,6 @@ import CardLink from "@/components/card-link";
 import services from "@/routes/services";
 import { View } from "react-native";
 
-
 export default function Page() {
 	return (
 		<View className="flex-1">

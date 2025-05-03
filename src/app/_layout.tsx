@@ -17,7 +17,6 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import React from "react";
 
-
 Sentry.init({
 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
 	// TODO

@@ -1,6 +1,5 @@
 import { Media } from "./media";
 
-
 export interface AppUser {
 	exp: number;
 	token: string;

@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
 
-
 const config = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
 	presets: [require("nativewind/preset")],

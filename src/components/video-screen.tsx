@@ -5,7 +5,6 @@ import { View } from "react-native";
 import { useEvent } from "expo";
 import React from "react";
 
-
 const videoSource = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
 export default function VideoScreen({ width, height, controls }: { width: number; height: number; controls: boolean }) {
@@ -24,7 +23,7 @@ export default function VideoScreen({ width, height, controls }: { width: number
 	const { isPlaying } = useEvent(player, "playingChange", { isPlaying: player.playing });
 
 	return (
-		<View className="flex-1 justify-center items-center">
+		<View className="flex-1 items-center justify-center">
 			<VideoView
 				contentFit="cover"
 				player={player}

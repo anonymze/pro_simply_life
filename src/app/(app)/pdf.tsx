@@ -5,14 +5,15 @@ import BackgroundLayout from "@/layouts/background-layout";
 import SignPdf from "@/components/sign-pdf/sign-pdf";
 import React from "react";
 
-
 export default function Page() {
 	const languageCode = getLanguageCodeLocale();
 	return (
 		<BackgroundLayout>
 			<DOMLoading
 				loaderComponent={<DOMLoaderComponent text={i18n[languageCode]("PDF_LOADING")} />}
-				DomComponent={(props) => <SignPdf {...props} languageCode={languageCode} querySavePdf={savePDFSignatureQuery} />}
+				DomComponent={(props) => (
+					<SignPdf {...props} languageCode={languageCode} querySavePdf={savePDFSignatureQuery} />
+				)}
 			/>
 		</BackgroundLayout>
 	);

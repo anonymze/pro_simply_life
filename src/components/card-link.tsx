@@ -1,10 +1,16 @@
-import Animated, { useSharedValue, withDelay, withRepeat, withTiming, useAnimatedStyle, interpolate, } from "react-native-reanimated";
+import Animated, {
+	useSharedValue,
+	withDelay,
+	withRepeat,
+	withTiming,
+	useAnimatedStyle,
+	interpolate,
+} from "react-native-reanimated";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { Service } from "@/routes/services";
 import React, { useEffect } from "react";
 import { Link } from "expo-router";
 import { Image } from "expo-image";
-
 
 const Ring = ({ delay }: { delay: number }) => {
 	const ring = useSharedValue(0);

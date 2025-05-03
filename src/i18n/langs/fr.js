@@ -7,7 +7,8 @@ export default {
 	BUTTON_LOGIN: "Connexion",
 	CANCEL: "Annuler",
 	CHAT_ROOM_DELETE: "Supprimer une conversation",
-	CHAT_ROOM_DELETE_CONFIRMATION: "Supprimer une conversation supprimera tous les messages de la conversation, en êtes vous sûr ?",
+	CHAT_ROOM_DELETE_CONFIRMATION:
+		"Supprimer une conversation supprimera tous les messages de la conversation, en êtes vous sûr ?",
 	DELETE: "Supprimer",
 	DOWNLOAD: "Télécharger",
 	ERROR_LOGIN: "Erreur de connexion",

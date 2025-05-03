@@ -8,7 +8,6 @@ import { truncateText } from "@/utils/helper";
 import { userHierarchy } from "@/types/user";
 import React from "react";
 
-
 export default function AppLayout() {
 	const userInfos = React.useMemo(() => getStorageUserInfos(), []);
 

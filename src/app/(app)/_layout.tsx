@@ -1,13 +1,10 @@
-import { Dimensions, Platform, TouchableOpacity } from "react-native";
 import { NotificationProvider } from "@/context/push-notifications";
-import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
-import { Stack, Redirect, Link, router } from "expo-router";
 import HeaderLayout from "@/layouts/headert-layout";
 import { getStorageUserInfos } from "@/utils/store";
 import { truncateText } from "@/utils/helper";
-import { userHierarchy } from "@/types/user";
+import { Stack, Redirect } from "expo-router";
+import { Platform } from "react-native";
 import React from "react";
-
 
 export default function AppLayout() {
 	const userInfos = React.useMemo(() => getStorageUserInfos(), []);

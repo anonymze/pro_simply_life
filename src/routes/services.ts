@@ -1,6 +1,5 @@
 import { LinkProps } from "expo-router";
 
-
 export interface Service {
 	id: number;
 	name: string;

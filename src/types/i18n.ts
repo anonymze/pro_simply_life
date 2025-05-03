@@ -5,4 +5,3 @@ export enum I18n {
 	FR = "fr",
 	ES = "es",
 }
-

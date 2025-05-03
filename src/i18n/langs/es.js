@@ -7,7 +7,8 @@ export default {
 	BUTTON_LOGIN: "Conectarse",
 	CANCEL: "Cancelar",
 	CHAT_ROOM_DELETE: "Eliminar una sala de chat",
-	CHAT_ROOM_DELETE_CONFIRMATION: "Eliminar una sala de chat eliminará todos los mensajes de la conversación, ¿está seguro?",
+	CHAT_ROOM_DELETE_CONFIRMATION:
+		"Eliminar una sala de chat eliminará todos los mensajes de la conversación, ¿está seguro?",
 	DELETE: "Eliminar",
 	DOWNLOAD: "Descargar",
 	ERROR_GENERIC_PART1: "Ocurrió un error desconocido",

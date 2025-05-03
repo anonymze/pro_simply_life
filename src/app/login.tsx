@@ -12,7 +12,6 @@ import { Image } from "expo-image";
 import React from "react";
 import { z } from "zod";
 
-
 export default function Page() {
 	const { height } = useReanimatedKeyboardAnimation();
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);

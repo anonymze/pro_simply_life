@@ -6,7 +6,6 @@ import config from "tailwind.config";
 import { Image } from "expo-image";
 import { useEffect } from "react";
 
-
 interface AnimatedMarkerProps {
 	latitude: number;
 	longitude: number;

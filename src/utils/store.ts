@@ -1,7 +1,6 @@
 import { MMKV } from "react-native-mmkv";
 import { AppUser } from "@/types/user";
 
-
 const storage = new MMKV();
 
 const USER_INFOS_KEY = "user.data";

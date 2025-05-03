@@ -4,7 +4,6 @@ import { Link, LinkProps, router } from "expo-router";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Text } from "react-native";
 
-
 interface HeaderLayoutProps extends Partial<LinkProps> {
 	title: string;
 	sheet?: {

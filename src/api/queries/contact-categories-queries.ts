@@ -4,7 +4,6 @@ import { QueryKey } from "@tanstack/react-query";
 
 import { api } from "../_config";
 
-
 export async function getContactCategoriesQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, filters] = queryKey;
 	const response = await api.get<PaginatedResponse<ContactCategory>>("/api/contact-categories", { params: filters });

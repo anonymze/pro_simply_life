@@ -14,7 +14,6 @@ import * as WebBrowser from "expo-web-browser";
 import config from "tailwind.config";
 import React from "react";
 
-
 const CAMERA_POSITION = {
 	coordinates: {
 		latitude: 46.227638,

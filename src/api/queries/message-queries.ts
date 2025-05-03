@@ -4,7 +4,6 @@ import { QueryKey } from "@tanstack/react-query";
 
 import { api } from "../_config";
 
-
 export async function getMessagesQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, chatId, maxMessages] = queryKey;
 
@@ -35,11 +34,7 @@ export async function createMessageQuery(params: MessageOptimistic) {
 }
 
 // use fetch for file upload polyfill
-export const createMessageWithFilesQuery = async ({
-	file,
-	app_user,
-	chat_room,
-}: MessageOptimistic) => {
+export const createMessageWithFilesQuery = async ({ file, app_user, chat_room }: MessageOptimistic) => {
 	const formData = new FormData();
 
 	if (!file) throw new Error("No file provided");
@@ -63,4 +58,3 @@ export const createMessageWithFilesQuery = async ({
 	if (!response.ok) throw new Error(await response.text());
 	return response.json();
 };
-

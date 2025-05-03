@@ -5,7 +5,6 @@ import { sleep } from "@/utils/helper";
 import config from "tailwind.config";
 import React from "react";
 
-
 interface Props {
 	loaderComponent: React.ReactNode;
 	DomComponent: React.ComponentType<{

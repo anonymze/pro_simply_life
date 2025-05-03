@@ -1,9 +1,8 @@
 import BottomSheet, { BottomSheetFooter, BottomSheetFooterProps, BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { View, Text, StyleSheet, Pressable, Platform } from "react-native";
 import config from "tailwind.config";
 import React from "react";
-
 
 interface Item {
 	id: string;
@@ -17,55 +16,56 @@ interface Props {
 	initiallyOpen?: boolean;
 }
 
-export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(({ onSelect, data, snapPoints = ["55%"], initiallyOpen = false }, ref) => {
-	const [selectedItems, setSelectedItems] = React.useState<any[]>([]);
+export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(
+	({ onSelect, data, snapPoints = ["55%"], initiallyOpen = false }, ref) => {
+		const [selectedItems, setSelectedItems] = React.useState<any[]>([]);
 
-	const renderFooter = React.useCallback(
-		(props: BottomSheetFooterProps) => (
-			<BottomSheetFooter {...props} style={styles.footerContainer}>
-				<Pressable
-					style={(status) => {
-						return StyleSheet.flatten([
-							{
-								opacity: status.pressed ? 0.5 : 1,
-							},
-							styles.containerTextBottom,
-						]);
-					}}
-					onPress={() => {
-						setSelectedItems([]);
-						onSelect([]);
-						if (ref && "current" in ref) {
-							ref.current?.close();
-						}
-					}}
-				>
-					<Text style={styles.textBottomSheet}>Annuler</Text>
-				</Pressable>
-				<Pressable
-					style={(status) => {
-						return StyleSheet.flatten([
-							{
-								opacity: status.pressed ? 0.5 : 1,
-							},
-							styles.containerTextBottom,
-						]);
-					}}
-					onPress={() => {
-						onSelect(selectedItems);
-						if (ref && "current" in ref) {
-							ref.current?.close();
-						}
-					}}
-				>
-					<Text style={styles.textBottomSheet}>Choisir</Text>
-				</Pressable>
-			</BottomSheetFooter>
-		),
-		[onSelect, selectedItems],
-	);
+		const renderFooter = React.useCallback(
+			(props: BottomSheetFooterProps) => (
+				<BottomSheetFooter {...props} style={styles.footerContainer}>
+					<Pressable
+						style={(status) => {
+							return StyleSheet.flatten([
+								{
+									opacity: status.pressed ? 0.5 : 1,
+								},
+								styles.containerTextBottom,
+							]);
+						}}
+						onPress={() => {
+							setSelectedItems([]);
+							onSelect([]);
+							if (ref && "current" in ref) {
+								ref.current?.close();
+							}
+						}}
+					>
+						<Text style={styles.textBottomSheet}>Annuler</Text>
+					</Pressable>
+					<Pressable
+						style={(status) => {
+							return StyleSheet.flatten([
+								{
+									opacity: status.pressed ? 0.5 : 1,
+								},
+								styles.containerTextBottom,
+							]);
+						}}
+						onPress={() => {
+							onSelect(selectedItems);
+							if (ref && "current" in ref) {
+								ref.current?.close();
+							}
+						}}
+					>
+						<Text style={styles.textBottomSheet}>Choisir</Text>
+					</Pressable>
+				</BottomSheetFooter>
+			),
+			[onSelect, selectedItems],
+		);
 
-	return (
+		return (
 			<BottomSheet
 				ref={ref}
 				enablePanDownToClose={true}
@@ -109,8 +109,9 @@ export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(({ onSelec
 					</View>
 				</BottomSheetScrollView>
 			</BottomSheet>
-	);
-});
+		);
+	},
+);
 
 const styles = StyleSheet.create({
 	paddingSheet: {

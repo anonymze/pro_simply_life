@@ -1,9 +1,7 @@
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
+import { CheckCheckIcon, CheckIcon } from "lucide-react-native";
 import { Directory, File, Paths } from "expo-file-system/next";
-import { CheckCheckIcon } from "lucide-react-native";
-// import * as ContextMenu from "zeego/context-menu";
-// import { MessageOptimistic } from "@/types/chat";
-import { CheckIcon } from "lucide-react-native";
+import * as ContextMenu from "zeego/context-menu";
 import { i18n } from "@/i18n/translations";
 import { Message } from "@/types/chat";
 import { AppUser } from "@/types/user";
@@ -13,8 +11,7 @@ import { Image } from "expo-image";
 import { cn } from "@/utils/cn";
 import React from "react";
 
-
-// import VideoScreen from "./video-screen";
+import VideoScreen from "./video-screen";
 
 
 const destination = new Directory(Paths.cache, "simply-life");
@@ -32,7 +29,7 @@ type ItemProps = {
 	languageCode: I18n;
 };
 
-export const Item = React.memo(({ firstMessage, item, appUser, stateMessage, languageCode }: ItemProps) => {
+export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }: ItemProps) => {
 	const me = item.app_user.id === appUser?.user.id;
 	const optimistic = "optimistic" in item ? true : false;
 	const [open, setOpen] = React.useState(false);
@@ -100,6 +97,93 @@ export const Item = React.memo(({ firstMessage, item, appUser, stateMessage, lan
 								/>
 							</>
 						) : (
+							// <ContextMenu.Root onOpenChange={setOpen}>
+							// 	<ContextMenu.Trigger>
+							// 		<>
+							// 			{item.file.mimeType?.startsWith("image") ? (
+							// 				<Image
+							// 					// @ts-ignore
+							// 					placeholder={item.file.blurhash}
+							// 					placeholderContentFit="cover"
+							// 					// @ts-ignore
+							// 					source={item.file.url}
+							// 					transition={300}
+							// 					contentFit="cover"
+							// 					style={styles.image}
+							// 				/>
+							// 			) : // TODO: add video
+							// 			item.file.mimeType?.startsWith("image") ? (
+							// 				<Image
+							// 					// @ts-ignore
+							// 					placeholder={item.file.blurhash}
+							// 					placeholderContentFit="cover"
+							// 					// @ts-ignore
+							// 					source={item.file.url}
+							// 					transition={300}
+							// 					contentFit="cover"
+							// 					style={styles.image}
+							// 				/>
+							// 			) : (
+							// 				<View style={styles.image} className="items-center justify-center">
+							// 					<Text className="text-center text-white">{i18n[languageCode]("FILE_NOT_SUPPORTED")}</Text>
+							// 				</View>
+							// 			)}
+							// 		</>
+							// 	</ContextMenu.Trigger>
+							// 	<ContextMenu.Content>
+							// 		<ContextMenu.Preview>
+							// 			{item.file.mimeType?.startsWith("image") && (
+							// 				<Image
+							// 					// @ts-ignore
+							// 					source={item.file.url}
+							// 					contentFit="cover"
+							// 					style={{
+							// 						width: widthWindow,
+							// 						height: heightWindow / 1.8,
+							// 						borderRadius: styles.image.borderRadius,
+							// 					}}
+							// 				/>
+							// 			)}
+
+							// 			{item.file.mimeType?.startsWith("video") && (
+							// 				<VideoScreen controls={open} width={widthWindow} height={heightWindow / 1.8} />
+							// 			)}
+							// 		</ContextMenu.Preview>
+							// 		<ContextMenu.Item
+							// 			key="download"
+							// 			onSelect={async () => {
+							// 				if (!item.file || "uri" in item?.file || !item.file.url) return;
+
+							// 				try {
+							// 					if (!destination.exists) destination.create();
+							// 					const output = await File.downloadFileAsync(item.file.url, destination);
+							// 				} catch (error) {
+							// 					console.warn(error);
+							// 					// Alert.alert(
+							// 					// 	i18n[languageCode]("ERROR_GENERIC_PART1"),
+							// 					// 	i18n[languageCode]("ERROR_GENERIC_PART2"),
+							// 					// );
+							// 				}
+							// 			}}
+							// 		>
+							// 			<ContextMenu.ItemTitle>{i18n[languageCode]("DOWNLOAD")}</ContextMenu.ItemTitle>
+							// 			<ContextMenu.ItemIcon
+							// 				// androidIconName="arrow_down_float"
+							// 				ios={{
+							// 					name: "arrow.down",
+							// 					pointSize: 15,
+							// 					weight: "semibold",
+							// 					paletteColors: [
+							// 						{
+							// 							dark: config.theme.extend.colors.primaryLight,
+							// 							light: config.theme.extend.colors.primaryLight,
+							// 						},
+							// 					],
+							// 				}}
+							// 			/>
+							// 		</ContextMenu.Item>
+							// 	</ContextMenu.Content>
+							// </ContextMenu.Root>
 							<>
 								{item.file.mimeType?.startsWith("image") ? (
 									<Image
@@ -143,7 +227,7 @@ export const Item = React.memo(({ firstMessage, item, appUser, stateMessage, lan
 			</View>
 		</View>
 	);
-});
+};
 
 // for debugging in react devtools
 Item.displayName = "Item";

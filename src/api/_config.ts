@@ -2,7 +2,6 @@ import { getStorageUserInfos } from "@/utils/store";
 import axios, { isAxiosError } from "axios";
 import { logout } from "@/utils/auth";
 
-
 const ORIGIN_MOBILE = "simply-life-app://mobile";
 
 /**
@@ -29,7 +28,7 @@ api.interceptors.response.use(
 	(response) => response, // return successful responses as-is
 	(error) => {
 		if (!isAxiosError(error)) return Promise.reject(error);
-	
+
 		// if the user is not authenticated, or the token is expired, logout
 		if (error.response?.status === 403) {
 			const userInfos = getStorageUserInfos();
@@ -40,4 +39,3 @@ api.interceptors.response.use(
 		return Promise.reject(error);
 	},
 );
-

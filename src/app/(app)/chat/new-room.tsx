@@ -13,7 +13,6 @@ import { router } from "expo-router";
 import React from "react";
 import { z } from "zod";
 
-
 export default function Page() {
 	const appUser = React.useMemo(() => getStorageUserInfos(), []);
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);

@@ -156,4 +156,4 @@ Unit tests
 reset expiration token on success
 
 
-CARTE + IMAGES CHAT + REPLACE FLAT LIST + VISIONNEUSE PDF
+CARTE google + REPLACE FLAT LIST + video list

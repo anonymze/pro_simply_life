@@ -3,10 +3,9 @@ import * as ImagePicker from "expo-image-picker";
 import { Media } from "./media";
 import { User } from "./user";
 
-
 export interface ChatRoom {
 	id: string;
-	app_user: User["id"]
+	app_user: User["id"];
 	name: string;
 	description: string | null;
 	private: boolean | null;
@@ -15,7 +14,6 @@ export interface ChatRoom {
 	createdAt: string;
 	updatedAt: string;
 }
-
 
 export interface Message {
 	id: string;
@@ -37,4 +35,3 @@ export interface MessageOptimistic {
 	createdAt: Message["createdAt"];
 	optimistic: true;
 }
-
