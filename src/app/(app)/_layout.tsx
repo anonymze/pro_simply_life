@@ -47,25 +47,7 @@ export default function AppLayout() {
 				<Stack.Screen
 					name="chat/index"
 					options={{
-						headerTitle: "Conversations",
-						headerRight: () => {
-							if (userHierarchy[userInfos.user.role] > 0) return null;
-
-							return (
-								<TouchableOpacity
-									onPress={() => {
-										router.push("/chat/new-room");
-									}}
-								>
-									<PlusCircleIcon size={24} color="#000" />
-								</TouchableOpacity>
-							);
-						},
-						headerLeft: () => (
-							<Link dismissTo href="/">
-								<ArrowLeftIcon size={24} color="#000" />
-							</Link>
-						),
+						header: () => <HeaderLayout title="Conversations" sheet={{ link: "/chat/new-room" }} />,
 					}}
 				/>
 				<Stack.Screen
@@ -83,6 +65,12 @@ export default function AppLayout() {
 						presentation: Platform.OS === "ios" ? "formSheet" : undefined,
 						sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
 						header: () => <HeaderLayout title="Nouvelle conversation" />,
+					}}
+				/>
+				<Stack.Screen
+					name="pdf"
+					options={{
+						header: () => <HeaderLayout title="Visionneuse PDF" />,
 					}}
 				/>
 			</Stack>

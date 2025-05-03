@@ -71,7 +71,7 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout>
-			<View className="flex-row items-center gap-4 bg-white p-4 pt-2">
+			<View className="flex-row items-center gap-4 bg-white p-4 pt-0">
 				<View className="basis-8/12">
 					<TextInput
 						editable={!isLoadingContacts && !isLoadingCategoryContacts}

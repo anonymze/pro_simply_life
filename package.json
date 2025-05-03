@@ -14,7 +14,6 @@
 	"dependencies": {
 		"@gorhom/bottom-sheet": "^5.1.2",
 		"@react-native-cookies/cookies": "^6.2.1",
-		"@react-native-menu/menu": "1.2.2",
 		"@react-pdf-viewer/core": "^3.12.0",
 		"@react-pdf-viewer/default-layout": "^3.12.0",
 		"@sentry/react-native": "^6.13.0",
@@ -42,6 +41,7 @@
 		"expo-web-browser": "~14.1.6",
 		"lucide-react-native": "^0.507.0",
 		"nativewind": "latest",
+		"pdfjs-dist": "3.4.120",
 		"react": "19.0.0",
 		"react-native": "0.79.2",
 		"react-native-gesture-handler": "~2.24.0",
