@@ -22,6 +22,8 @@ web-build/
 x
 .idea
 
+./resources/
+
 .env.local
 
 

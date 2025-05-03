@@ -15,7 +15,7 @@ export default {
 			tsconfigPaths: true,
 			typedRoutes: true,
 		},
-		assetBundlePatterns: ["**/*"],
+		// assetBundlePatterns: ["**/*"],
 		locales: {
 			en: "./src/i18n/metadata/ios/en.json",
 			fr: "./src/i18n/metadata/ios/fr.json",
@@ -110,5 +110,11 @@ export default {
 				},
 			],
 		],
+		extra: {
+			eas: {
+				projectId: "71cf24a7-3efc-4fe5-9b69-f37c315aebbc",
+			},
+		},
+		runtimeVersion: "1.0.0",
 	},
 };
