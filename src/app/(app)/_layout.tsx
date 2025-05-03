@@ -37,6 +37,54 @@ export default function AppLayout() {
 						headerShown: false,
 					}}
 				/>
+				<Stack.Screen
+					name="contact"
+					options={{
+						gestureEnabled: false,
+						header: () => <HeaderLayout title="Contacts" />,
+					}}
+				/>
+				<Stack.Screen
+					name="chat/index"
+					options={{
+						headerTitle: "Conversations",
+						headerRight: () => {
+							if (userHierarchy[userInfos.user.role] > 0) return null;
+
+							return (
+								<TouchableOpacity
+									onPress={() => {
+										router.push("/chat/new-room");
+									}}
+								>
+									<PlusCircleIcon size={24} color="#000" />
+								</TouchableOpacity>
+							);
+						},
+						headerLeft: () => (
+							<Link dismissTo href="/">
+								<ArrowLeftIcon size={24} color="#000" />
+							</Link>
+						),
+					}}
+				/>
+				<Stack.Screen
+					name="chat/[chat]"
+					// Set title to empty string to prevent showing [chat] in the header while chat room title is being fetched
+					options={{
+						header: (props) => {
+							return <HeaderLayout title={truncateText(props.options.title || "", 22)} />;
+						},
+					}}
+				/>
+				<Stack.Screen
+					name="chat/new-room"
+					options={{
+						presentation: Platform.OS === "ios" ? "formSheet" : undefined,
+						sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+						header: () => <HeaderLayout title="Nouvelle conversation" />,
+					}}
+				/>
 			</Stack>
 		</NotificationProvider>
 	);

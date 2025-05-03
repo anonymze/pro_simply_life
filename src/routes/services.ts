@@ -13,11 +13,38 @@ export interface Service {
 
 const services: Service[] = [
 	{
+		id: 4,
+		name: "Canaux de discussion / Conversations",
+		description: "Suivez votre plan nutritionnel",
+		icon: require("@/assets/images/logo.png"),
+		link: "/chat",
+		theme: "text-green-600",
+		pastille: true,
+	},
+	{
 		id: 14,
 		name: "Page de connexion",
 		description: "Accédez à vos documents sécurisés",
 		icon: require("@/assets/images/logo.png"),
 		link: "/login",
+		theme: "text-blue-600",
+		pastille: true,
+	},
+	{
+		id: 15,
+		name: "Visionneuse PDF",
+		description: "Accédez à vos documents sécurisés",
+		icon: require("@/assets/images/logo.png"),
+		link: "/login",
+		theme: "text-blue-600",
+		pastille: true,
+	},
+	{
+		id: 16,
+		name: "Carte des contacts",
+		description: "Accédez à vos documents sécurisés",
+		icon: require("@/assets/images/logo.png"),
+		link: "/contact",
 		theme: "text-blue-600",
 		pastille: true,
 	},

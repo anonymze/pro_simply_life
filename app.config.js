@@ -74,6 +74,19 @@ export default {
 			"expo-localization",
 			"expo-router",
 			[
+				"expo-web-browser",
+				{
+					// experimentalLauncherActivity: true
+				},
+			],
+			[
+				"expo-maps",
+				{
+					requestLocationPermission: true,
+					locationPermission: "Allow $(PRODUCT_NAME) to use your location.",
+				},
+			],
+			[
 				"expo-video",
 				{
 					supportsBackgroundPlayback: true,

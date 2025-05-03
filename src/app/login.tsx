@@ -1,5 +1,5 @@
+import Animated, { FadeInDown, FadeOut, FadeOutUp, useAnimatedStyle } from "react-native-reanimated";
 import { ActivityIndicator, Alert, Pressable, Text, View, TextInput, Button } from "react-native";
-import Animated, { FadeInDown, FadeOutUp, useAnimatedStyle } from "react-native-reanimated";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -70,7 +70,7 @@ export default function Page() {
 					<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_EMAIL_LOGIN")}</Text>
 					<form.Field name="email">
 						{(field) => (
-							<>
+							<React.Fragment>
 								<TextInput
 									returnKeyType="done"
 									autoCapitalize="none"
@@ -84,7 +84,7 @@ export default function Page() {
 								{field.state.meta.errors.length > 0 && (
 									<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
 								)}
-							</>
+							</React.Fragment>
 						)}
 					</form.Field>
 				</View>
@@ -93,7 +93,7 @@ export default function Page() {
 					<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_PASSWORD_LOGIN")}</Text>
 					<form.Field name="password">
 						{(field) => (
-							<>
+							<React.Fragment>
 								<TextInput
 									secureTextEntry
 									returnKeyType="done"
@@ -108,7 +108,7 @@ export default function Page() {
 								{field.state.meta.errors.length > 0 && (
 									<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
 								)}
-							</>
+							</React.Fragment>
 						)}
 					</form.Field>
 				</View>
@@ -118,11 +118,13 @@ export default function Page() {
 					className="mt-4 h-14 w-full items-center justify-center rounded-lg bg-primary disabled:opacity-70"
 				>
 					{mutationLogin.isPending ? (
-						<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOutUp.duration(300)}>
+						<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
 							<ActivityIndicator size="small" color="white" />
 						</Animated.View>
 					) : (
-						<Text className="text-center text-white">{i18n[languageCode]("BUTTON_LOGIN")}</Text>
+						<Animated.Text entering={FadeInDown.springify().duration(1200)} className="text-center text-white">
+							{i18n[languageCode]("BUTTON_LOGIN")}
+						</Animated.Text>
 					)}
 				</Pressable>
 			</Animated.View>

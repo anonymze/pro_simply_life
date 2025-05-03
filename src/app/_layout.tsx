@@ -93,10 +93,10 @@ const Layout = () => {
 	return (
 		<GestureHandlerRootView>
 			{/* <BottomSheetModalProvider> */}
-				<KeyboardProvider>
-					<StatusBar style="light" translucent />
-					<SafeAreaProvider>
-					<SafeAreaView className="flex-1 bg-primaryLight" edges={["right", "left", "top"]}>
+			<KeyboardProvider>
+				<StatusBar style="light" translucent />
+				<SafeAreaProvider>
+					<SafeAreaView pointerEvents="box-none" className="flex-1 bg-primaryLight" edges={["right", "left", "top"]}>
 						<Stack
 							screenOptions={{
 								headerShown: false,
@@ -108,8 +108,8 @@ const Layout = () => {
 							<Stack.Screen name="login" />
 						</Stack>
 					</SafeAreaView>
-					</SafeAreaProvider>
-				</KeyboardProvider>
+				</SafeAreaProvider>
+			</KeyboardProvider>
 			{/* </BottomSheetModalProvider> */}
 		</GestureHandlerRootView>
 	);

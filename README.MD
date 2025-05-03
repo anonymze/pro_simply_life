@@ -154,3 +154,6 @@ http://localhost:8081/\_expo/atlas
 changement icone + push notifs + depp link + traduction
 Unit tests
 reset expiration token on success
+
+
+CARTE + IMAGES CHAT + REPLACE FLAT LIST + VISIONNEUSE PDF
