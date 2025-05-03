@@ -25,7 +25,6 @@ web-build/
 x
 .idea
 
-./resources/google-services.json
-
 .env.local
 .env.local
+resources/google-services.json
