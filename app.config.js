@@ -1,34 +1,36 @@
 export default {
-  expo: {
-    name: 'Simply Life : Groupe Valorem',
-    // slug used by expo for your project
-    slug: 'simply-life',
-    version: '1.0.0',
-    orientation: 'portrait',
-    icon: './src/assets/images/icon.png',
-    // simply-life://some_path
-    scheme: 'simply-life',
-    // theme
-    userInterfaceStyle: 'light',
-    newArchEnabled: true,
-    experiments: {
-      tsconfigPaths: true,
-    },
-    locales: {
+	expo: {
+		name: "Simply Life : Groupe Valorem",
+		// slug used by expo for your project
+		slug: "simply-life",
+		version: "1.0.0",
+		orientation: "portrait",
+		icon: "./src/assets/images/icon.png",
+		// simply-life://some_path
+		scheme: "simply-life",
+		// theme
+		userInterfaceStyle: "light",
+		newArchEnabled: true,
+		experiments: {
+			tsconfigPaths: true,
+			typedRoutes: true,
+		},
+		assetBundlePatterns: ["**/*"],
+		locales: {
 			en: "./src/i18n/metadata/ios/en.json",
 			fr: "./src/i18n/metadata/ios/fr.json",
 			es: "./src/i18n/metadata/ios/es.json",
 		},
-    web: {
-      favicon: './src/assets/favicon.png',
-    },
-    assetBundlePatterns: ['**/*'],
-    ios: {
-      supportsTablet: true,
+		web: {
+			favicon: "./src/assets/favicon.png",
+		},
+
+		ios: {
+			supportsTablet: true,
 			bundleIdentifier: "com.anonymze.simplylife",
 			associatedDomains: ["applinks:simply-life.expo.app"],
 			CFBundleAllowMixedLocalizations: true,
-    },
+		},
 		android: {
 			edgeToEdgeEnabled: true,
 			// adaptiveIcon: {
@@ -67,22 +69,46 @@ export default {
 				},
 			],
 		},
-    plugins: [
-      "expo-font",
-      "expo-localization",
-      'expo-router',
-      [
-        'expo-splash-screen',
-        {
-          backgroundColor: '#ffffff',
-          image: './src/assets/images/splash-icon.png',
-          // dark: {
-          // 	image: "./assets/images/splash-icon-dark.png",
-          // 	backgroundColor: "#ffffff",
-          // },
-          // imageWidth: 220,
-        },
-      ],
-    ],
-  },
+		plugins: [
+			"expo-font",
+			"expo-localization",
+			"expo-router",
+			[
+				"expo-video",
+				{
+					supportsBackgroundPlayback: true,
+					supportsPictureInPicture: true,
+				},
+			],
+			[
+				"expo-image-picker",
+				// translations in file so don't need
+				// {
+				// 	photosPermission: "Allow $(PRODUCT_NAME) to access your photos",
+				// 	cameraPermission: "Allow $(PRODUCT_NAME) to access your camera",
+				// 	microphonePermission: "Allow $(PRODUCT_NAME) to use the microphone.",
+				// },
+			],
+			[
+				"expo-splash-screen",
+				{
+					backgroundColor: "#ffffff",
+					image: "./src/assets/images/splash-icon.png",
+					// dark: {
+					// 	image: "./assets/images/splash-icon-dark.png",
+					// 	backgroundColor: "#ffffff",
+					// },
+					// imageWidth: 220,
+				},
+			],
+			[
+				"@sentry/react-native/expo",
+				{
+					url: "https://sentry.io/",
+					project: "simply_life",
+					organization: "yann-metier",
+				},
+			],
+		],
+	},
 };

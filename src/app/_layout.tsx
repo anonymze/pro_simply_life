@@ -2,9 +2,42 @@ import "react-native-reanimated";
 import "@/styles/app.css";
 
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import * as Notifications from 'expo-notifications';
+import * as SplashScreen from "expo-splash-screen";
+import * as Sentry from "@sentry/react-native";
 import { StatusBar } from "expo-status-bar";
 import { Platform } from "react-native";
 import { Stack } from "expo-router";
+
+
+Sentry.init({
+	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
+	// TODO
+	enabled: false,
+	// Configure Session Replay
+	replaysSessionSampleRate: 0.1,
+	replaysOnErrorSampleRate: 1,
+	integrations: [Sentry.mobileReplayIntegration()],
+
+	// uncomment the line below to enable Spotlight (https://spotlightjs.com)
+	// spotlight: __DEV__,
+});
+
+// here we set if we should show the alert of push notifications even if the app is running
+Notifications.setNotificationHandler({
+	handleNotification: () => ({
+		shouldShowAlert: true,
+		shouldPlaySound: false,
+		shouldSetBadge: false,
+	}),
+});
+
+// keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({
+	fade: true,
+	duration: 600,
+});
 
 
 export default function RootLayout() {

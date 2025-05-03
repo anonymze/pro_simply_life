@@ -28,3 +28,4 @@ x
 ./resources/google-services.json
 
 .env.local
+.env.local
