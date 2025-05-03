@@ -6,7 +6,6 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { loginQuery } from "@/api/queries/login-queries";
 import { useMutation } from "@tanstack/react-query";
 import { setStorageUserInfos } from "@/utils/store";
-import * as Sentry from "@sentry/react-native";
 import { useForm } from "@tanstack/react-form";
 import { router } from "expo-router";
 import { Image } from "expo-image";
