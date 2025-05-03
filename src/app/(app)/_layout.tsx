@@ -1,7 +1,7 @@
+import { Dimensions, Platform, TouchableOpacity } from "react-native";
 import { NotificationProvider } from "@/context/push-notifications";
 import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
 import { Stack, Redirect, Link, router } from "expo-router";
-import { Platform, TouchableOpacity } from "react-native";
 import HeaderLayout from "@/layouts/headert-layout";
 import { getStorageUserInfos } from "@/utils/store";
 import { truncateText } from "@/utils/helper";
@@ -62,8 +62,8 @@ export default function AppLayout() {
 				<Stack.Screen
 					name="chat/new-room"
 					options={{
-						presentation: Platform.OS === "ios" ? "formSheet" : undefined,
-						sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+						presentation: Platform.OS === "ios" ? "formSheet" : "formSheet",
+						sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : [0.6, 1],
 						header: () => <HeaderLayout title="Nouvelle conversation" />,
 					}}
 				/>

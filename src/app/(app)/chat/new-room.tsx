@@ -121,7 +121,11 @@ export default function Page() {
 				{mutationChatRoom.isPending ? (
 					<Animated.View
 						entering={FadeInDown.springify().duration(1200)}
-						exiting={FadeOut.duration(300)}
+						exiting={FadeOut.duration(300).withCallback((finished) => {
+							if (finished) {
+								runOnJS(router.back)();
+							}
+						})}
 					>
 						<ActivityIndicator size="small" color="white" />
 					</Animated.View>

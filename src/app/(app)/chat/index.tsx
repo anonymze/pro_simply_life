@@ -67,6 +67,7 @@ export default function Page() {
 			return (
 				<React.Fragment>
 					<FlatList
+						showsVerticalScrollIndicator={false}
 						data={data.docs}
 						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
