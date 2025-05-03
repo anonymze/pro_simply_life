@@ -156,4 +156,4 @@ Unit tests
 reset expiration token on success
 
 
-CARTE google + REPLACE FLAT LIST + video list
+CARTE google + video list
