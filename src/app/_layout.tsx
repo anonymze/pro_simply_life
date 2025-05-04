@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { Platform, AppState, AppStateStatus } from "react-native";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
 import * as Sentry from "@sentry/react-native";
@@ -16,6 +17,7 @@ import * as Network from "expo-network";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import React from "react";
+
 
 Sentry.init({
 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
@@ -91,7 +93,7 @@ const Layout = () => {
 
 	return (
 		<GestureHandlerRootView>
-			{/* <BottomSheetModalProvider> */}
+			<BottomSheetModalProvider>
 			<KeyboardProvider>
 				<StatusBar style="light" translucent />
 				<SafeAreaProvider>
@@ -109,7 +111,7 @@ const Layout = () => {
 					</SafeAreaView>
 				</SafeAreaProvider>
 			</KeyboardProvider>
-			{/* </BottomSheetModalProvider> */}
+			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
 	);
 };

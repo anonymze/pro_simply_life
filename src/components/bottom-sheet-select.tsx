@@ -1,12 +1,17 @@
 import BottomSheet, { BottomSheetFooter, BottomSheetFooterProps, BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { View, Text, StyleSheet, Pressable, Platform } from "react-native";
+import { View, Text, StyleSheet, Pressable, Platform, TouchableOpacity } from "react-native";
+import { SymbolView, SFSymbol } from "expo-symbols";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Image, ImageRef } from "expo-image";
 import config from "tailwind.config";
 import React from "react";
+
 
 interface Item {
 	id: string;
 	name: string;
+	iosIcon?: SFSymbol;
+	androidIcon?: string;
 }
 
 interface Props {
@@ -23,15 +28,7 @@ export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(
 		const renderFooter = React.useCallback(
 			(props: BottomSheetFooterProps) => (
 				<BottomSheetFooter {...props} style={styles.footerContainer}>
-					<Pressable
-						style={(status) => {
-							return StyleSheet.flatten([
-								{
-									opacity: status.pressed ? 0.5 : 1,
-								},
-								styles.containerTextBottom,
-							]);
-						}}
+					<TouchableOpacity
 						onPress={() => {
 							setSelectedItems([]);
 							onSelect([]);
@@ -41,16 +38,8 @@ export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(
 						}}
 					>
 						<Text style={styles.textBottomSheet}>Annuler</Text>
-					</Pressable>
-					<Pressable
-						style={(status) => {
-							return StyleSheet.flatten([
-								{
-									opacity: status.pressed ? 0.5 : 1,
-								},
-								styles.containerTextBottom,
-							]);
-						}}
+					</TouchableOpacity>
+					<TouchableOpacity
 						onPress={() => {
 							onSelect(selectedItems);
 							if (ref && "current" in ref) {
@@ -59,7 +48,7 @@ export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(
 						}}
 					>
 						<Text style={styles.textBottomSheet}>Choisir</Text>
-					</Pressable>
+					</TouchableOpacity>
 				</BottomSheetFooter>
 			),
 			[onSelect, selectedItems],
@@ -96,6 +85,16 @@ export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(
 									}
 								}}
 							>
+								{item.iosIcon && (
+									<SymbolView
+										name={item.iosIcon}
+										tintColor={selectedItems.find((id) => id.id === item.id) ? "#fff" : "#000"}
+										type="hierarchical"
+									/>
+								)}
+								{item.androidIcon && (
+									<Image source={item.androidIcon} style={{ width: 26, height: 26, borderRadius: 99 }} />
+								)}
 								<Text
 									style={StyleSheet.flatten([
 										styles.itemText,
@@ -136,6 +135,7 @@ const styles = StyleSheet.create({
 		color: config.theme.extend.colors.primary,
 		fontSize: 18,
 		fontWeight: 500,
+		padding: 15,
 	},
 	itemContainer: {
 		flexDirection: "row",

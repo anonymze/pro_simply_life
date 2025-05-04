@@ -338,6 +338,8 @@ PODS:
     - ExpoModulesCore
   - ExpoSplashScreen (0.30.8):
     - ExpoModulesCore
+  - ExpoSymbols (0.4.4):
+    - ExpoModulesCore
   - ExpoSystemUI (5.0.7):
     - ExpoModulesCore
   - ExpoVideo (2.1.8):
@@ -2645,6 +2647,7 @@ DEPENDENCIES:
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoNetwork (from `../node_modules/expo-network/ios`)
   - ExpoSplashScreen (from `../node_modules/expo-splash-screen/ios`)
+  - ExpoSymbols (from `../node_modules/expo-symbols/ios`)
   - ExpoSystemUI (from `../node_modules/expo-system-ui/ios`)
   - ExpoVideo (from `../node_modules/expo-video/ios`)
   - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
@@ -2809,6 +2812,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-network/ios"
   ExpoSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
+  ExpoSymbols:
+    :path: "../node_modules/expo-symbols/ios"
   ExpoSystemUI:
     :path: "../node_modules/expo-system-ui/ios"
   ExpoVideo:
@@ -3019,6 +3024,7 @@ SPEC CHECKSUMS:
   ExpoModulesCore: 3ac17421302df62928fc99c133cf25bdbcf0b004
   ExpoNetwork: 92cac43c13a2d9e9c1470ec8804836574ff34068
   ExpoSplashScreen: f524572afd81522e40850eaa7163e2ae99cce783
+  ExpoSymbols: 5324de61341b396965a1cd3d2c738227b13d6a60
   ExpoSystemUI: 82c970cf8495449698e7343b4f78a0d04bcec9ee
   ExpoVideo: 9bf8a305dc90a73198582eb338bce6f7867355d8
   ExpoWebBrowser: 06fb5f767f53ad53944b068cdd207984cb998712

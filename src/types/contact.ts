@@ -1,13 +1,16 @@
+import { ImageRef } from "expo-image";
+
 import { Media } from "./media";
+
 
 export interface Contact {
 	id: string;
 	name: string;
-	logo: string | Media;
-	latitude: number;
-	longitude: number;
+	latitude: string;
+	longitude: string;
 	category: ContactCategory;
 	phone?: string | null;
+	logo?: ImageRef;
 	website?: string | null;
 	address?: string | null;
 	updatedAt: string;
