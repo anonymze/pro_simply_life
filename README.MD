@@ -156,4 +156,5 @@ Unit tests
 reset expiration token on success
 
 
-CARTE google + video list
+CARTE google + video list + push notif
+

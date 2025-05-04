@@ -84,7 +84,8 @@ export default {
 				"expo-maps",
 				{
 					requestLocationPermission: true,
-					locationPermission: "Allow $(PRODUCT_NAME) to use your location.",
+					// translations in file so don't need
+					// locationPermission: "Allow $(PRODUCT_NAME) to use your location.",
 				},
 			],
 			[

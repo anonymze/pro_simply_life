@@ -2,11 +2,11 @@ import { ActivityIndicator, Alert, Platform, Pressable, Text, View, TextInput } 
 import { getContactCategoriesQuery } from "@/api/queries/contact-categories-queries";
 import BackgroundLayout, { stylesLayout } from "@/layouts/background-layout";
 import { GoogleMapsMapType } from "expo-maps/build/google/GoogleMaps.types";
+import { AppleMaps, GoogleMaps, useLocationPermissions } from "expo-maps";
 import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
 import { BottomSheetSelect } from "@/components/bottom-sheet-select";
 import { getContactsQuery } from "@/api/queries/contact-queries";
 import { ContactCategory } from "@/types/contact";
-import { AppleMaps, GoogleMaps } from "expo-maps";
 import { useQuery } from "@tanstack/react-query";
 import { FontAwesome } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
@@ -14,12 +14,13 @@ import * as WebBrowser from "expo-web-browser";
 import config from "tailwind.config";
 import React from "react";
 
+
 const CAMERA_POSITION = {
 	coordinates: {
 		latitude: 46.227638,
 		longitude: 2.213749,
 	},
-	zoom: 5,
+	zoom: Platform.OS === "ios" ? 5 : 6,
 };
 
 export default function Page() {
@@ -27,6 +28,18 @@ export default function Page() {
 	const [selectedCategories, setSelectedCategories] = React.useState<ContactCategory[]>([]);
 	const [input, setInput] = React.useState<string>("");
 	const mapRef = React.useRef<AppleMaps.MapView>(null);
+	const [status, requestPermission] = useLocationPermissions();
+
+
+	React.useEffect(() => {
+		console.log("status", status);
+		const test = async () => {
+			const status = await requestPermission();
+			console.log(status);
+		};
+		test();
+	}, [status, requestPermission]);
+
 	const {
 		error: errorContacts,
 		isLoading: isLoadingContacts,
@@ -159,8 +172,9 @@ export default function Page() {
 					/>
 				) : (
 					<GoogleMaps.View
-						onMarkerClick={(marker) => {
-							console.log(marker);
+						onMarkerClick={async (marker) => {
+							if (marker.id || marker.showCallout) return;
+							await WebBrowser.openBrowserAsync(marker?.id ?? "");
 						}}
 						uiSettings={{
 							myLocationButtonEnabled: false,
@@ -171,15 +185,29 @@ export default function Page() {
 							isTrafficEnabled: false,
 							selectionEnabled: false,
 							mapType: GoogleMapsMapType.NORMAL,
-						}}
-						markers={filteredContacts.map((contact) => ({
+						}}						
+						markers={[...filteredContacts.map((contact) => ({
 							coordinates: { latitude: contact.latitude, longitude: contact.longitude },
 							title: contact.name,
 							snippet: contact.name,
+							showCallout: true,
 							draggable: false,
 							id: contact.id,
+						})), {
+							coordinates: { latitude: 47.5, longitude: 3.5 },
+							title: "49th Parallel Café & Avocat d'exception...",
+							snippet: "49th Parallel Café & Avocat d'exception!!",
 							showCallout: true,
-						}))}
+							draggable: false,
+							id: "https://google.fr",
+						}, {
+							coordinates: { latitude: 45.33, longitude: 2.75 },
+							title: "Restaurant au pif??",
+							snippet: "Restaurant au pif!!!!",
+							draggable: false,
+							showCallout: true,
+							id: "https://amazon.fr",
+						}]}
 						ref={mapRef}
 						cameraPosition={CAMERA_POSITION}
 						style={stylesLayout.container}

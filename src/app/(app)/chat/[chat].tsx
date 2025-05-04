@@ -232,8 +232,6 @@ export default function Page() {
 		});
 	}, [form]);
 
-	console.log("messages");
-
 	return (
 		<SafeAreaView className="flex-1 bg-background" edges={["bottom"]}>
 			<Title title={title} />
@@ -281,7 +279,6 @@ export default function Page() {
 								onEndReached={() => {
 									// add more messages when on end scroll
 									if (!!messages.length && messages.length >= maxMessages) {
-										console.log("add more messages");
 										setMaxMessages((props) => props + 20);
 									}
 								}}
