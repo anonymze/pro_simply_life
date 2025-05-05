@@ -52,14 +52,28 @@ export default function Page() {
 					snapToOffsets={[
 						0,
 						cardWidth + 16,
-						cardWidth * 2 + 16 * 2,
-						cardWidth * 3 + 16 * 3,
-						cardWidth * 4 + 16 * 4,
-						cardWidth * 5 + 16 * 5,
+						cardWidth * 2 + (16 * 2),
+						cardWidth * 3 + (16 * 3),
+						cardWidth * 4 + (16 * 4),
+						cardWidth * 5 + (16 * 5),
 					]}
-					contentContainerStyle={{ paddingRight: 16, gap: 16 }} // keep right padding for last card
+					contentContainerStyle={{ paddingRight: 24, gap: 16 }} // keep right padding for last card
 					scrollEventThrottle={200}
 				>
+					<CardEvent
+						date="2025-05-05"
+						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+						type="Masterclass"
+						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+						width={cardWidth}
+					/>
+					<CardEvent
+						date="2025-05-05"
+						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+						type="Masterclass"
+						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+						width={cardWidth}
+					/>
 					<CardEvent
 						date="2025-05-05"
 						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
@@ -94,6 +108,8 @@ export default function Page() {
 					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 1 && "bg-dark")} />
 					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 2 && "bg-dark")} />
 					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 3 && "bg-dark")} />
+					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 4 && "bg-dark")} />
+					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 5 && "bg-dark")} />
 				</View>
 				<Link href="/" push asChild className="mt-2 py-2 pr-2">
 					<TouchableOpacity className=" flex-row items-center gap-2">
