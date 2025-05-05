@@ -6,6 +6,7 @@ import { Stack, Redirect } from "expo-router";
 import { Platform } from "react-native";
 import React from "react";
 
+
 export default function AppLayout() {
 	const userInfos = React.useMemo(() => getStorageUserInfos(), []);
 
@@ -30,6 +31,14 @@ export default function AppLayout() {
 			>
 				<Stack.Screen
 					name="index"
+					initialParams={{
+						userJSON: JSON.stringify({
+							firstname: userInfos.user.firstname,
+							lastname: userInfos.user.lastname,
+							photo: userInfos.user.photo,
+							createdAt: userInfos.user.createdAt,
+						}),
+					}}
 					options={{
 						headerShown: false,
 					}}
@@ -39,6 +48,42 @@ export default function AppLayout() {
 					options={{
 						gestureEnabled: false,
 						header: () => <HeaderLayout title="Contacts" />,
+					}}
+				/>
+				<Stack.Screen
+					name="supplier-category/index"
+					options={{
+						header: () => <HeaderLayout title="Catégories de fournisseurs" />,
+					}}
+				/>
+				<Stack.Screen
+					name="supplier-category/[supplier-category]/index"
+					options={{
+						header: () => <HeaderLayout title="Catégorie de fournisseurs" />,
+					}}
+				/>
+				<Stack.Screen
+					name="supplier-category/[supplier-category]/supplier-product/index"
+					options={{
+						header: () => <HeaderLayout title="Produits des fournisseurs" />,
+					}}
+				/>
+				<Stack.Screen
+					name="supplier-category/[supplier-category]/supplier-product/[supplier-product]/index"
+					options={{
+						header: () => <HeaderLayout title="Produit des fournisseurs" />,
+					}}
+				/>
+				<Stack.Screen
+					name="supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/index"
+					options={{
+						header: () => <HeaderLayout title="Fournisseurs" />,
+					}}
+				/>
+				<Stack.Screen
+					name="supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/index"
+					options={{
+						header: () => <HeaderLayout title="Fournisseur" />,
 					}}
 				/>
 				<Stack.Screen

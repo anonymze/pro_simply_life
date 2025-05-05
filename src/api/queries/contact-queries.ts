@@ -1,5 +1,5 @@
 import { PaginatedResponse } from "@/types/response";
-import { getAndroidIcon } from "@/app/(app)/contact";
+import { getAndroidIcon } from "@/utils/icon-maps";
 import { QueryKey } from "@tanstack/react-query";
 import { Contact } from "@/types/contact";
 import { Platform } from "react-native";
@@ -27,3 +27,4 @@ export async function getContactsQuery({ queryKey }: { queryKey: QueryKey }) {
 
 	return response.data;
 }
+

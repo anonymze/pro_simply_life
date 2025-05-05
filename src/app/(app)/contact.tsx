@@ -3,6 +3,7 @@ import { getContactCategoriesQuery } from "@/api/queries/contact-categories-quer
 import BackgroundLayout, { stylesLayout } from "@/layouts/background-layout";
 import { GoogleMapsMapType } from "expo-maps/build/google/GoogleMaps.types";
 import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
+import { getAndroidIcon, iconIos, tintIos } from "@/utils/icon-maps";
 import { BottomSheetSelect } from "@/components/bottom-sheet-select";
 import { getContactsQuery } from "@/api/queries/contact-queries";
 import { useQueries } from "@tanstack/react-query";
@@ -11,38 +12,9 @@ import { AppleMaps, GoogleMaps } from "expo-maps";
 import { FontAwesome } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
 import * as WebBrowser from "expo-web-browser";
-import { SFSymbol } from "expo-symbols";
 import config from "tailwind.config";
 import React from "react";
 
-
-const tintIos = {
-	Hotel: "brown",
-	Restaurant: "red",
-	Avocat: "blue",
-	Agence: "purple",
-};
-
-export const iconIos: {
-	[key: string]: SFSymbol;
-} = {
-	Hotel: "cup.and.saucer.fill",
-	Restaurant: "fork.knife",
-	Avocat: "bubble.middle.bottom",
-	Agence: "building.2",
-};
-
-const iconAndroid: Record<string, string> = {
-	Restaurant: require("@/assets/icons/restaurant.png"),
-	Hotel: require("@/assets/icons/hotel.png"),
-	Avocat: require("@/assets/icons/lawyer.png"),
-	Agence: require("@/assets/icons/agency.png"),
-};
-
-export const getAndroidIcon = (name: string) => {
-	const icon = iconAndroid[name as keyof typeof iconAndroid];
-	return icon ?? require("@/assets/icons/unknown.png");
-};
 
 const CAMERA_POSITION = {
 	coordinates: {

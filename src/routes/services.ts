@@ -1,5 +1,6 @@
 import { LinkProps } from "expo-router";
 
+
 export interface Service {
 	id: number;
 	name: string;
@@ -18,7 +19,7 @@ const services: Service[] = [
 		icon: require("@/assets/images/logo.png"),
 		link: "/chat",
 		theme: "text-green-600",
-		pastille: true,
+		pastille: false,
 	},
 	{
 		id: 14,
@@ -27,7 +28,7 @@ const services: Service[] = [
 		icon: require("@/assets/images/logo.png"),
 		link: "/login",
 		theme: "text-blue-600",
-		pastille: true,
+		pastille: false,
 	},
 	{
 		id: 15,
@@ -36,7 +37,7 @@ const services: Service[] = [
 		icon: require("@/assets/images/logo.png"),
 		link: "/pdf",
 		theme: "text-blue-600",
-		pastille: true,
+		pastille: false,
 	},
 	{
 		id: 16,
@@ -44,6 +45,15 @@ const services: Service[] = [
 		description: "Accédez à vos documents sécurisés",
 		icon: require("@/assets/images/logo.png"),
 		link: "/contact",
+		theme: "text-blue-600",
+		pastille: false,
+	},
+	{
+		id: 17,
+		name: "Fournisseurs",
+		description: "Accédez à vos documents sécurisés",
+		icon: require("@/assets/images/logo.png"),
+		link: "/supplier-category",
 		theme: "text-blue-600",
 		pastille: true,
 	},

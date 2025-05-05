@@ -2,6 +2,7 @@ import "react-native-reanimated";
 import "@/styles/app.css";
 
 import { onlineManager, QueryClientProvider, focusManager, useQueryClient } from "@tanstack/react-query";
+import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -94,23 +95,23 @@ const Layout = () => {
 	return (
 		<GestureHandlerRootView>
 			<BottomSheetModalProvider>
-			<KeyboardProvider>
-				<StatusBar style="light" translucent />
-				<SafeAreaProvider>
-					<SafeAreaView pointerEvents="box-none" className="flex-1 bg-primaryLight" edges={["right", "left", "top"]}>
-						<Stack
-							screenOptions={{
-								headerShown: false,
-								animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
-								gestureEnabled: false,
-								fullScreenGestureEnabled: false,
-							}}
-						>
-							<Stack.Screen name="login" />
-						</Stack>
-					</SafeAreaView>
-				</SafeAreaProvider>
-			</KeyboardProvider>
+				<KeyboardProvider>
+					<StatusBar style="light" translucent />
+					<SafeAreaProvider>
+						<SafeAreaView pointerEvents="box-none" className="flex-1 bg-primaryLight" edges={["right", "left", "top"]}>
+							<Stack
+								screenOptions={{
+									headerShown: false,
+									animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
+									gestureEnabled: false,
+									fullScreenGestureEnabled: false,
+								}}
+							>
+								<Stack.Screen name="login" />
+							</Stack>
+						</SafeAreaView>
+					</SafeAreaProvider>
+				</KeyboardProvider>
 			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
 	);
@@ -120,5 +121,9 @@ const prefetchSomeData = async () => {
 	queryClient.prefetchQuery({
 		queryKey: ["chat-rooms"],
 		queryFn: getChatRoomsQuery,
+	});
+	queryClient.prefetchQuery({
+		queryKey: ["supplier-categories"],
+		queryFn: getSupplierCategoriesQuery,
 	});
 };

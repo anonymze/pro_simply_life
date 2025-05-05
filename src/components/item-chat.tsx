@@ -34,8 +34,6 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 	const optimistic = "optimistic" in item ? true : false;
 	const [open, setOpen] = React.useState(false);
 
-	// console.log(item);
-
 	return (
 		<View
 			className={cn(

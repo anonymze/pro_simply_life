@@ -1,5 +1,6 @@
 import { Media } from "./media";
 
+
 export interface Supplier {
 	id: string;
 	name: string;
@@ -33,7 +34,7 @@ export interface SupplierProduct {
 	id: string;
 	name: string;
 	logo?: (string | null) | Media;
-	suppliers: (string | Supplier)[];
+	suppliers: Supplier[];
 	updatedAt: string;
 	createdAt: string;
 }
@@ -42,13 +43,10 @@ export interface SupplierCategory {
 	id: string;
 	name: string;
 	logo?: (string | null) | Media;
-	product_suppliers: (string | SupplierProduct)[];
+	product_suppliers: SupplierProduct[];
 	offers?:
 		| {
 				name: string;
-				/**
-				 * Le fichier doit être au format PDF.
-				 */
 				file: string | Media;
 				description?: string | null;
 				id?: string | null;
