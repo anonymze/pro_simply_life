@@ -29,8 +29,7 @@ export default function Page() {
 		(event: NativeSyntheticEvent<NativeScrollEvent>) => {
 			const offsetX = event.nativeEvent.contentOffset.x;
 			const index = Math.round(offsetX / cardWidth);
-			setCurrentIndex(index);
-			console.log("current page index:", index);
+			setCurrentIndex(~~index);
 		},
 		[cardWidth],
 	);
