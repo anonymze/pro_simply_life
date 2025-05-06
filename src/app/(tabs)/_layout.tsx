@@ -3,8 +3,6 @@ import { NotificationProvider } from "@/context/push-notifications";
 import HeaderLayout from "@/layouts/headert-layout";
 import { Redirect, Stack, Tabs } from "expo-router";
 import { getStorageUserInfos } from "@/utils/store";
-import { truncateText } from "@/utils/helper";
-import { Platform } from "react-native";
 import config from "tailwind.config";
 import React from "react";
 
@@ -79,7 +77,7 @@ export default function AppLayout() {
 				<Tabs.Screen
 					name="pdf"
 					options={{
-						header: () => <HeaderLayout title="Visionneuse PDF" />,
+						header: () => <HeaderLayout title="Visionneuse PDF"  />,
 						href: null,
 					}}
 				/>

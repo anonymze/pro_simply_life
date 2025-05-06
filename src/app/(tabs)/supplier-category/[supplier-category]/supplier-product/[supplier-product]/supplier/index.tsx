@@ -1,6 +1,7 @@
 import { getSupplierCategoryQuery } from "@/api/queries/supplier-categories-queries";
 import { getSupplierProductQuery } from "@/api/queries/supplier-products-queries";
 import CardSupplierProduct from "@/components/card/card-supplier-product";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardSupplier from "@/components/card/card-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
@@ -10,7 +11,6 @@ import { useQuery } from "@tanstack/react-query";
 import Title from "@/components/ui/title";
 import { Text, View } from "react-native";
 import config from "tailwind.config";
-import { Image } from "expo-image";
 import React from "react";
 
 
@@ -25,7 +25,23 @@ export default function Page() {
 
 	if (!data) return null;
 
-	console.log(data.suppliers);
+	// sort and group suppliers by first letter
+	const groupedSuppliers = React.useMemo(
+		() =>
+			data.suppliers
+				.slice()
+				.sort((a, b) => a.name.localeCompare(b.name, "fr"))
+				.reduce(
+					(acc, supplier) => {
+						const letter = supplier.name[0].toUpperCase();
+						if (!acc[letter]) acc[letter] = [];
+						acc[letter].push(supplier);
+						return acc;
+					},
+					{} as Record<string, typeof data.suppliers>,
+				),
+		[data],
+	);
 
 	return (
 		<BackgroundLayout className="p-4">
@@ -33,26 +49,32 @@ export default function Page() {
 			<Text className="mb-7 text-xs text-defaultGray">Liste des fournisseurs</Text>
 			<InputSearch onSubmit={() => {}} />
 			<ScrollView
-				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 			>
-				<View className="mt-5 gap-2">
-					{data.suppliers.map((supplier) => (
-						<CardSupplier
-							icon={supplier.logo ? <Image source={supplier.logo.url} style={{ width: 22, height: 22 }} /> : undefined}
-							key={supplier.id}
-							supplier={supplier}
-							link={{
-								pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
-								params: {
-									"supplier-category": supplierCategoryId,
-									"supplier-product": supplierProductId,
-									supplier: supplier.id,
-								},
-							}}
-						/>
-					))}
+				<View className="gap-2">
+					{Object.keys(groupedSuppliers)
+						.sort()
+						.map((letter) => (
+							<View key={letter} className="gap-2">
+								<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
+								{groupedSuppliers[letter].map((supplier) => (
+									<CardSupplier
+										icon={<ImagePlaceholder source={supplier.logo?.url} style={{ width: 22, height: 22 }} />}
+										key={supplier.id}
+										supplier={supplier}
+										link={{
+											pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
+											params: {
+												"supplier-category": supplierCategoryId,
+												"supplier-product": supplierProductId,
+												supplier: supplier.id,
+											},
+										}}
+									/>
+								))}
+							</View>
+						))}
 				</View>
 			</ScrollView>
 		</BackgroundLayout>

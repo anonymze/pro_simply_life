@@ -96,9 +96,9 @@ const Layout = () => {
 		<GestureHandlerRootView>
 			<BottomSheetModalProvider>
 				<KeyboardProvider>
-					<StatusBar style="dark" translucent />
+					<StatusBar style="dark" translucent animated />
 					<SafeAreaProvider>
-						<SafeAreaView pointerEvents="box-none" className="flex-1 bg-background" edges={["right", "left", "top"]}>
+						<SafeAreaView className="flex-1 bg-red-500" edges={["right", "left", "top"]}>
 							<Stack
 								screenOptions={{
 									headerShown: false,

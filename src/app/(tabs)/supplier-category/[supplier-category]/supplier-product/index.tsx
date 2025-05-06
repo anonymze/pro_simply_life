@@ -37,7 +37,6 @@ export default function Page() {
 			<Text className="mb-7 text-xs text-defaultGray">{description}</Text>
 			<InputSearch onSubmit={() => {}} />
 			<ScrollView
-				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 			>

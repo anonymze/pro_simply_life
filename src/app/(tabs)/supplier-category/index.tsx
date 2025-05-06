@@ -1,41 +1,16 @@
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
 import CardSupplierCategory from "@/components/card/card-supplier-category";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
-import { useQueryClient } from "@tanstack/react-query";
 import Title from "@/components/ui/title";
-import { useRouter } from "expo-router";
 import config from "tailwind.config";
 import { View } from "react-native";
 
 
-interface SupplierCategory {
-	id: string;
-	name: string;
-	product_suppliers: Array<{
-		id: string;
-		name: string;
-	}>;
-}
-
 export default function Page() {
-	const queryClient = useQueryClient();
-	const router = useRouter();
-
-	const handleNavigate = (supplierCategory: SupplierCategory) => {
-		// store the supplier category data in react-query cache
-		queryClient.setQueryData(["supplier-category", supplierCategory.id], supplierCategory);
-
-		router.push({
-			pathname: `/supplier-category/[supplier-category]/supplier-product`,
-			params: {
-				"supplier-category": supplierCategory.id,
-			},
-		});
-	};
-
 	return withQueryWrapper(
 		{
 			queryKey: ["supplier-categories", { depth: 3 }],
@@ -47,7 +22,6 @@ export default function Page() {
 					<Title title="Répertoire des fournisseurs" />
 					<InputSearch onSubmit={() => {}} />
 					<ScrollView
-						className="flex-1"
 						showsVerticalScrollIndicator={false}
 						style={{ backgroundColor: config.theme.extend.colors.background }}
 					>
@@ -56,6 +30,7 @@ export default function Page() {
 								<CardSupplierCategory
 									key={supplierCategory.id}
 									supplierCategory={supplierCategory}
+									icon={<ImagePlaceholder source={supplierCategory.logo?.url ?? ""} style={{ width: 22, height: 22 }} />}
 									link={{
 										pathname: `/supplier-category/[supplier-category]/supplier-product`,
 										params: {

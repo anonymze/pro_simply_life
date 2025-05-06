@@ -15,7 +15,7 @@ export default {
 			tsconfigPaths: true,
 			typedRoutes: true,
 		},
-		backgroundColor: "#f4f5f6",
+		backgroundColor: "#ffffff",
 		// assetBundlePatterns: ["**/*"],
 		locales: {
 			en: "./src/i18n/metadata/ios/en.json",
@@ -108,7 +108,7 @@ export default {
 			[
 				"expo-splash-screen",
 				{
-					backgroundColor: "#f4f5f6",
+					backgroundColor: "#ffffff",
 					image: "./src/assets/images/splash-icon.png",
 					// dark: {
 					// 	image: "./assets/images/splash-icon-dark.png",

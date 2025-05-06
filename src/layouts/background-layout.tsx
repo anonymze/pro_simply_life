@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { cn } from "@/utils/libs/tailwind";
 
+
 export default function BackgroundLayout({ children, className }: { children: React.ReactNode; className?: string }) {
 	return <View className={cn("flex-1 bg-background", className)}>{children}</View>;
 }

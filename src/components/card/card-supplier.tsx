@@ -13,7 +13,7 @@ export default function CardSupplierCategory({
 	supplier,
 	link,
 }: {
-	icon?: React.ReactNode;
+	icon: React.ReactNode;
 	supplier: Supplier;
 	link: HrefObject;
 }) {
@@ -23,9 +23,9 @@ export default function CardSupplierCategory({
 
 return (
 		<Link href={link} push asChild onPressIn={onPress}>
-			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
+			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl  p-2 bg-white shadow-sm shadow-defaultGray/10">
 				<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
-					{icon ? icon : <Image source={require("@/assets/images/logo.png")} style={{ width: 22, height: 22 }} />}
+					{icon}
 				</View>
 				<View className="flex-1">
 					<Text className="text-lg font-semibold text-dark">{supplier.name}</Text>

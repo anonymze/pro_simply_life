@@ -16,6 +16,7 @@ const config = {
 				dark: "#15202a",
 				primary: "#047684",
 				primaryLight: "#0794a4",
+				primaryUltraLight: "#d5f3f6",
 				primaryDark: "#e7b528",
 				background: "#f4f5f6",
 				greenChat: "#134d38",

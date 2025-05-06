@@ -13,9 +13,7 @@ export default function SupplierLayout() {
 				animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
 			}}
 		>
-			<Stack.Screen
-				name="index"
-			/>
+			<Stack.Screen name="index" />
 			<Stack.Screen
 				options={{
 					headerShown: true,
@@ -29,6 +27,13 @@ export default function SupplierLayout() {
 					header: () => <HeaderLayout />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/index"
+			/>
+			<Stack.Screen
+				options={{
+					headerShown: true,
+					header: () => <HeaderLayout backgroundColor="bg-white" />,
+				}}
+				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/index"
 			/>
 		</Stack>
 	);
