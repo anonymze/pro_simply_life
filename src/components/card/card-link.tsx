@@ -1,9 +1,9 @@
 import Animated, { useSharedValue, withDelay, withRepeat, withTiming, useAnimatedStyle, interpolate, } from "react-native-reanimated";
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { LucideIcon } from "lucide-react-native";
+import { Link, LinkProps } from "expo-router";
 import { Service } from "@/routes/services";
 import React, { useEffect } from "react";
-import { Link } from "expo-router";
 import { Image } from "expo-image";
 
 
@@ -16,7 +16,7 @@ export default function CardLink({
 	icon: React.ReactNode;
 	title: string;
 	description: string;
-	link: string;
+	link: LinkProps["href"];
 }) {
 	return (
 		<Link href={link} push asChild>

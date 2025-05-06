@@ -4,7 +4,7 @@ import { Media } from "./media";
 export interface Supplier {
 	id: string;
 	name: string;
-	logo: string | Media;
+	logo: Media;
 	contact_info?: {
 		lastname?: string | null;
 		firstname?: string | null;
@@ -33,7 +33,6 @@ export interface Supplier {
 export interface SupplierProduct {
 	id: string;
 	name: string;
-	logo?: (string | null) | Media;
 	suppliers: Supplier[];
 	updatedAt: string;
 	createdAt: string;
@@ -42,7 +41,7 @@ export interface SupplierProduct {
 export interface SupplierCategory {
 	id: string;
 	name: string;
-	logo?: (string | null) | Media;
+	logo?: Media;
 	product_suppliers: SupplierProduct[];
 	offers?:
 		| {

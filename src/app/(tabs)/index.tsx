@@ -4,8 +4,9 @@ import ProfileDashboard from "@/components/profile-dashboard";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import { Link, useLocalSearchParams } from "expo-router";
+import CardLink from "@/components/card/card-link";
 import CardEvent from "@/components/card-event";
-import CardLink from "@/components/card-link";
+import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import { User } from "@/types/user";
 import { cn } from "@/utils/cn";
@@ -40,9 +41,9 @@ export default function Page() {
 			showsVerticalScrollIndicator={false}
 			style={{ backgroundColor: config.theme.extend.colors.background }}
 		>
-			<BackgroundLayout className="mb-6 p-4">
+			<BackgroundLayout className="p-4">
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
-				<Text className="mb-5 mt-7 text-xl font-bold">Vie d'agence Valorem</Text>
+				<Title title="Vie d'agence Valorem" />
 				<ScrollView
 					onScroll={handleScrollEnd}
 					horizontal
@@ -117,7 +118,7 @@ export default function Page() {
 						<ArrowRight size={16} color={config.theme.extend.colors.defaultGray} />
 					</TouchableOpacity>
 				</Link>
-				<Text className="mb-5 mt-7 text-xl font-bold">Fonctionnalités</Text>
+				<Title title="Fonctionnalités" />
 				<View className="gap-2">
 					<CardLink
 						icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}

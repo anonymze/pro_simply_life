@@ -1,10 +1,10 @@
 import { Text, View } from "react-native";
 
 
-export default function Page() {
+export default function Organigramme() {
 	return (
 		<View>
-			<Text>Supplier Category</Text>
+			<Text>Organigramme</Text>
 		</View>
 	);
 }

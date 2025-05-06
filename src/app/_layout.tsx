@@ -107,6 +107,7 @@ const Layout = () => {
 									fullScreenGestureEnabled: false,
 								}}
 							>
+								<Stack.Screen name="(tabs)"  />
 								<Stack.Screen name="login" />
 							</Stack>
 						</SafeAreaView>
@@ -123,7 +124,7 @@ const prefetchSomeData = async () => {
 		queryFn: getChatRoomsQuery,
 	});
 	queryClient.prefetchQuery({
-		queryKey: ["supplier-categories"],
+		queryKey: ["supplier-categories", { depth: 3 }],
 		queryFn: getSupplierCategoriesQuery,
 	});
 };
