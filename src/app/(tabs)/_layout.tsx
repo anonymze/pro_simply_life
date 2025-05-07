@@ -74,13 +74,13 @@ export default function AppLayout() {
 						tabBarIcon: ({ color }) => <MessageCircleMoreIcon color={color} size={20} />,
 					}}
 				/>
-				<Tabs.Screen
+				{/* <Tabs.Screen
 					name="pdf"
 					options={{
 						header: () => <HeaderLayout title="Visionneuse PDF"  />,
 						href: null,
 					}}
-				/>
+				/> */}
 			</Tabs>
 		</NotificationProvider>
 	);

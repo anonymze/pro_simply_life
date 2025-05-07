@@ -1,4 +1,4 @@
-import { BookOpen, BriefcaseBusinessIcon, BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, } from "lucide-react-native";
+import { BookOpen, BriefcaseBusinessIcon, BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, } from "lucide-react-native";
 import { Text, View, Dimensions, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
 import ProfileDashboard from "@/components/profile-dashboard";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -155,6 +155,12 @@ export default function Page() {
 						title="Fidnet"
 						description="Newsletter hebdomadaire de Fidnet"
 						link={"/"}
+					/>
+					<CardLink
+						icon={<MapPinnedIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+						title="Contacts"
+						description="Carte des contacts utiles"
+						link={"/contact"}
 					/>
 				</View>
 			</BackgroundLayout>

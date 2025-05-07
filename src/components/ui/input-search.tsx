@@ -27,15 +27,18 @@ export default function InputSearch({
 				textContentType="oneTimeCode"
 				placeholder={placeholder}
 				autoCorrect={false}
-				className={cn("w-full rounded-lg bg-defaultGray/15 h-16 pl-14 items-center text-lg placeholder:text-defaultGray", className)}
+				className={cn(
+					"w-full rounded-lg bg-defaultGray/15 py-5 pl-4 pr-12 text-dark placeholder:text-defaultGray",
+					className,
+				)}
 				onSubmitEditing={(text) => {
 					onSubmit(text.nativeEvent.text);
 				}}
 			/>
 			<SearchIcon
-				style={{ position: "absolute", left: 15, top: "50%", transform: [{ translateY: "-50%" }] }}
+				style={{ position: "absolute", right: 15, top: "50%", transform: [{ translateY: "-50%" }] }}
 				size={18}
-				color={config.theme.extend.colors.defaultGray}
+				color={config.theme.extend.colors.primary}
 			/>
 		</View>
 	);

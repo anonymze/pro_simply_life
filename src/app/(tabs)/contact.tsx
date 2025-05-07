@@ -6,6 +6,7 @@ import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
 import { getAndroidIcon, iconIos, tintIos } from "@/utils/icon-maps";
 import { BottomSheetSelect } from "@/components/bottom-sheet-select";
 import { getContactsQuery } from "@/api/queries/contact-queries";
+import InputSearch from "@/components/ui/input-search";
 import { useQueries } from "@tanstack/react-query";
 import { ContactCategory } from "@/types/contact";
 import { AppleMaps, GoogleMaps } from "expo-maps";
@@ -73,26 +74,9 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout>
-			<View className="flex-row items-center gap-4 bg-white p-4 pt-0">
+			<View className="flex-row items-center gap-4 bg-white p-4">
 				<View className="basis-8/12">
-					<TextInput
-						editable={!queries[0].isLoading && !queries[1].isLoading}
-						returnKeyType="search"
-						keyboardType="default"
-						autoCorrect={false}
-						autoCapitalize="none"
-						className="w-full rounded-xl bg-gray-100 p-4"
-						placeholder="Rechercher..."
-						onSubmitEditing={(elem) => {
-							setInput(elem.nativeEvent.text.trim());
-						}}
-					/>
-					<FontAwesome
-						className="absolute right-4 top-4"
-						name="search"
-						size={18}
-						color={config.theme.extend.colors.defaultGray}
-					/>
+					<InputSearch className="py-4" onSubmit={() => {}} />
 				</View>
 				<Pressable
 					disabled={queries[0].isLoading || queries[1].isLoading}
