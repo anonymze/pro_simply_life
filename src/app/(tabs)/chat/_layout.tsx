@@ -23,7 +23,7 @@ export default function ChatLayout() {
 				name="new-room"
 				options={{
 					header: () => <HeaderLayout title="Nouvelle conversation" />,
-					presentation: Platform.OS === "ios" ? "formSheet" : "formSheet",
+					presentation: "formSheet",
 					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : [0.6, 1],
 				}}
 			/>

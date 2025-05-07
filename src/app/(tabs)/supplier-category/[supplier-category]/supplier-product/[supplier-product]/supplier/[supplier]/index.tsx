@@ -1,20 +1,22 @@
-import { Download, EyeIcon, FileIcon, MailIcon, PhoneIcon } from "lucide-react-native";
-import { useSafeAreaFrame, useSafeAreaInsets } from "react-native-safe-area-context";
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ArrowRight, Download, EyeIcon, FileIcon, KeyboardIcon, KeyIcon, KeyRoundIcon, MailIcon, PhoneIcon, } from "lucide-react-native";
+import { ActivityIndicator, Alert, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { HrefObject, Link, router, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
-import Image from "@/components/ui/image-placeholder";
-import { useLocalSearchParams } from "expo-router";
+import { downloadFile, getFile } from "@/utils/download";
 import { useQuery } from "@tanstack/react-query";
-import { Supplier } from "@/types/supplier";
-import { StatusBar } from "expo-status-bar";
+import type { Media } from "@/types/media";
 import config from "tailwind.config";
 import React from "react";
 
 
 export default function Page() {
-	const { supplier: supplierId } = useLocalSearchParams();
+	const {
+		supplier: supplierId,
+		"supplier-product": supplierProductId,
+		"supplier-category": supplierCategoryId,
+	} = useLocalSearchParams();
 
 	const { data } = useQuery({
 		queryKey: ["supplier", supplierId],
@@ -24,32 +26,83 @@ export default function Page() {
 
 	if (!data) return null;
 
-	console.log(data);
-
 	return (
 		<>
 			<View className="items-center rounded-2xl bg-white pb-4">
 				<ImagePlaceholder contentFit="contain" source={data.logo?.url} style={{ width: "100%", height: 60 }} />
 				<Text className="mt-4 text-xl font-bold">{data.name}</Text>
-				<View className="mt-2 flex-row flex-wrap items-center gap-2">
+				{/* <View className="mt-2 flex-row flex-wrap items-center gap-2">
 					<Tag title="Fournisseur" />
 					<Tag title="Fournisseur" />
-				</View>
+				</View> */}
 			</View>
-			<BackgroundLayout className="p-4">
-				<ContactInfo
-					phone={data.contact_info?.phone}
-					email={data.contact_info?.email}
-					firstname={data.contact_info?.firstname}
-					lastname={data.contact_info?.lastname}
-				/>
-				<Brochure data={data} />
-			</BackgroundLayout>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				style={{ backgroundColor: config.theme.extend.colors.background }}
+			>
+				<BackgroundLayout className="p-4">
+					<ContactInfo
+						phone={data.contact_info?.phone}
+						email={data.contact_info?.email}
+						firstname={data.contact_info?.firstname}
+						lastname={data.contact_info?.lastname}
+					/>
+					{data.brochure && (
+						<Brochure
+							brochure={data.brochure}
+							updatedAt={data.updatedAt}
+							link={{
+								pathname:
+									"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+								params: {
+									"supplier-category": supplierCategoryId,
+									"supplier-product": supplierProductId,
+									supplier: supplierId,
+									pdf: data.brochure?.filename,
+								},
+							}}
+						/>
+					)}
+					{data.connexion && (
+						<Logs
+							link={{
+								pathname:
+									"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+								params: {
+									"supplier-category": supplierCategoryId,
+									"supplier-product": supplierProductId,
+									supplier: supplierId,
+									logs: JSON.stringify(data.connexion),
+								},
+							}}
+						/>
+					)}
+				</BackgroundLayout>
+			</ScrollView>
 		</>
 	);
 }
 
-const Brochure = ({ data }: { data: Supplier }) => {
+const Logs = ({ link }: { link: HrefObject }) => {
+	return (
+		<Link href={link} push asChild>
+			<TouchableOpacity className="mt-4 w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
+				<View className="size-14 items-center justify-center rounded-lg bg-secondaryLight">
+					<KeyRoundIcon size={18} color={config.theme.extend.colors.secondaryDark} />
+				</View>
+				<View className="flex-1">
+					<Text className="text-lg font-semibold text-dark">Identifiants de connexion</Text>
+				</View>
+				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+			</TouchableOpacity>
+		</Link>
+	);
+};
+
+const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: string; link: HrefObject }) => {
+	const [loadingDownload, setLoadingDownload] = React.useState(false);
+	const [loadingOpen, setLoadingOpen] = React.useState(false);
+
 	return (
 		<View className="mt-4 w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="text-sm font-semibold text-defaultGray">Brochure</Text>
@@ -59,9 +112,9 @@ const Brochure = ({ data }: { data: Supplier }) => {
 						<FileIcon size={18} color={config.theme.extend.colors.defaultGray} />
 					</View>
 					<View className="flex-shrink">
-						<Text className="text-sm font-semibold text-dark">{data.name}</Text>
+						<Text className="text-sm font-semibold text-dark">{brochure.filename}</Text>
 						<Text className="text-sm font-semibold text-defaultGray">
-							{new Date(data.updatedAt).toLocaleDateString("fr-FR", {
+							{new Date(updatedAt).toLocaleDateString("fr-FR", {
 								day: "2-digit",
 								month: "2-digit",
 								year: "numeric",
@@ -70,11 +123,73 @@ const Brochure = ({ data }: { data: Supplier }) => {
 					</View>
 				</View>
 				<View className="flex-row gap-3">
-					<TouchableOpacity onPress={() => {}} className="rounded-full bg-primaryUltraLight p-3">
-						<Download size={16} color={config.theme.extend.colors.primary} />
+					<TouchableOpacity
+						disabled={loadingDownload}
+						onPress={() => {
+							if (!brochure.url) return;
+
+							setLoadingDownload(true);
+							downloadFile(brochure.url)
+								.then(() => {
+									Alert.alert("Brochure téléchargée !");
+								})
+								.catch((_) => {
+									Alert.alert(
+										"La brochure n'a pas pu être téléchargée",
+										"Vérifiez que le nom du fichier n'existe pas déjà sur votre appareil ou que vous avez assez d'espace de stockage.",
+									);
+								})
+								.finally(() => {
+									setLoadingDownload(false);
+								});
+						}}
+						className="rounded-full bg-primaryUltraLight p-3"
+					>
+						{loadingDownload ? (
+							<ActivityIndicator
+								size="small"
+								style={{ width: 16, height: 16 }}
+								color={config.theme.extend.colors.primary}
+							/>
+						) : (
+							<Download size={16} color={config.theme.extend.colors.primary} />
+						)}
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => {}} className="rounded-full bg-primaryUltraLight p-3">
-						<EyeIcon size={16} color={config.theme.extend.colors.primary} />
+					<TouchableOpacity
+						disabled={loadingOpen}
+						onPress={async () => {
+							if (!brochure.filename || !brochure.url) return;
+
+							const file = getFile(brochure.filename);
+
+							if (file.exists) {
+								router.push(link);
+								return;
+							}
+
+							setLoadingOpen(true);
+
+							downloadFile(brochure.url)
+								.then((_) => {
+									router.push(link);
+								})
+								.catch((_) => {
+									Alert.alert(
+										"La brochure n'a pas pu être téléchargée pour être visualisée",
+										"Vérifiez que vous avez assez d'espace de stockage.",
+									);
+								})
+								.finally(() => {
+									setLoadingOpen(false);
+								});
+						}}
+						className="rounded-full bg-primaryUltraLight p-3"
+					>
+						{loadingOpen ? (
+							<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
+						) : (
+							<EyeIcon size={16} color={config.theme.extend.colors.primary} />
+						)}
 					</TouchableOpacity>
 				</View>
 			</View>

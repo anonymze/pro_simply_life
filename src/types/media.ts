@@ -1,9 +1,9 @@
 export interface Media {
 	id: string;
 	alt: string;
-	prefix?: string | null;
 	updatedAt: string;
 	createdAt: string;
+	prefix?: string | null;
 	url?: string | null;
 	blurhash?: string | null;
 	thumbnailURL?: string | null;

@@ -35,6 +35,22 @@ export default function SupplierLayout() {
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/index"
 			/>
+			<Stack.Screen
+				options={{
+					presentation: "modal",
+					headerShown: false,
+				}}
+				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]"
+			/>
+			<Stack.Screen
+				options={{
+					presentation: "formSheet",
+					sheetGrabberVisible: true,
+					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : [0.6, 1],
+					headerShown: false,
+				}}
+				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]"
+			/>
 		</Stack>
 	);
 }

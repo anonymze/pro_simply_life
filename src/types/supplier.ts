@@ -13,7 +13,7 @@ export interface Supplier {
 		phone?: string | null;
 	};
 	connexion?: {
-		id?: string | null;
+		email?: string | null;
 		password?: string | null;
 	};
 	other_information?: {
