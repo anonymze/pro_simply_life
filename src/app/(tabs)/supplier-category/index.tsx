@@ -114,7 +114,7 @@ export default function Page() {
 const CardSearchSupplier = ({ supplier }: { supplier: Supplier & { productName: string; productId: string, categoryName: string } }) => {
 	return (
 		<View>
-			<Text className="text-md font-semibold text-defaultGray mb-2">{supplier.productName}</Text>
+			<Text className="text-md font-semibold text-defaultGray mb-3">{supplier.productName}</Text>
 			<CardSupplier
 				icon={
 					<ImagePlaceholder source={supplier.logo_mini?.url ?? ""} style={{ width: 26, height: 26, borderRadius: 4 }} />
