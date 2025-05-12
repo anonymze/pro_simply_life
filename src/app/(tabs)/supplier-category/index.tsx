@@ -96,7 +96,7 @@ export default function Page() {
 									showsVerticalScrollIndicator={false}
 									style={{ backgroundColor: config.theme.extend.colors.background }}
 								>
-									<View className="mt-5 gap-4">
+									<View className="mt-5 gap-5">
 										{filteredData.map((supplier) => (
 											<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
 										))}
