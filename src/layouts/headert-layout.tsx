@@ -36,7 +36,7 @@ export default function HeaderLayout({ title, sheet, backgroundColor }: HeaderLa
 					<PlusCircleIcon size={24} color={config.theme.extend.colors.primary} />
 				</TouchableOpacity>
 			) : (
-				<View className="w-10" />
+				<View className="w-24" />
 			)}
 		</View>
 	);

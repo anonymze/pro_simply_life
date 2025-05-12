@@ -1,10 +1,11 @@
+import BackgroundLayout from "@/layouts/background-layout";
 import { Text, View } from "react-native";
 
 
 export default function Organigramme() {
 	return (
-		<View>
+		<BackgroundLayout className="p-4">
 			<Text>Organigramme</Text>
-		</View>
+		</BackgroundLayout>
 	);
 }

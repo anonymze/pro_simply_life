@@ -4,6 +4,7 @@ import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { getMessagesQuery } from "@/api/queries/message-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
+import BackgroundLayout from "@/layouts/background-layout";
 import { FlatList } from "react-native-gesture-handler";
 import { PaginatedResponse } from "@/types/response";
 import { useMutation } from "@tanstack/react-query";
@@ -65,7 +66,7 @@ export default function Page() {
 			}, []);
 
 			return (
-				<React.Fragment>
+				<BackgroundLayout className="p-4">
 					<FlatList
 						showsVerticalScrollIndicator={false}
 						data={data.docs}
@@ -122,7 +123,7 @@ export default function Page() {
 							itemVisiblePercentThreshold: 75, // item is considered visible when 75% visible
 						}}
 					/>
-				</React.Fragment>
+				</BackgroundLayout>
 			);
 
 			// <LegendList

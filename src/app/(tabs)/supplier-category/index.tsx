@@ -98,7 +98,7 @@ export default function Page() {
 								>
 									<View className="mt-5 gap-4">
 										{filteredData.map((supplier) => (
-											<CardSearchSupplier supplier={supplier} />
+											<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
 										))}
 									</View>
 								</ScrollView>

@@ -358,7 +358,7 @@ const SendButton = React.memo(
 					opacity: loadingMessages ? 0.5 : opacity,
 					transform: [{ translateX }, { translateY }],
 				}}
-				className={cn("p-1.5 pr-0", Platform.OS === "android" && "mb-3")}
+				className={cn("p-1.5 pr-0 mb-3")}
 			>
 				<SendIcon size={20} color={config.theme.extend.colors.primaryLight} />
 			</AnimatedPressable>
