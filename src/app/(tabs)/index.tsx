@@ -37,7 +37,7 @@ export default function Page() {
 	);
 
 	return (
-		<SafeAreaView className="flex-1 bg-background">
+		<SafeAreaView className="flex-1 bg-background" edges={["top"]}>
 			<ScrollView
 				className="flex-1"
 				showsVerticalScrollIndicator={false}

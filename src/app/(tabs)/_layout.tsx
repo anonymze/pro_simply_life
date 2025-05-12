@@ -48,7 +48,7 @@ export default function AppLayout() {
 					options={{
 						title: "Valorem",
 						headerShown: true,
-						header: () => <HeaderLayout title="Organigramme" />,
+						header: () => <HeaderLayout title="Organigramme" backButton={false} />,
 						tabBarIcon: ({ color }) => <BriefcaseBusinessIcon color={color} size={20} />,
 					}}
 				/>

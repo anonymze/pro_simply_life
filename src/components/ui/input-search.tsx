@@ -53,7 +53,6 @@ const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClea
 					keyboardType="default"
 					textContentType="oneTimeCode"
 					autoCorrect={false}
-					placeholder={props.placeholder || "Rechercher..."}
 					onChangeText={(text) => {
 						setValue(text);
 						props.onChangeText?.(text);
@@ -73,7 +72,7 @@ const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClea
 					<AnimatedPressable
 						entering={FadeIn.duration(150)}
 						exiting={FadeOut.duration(150)}
-						className="bg-red-defaultGray/15 absolute right-2 h-full w-10 items-center justify-center rounded-full"
+						className="absolute right-2 h-full w-10 items-center justify-center rounded-full"
 						onPress={handleClear}
 					>
 						<CircleXIcon size={18} color={config.theme.extend.colors.defaultGray} />
@@ -87,7 +86,7 @@ const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClea
 					className="ml-2"
 					onPress={handleClear}
 				>
-					<Text className="my-4 text-sm text-primary">Annuler</Text>
+					<Text className="text-sm text-primary">Annuler</Text>
 				</AnimatedPressable>
 			)}
 		</View>

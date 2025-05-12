@@ -29,6 +29,8 @@ export default function Page() {
 
 	if (!data) return null;
 
+	console.log(data);
+
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
@@ -58,12 +60,12 @@ export default function Page() {
 						</TouchableOpacity>
 					)}
 				</View>
-				<View className="mt-2 flex-row flex-wrap items-center justify-center gap-2">
+				{/* <View className="mt-2 flex-row flex-wrap items-center justify-center gap-2">
 					{data.other_information?.theme?.split(",").map((tag) => {
 						if (!tag) return null;
 						return <Tag key={tag} title={tag.replace(/^\s+|\s+$/g, "")} />;
 					})}
-				</View>
+				</View> */}
 			</View>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
@@ -213,13 +215,13 @@ const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: s
 	);
 };
 
-const Tag = ({ title }: { title: string }) => {
-	return (
-		<View className="rounded-md bg-defaultGray/10 px-2 py-1.5">
-			<Text className="text-xs font-semibold text-defaultGray">{title}</Text>
-		</View>
-	);
-};
+// const Tag = ({ title }: { title: string }) => {
+// 	return (
+// 		<View className="rounded-md bg-defaultGray/10 px-2 py-1.5">
+// 			<Text className="text-xs font-semibold text-defaultGray">{title}</Text>
+// 		</View>
+// 	);
+// };
 
 const ContactInfo = ({
 	phone,
@@ -289,6 +291,8 @@ const ContactInfo = ({
 const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["other_information"] }) => {
 	return (
 		<View className="mt-4 w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+			<Text className="text-sm font-semibold text-defaultGray">Thématique</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.theme}</Text>
 			<Text className="text-sm font-semibold text-defaultGray">Remarque</Text>
 			<Text className="text-base font-semibold text-dark">{otherInformation.annotation}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
