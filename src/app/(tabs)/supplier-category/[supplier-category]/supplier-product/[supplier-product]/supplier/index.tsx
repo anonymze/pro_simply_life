@@ -57,7 +57,6 @@ export default function Page() {
 			>
 				<View className="gap-2">
 					{Object.keys(groupedSuppliers)
-						.sort()
 						.map((letter) => (
 							<View key={letter} className="gap-2">
 								<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
