@@ -49,7 +49,6 @@ export default function Page() {
 	);
 
 	const form = useForm({
-		// TODO: remove defaults
 		defaultValues: {
 			name: "",
 			description: "",
@@ -81,8 +80,8 @@ export default function Page() {
 								autoCapitalize="none"
 								keyboardType="default"
 								textContentType="oneTimeCode"
-								placeholder="Chat room"
-								className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400"
+								placeholder="Fournisseurs"
+								className="w-full rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>
@@ -103,8 +102,8 @@ export default function Page() {
 								returnKeyType="done"
 								autoCapitalize="none"
 								keyboardType="default"
-								placeholder="Informations sur les matchs"
-								className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400"
+								placeholder="Informations sur les fournisseurs"
+								className="w-full rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>

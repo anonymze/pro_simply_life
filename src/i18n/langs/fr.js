@@ -1,6 +1,6 @@
 export default {
-	INPUT_NAME_NEW_ROOM: "Votre nom de conversation :",
-	INPUT_DESCRIPTION_NEW_ROOM: "Votre description de conversation :",
+	INPUT_NAME_NEW_ROOM: "Nom de la conversation :",
+	INPUT_DESCRIPTION_NEW_ROOM: "Description de la conversation :",
 	INPUT_EMAIL_LOGIN: "Votre email de connexion :",
 	INPUT_PASSWORD_LOGIN: "Votre mot de passe :",
 	BUTTON_CREATE_ROOM: "Créer une conversation",
