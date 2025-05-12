@@ -47,7 +47,8 @@ export default function AppLayout() {
 					name="organigramme"
 					options={{
 						title: "Valorem",
-						headerShown: false,
+						headerShown: true,
+						header: () => <HeaderLayout title="Organigramme" />,
 						tabBarIcon: ({ color }) => <BriefcaseBusinessIcon color={color} size={20} />,
 					}}
 				/>
@@ -55,7 +56,6 @@ export default function AppLayout() {
 					name="supplier-category"
 					options={{
 						title: "Fournisseurs",
-						headerShown: false,
 						tabBarIcon: ({ color }) => <BookOpenIcon color={color} size={19} />,
 					}}
 				/>
@@ -70,7 +70,6 @@ export default function AppLayout() {
 					name="chat"
 					options={{
 						title: "Messages",
-						headerShown: false,
 						tabBarIcon: ({ color }) => <MessageCircleMoreIcon color={color} size={20} />,
 					}}
 				/>

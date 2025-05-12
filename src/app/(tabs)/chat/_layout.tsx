@@ -16,7 +16,7 @@ export default function ChatLayout() {
 			<Stack.Screen
 				name="index"
 				options={{
-					header: () => <HeaderLayout title="Conversations" sheet={{ link: "/chat/new-room" }} />,
+					header: () => <HeaderLayout backButton={false} title="Conversations" sheet={{ link: "/chat/new-room" }} />,
 				}}
 			/>
 			<Stack.Screen

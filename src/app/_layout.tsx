@@ -3,11 +3,11 @@ import "@/styles/app.css";
 
 import { onlineManager, QueryClientProvider, focusManager, useQueryClient } from "@tanstack/react-query";
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { Platform, AppState, AppStateStatus, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Platform, AppState, AppStateStatus } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";

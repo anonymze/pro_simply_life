@@ -1,9 +1,9 @@
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { cn } from "@/utils/libs/tailwind";
 
 
-export default function BackgroundLayout({ children, className }: { children: React.ReactNode; className?: string }) {
-	return <View className={cn("flex-1 bg-background", className)}>{children}</View>;
+export default function BackgroundLayout({ children, style, className }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; className?: string }) {
+	return <View className={cn("flex-1 bg-background", className)} style={style}>{children}</View>;
 }
 
 // used for components that need native style

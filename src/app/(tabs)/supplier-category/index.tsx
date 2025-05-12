@@ -1,9 +1,9 @@
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import CardSupplierCategory from "@/components/card/card-supplier-category";
 import CardSupplierProduct from "@/components/card/card-supplier-product";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { Supplier, SupplierCategory } from "@/types/supplier";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import CardSupplier from "@/components/card/card-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -23,6 +23,7 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [search, setSearch] = React.useState("");
+			const { top } = useSafeAreaInsets();
 
 			// flatten all suppliers from all categories
 			const allSuppliers = React.useMemo(() => {
@@ -50,8 +51,7 @@ export default function Page() {
 			}, [allSuppliers, search]);
 
 			return (
-				<SafeAreaView className="flex-1 bg-background">
-					<BackgroundLayout className="p-4">
+				<BackgroundLayout className="p-4" style={{ paddingTop: top }}>
 						<Title title="Répertoire des fournisseurs" />
 						<InputSearch
 							placeholder="Rechercher un fournisseur..."
@@ -107,8 +107,7 @@ export default function Page() {
 								)}
 							</React.Fragment>
 						)}
-					</BackgroundLayout>
-				</SafeAreaView>
+				</BackgroundLayout>
 			);
 		},
 	)();
