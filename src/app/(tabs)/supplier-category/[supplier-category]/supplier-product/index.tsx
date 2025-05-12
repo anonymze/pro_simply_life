@@ -32,11 +32,12 @@ export default function Page() {
 	}, [data]);
 
 	return (
-		<BackgroundLayout className="p-4">
+		<BackgroundLayout className="px-4 pt-4">
 			<Title className="mb-2 mt-0" title={data.name} />
 			<Text className="mb-5 text-xs text-defaultGray">{description}</Text>
 			{/* <InputSearch onSubmitEditing={() => {}} /> */}
 			<ScrollView
+				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 			>

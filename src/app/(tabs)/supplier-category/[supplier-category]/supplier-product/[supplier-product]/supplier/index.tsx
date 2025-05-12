@@ -47,45 +47,45 @@ export default function Page() {
 	);
 
 	return (
-		<BackgroundLayout className="p-4">
+		<BackgroundLayout className="px-4 pt-4">
 			<Title className="mb-2 mt-0" title={data.name} />
 			<Text className="mb-5 text-xs text-defaultGray">Liste des fournisseurs</Text>
 			{/* <InputSearch onSubmitEditing={() => {}} /> */}
 			<ScrollView
+				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 			>
 				<View className="gap-2">
-					{Object.keys(groupedSuppliers)
-						.map((letter) => (
-							<View key={letter} className="gap-2">
-								<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
-								{groupedSuppliers[letter].map((supplier) => (
-									<CardSupplier
-										icon={
-											<ImagePlaceholder
-												transition={300}
-												contentFit="contain"
-												source={supplier.logo_mini?.url}
-												style={{ width: 26, height: 26, borderRadius: 4 }}
-											/>
-										}
-										key={supplier.id}
-										supplier={supplier}
-										link={{
-											pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
-											params: {
-												"supplier-category": supplierCategoryId,
-												"supplier-category-name": supplierCategoryName,
-												"supplier-product": supplierProductId,
-												"supplier-product-name": supplierProductName,
-												supplier: supplier.id,
-											},
-										}}
-									/>
-								))}
-							</View>
-						))}
+					{Object.keys(groupedSuppliers).map((letter) => (
+						<View key={letter} className="gap-2">
+							<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
+							{groupedSuppliers[letter].map((supplier) => (
+								<CardSupplier
+									icon={
+										<ImagePlaceholder
+											transition={300}
+											contentFit="contain"
+											source={supplier.logo_mini?.url}
+											style={{ width: 26, height: 26, borderRadius: 4 }}
+										/>
+									}
+									key={supplier.id}
+									supplier={supplier}
+									link={{
+										pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
+										params: {
+											"supplier-category": supplierCategoryId,
+											"supplier-category-name": supplierCategoryName,
+											"supplier-product": supplierProductId,
+											"supplier-product-name": supplierProductName,
+											supplier: supplier.id,
+										},
+									}}
+								/>
+							))}
+						</View>
+					))}
 				</View>
 			</ScrollView>
 		</BackgroundLayout>

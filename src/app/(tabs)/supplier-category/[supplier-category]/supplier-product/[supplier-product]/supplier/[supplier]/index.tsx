@@ -29,8 +29,6 @@ export default function Page() {
 
 	if (!data) return null;
 
-	console.log(data);
-
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
