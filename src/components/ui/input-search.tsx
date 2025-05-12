@@ -14,17 +14,19 @@ const AnimatedView = Animated.createAnimatedComponent(View);
 
 interface InputSearchProps extends TextInputProps {
 	onClear?: () => void;
+	clearable?: boolean;
 }
 
 export type InputSearchRef = {
 	clear: () => void;
 };
 
-const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClear, ...props }, ref) => {
+const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClear, clearable = true, ...props }, ref) => {
 	const inputRef = React.useRef<TextInput>(null);
 	const [value, setValue] = React.useState("");
 
 	const inputAnimatedStyle = useAnimatedStyle(() => {
+		if (!clearable) return { width: "100%" };
 		return {
 			width: withSpring(value.length > 0 ? widthTextInputAnimated : widthTextInput, {
 				damping: 23,
@@ -53,12 +55,13 @@ const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClea
 					keyboardType="default"
 					textContentType="oneTimeCode"
 					autoCorrect={false}
+					placeholder={props.placeholder ?? "Rechercher..."}
 					onChangeText={(text) => {
 						setValue(text);
 						props.onChangeText?.(text);
 					}}
 					className={cn(
-						"w-full rounded-xl bg-defaultGray/15 py-5 pl-12 text-dark placeholder:text-defaultGray",
+						"flex-grow rounded-xl bg-defaultGray/15 py-5 pl-12 text-dark placeholder:text-defaultGray",
 						props.className,
 					)}
 					{...props}
@@ -79,7 +82,7 @@ const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClea
 					</AnimatedPressable>
 				)}
 			</AnimatedView>
-			{value.length > 0 && (
+			{clearable && value.length > 0 && (
 				<AnimatedPressable
 					entering={FadeIn.duration(150)}
 					exiting={FadeOut.duration(150)}

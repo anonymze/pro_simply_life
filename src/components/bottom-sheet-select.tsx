@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
 		justifyContent: "space-around",
 		alignItems: "center",
 		backgroundColor: "#fff",
-		height: Platform.OS === "android" ? 55 : 70,
-		paddingBottom: Platform.OS === "android" ? 0 : 15,
+		height: Platform.OS === "android" ? 55 : 60,
+		paddingBottom: Platform.OS === "android" ? 0 : 0,
 	},
 	textBottomSheet: {
 		color: config.theme.extend.colors.primary,

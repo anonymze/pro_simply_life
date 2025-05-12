@@ -37,7 +37,7 @@ export default function Page() {
 	);
 
 	return (
-		<SafeAreaView className="flex-1 bg-background" edges={["top"]}>
+		<SafeAreaView className="flex-1 bg-background" edges={["top", "right", "left"]}>
 			<ScrollView
 				className="flex-1"
 				showsVerticalScrollIndicator={false}
@@ -128,18 +128,18 @@ export default function Page() {
 							description="Newsletter hebdomadaire de Fundesys"
 							link={"/"}
 						/>
-						<CardLink
+						{/* <CardLink
 							icon={<BriefcaseBusinessIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
 							title="Valorem"
 							description="Organigramme du groupe Valorem"
 							link={"/"}
-						/>
-						<CardLink
+						/> */}
+						{/* <CardLink
 							icon={<BookOpen size={20} color={config.theme.extend.colors.secondaryDark} />}
 							title="Fournisseurs"
 							description="Répertoire d'informations des fournisseurs"
-							link={"/"}
-						/>
+							link={"/supplier-category"}
+						/> */}
 						<CardLink
 							icon={<BuildingIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
 							title="Bureaux"

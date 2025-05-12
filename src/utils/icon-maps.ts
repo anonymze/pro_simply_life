@@ -13,7 +13,7 @@ export const iconIos: {
 } = {
 	Hotel: "cup.and.saucer.fill",
 	Restaurant: "fork.knife",
-	Avocat: "bubble.middle.bottom",
+	Avocat: "scalemass.fill",
 	Agence: "building.2",
 };
 

@@ -6,14 +6,16 @@ import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
 import { getAndroidIcon, iconIos, tintIos } from "@/utils/icon-maps";
 import { BottomSheetSelect } from "@/components/bottom-sheet-select";
 import { getContactsQuery } from "@/api/queries/contact-queries";
+import { SafeAreaView } from "react-native-safe-area-context";
 import InputSearch from "@/components/ui/input-search";
 import { useQueries } from "@tanstack/react-query";
 import { ContactCategory } from "@/types/contact";
 import { AppleMaps, GoogleMaps } from "expo-maps";
-import { FontAwesome } from "@expo/vector-icons";
+import { SearchIcon } from "lucide-react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import * as WebBrowser from "expo-web-browser";
 import config from "tailwind.config";
+import { cn } from "@/utils/cn";
 import React from "react";
 
 
@@ -73,14 +75,23 @@ export default function Page() {
 	}
 
 	return (
-		<BackgroundLayout>
+		<SafeAreaView className="flex-1 bg-white" edges={["top", "right", "left"]}>
 			<View className="flex-row items-center gap-4 bg-white p-4">
-				<View className="basis-8/12">
-					<InputSearch className="py-4" onSubmitEditing={() => {}} />
+				<View className="flex-1 flex-row items-center">
+					<InputSearch
+						clearable={false}
+						placeholder="Rechercher contact..."
+						onSubmitEditing={(e) => {
+							setInput(e.nativeEvent.text);
+						}}
+						onClear={() => {
+							setInput("");
+						}}
+					/>
 				</View>
 				<Pressable
 					disabled={queries[0].isLoading || queries[1].isLoading}
-					className="grow rounded-xl bg-black/85 p-4 disabled:opacity-80"
+					className="rounded-xl bg-primary p-5 disabled:opacity-80"
 					onPress={() => {
 						bottomSheetRef.current?.expand();
 					}}
@@ -104,7 +115,7 @@ export default function Page() {
 						}}
 						markers={filteredContacts.map((contact) => ({
 							coordinates: { latitude: parseFloat(contact.latitude), longitude: parseFloat(contact.longitude) },
-							title: "test",
+							title: contact.name,
 							tintColor: tintIos[contact.category.name as keyof typeof tintIos] ?? "gray",
 							systemImage: iconIos[contact.category.name as keyof typeof iconIos] ?? "questionmark.square.fill",
 							id: contact.website ? contact.website : contact.phone ? contact.phone : "_" + contact.id,
@@ -178,6 +189,6 @@ export default function Page() {
 					setSelectedCategories(item as ContactCategory[]);
 				}}
 			/>
-		</BackgroundLayout>
+		</SafeAreaView>
 	);
 }
