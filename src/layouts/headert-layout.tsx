@@ -1,4 +1,5 @@
 import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TouchableOpacity, View } from "react-native";
 import { Link, LinkProps, router } from "expo-router";
 import { SimpleLineIcons } from "@expo/vector-icons";
@@ -16,8 +17,9 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 }
 
 export default function HeaderLayout({ title, sheet, backgroundColor }: HeaderLayoutProps) {
+	const { top } = useSafeAreaInsets();
 	return (
-		<View className={cn("flex-row items-center justify-between bg-background p-2", backgroundColor)}>
+		<View className={cn("flex-row items-center justify-between bg-background p-2", backgroundColor)} style={{ paddingTop: top }}>
 			<Link className="p-2 w-24" dismissTo href="../" asChild>
 				<TouchableOpacity className="flex-row items-center gap-3">
 					<ArrowLeftIcon size={20} color={config.theme.extend.colors.primary} />

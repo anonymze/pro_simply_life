@@ -3,6 +3,7 @@ import CardSupplierCategory from "@/components/card/card-supplier-category";
 import CardSupplierProduct from "@/components/card/card-supplier-product";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { Supplier, SupplierCategory } from "@/types/supplier";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import CardSupplier from "@/components/card/card-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -49,72 +50,78 @@ export default function Page() {
 			}, [allSuppliers, search]);
 
 			return (
-				<BackgroundLayout className="p-4">
-					<Title title="Répertoire des fournisseurs" />
-					<InputSearch
-						placeholder="Rechercher un fournisseur..."
-						onSubmitEditing={(input) => {
-							setSearch(input.nativeEvent.text);
-						}}
-						onClear={() => {
-							setSearch("");
-						}}
-					/>
+				<SafeAreaView className="flex-1 bg-background">
+					<BackgroundLayout className="p-4">
+						<Title title="Répertoire des fournisseurs" />
+						<InputSearch
+							placeholder="Rechercher un fournisseur..."
+							onSubmitEditing={(input) => {
+								setSearch(input.nativeEvent.text);
+							}}
+							onClear={() => {
+								setSearch("");
+							}}
+						/>
 
-					{search.length < 3 ? (
-						<ScrollView
-							showsVerticalScrollIndicator={false}
-							style={{ backgroundColor: config.theme.extend.colors.background }}
-						>
-							<View className="mt-5 gap-2">
-								{data?.docs?.map((supplierCategory) => (
-									<CardSupplierCategory
-										key={supplierCategory.id}
-										supplierCategory={supplierCategory}
-										icon={
-											<ImagePlaceholder source={supplierCategory.logo?.url ?? ""} style={{ width: 22, height: 22 }} />
-										}
-										link={{
-											pathname: `/supplier-category/[supplier-category]/supplier-product`,
-											params: {
-												"supplier-category": supplierCategory.id,
-												"supplier-category-name": supplierCategory.name,
-											},
-										}}
-									/>
-								))}
-							</View>
-						</ScrollView>
-					) : (
-						<React.Fragment>
-							{!filteredData?.length ? (
-								<View className="flex-1 items-center justify-center">
-									<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
+						{search.length < 3 ? (
+							<ScrollView
+								showsVerticalScrollIndicator={false}
+								style={{ backgroundColor: config.theme.extend.colors.background }}
+							>
+								<View className="mt-5 gap-2">
+									{data?.docs?.map((supplierCategory) => (
+										<CardSupplierCategory
+											key={supplierCategory.id}
+											supplierCategory={supplierCategory}
+											icon={
+												<ImagePlaceholder source={supplierCategory.logo?.url ?? ""} style={{ width: 22, height: 22 }} />
+											}
+											link={{
+												pathname: `/supplier-category/[supplier-category]/supplier-product`,
+												params: {
+													"supplier-category": supplierCategory.id,
+													"supplier-category-name": supplierCategory.name,
+												},
+											}}
+										/>
+									))}
 								</View>
-							) : (
-								<ScrollView
-									showsVerticalScrollIndicator={false}
-									style={{ backgroundColor: config.theme.extend.colors.background }}
-								>
-									<View className="mt-5 gap-5">
-										{filteredData.map((supplier) => (
-											<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
-										))}
+							</ScrollView>
+						) : (
+							<React.Fragment>
+								{!filteredData?.length ? (
+									<View className="flex-1 items-center justify-center">
+										<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
 									</View>
-								</ScrollView>
-							)}
-						</React.Fragment>
-					)}
-				</BackgroundLayout>
+								) : (
+									<ScrollView
+										showsVerticalScrollIndicator={false}
+										style={{ backgroundColor: config.theme.extend.colors.background }}
+									>
+										<View className="mt-5 gap-5">
+											{filteredData.map((supplier) => (
+												<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
+											))}
+										</View>
+									</ScrollView>
+								)}
+							</React.Fragment>
+						)}
+					</BackgroundLayout>
+				</SafeAreaView>
 			);
 		},
 	)();
 }
 
-const CardSearchSupplier = ({ supplier }: { supplier: Supplier & { productName: string; productId: string, categoryName: string } }) => {
+const CardSearchSupplier = ({
+	supplier,
+}: {
+	supplier: Supplier & { productName: string; productId: string; categoryName: string };
+}) => {
 	return (
 		<View>
-			<Text className="text-md font-semibold text-defaultGray mb-3">{supplier.productName}</Text>
+			<Text className="text-md mb-3 font-semibold text-defaultGray">{supplier.productName}</Text>
 			<CardSupplier
 				icon={
 					<ImagePlaceholder source={supplier.logo_mini?.url ?? ""} style={{ width: 26, height: 26, borderRadius: 4 }} />

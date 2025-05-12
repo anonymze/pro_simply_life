@@ -1,6 +1,7 @@
 import { BookOpen, BriefcaseBusinessIcon, BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, } from "lucide-react-native";
 import { Text, View, Dimensions, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
 import ProfileDashboard from "@/components/profile-dashboard";
+import { SafeAreaView } from "react-native-safe-area-context";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import { Link, useLocalSearchParams } from "expo-router";
@@ -36,134 +37,136 @@ export default function Page() {
 	);
 
 	return (
-		<ScrollView
-			className="flex-1"
-			showsVerticalScrollIndicator={false}
-			style={{ backgroundColor: config.theme.extend.colors.background }}
-		>
-			<BackgroundLayout className="p-4">
-				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
-				<Title title="Vie d'agence Valorem" />
-				<ScrollView
-					onScroll={handleScrollEnd}
-					horizontal
-					showsHorizontalScrollIndicator={false}
-					className="-mr-4"
-					decelerationRate={0.1}
-					snapToOffsets={[
-						0,
-						cardWidth + 16,
-						cardWidth * 2 + (16 * 2),
-						cardWidth * 3 + (16 * 3),
-						cardWidth * 4 + (16 * 4),
-						cardWidth * 5 + (16 * 5),
-					]}
-					contentContainerStyle={{ paddingRight: 24, gap: 16 }} // keep right padding for last card
-					scrollEventThrottle={200}
-				>
-					<CardEvent
-						date="2025-05-05"
-						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						type="Masterclass"
-						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						width={cardWidth}
-					/>
-					<CardEvent
-						date="2025-05-05"
-						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						type="Masterclass"
-						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						width={cardWidth}
-					/>
-					<CardEvent
-						date="2025-05-05"
-						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						type="Masterclass"
-						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						width={cardWidth}
-					/>
-					<CardEvent
-						date="2025-05-05"
-						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						type="Masterclass"
-						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						width={cardWidth}
-					/>
-					<CardEvent
-						date="2025-05-05"
-						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						type="Masterclass"
-						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						width={cardWidth}
-					/>
-					<CardEvent
-						date="2025-05-05"
-						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						type="Masterclass"
-						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						width={cardWidth}
-					/>
-				</ScrollView>
-				<View className="mt-4 flex-row items-center gap-2">
-					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 0 && "bg-dark")} />
-					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 1 && "bg-dark")} />
-					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 2 && "bg-dark")} />
-					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 3 && "bg-dark")} />
-					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 4 && "bg-dark")} />
-					<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 5 && "bg-dark")} />
-				</View>
-				<Link href="/" push asChild className="mt-2 py-2 pr-2">
-					<TouchableOpacity className=" flex-row items-center gap-2">
-						<Text className="text-sm text-defaultGray">Voir toutes les évènements à venir</Text>
-						<ArrowRight size={16} color={config.theme.extend.colors.defaultGray} />
-					</TouchableOpacity>
-				</Link>
-				<Title title="Fonctionnalités" />
-				<View className="gap-2">
-					<CardLink
-						icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-						title="Fundesys"
-						description="Newsletter hebdomadaire de Fundesys"
-						link={"/"}
-					/>
-					<CardLink
-						icon={<BriefcaseBusinessIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
-						title="Valorem"
-						description="Organigramme du groupe Valorem"
-						link={"/"}
-					/>
-					<CardLink
-						icon={<BookOpen size={20} color={config.theme.extend.colors.secondaryDark} />}
-						title="Fournisseurs"
-						description="Répertoire d'informations des fournisseurs"
-						link={"/"}
-					/>
-					<CardLink
-						icon={<BuildingIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
-						title="Bureaux"
-						description="Réservation de bureaux"
-						link={"/"}
-					/>
-					<CardLink
-						icon={<CalendarIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-						title="Évènements"
-						description="Dates à ne pas manquer"
-						link={"/"}
-					/>
-					<CardLink
-						icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-						title="Fidnet"
-						description="Newsletter hebdomadaire de Fidnet"
-						link={"/"}
-					/>
-					<CardLink
-						icon={<MapPinnedIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-						title="Contacts"
-						description="Carte des contacts utiles"
-						link={"/contact"}
-					/>
-				</View>
-			</BackgroundLayout>
-		</ScrollView>
+		<SafeAreaView className="flex-1 bg-background">
+			<ScrollView
+				className="flex-1"
+				showsVerticalScrollIndicator={false}
+				style={{ backgroundColor: config.theme.extend.colors.background }}
+			>
+				<BackgroundLayout className="p-4">
+					<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
+					<Title title="Vie d'agence Valorem" />
+					<ScrollView
+						onScroll={handleScrollEnd}
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						className="-mr-4"
+						decelerationRate={0.1}
+						snapToOffsets={[
+							0,
+							cardWidth + 16,
+							cardWidth * 2 + 16 * 2,
+							cardWidth * 3 + 16 * 3,
+							cardWidth * 4 + 16 * 4,
+							cardWidth * 5 + 16 * 5,
+						]}
+						contentContainerStyle={{ paddingRight: 24, gap: 16 }} // keep right padding for last card
+						scrollEventThrottle={200}
+					>
+						<CardEvent
+							date="2025-05-05"
+							title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							type="Masterclass"
+							description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							width={cardWidth}
+						/>
+						<CardEvent
+							date="2025-05-05"
+							title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							type="Masterclass"
+							description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							width={cardWidth}
+						/>
+						<CardEvent
+							date="2025-05-05"
+							title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							type="Masterclass"
+							description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							width={cardWidth}
+						/>
+						<CardEvent
+							date="2025-05-05"
+							title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							type="Masterclass"
+							description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							width={cardWidth}
+						/>
+						<CardEvent
+							date="2025-05-05"
+							title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							type="Masterclass"
+							description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							width={cardWidth}
+						/>
+						<CardEvent
+							date="2025-05-05"
+							title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							type="Masterclass"
+							description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
+							width={cardWidth}
+						/>
+					</ScrollView>
+					<View className="mt-4 flex-row items-center gap-2">
+						<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 0 && "bg-dark")} />
+						<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 1 && "bg-dark")} />
+						<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 2 && "bg-dark")} />
+						<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 3 && "bg-dark")} />
+						<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 4 && "bg-dark")} />
+						<View className={cn("size-1.5 rounded-full bg-defaultGray/30", currentIndex === 5 && "bg-dark")} />
+					</View>
+					<Link href="/" push asChild className="mt-2 py-2 pr-2">
+						<TouchableOpacity className=" flex-row items-center gap-2">
+							<Text className="text-sm text-defaultGray">Voir toutes les évènements à venir</Text>
+							<ArrowRight size={16} color={config.theme.extend.colors.defaultGray} />
+						</TouchableOpacity>
+					</Link>
+					<Title title="Fonctionnalités" />
+					<View className="gap-2">
+						<CardLink
+							icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+							title="Fundesys"
+							description="Newsletter hebdomadaire de Fundesys"
+							link={"/"}
+						/>
+						<CardLink
+							icon={<BriefcaseBusinessIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
+							title="Valorem"
+							description="Organigramme du groupe Valorem"
+							link={"/"}
+						/>
+						<CardLink
+							icon={<BookOpen size={20} color={config.theme.extend.colors.secondaryDark} />}
+							title="Fournisseurs"
+							description="Répertoire d'informations des fournisseurs"
+							link={"/"}
+						/>
+						<CardLink
+							icon={<BuildingIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
+							title="Bureaux"
+							description="Réservation de bureaux"
+							link={"/"}
+						/>
+						<CardLink
+							icon={<CalendarIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+							title="Évènements"
+							description="Dates à ne pas manquer"
+							link={"/"}
+						/>
+						<CardLink
+							icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+							title="Fidnet"
+							description="Newsletter hebdomadaire de Fidnet"
+							link={"/"}
+						/>
+						<CardLink
+							icon={<MapPinnedIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+							title="Contacts"
+							description="Carte des contacts utiles"
+							link={"/contact"}
+						/>
+					</View>
+				</BackgroundLayout>
+			</ScrollView>
+		</SafeAreaView>
 	);
 }

@@ -98,19 +98,17 @@ const Layout = () => {
 				<KeyboardProvider>
 					<StatusBar style="dark" translucent animated />
 					<SafeAreaProvider>
-						<SafeAreaView className="flex-1 bg-background" edges={["right", "left", "top"]}>
-							<Stack
-								screenOptions={{
-									headerShown: false,
-									animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
-									gestureEnabled: false,
-									fullScreenGestureEnabled: false,
-								}}
-							>
-								<Stack.Screen name="(tabs)"  />
-								<Stack.Screen name="login" />
-							</Stack>
-						</SafeAreaView>
+						<Stack
+							screenOptions={{
+								headerShown: false,
+								animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
+								gestureEnabled: false,
+								fullScreenGestureEnabled: false,
+							}}
+						>
+							<Stack.Screen name="(tabs)" />
+							<Stack.Screen name="login" />
+						</Stack>
 					</SafeAreaProvider>
 				</KeyboardProvider>
 			</BottomSheetModalProvider>
