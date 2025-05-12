@@ -51,8 +51,8 @@ export default function Page() {
 	const form = useForm({
 		// TODO: remove defaults
 		defaultValues: {
-			name: "Test",
-			description: "Test description",
+			name: "",
+			description: "",
 		},
 		validators: {
 			onSubmit: formSchema,
