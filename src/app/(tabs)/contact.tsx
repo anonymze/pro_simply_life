@@ -76,7 +76,7 @@ export default function Page() {
 		<BackgroundLayout>
 			<View className="flex-row items-center gap-4 bg-white p-4">
 				<View className="basis-8/12">
-					<InputSearch className="py-4" onSubmit={() => {}} />
+					<InputSearch className="py-4" onSubmitEditing={() => {}} />
 				</View>
 				<Pressable
 					disabled={queries[0].isLoading || queries[1].isLoading}

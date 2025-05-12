@@ -18,25 +18,25 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 export default function HeaderLayout({ title, sheet, backgroundColor }: HeaderLayoutProps) {
 	return (
 		<View className={cn("flex-row items-center justify-between bg-background p-2", backgroundColor)}>
-			<Link className="p-2" dismissTo href="../" asChild>
+			<Link className="p-2 w-24" dismissTo href="../" asChild>
 				<TouchableOpacity className="flex-row items-center gap-3">
-					<ArrowLeftIcon size={20} color={config.theme.extend.colors.dark} />
-					<Text className="text-sm font-semibold text-dark">Retour</Text>
+					<ArrowLeftIcon size={20} color={config.theme.extend.colors.primary} />
+					<Text className="text-sm font-semibold text-primary">Retour</Text>
 				</TouchableOpacity>
 			</Link>
 
 			<Text className="text-lg font-bold">{title}</Text>
 			{sheet ? (
 				<TouchableOpacity
-					className="p-2"
+					className="p-2 w-24 items-end"
 					onPress={() => {
 						router.push(sheet.link);
 					}}
 				>
-					<PlusCircleIcon size={24} color="#000" />
+					<PlusCircleIcon size={24} color={config.theme.extend.colors.primary} />
 				</TouchableOpacity>
 			) : (
-				<View className="p-5" />
+				<View className="w-10" />
 			)}
 		</View>
 	);

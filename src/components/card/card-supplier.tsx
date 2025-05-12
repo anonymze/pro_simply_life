@@ -1,14 +1,13 @@
-import { Supplier, SupplierCategory } from "@/types/supplier";
 import { Text, TouchableOpacity, View } from "react-native";
-import { HrefObject, Link, LinkProps } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
+import { HrefObject, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
+import { Supplier } from "@/types/supplier";
 import config from "tailwind.config";
-import { Image } from "expo-image";
 import React from "react";
 
 
-export default function CardSupplierCategory({
+export default function CardSupplier({
 	icon,
 	supplier,
 	link,

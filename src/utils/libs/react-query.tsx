@@ -4,6 +4,7 @@ import { PaginatedResponse } from "@/types/response";
 import config from "tailwind.config";
 import { View } from "react-native";
 
+
 // HOC pattern
 export function withQueryWrapper<T>(
 	query: {
@@ -24,7 +25,7 @@ export function withQueryWrapper<T>(
 		if (isError) {
 			return (
 				<View className="flex-1 items-center justify-center">
-					<Text>Error</Text>
+					<Text className="text-sm text-defaultGray">Erreur</Text>
 				</View>
 			);
 		}
@@ -42,7 +43,7 @@ export function withQueryWrapper<T>(
 		if (!data?.docs?.length) {
 			return (
 				<View className="flex-1 items-center justify-center">
-					<Text>No content available</Text>
+					<Text className="text-sm text-defaultGray">Pas de contenu</Text>
 				</View>
 			);
 		}

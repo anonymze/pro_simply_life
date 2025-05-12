@@ -1,4 +1,4 @@
-import { ArrowRight, Download, EyeIcon, FileIcon, KeyboardIcon, KeyIcon, KeyRoundIcon, MailIcon, PhoneIcon, } from "lucide-react-native";
+import { ArrowRight, ChevronRight, Download, EyeIcon, FileIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import { ActivityIndicator, Alert, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { HrefObject, Link, router, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
@@ -6,6 +6,7 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { downloadFile, getFile } from "@/utils/download";
 import { useQuery } from "@tanstack/react-query";
+import { Supplier } from "@/types/supplier";
 import type { Media } from "@/types/media";
 import config from "tailwind.config";
 import React from "react";
@@ -16,6 +17,8 @@ export default function Page() {
 		supplier: supplierId,
 		"supplier-product": supplierProductId,
 		"supplier-category": supplierCategoryId,
+		"supplier-category-name": supplierCategoryName,
+		"supplier-product-name": supplierProductName,
 	} = useLocalSearchParams();
 
 	const { data } = useQuery({
@@ -28,13 +31,39 @@ export default function Page() {
 
 	return (
 		<>
-			<View className="items-center rounded-2xl bg-white pb-4">
-				<ImagePlaceholder contentFit="contain" source={data.logo?.url} style={{ width: "100%", height: 60 }} />
-				<Text className="mt-4 text-xl font-bold">{data.name}</Text>
-				{/* <View className="mt-2 flex-row flex-wrap items-center gap-2">
-					<Tag title="Fournisseur" />
-					<Tag title="Fournisseur" />
-				</View> */}
+			<View className="items-center rounded-b-2xl bg-white pb-4">
+				<View className="mb-4 flex-row items-center gap-2">
+					<Text className="text-sm font-semibold text-primary ">
+						{supplierCategoryName}
+					</Text>
+					<ChevronRight size={14} color={config.theme.extend.colors.primary} />
+					<Text className="text-sm font-semibold text-primary">
+						{supplierProductName}
+					</Text>
+				</View>
+				<ImagePlaceholder
+					transition={300}
+					contentFit="contain"
+					source={data.logo_full?.url}
+					style={{ width: "95%", height: 60 }}
+				/>
+				<View className="mt-4 flex-row items-center gap-3">
+					<Text className="text-xl font-bold">{data.name}</Text>
+					{data.website && (
+						<TouchableOpacity
+							className="rounded-full bg-primaryUltraLight p-2.5"
+							onPress={() => Linking.openURL(data.website!)}
+						>
+							<LinkIcon size={14} color={config.theme.extend.colors.primary} />
+						</TouchableOpacity>
+					)}
+				</View>
+				<View className="mt-2 flex-row flex-wrap items-center justify-center gap-2">
+					{data.other_information?.theme?.split(",").map((tag) => {
+						if (!tag) return null;
+						return <Tag key={tag} title={tag.replace(/^\s+|\s+$/g, "")} />;
+					})}
+				</View>
 			</View>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
@@ -47,23 +76,10 @@ export default function Page() {
 						firstname={data.contact_info?.firstname}
 						lastname={data.contact_info?.lastname}
 					/>
-					{data.brochure && (
-						<Brochure
-							brochure={data.brochure}
-							updatedAt={data.updatedAt}
-							link={{
-								pathname:
-									"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
-								params: {
-									"supplier-category": supplierCategoryId,
-									"supplier-product": supplierProductId,
-									supplier: supplierId,
-									pdf: data.brochure?.filename,
-								},
-							}}
-						/>
+					{Object.values(data.other_information).some(Boolean) && (
+						<OtherInformation otherInformation={data.other_information} />
 					)}
-					{data.connexion && (
+					{(data.connexion?.email || data.connexion?.password) && (
 						<Logs
 							link={{
 								pathname:
@@ -216,26 +232,40 @@ const ContactInfo = ({
 	firstname?: string | null;
 	lastname?: string | null;
 }) => {
+	const numbers = phone?.split(",").map((number) => number.replace(/^\s+|\s+$/g, ""));
 	return (
 		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="text-sm font-semibold text-defaultGray">Contact</Text>
+			<Text className="text-sm font-semibold text-defaultGray">Prénom et Nom</Text>
 			<Text className="text-base font-semibold text-dark">
-				{firstname} {lastname}
+				{firstname} {lastname?.toUpperCase()}
 			</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
 					<Text className="text-sm font-semibold text-defaultGray">Téléphone</Text>
-					<Text className="text-base font-semibold text-dark">{phone}</Text>
+					{numbers?.map((number) => {
+						if (!number) return null;
+
+						return (
+							<Text key={number} className="text-base font-semibold text-dark">
+								{number}
+							</Text>
+						);
+					})}
 				</View>
-				{phone && (
-					<TouchableOpacity
-						onPress={() => Linking.openURL(`tel:${phone}`)}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						<PhoneIcon size={16} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
-				)}
+				{numbers?.map((number) => {
+					if (!number) return null;
+
+					return (
+						<TouchableOpacity
+							key={number}
+							onPress={() => Linking.openURL(`tel:${number}`)}
+							className="rounded-full bg-primaryUltraLight p-3"
+						>
+							<PhoneIcon size={16} color={config.theme.extend.colors.primary} />
+						</TouchableOpacity>
+					);
+				})}
 			</View>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
@@ -252,6 +282,46 @@ const ContactInfo = ({
 					</TouchableOpacity>
 				)}
 			</View>
+		</View>
+	);
+};
+
+const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["other_information"] }) => {
+	return (
+		<View className="mt-4 w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+			<Text className="text-sm font-semibold text-defaultGray">Remarque</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.annotation}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">Frais de souscription</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.subscription_fee}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">Durée</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.duration}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">Rentabilité</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.rentability}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">Rentabilité N1</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.rentability_n1}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">Commission</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.commission}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">Commission pour l'offre publique</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.commission_public_offer}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">Commission pour le groupe Valorem</Text>
+			<Text className="text-base font-semibold text-dark">{otherInformation.commission_offer_group_valorem}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="text-sm font-semibold text-defaultGray">SCPI</Text>
+			{otherInformation.scpi?.split(",").map((scpi) => {
+				if (!scpi) return null;
+				return (
+					<Text key={scpi} className="text-sm font-semibold text-dark">
+						{scpi.replace(/^\s+|\s+$/g, "")}
+					</Text>
+				);
+			})}
 		</View>
 	);
 };

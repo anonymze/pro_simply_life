@@ -1,6 +1,4 @@
-import { getSupplierCategoryQuery } from "@/api/queries/supplier-categories-queries";
 import { getSupplierProductQuery } from "@/api/queries/supplier-products-queries";
-import CardSupplierProduct from "@/components/card/card-supplier-product";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardSupplier from "@/components/card/card-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -15,7 +13,12 @@ import React from "react";
 
 
 export default function Page() {
-	const { "supplier-product": supplierProductId, "supplier-category": supplierCategoryId } = useLocalSearchParams();
+	const {
+		"supplier-product": supplierProductId,
+		"supplier-category": supplierCategoryId,
+		"supplier-category-name": supplierCategoryName,
+		"supplier-product-name": supplierProductName,
+	} = useLocalSearchParams();
 
 	const { data } = useQuery({
 		queryKey: ["supplier-product", supplierProductId],
@@ -46,8 +49,8 @@ export default function Page() {
 	return (
 		<BackgroundLayout className="p-4">
 			<Title className="mb-2 mt-0" title={data.name} />
-			<Text className="mb-7 text-xs text-defaultGray">Liste des fournisseurs</Text>
-			<InputSearch onSubmit={() => {}} />
+			<Text className="mb-5 text-xs text-defaultGray">Liste des fournisseurs</Text>
+			{/* <InputSearch onSubmitEditing={() => {}} /> */}
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
@@ -60,14 +63,23 @@ export default function Page() {
 								<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
 								{groupedSuppliers[letter].map((supplier) => (
 									<CardSupplier
-										icon={<ImagePlaceholder source={supplier.logo?.url} style={{ width: 22, height: 22 }} />}
+										icon={
+											<ImagePlaceholder
+												transition={300}
+												contentFit="contain"
+												source={supplier.logo_mini?.url}
+												style={{ width: 26, height: 26, borderRadius: 4 }}
+											/>
+										}
 										key={supplier.id}
 										supplier={supplier}
 										link={{
 											pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
 											params: {
 												"supplier-category": supplierCategoryId,
+												"supplier-category-name": supplierCategoryName,
 												"supplier-product": supplierProductId,
+												"supplier-product-name": supplierProductName,
 												supplier: supplier.id,
 											},
 										}}

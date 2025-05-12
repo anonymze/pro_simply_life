@@ -4,20 +4,23 @@ import { Media } from "./media";
 export interface Supplier {
 	id: string;
 	name: string;
-	logo?: Media | null;
+	website?: string | null;
+	logo_mini?: Media | null;
+	logo_full?: Media | null;
 	brochure?: Media | null;
-	contact_info?: {
+	contact_info: {
 		lastname?: string | null;
 		firstname?: string | null;
 		email?: string | null;
 		phone?: string | null;
 	};
-	connexion?: {
+	connexion: {
 		email?: string | null;
 		password?: string | null;
 	};
-	other_information?: {
+	other_information: {
 		theme?: string | null;
+		annotation?: string | null;
 		subscription_fee?: string | null;
 		duration?: string | null;
 		rentability?: string | null;

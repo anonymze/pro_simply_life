@@ -233,104 +233,97 @@ export default function Page() {
 	}, [form]);
 
 	return (
-		<SafeAreaView className="flex-1 bg-background" edges={["bottom"]}>
-			<Title title={title} />
-			<BackgroundLayout className="px-6">
-				{/* <View className={cn("absolute left-4 top-4 size-4 bg-red-500", websocketConnected && "bg-green-500")} /> */}
-				<Animated.View className="flex-1" style={animatedStyle}>
-					<View className="flex-1">
-						{!!messages?.length ? (
-							<FlashList
-								contentContainerStyle={{}}
-								// ListEmptyComponent={() => {
-								// 	return (
-								// 		<View className="flex-1 items-center justify-center">
-								// 			<Text className="text-gray-500">Pas de message</Text>
-								// 		</View>
-								// 	);
-								// }}
-								// drawDistance={300}
-								keyExtractor={(item) => item.id}
-								showsVerticalScrollIndicator={false}
-								data={messages}
-								inverted={true}
-								estimatedItemSize={50}
-								renderItem={({ item, index }) => {
-									const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
-									const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
-									return (
-										<Item
-											key={item.id}
-											languageCode={languageCode}
-											stateMessage={{
-												lastMessageUser,
-												newMessageUser,
-											}}
-											firstMessage={index === 0 ? true : false}
-											item={item}
-											appUser={appUser}
-										/>
-									);
-								}}
-								// don't invert on empty list
-								// inverted={true}
+		<BackgroundLayout className="px-6">
+			<TitleHeader title={title} />
+			{/* <View className={cn("absolute left-4 top-4 size-4 bg-red-500", websocketConnected && "bg-green-500")} /> */}
+			<Animated.View className="flex-1" style={animatedStyle}>
+				<View className="flex-1">
+					{!!messages?.length ? (
+						<FlashList
+							contentContainerStyle={{}}
+							// ListEmptyComponent={() => {
+							// 	return (
+							// 		<View className="flex-1 items-center justify-center">
+							// 			<Text className="text-gray-500">Pas de message</Text>
+							// 		</View>
+							// 	);
+							// }}
+							// drawDistance={300}
+							keyExtractor={(item) => item.id}
+							showsVerticalScrollIndicator={false}
+							data={messages}
+							inverted={true}
+							estimatedItemSize={50}
+							renderItem={({ item, index }) => {
+								const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
+								const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
+								return (
+									<Item
+										key={item.id}
+										languageCode={languageCode}
+										stateMessage={{
+											lastMessageUser,
+											newMessageUser,
+										}}
+										firstMessage={index === 0 ? true : false}
+										item={item}
+										appUser={appUser}
+									/>
+								);
+							}}
+							// don't invert on empty list
+							// inverted={true}
 
-								// disableRecycling={true}
-								onEndReached={() => {
-									// add more messages when on end scroll
-									if (!!messages.length && messages.length >= maxMessages) {
-										setMaxMessages((props) => props + 20);
-									}
-								}}
-								onEndReachedThreshold={0.1}
-							/>
-						) : (
-							<View className="flex-1 items-center justify-center">
-								{loadingMessages ? (
-									<Text className="text-gray-500">Chargement...</Text>
-								) : (
-									<Text className="text-gray-500">Pas de message</Text>
-								)}
-							</View>
-						)}
-
-						<View className="flex-row items-center gap-0.5">
-							<View
-								className={cn(
-									"flex-shrink flex-row items-center rounded-2xl border border-gray-300",
-									Platform.OS === "android" && "mb-3",
-								)}
-							>
-								<form.Field name="message">
-									{(field) => (
-										<TextInput
-											placeholderTextColor={config.theme.extend.colors.lightGray}
-											returnKeyType="default"
-											autoCapitalize="none"
-											keyboardType="default"
-											submitBehavior="newline"
-											multiline={true}
-											placeholder={`${i18n[languageCode]("MESSAGE")}...`}
-											className="flex-1 p-3 pr-0"
-											onChangeText={field.handleChange}
-											defaultValue={field.state.value}
-										/>
-									)}
-								</form.Field>
-								<Actions pickImage={pickImage} />
-							</View>
-							<SendButton
-								handleSubmit={handleSubmit}
-								loadingMessages={loadingMessages}
-								opacity={opacity}
-								translateX={translateX}
-								translateY={translateY}
-							/>
+							// disableRecycling={true}
+							onEndReached={() => {
+								// add more messages when on end scroll
+								if (!!messages.length && messages.length >= maxMessages) {
+									setMaxMessages((props) => props + 20);
+								}
+							}}
+							onEndReachedThreshold={0.1}
+						/>
+					) : (
+						<View className="flex-1 items-center justify-center">
+							{loadingMessages ? (
+								<Text className="text-sm text-defaultGray">Chargement...</Text>
+							) : (
+								<Text className="text-sm text-defaultGray">Pas de message</Text>
+							)}
 						</View>
+					)}
+
+					<View className="flex-row items-center gap-0.5">
+						<View className={cn("mb-3 flex-shrink flex-row items-center rounded-xl border border-lightGray")}>
+							<form.Field name="message">
+								{(field) => (
+									<TextInput
+										placeholderTextColor={config.theme.extend.colors.lightGray}
+										returnKeyType="default"
+										autoCapitalize="none"
+										keyboardType="default"
+										submitBehavior="newline"
+										multiline={true}
+										placeholder={`${i18n[languageCode]("MESSAGE")}...`}
+										className="flex-1 p-3 pr-0"
+										onChangeText={field.handleChange}
+										defaultValue={field.state.value}
+									/>
+								)}
+							</form.Field>
+							<Actions pickImage={pickImage} />
+						</View>
+						<SendButton
+							handleSubmit={handleSubmit}
+							loadingMessages={loadingMessages}
+							opacity={opacity}
+							translateX={translateX}
+							translateY={translateY}
+						/>
 					</View>
-				</Animated.View>
-			</BackgroundLayout>
-		</SafeAreaView>
+				</View>
+			</Animated.View>
+		</BackgroundLayout>
 	);
 }
 
@@ -391,6 +384,6 @@ const Actions = React.memo(({ pickImage }: { pickImage: () => void }) => {
 	);
 });
 
-const Title = React.memo(({ title }: { title: string | undefined }) => {
+const TitleHeader = React.memo(({ title }: { title: string | undefined }) => {
 	return <Stack.Screen options={{ title }} />;
 });

@@ -8,10 +8,12 @@ import { useMutation } from "@tanstack/react-query";
 import { getStorageUserInfos } from "@/utils/store";
 import { useForm } from "@tanstack/react-form";
 import { queryClient } from "@/api/_queries";
+import Title from "@/components/ui/title";
 import { ChatRoom } from "@/types/chat";
 import { router } from "expo-router";
 import React from "react";
 import { z } from "zod";
+
 
 export default function Page() {
 	const appUser = React.useMemo(() => getStorageUserInfos(), []);
@@ -67,7 +69,8 @@ export default function Page() {
 	});
 
 	return (
-		<BackgroundLayout className="p-6">
+		<BackgroundLayout className="p-4">
+			<Title title="Nouvelle conversation" className="mt-3" />
 			<View className="w-full gap-3">
 				<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_NAME_NEW_ROOM")}</Text>
 				<form.Field name="name">

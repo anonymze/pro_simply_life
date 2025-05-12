@@ -12,7 +12,7 @@ import React from "react";
 
 
 export default function Page() {
-	const { "supplier-category": supplierCategoryId } = useLocalSearchParams();
+	const { "supplier-category": supplierCategoryId, "supplier-category-name": supplierCategoryName } = useLocalSearchParams();
 
 	const { data } = useQuery({
 		queryKey: ["supplier-category", supplierCategoryId],
@@ -34,8 +34,8 @@ export default function Page() {
 	return (
 		<BackgroundLayout className="p-4">
 			<Title className="mb-2 mt-0" title={data.name} />
-			<Text className="mb-7 text-xs text-defaultGray">{description}</Text>
-			<InputSearch onSubmit={() => {}} />
+			<Text className="mb-5 text-xs text-defaultGray">{description}</Text>
+			{/* <InputSearch onSubmitEditing={() => {}} /> */}
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
@@ -49,7 +49,9 @@ export default function Page() {
 								pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
 								params: {
 									"supplier-category": supplierCategoryId,
+									"supplier-category-name": supplierCategoryName,
 									"supplier-product": supplierProduct.id,
+									"supplier-product-name": supplierProduct.name,
 								},
 							}}
 						/>
