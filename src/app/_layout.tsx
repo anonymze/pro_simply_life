@@ -17,6 +17,7 @@ import { StatusBar } from "expo-status-bar";
 import * as Network from "expo-network";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
+import { Image } from "expo-image";
 import React from "react";
 
 
@@ -86,6 +87,7 @@ const Layout = () => {
 	// refetch on app focus
 	React.useEffect(() => {
 		prefetchSomeData();
+		// Image.prefetch(require("@/assets/images/icon.png")).catch(() => {});
 		const subscription = AppState.addEventListener("change", onAppStateChange);
 		return () => subscription.remove();
 	}, []);
