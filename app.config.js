@@ -72,9 +72,21 @@ export default {
 			],
 		},
 		plugins: [
-			"expo-font",
 			"expo-localization",
 			"expo-router",
+			[
+				"expo-font",
+				{
+					fonts: [
+						"./src/assets/fonts/DMSans18pt-Regular.ttf",
+						"./src/assets/fonts/DMSans18pt-Bold.ttf",
+						"./src/assets/fonts/DMSans18pt-Italic.ttf",
+						"./src/assets/fonts/DMSans18pt-Light.ttf",
+						"./src/assets/fonts/DMSans18pt-Medium.ttf",
+						"./src/assets/fonts/DMSans18pt-SemiBold.ttf",
+					],
+				},
+			],
 			[
 				"expo-web-browser",
 				{

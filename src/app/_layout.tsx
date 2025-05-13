@@ -9,15 +9,15 @@ import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Platform, AppState, AppStateStatus } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { getLoadedFonts, useFonts } from "expo-font";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
 import * as Sentry from "@sentry/react-native";
 import { queryClient } from "@/api/_queries";
 import { StatusBar } from "expo-status-bar";
 import * as Network from "expo-network";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { Image } from "expo-image";
+// import { Image } from "expo-image";
 import React from "react";
 
 
@@ -36,11 +36,12 @@ Sentry.init({
 
 // here we set if we should show the alert of push notifications even if the app is running
 Notifications.setNotificationHandler({
-	handleNotification: async () => ({
-		shouldShowAlert: true,
-		shouldPlaySound: false,
-		shouldSetBadge: false,
-	}),
+  handleNotification: async () => ({
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
 });
 
 // keep the splash screen visible while we fetch resources
@@ -74,26 +75,16 @@ export default Sentry.wrap(function RootLayout() {
 });
 
 const Layout = () => {
-	const [loaded] = useFonts({
-		// AtkinsonRegular: require("@/assets/fonts/atkinson/Atkinson-Hyperlegible-Regular-102a.woff2"),
-		// AtkinsonBold: require("@/assets/fonts/atkinson/Atkinson-Hyperlegible-Bold-102a.woff2"),
-		// AtkinsonItalic: require("@/assets/fonts/atkinson/Atkinson-Hyperlegible-Italic-102a.woff2"),
-	});
-
-	React.useEffect(() => {
-		if (loaded) SplashScreen.hideAsync();
-	}, [loaded]);
 
 	// refetch on app focus
 	React.useEffect(() => {
 		prefetchSomeData();
 		// Image.prefetch(require("@/assets/images/icon.png")).catch(() => {});
 		const subscription = AppState.addEventListener("change", onAppStateChange);
+		SplashScreen.hideAsync();
 		return () => subscription.remove();
 	}, []);
-
-	if (!loaded) return null;
-
+ 
 	return (
 		<GestureHandlerRootView>
 			<BottomSheetModalProvider>
@@ -119,6 +110,7 @@ const Layout = () => {
 };
 
 const prefetchSomeData = async () => {
+	console.log(getLoadedFonts());
 	queryClient.prefetchQuery({
 		queryKey: ["chat-rooms"],
 		queryFn: getChatRoomsQuery,

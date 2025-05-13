@@ -65,6 +65,15 @@
     </array>
     <key>RCTRootViewBackgroundColor</key>
     <integer>4294967295</integer>
+    <key>UIAppFonts</key>
+    <array>
+      <string>DMSans18pt-Regular.ttf</string>
+      <string>DMSans18pt-Bold.ttf</string>
+      <string>DMSans18pt-Italic.ttf</string>
+      <string>DMSans18pt-Light.ttf</string>
+      <string>DMSans18pt-Medium.ttf</string>
+      <string>DMSans18pt-SemiBold.ttf</string>
+    </array>
     <key>UIBackgroundModes</key>
     <array>
       <string>audio</string>

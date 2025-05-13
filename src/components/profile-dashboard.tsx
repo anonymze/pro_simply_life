@@ -20,15 +20,15 @@ export default function ProfileDashboard({
 				{photo ? (
 					<Image source={photo.url} placeholder={require("@/assets/icons/placeholder_user.svg")} />
 				) : (
-					<View className="size-10 items-center justify-center rounded-full bg-secondary">
-						<Text className="text-xs uppercase tracking-[-1px] text-white">
+					<View className="size-12 items-center justify-center rounded-full bg-secondary">
+						<Text className="text-sm uppercase tracking-[-1px] text-white">
 							{firstname.charAt(0)} {lastname.charAt(0)}
 						</Text>
 					</View>
 				)}
 				<View>
-					<Text className="text-xs text-defaultGray">Bonjour,</Text>
-					<Text className="text-dark text-sm font-semibold">
+					<Text className="text-sm text-defaultGray">Bonjour,</Text>
+					<Text className="text-dark text-base font-semibold">
 						{firstname} {lastname}
 					</Text>
 				</View>

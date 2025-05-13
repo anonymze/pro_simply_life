@@ -62,6 +62,7 @@ const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(({ onClea
 					}}
 					className={cn(
 						"flex-grow rounded-xl bg-defaultGray/15 py-5 pl-12 text-dark placeholder:text-defaultGray/75",
+						!clearable && "py-4",
 						props.className,
 					)}
 					{...props}

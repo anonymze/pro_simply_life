@@ -1,5 +1,7 @@
-import { BookOpen, BriefcaseBusinessIcon, BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, } from "lucide-react-native";
-import { Text, View, Dimensions, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
+import { Text, View, Dimensions, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent, useWindowDimensions, } from "react-native";
+import { BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon } from "lucide-react-native";
+import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
+import CardLinkTablet from "@/components/card/card-link-tablet";
 import ProfileDashboard from "@/components/profile-dashboard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -116,55 +118,79 @@ export default function Page() {
 					</View>
 					<Link href="/" push asChild className="mt-2 py-2 pr-2">
 						<TouchableOpacity className=" flex-row items-center gap-2">
-							<Text className="text-sm text-defaultGray">Voir toutes les évènements à venir</Text>
+							<Text className="text-base font-semiBold text-defaultGray">Voir tous les évènements à venir</Text>
 							<ArrowRight size={16} color={config.theme.extend.colors.defaultGray} />
 						</TouchableOpacity>
 					</Link>
 					<Title title="Fonctionnalités" />
-					<View className="gap-2">
-						<CardLink
-							icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-							title="Fundesys"
-							description="Newsletter hebdomadaire de Fundesys"
-							link={"/"}
-						/>
-						{/* <CardLink
-							icon={<BriefcaseBusinessIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
-							title="Valorem"
-							description="Organigramme du groupe Valorem"
-							link={"/"}
-						/> */}
-						{/* <CardLink
-							icon={<BookOpen size={20} color={config.theme.extend.colors.secondaryDark} />}
-							title="Fournisseurs"
-							description="Répertoire d'informations des fournisseurs"
-							link={"/supplier-category"}
-						/> */}
-						<CardLink
-							icon={<BuildingIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
-							title="Bureaux"
-							description="Réservation de bureaux"
-							link={"/"}
-						/>
-						<CardLink
-							icon={<CalendarIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-							title="Évènements"
-							description="Dates à ne pas manquer"
-							link={"/"}
-						/>
-						<CardLink
-							icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-							title="Fidnet"
-							description="Newsletter hebdomadaire de Fidnet"
-							link={"/"}
-						/>
-						<CardLink
-							icon={<MapPinnedIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
-							title="Contacts"
-							description="Carte des contacts utiles"
-							link={"/contact"}
-						/>
-					</View>
+					<TabletMediaQuery screenWidth={screenWidth}>
+						<View className="flex-row flex-wrap gap-2">
+							<CardLinkTablet
+								icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Fundesys"
+								description="Newsletter hebdomadaire de Fundesys"
+								link={"/"}
+							/>
+							<CardLinkTablet
+								icon={<BuildingIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
+								title="Bureaux"
+								description="Réservation de bureaux"
+								link={"/"}
+							/>
+							<CardLinkTablet
+								icon={<CalendarIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Évènements"
+								description="Dates à ne pas manquer"
+								link={"/"}
+							/>
+							<CardLinkTablet
+								icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Fidnet"
+								description="Newsletter hebdomadaire de Fidnet"
+								link={"/"}
+							/>
+							<CardLinkTablet
+								icon={<MapPinnedIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Contacts"
+								description="Carte des contacts utiles"
+								link={"/contact"}
+							/>
+						</View>
+					</TabletMediaQuery>
+					<MobileMediaQuery screenWidth={screenWidth}>
+						<View className="gap-2">
+							<CardLink
+								icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Fundesys"
+								description="Newsletter hebdomadaire de Fundesys"
+								link={"/"}
+							/>
+							<CardLink
+								icon={<BuildingIcon size={21} color={config.theme.extend.colors.secondaryDark} />}
+								title="Bureaux"
+								description="Réservation de bureaux"
+								link={"/"}
+							/>
+							<CardLink
+								icon={<CalendarIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Évènements"
+								description="Dates à ne pas manquer"
+								link={"/"}
+							/>
+							<CardLink
+								icon={<NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Fidnet"
+								description="Newsletter hebdomadaire de Fidnet"
+								link={"/"}
+							/>
+							<CardLink
+								icon={<MapPinnedIcon size={20} color={config.theme.extend.colors.secondaryDark} />}
+								title="Contacts"
+								description="Carte des contacts utiles"
+								link={"/contact"}
+							/>
+						</View>
+					</MobileMediaQuery>
 				</BackgroundLayout>
 			</ScrollView>
 		</SafeAreaView>

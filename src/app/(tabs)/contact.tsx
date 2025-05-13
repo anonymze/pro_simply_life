@@ -1,21 +1,18 @@
 import { Alert, Platform, Pressable, Text, View, TextInput, Linking } from "react-native";
 import { getContactCategoriesQuery } from "@/api/queries/contact-categories-queries";
-import BackgroundLayout, { stylesLayout } from "@/layouts/background-layout";
 import { GoogleMapsMapType } from "expo-maps/build/google/GoogleMaps.types";
 import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
 import { getAndroidIcon, iconIos, tintIos } from "@/utils/icon-maps";
 import { BottomSheetSelect } from "@/components/bottom-sheet-select";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getContactsQuery } from "@/api/queries/contact-queries";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { stylesLayout } from "@/layouts/background-layout";
 import InputSearch from "@/components/ui/input-search";
 import { useQueries } from "@tanstack/react-query";
 import { ContactCategory } from "@/types/contact";
 import { AppleMaps, GoogleMaps } from "expo-maps";
-import { SearchIcon } from "lucide-react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 import * as WebBrowser from "expo-web-browser";
-import config from "tailwind.config";
-import { cn } from "@/utils/cn";
 import React from "react";
 
 
@@ -32,6 +29,7 @@ export default function Page() {
 	const [selectedCategories, setSelectedCategories] = React.useState<ContactCategory[]>([]);
 	const [input, setInput] = React.useState<string>("");
 	const mapRef = React.useRef<AppleMaps.MapView>(null);
+	const { top } = useSafeAreaInsets();
 
 	const queries = useQueries({
 		queries: [
@@ -75,8 +73,8 @@ export default function Page() {
 	}
 
 	return (
-		<SafeAreaView className="flex-1 bg-white" edges={["top", "right", "left"]}>
-			<View className="flex-row items-center gap-4 bg-white p-4">
+		<>
+			<View className="flex-row items-center gap-4 bg-white p-4" style={{ paddingTop: top + 5 }}>
 				<View className="flex-1 flex-row items-center">
 					<InputSearch
 						clearable={false}
@@ -91,7 +89,7 @@ export default function Page() {
 				</View>
 				<Pressable
 					disabled={queries[0].isLoading || queries[1].isLoading}
-					className="rounded-xl bg-primary p-5 disabled:opacity-80"
+					className="rounded-xl bg-primary p-4 disabled:opacity-80"
 					onPress={() => {
 						bottomSheetRef.current?.expand();
 					}}
@@ -189,6 +187,6 @@ export default function Page() {
 					setSelectedCategories(item as ContactCategory[]);
 				}}
 			/>
-		</SafeAreaView>
+		</>
 	);
 }
