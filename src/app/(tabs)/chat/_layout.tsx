@@ -22,10 +22,11 @@ export default function ChatLayout() {
 			<Stack.Screen
 				name="new-room"
 				options={{
-					headerShown: false,
+					headerShown: Platform.OS === "ios" ? false : true,
 					sheetGrabberVisible: true,
-					presentation: "formSheet",
-					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : [0.6, 1],
+					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
+					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					header: () => <HeaderLayout />,
 				}}
 			/>
 			<Stack.Screen

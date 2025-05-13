@@ -44,10 +44,11 @@ export default function SupplierLayout() {
 			/>
 			<Stack.Screen
 				options={{
-					presentation: "formSheet",
+					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
 					sheetGrabberVisible: true,
-					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : [0.6, 1],
-					headerShown: false,
+					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					headerShown: Platform.OS === "ios" ? false : true,
+					header: () => <HeaderLayout />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]"
 			/>

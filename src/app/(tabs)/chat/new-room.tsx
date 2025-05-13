@@ -80,7 +80,7 @@ export default function Page() {
 								autoCapitalize="none"
 								keyboardType="default"
 								textContentType="oneTimeCode"
-								placeholder="Fournisseurs"
+								placeholder="Ex : fournisseurs"
 								className="w-full rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
@@ -102,7 +102,7 @@ export default function Page() {
 								returnKeyType="done"
 								autoCapitalize="none"
 								keyboardType="default"
-								placeholder="Informations sur les fournisseurs"
+								placeholder="Ex : informations sur les fournisseurs"
 								className="w-full rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
