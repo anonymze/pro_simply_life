@@ -31,6 +31,7 @@ export default function SupplierLayout() {
 			<Stack.Screen
 				options={{
 					headerShown: true,
+					gestureEnabled: false,
 					header: () => <HeaderLayout backgroundColor="bg-white" />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/index"

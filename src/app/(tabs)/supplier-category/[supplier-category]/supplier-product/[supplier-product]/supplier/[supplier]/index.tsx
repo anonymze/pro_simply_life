@@ -1,5 +1,6 @@
 import { ArrowRight, ChevronRight, Download, EyeIcon, FileIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon, } from "lucide-react-native";
-import { ActivityIndicator, Alert, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Linking, ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
+import Animated, { Easing, useSharedValue, withTiming } from "react-native-reanimated";
 import { HrefObject, Link, router, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
@@ -8,11 +9,19 @@ import { downloadFile, getFile } from "@/utils/download";
 import { useQuery } from "@tanstack/react-query";
 import { Supplier } from "@/types/supplier";
 import type { Media } from "@/types/media";
+import { Picker } from "@expo/ui/swift-ui";
 import config from "tailwind.config";
 import React from "react";
 
 
+const heightContact = 195;
+const heightOtherInformation = 794;
+
+
 export default function Page() {
+	const scrollRef = React.useRef<Animated.ScrollView>(null);
+	const heightScrollView = useSharedValue(195);
+
 	const {
 		supplier: supplierId,
 		"supplier-product": supplierProductId,
@@ -29,7 +38,7 @@ export default function Page() {
 
 	if (!data) return null;
 
-	console.log(data.brochure);
+	const hasMoreInformation = Object.values(data.other_information).some(Boolean);
 
 	return (
 		<>
@@ -63,19 +72,64 @@ export default function Page() {
 					})}
 				</View> */}
 			</View>
-			<ScrollView
-				showsVerticalScrollIndicator={false}
-				style={{ backgroundColor: config.theme.extend.colors.background }}
-			>
-				<BackgroundLayout className="p-4">
-					<ContactInfo
-						phone={data.contact_info?.phone}
-						email={data.contact_info?.email}
-						firstname={data.contact_info?.firstname}
-						lastname={data.contact_info?.lastname}
+			<BackgroundLayout className="px-4 pt-4">
+				{hasMoreInformation && (
+					<Picker
+						style={{ width: 260, marginBottom: 10, marginTop: 5, marginHorizontal: "auto" }}
+						variant="segmented"
+						options={["Contact", "Produit"]}
+						selectedIndex={null}
+						onOptionSelected={({ nativeEvent: { index } }) => {
+							if (index === 0) {
+								scrollRef.current?.scrollTo({ x: 0, animated: true });
+								heightScrollView.value = withTiming(heightContact, {
+									easing: Easing.bezier(0.25, 0.1, 0.25, 1.0),
+									// duration: 300,
+								});
+							} else {
+								scrollRef.current?.scrollToEnd({ animated: true });
+								heightScrollView.value = withTiming(heightOtherInformation, {
+									easing: Easing.bezier(0.25, 0.1, 0.25, 1.0),
+									// duration: 300,
+								});
+							}
+						}}
 					/>
-					{Object.values(data.other_information).some(Boolean) && (
-						<OtherInformation otherInformation={data.other_information} />
+				)}
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					style={{ backgroundColor: config.theme.extend.colors.background }}
+					contentContainerStyle={{ paddingBottom: 10 }}
+				>
+					{!hasMoreInformation ? (
+						<ContactInfo
+							phone={data.contact_info?.phone}
+							email={data.contact_info?.email}
+							firstname={data.contact_info?.firstname}
+							lastname={data.contact_info?.lastname}
+						/>
+					) : (
+						<Animated.ScrollView
+							ref={scrollRef}
+							horizontal
+							showsHorizontalScrollIndicator={false}
+							scrollEnabled={false}
+							decelerationRate={"fast"}
+							style={{ height: heightScrollView }}
+							contentContainerStyle={{ gap: 16 }}
+						>
+							<View style={{ width: Dimensions.get("window").width - 28, height: heightContact }}>
+								<ContactInfo
+									phone={data.contact_info?.phone}
+									email={data.contact_info?.email}
+									firstname={data.contact_info?.firstname}
+									lastname={data.contact_info?.lastname}
+								/>
+							</View>
+							<View style={{ width: Dimensions.get("window").width - 28, height: heightOtherInformation }}>
+								<OtherInformation otherInformation={data.other_information} />
+							</View>
+						</Animated.ScrollView>
 					)}
 					{(data.connexion?.email || data.connexion?.password) && (
 						<Logs
@@ -107,8 +161,8 @@ export default function Page() {
 							}}
 						/>
 					)}
-				</BackgroundLayout>
-			</ScrollView>
+				</ScrollView>
+			</BackgroundLayout>
 		</>
 	);
 }
@@ -252,7 +306,7 @@ const ContactInfo = ({
 }) => {
 	const numbers = phone?.split(",").map((number) => number.replace(/^\s+|\s+$/g, ""));
 	return (
-		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="text-sm font-semibold text-defaultGray">Prénom et Nom</Text>
 			<Text className="text-base font-semibold text-dark">
 				{firstname} {lastname?.toUpperCase()}
@@ -306,9 +360,10 @@ const ContactInfo = ({
 
 const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["other_information"] }) => {
 	return (
-		<View className="mt-4 w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="text-sm font-semibold text-defaultGray">Thématique</Text>
 			<Text className="text-base font-semibold text-dark">{otherInformation.theme}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<Text className="text-sm font-semibold text-defaultGray">Remarque</Text>
 			<Text className="text-base font-semibold text-dark">{otherInformation.annotation}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />

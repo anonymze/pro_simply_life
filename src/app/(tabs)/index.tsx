@@ -1,7 +1,6 @@
-import { BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, KeyRoundIcon, } from "lucide-react-native";
 import { Text, View, Dimensions, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
+import { CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, KeyRoundIcon, } from "lucide-react-native";
 import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
-import CardLinkTablet from "@/components/card/card-link-tablet";
 import ProfileDashboard from "@/components/profile-dashboard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackgroundLayout from "@/layouts/background-layout";
