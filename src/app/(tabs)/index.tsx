@@ -174,7 +174,7 @@ const links = [
 	},
 
 	{
-		icon: <MapPinnedIcon size={26} color={config.theme.extend.colors.secondaryDark} />,
+		icon: <MapPinnedIcon size={24} color={config.theme.extend.colors.secondaryDark} />,
 		title: "Contacts",
 		description: "Carte des contacts utiles",
 		link: "/contact",

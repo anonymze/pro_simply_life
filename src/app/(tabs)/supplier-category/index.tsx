@@ -63,81 +63,84 @@ export default function Page() {
 						}}
 					/>
 
-					<ScrollView
-						className="flex-1"
-						showsVerticalScrollIndicator={false}
-						style={{ backgroundColor: config.theme.extend.colors.background }}
-					>
-						{search.length < 3 ? (
-							<>
-								<TabletMediaQuery screenWidth={screenWidth}>
-									<View className="mt-4 flex-row flex-wrap">
-										{data?.docs?.map((supplierCategory) => (
-											<View key={supplierCategory.id} className="w-1/2 p-1.5">
-												<CardSupplierCategory
-													supplierCategory={supplierCategory}
-													icon={
-														<ImagePlaceholder
-															source={supplierCategory.logo?.url ?? ""}
-															style={{ width: 24, height: 24, borderRadius: 4 }}
-														/>
-													}
-													link={{
-														pathname: `/supplier-category/[supplier-category]/supplier-product`,
-														params: {
-															"supplier-category": supplierCategory.id,
-															"supplier-category-name": supplierCategory.name,
-														},
-													}}
-												/>
-											</View>
-										))}
-									</View>
-								</TabletMediaQuery>
-								<MobileMediaQuery screenWidth={screenWidth}>
-									<View className="mt-4 flex-row flex-wrap">
-										{data?.docs?.map((supplierCategory) => (
-											<View key={supplierCategory.id} className="w-1/2 p-1">
-												<CardSupplierCategory
-													supplierCategory={supplierCategory}
-													icon={
-														<ImagePlaceholder
-															source={supplierCategory.logo?.url ?? ""}
-															style={{ width: 28, height: 28, borderRadius: 4 }}
-														/>
-													}
-													link={{
-														pathname: `/supplier-category/[supplier-category]/supplier-product`,
-														params: {
-															"supplier-category": supplierCategory.id,
-															"supplier-category-name": supplierCategory.name,
-														},
-													}}
-												/>
-											</View>
-										))}
-									</View>
-								</MobileMediaQuery>
-							</>
-						) : (
-							<>
-								{!filteredData?.length ? (
-									<View className="flex-1 items-center justify-center">
-										<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
-									</View>
-								) : (
+					{search.length < 3 ? (
+						<ScrollView
+							className="flex-1"
+							showsVerticalScrollIndicator={false}
+							style={{ backgroundColor: config.theme.extend.colors.background }}
+						>
+							<TabletMediaQuery screenWidth={screenWidth}>
+								<View className="mt-4 flex-row flex-wrap">
+									{data?.docs?.map((supplierCategory) => (
+										<View key={supplierCategory.id} className="w-1/2 p-1.5">
+											<CardSupplierCategory
+												supplierCategory={supplierCategory}
+												icon={
+													<ImagePlaceholder
+														source={supplierCategory.logo?.url ?? ""}
+														style={{ width: 28, height: 28, borderRadius: 4 }}
+													/>
+												}
+												link={{
+													pathname: `/supplier-category/[supplier-category]/supplier-product`,
+													params: {
+														"supplier-category": supplierCategory.id,
+														"supplier-category-name": supplierCategory.name,
+													},
+												}}
+											/>
+										</View>
+									))}
+								</View>
+							</TabletMediaQuery>
+							<MobileMediaQuery screenWidth={screenWidth}>
+								<View className="mt-4 flex-row flex-wrap">
+									{data?.docs?.map((supplierCategory) => (
+										<View key={supplierCategory.id} className="w-1/2 p-1">
+											<CardSupplierCategory
+												supplierCategory={supplierCategory}
+												icon={
+													<ImagePlaceholder
+														source={supplierCategory.logo?.url ?? ""}
+														style={{ width: 28, height: 28, borderRadius: 4 }}
+													/>
+												}
+												link={{
+													pathname: `/supplier-category/[supplier-category]/supplier-product`,
+													params: {
+														"supplier-category": supplierCategory.id,
+														"supplier-category-name": supplierCategory.name,
+													},
+												}}
+											/>
+										</View>
+									))}
+								</View>
+							</MobileMediaQuery>
+						</ScrollView>
+					) : (
+						<>
+							{!filteredData?.length ? (
+								<View className="flex-1 items-center justify-center ">
+									<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
+								</View>
+							) : (
+								<ScrollView
+									className="flex-1"
+									showsVerticalScrollIndicator={false}
+									style={{ backgroundColor: config.theme.extend.colors.background }}
+								>
 									<View className="mt-5 gap-5">
 										{filteredData.map((supplier) => (
 											<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
 										))}
 									</View>
-								)}
-							</>
-						)}
-					</ScrollView>
+								</ScrollView>
+							)}
+						</>
+					)}
 				</BackgroundLayout>
 			);
 		},
 	)();
 }
-

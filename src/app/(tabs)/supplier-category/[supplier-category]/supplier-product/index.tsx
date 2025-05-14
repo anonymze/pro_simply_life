@@ -70,47 +70,51 @@ export default function Page() {
 					setSearch("");
 				}}
 			/>
-			<ScrollView
-				className="flex-1"
-				showsVerticalScrollIndicator={false}
-				style={{ backgroundColor: config.theme.extend.colors.background }}
-			>
-				{search.length < 3 ? (
-					<>
-						<View className="mt-5 gap-2">
-							{data.product_suppliers.map((supplierProduct) => (
-								<CardSupplierProduct
-									key={supplierProduct.id}
-									supplierProduct={supplierProduct}
-									link={{
-										pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
-										params: {
-											"supplier-category": supplierCategoryId,
-											"supplier-category-name": supplierCategoryName,
-											"supplier-product": supplierProduct.id,
-											"supplier-product-name": supplierProduct.name,
-										},
-									}}
-								/>
-							))}
+			{search.length < 3 ? (
+				<ScrollView
+					className="flex-1"
+					showsVerticalScrollIndicator={false}
+					style={{ backgroundColor: config.theme.extend.colors.background }}
+				>
+					<View className="mt-5 gap-2">
+						{data.product_suppliers.map((supplierProduct) => (
+							<CardSupplierProduct
+								key={supplierProduct.id}
+								supplierProduct={supplierProduct}
+								link={{
+									pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+									params: {
+										"supplier-category": supplierCategoryId,
+										"supplier-category-name": supplierCategoryName,
+										"supplier-product": supplierProduct.id,
+										"supplier-product-name": supplierProduct.name,
+									},
+								}}
+							/>
+						))}
+					</View>
+				</ScrollView>
+			) : (
+				<>
+					{!filteredData?.length ? (
+						<View className="flex-1 items-center justify-center ">
+							<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
 						</View>
-					</>
-				) : (
-					<>
-						{!filteredData?.length ? (
-							<View className="flex-1 items-center justify-center">
-								<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
-							</View>
-						) : (
+					) : (
+						<ScrollView
+							className="flex-1"
+							showsVerticalScrollIndicator={false}
+							style={{ backgroundColor: config.theme.extend.colors.background }}
+						>
 							<View className="mt-5 gap-5">
 								{filteredData.map((supplier) => (
 									<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
 								))}
 							</View>
-						)}
-					</>
-				)}
-			</ScrollView>
+						</ScrollView>
+					)}
+				</>
+			)}
 		</BackgroundLayout>
 	);
 }
