@@ -20,7 +20,7 @@ export default function CardLink({
 }) {
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
+			<TouchableOpacity className="flex-1 flex-row items-center gap-3 rounded-2xl bg-white p-2 shadow-sm shadow-defaultGray/10">
 				<View className="size-14 rounded-lg bg-secondaryLight items-center justify-center">{icon}</View>
 				<View className="flex-1">
 					<Text className="text-dark text-lg font-semibold">{title}</Text>

@@ -23,7 +23,6 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [search, setSearch] = React.useState("");
-			const { top } = useSafeAreaInsets();
 
 			// flatten all suppliers from all categories
 			const allSuppliers = React.useMemo(() => {
@@ -51,7 +50,7 @@ export default function Page() {
 			}, [allSuppliers, search]);
 
 			return (
-				<BackgroundLayout className="px-4" style={{ paddingTop: top }}>
+				<BackgroundLayout className="px-4 pt-safe">
 					<Title title="Répertoire des fournisseurs" />
 					<InputSearch
 						placeholder="Rechercher un fournisseur..."

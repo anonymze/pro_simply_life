@@ -1,8 +1,10 @@
-import { BookOpenIcon, BriefcaseBusinessIcon, Grid2x2Icon, MessageCircleMoreIcon } from "lucide-react-native";
+import { BookOpenIcon, BriefcaseBusinessIcon, MessageCircleMoreIcon } from "lucide-react-native";
 import { NotificationProvider } from "@/context/push-notifications";
 import HeaderLayout from "@/layouts/headert-layout";
 import { Redirect, Stack, Tabs } from "expo-router";
 import { getStorageUserInfos } from "@/utils/store";
+import HomeIcon from "@/components/home-icon";
+import BookIcon from "@/components/book-icon";
 import config from "tailwind.config";
 import React from "react";
 
@@ -39,24 +41,24 @@ export default function AppLayout() {
 					}}
 					options={{
 						headerShown: false,
-						tabBarIcon: ({ color }) => <Grid2x2Icon color={color} size={19} />,
+						tabBarIcon: ({ color }) => <HomeIcon color={color} />,
 						title: "Accueil",
 					}}
 				/>
 				<Tabs.Screen
 					name="organigramme"
 					options={{
-						title: "Valorem",
+						title: "Groupe Valorem",
 						headerShown: true,
 						header: () => <HeaderLayout title="Organigramme" backButton={false} />,
-						tabBarIcon: ({ color }) => <BriefcaseBusinessIcon color={color} size={20} />,
+						tabBarIcon: ({ color }) => <BriefcaseBusinessIcon color={color} size={21} />,
 					}}
 				/>
 				<Tabs.Screen
 					name="supplier-category"
 					options={{
 						title: "Fournisseurs",
-						tabBarIcon: ({ color }) => <BookOpenIcon color={color} size={19} />,
+						tabBarIcon: ({ color }) => <BookIcon color={color} />,
 					}}
 				/>
 				<Tabs.Screen
@@ -70,7 +72,7 @@ export default function AppLayout() {
 					name="chat"
 					options={{
 						title: "Messages",
-						tabBarIcon: ({ color }) => <MessageCircleMoreIcon color={color} size={20} />,
+						tabBarIcon: ({ color }) => <MessageCircleMoreIcon color={color} size={21} strokeWidth={2} />,
 					}}
 				/>
 				{/* <Tabs.Screen

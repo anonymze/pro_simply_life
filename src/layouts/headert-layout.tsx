@@ -18,9 +18,8 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 }
 
 export default function HeaderLayout({ title, sheet, backgroundColor, backButton = true }: HeaderLayoutProps) {
-	const { top } = useSafeAreaInsets();
 	return (
-		<View className={cn("flex-row items-center justify-between bg-background p-2", backgroundColor)} style={{ paddingTop: top }}>
+		<View className={cn("flex-row items-center justify-between bg-background px-2 pb-2 pt-safe", backgroundColor)}>
 			{backButton ? (
 				<Link className="p-2 w-24" dismissTo href="../" asChild>
 					<TouchableOpacity className="flex-row items-center gap-3">

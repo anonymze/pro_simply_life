@@ -9,7 +9,6 @@ import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Platform, AppState, AppStateStatus } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { getLoadedFonts, useFonts } from "expo-font";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
 import * as Sentry from "@sentry/react-native";
@@ -90,7 +89,8 @@ const Layout = () => {
 			<BottomSheetModalProvider>
 				<KeyboardProvider>
 					<StatusBar style="dark" translucent animated />
-					<SafeAreaProvider>
+					{/* already added by expo router on every route */}
+					{/* <SafeAreaProvider> */}
 						<Stack
 							screenOptions={{
 								headerShown: false,
@@ -102,7 +102,7 @@ const Layout = () => {
 							<Stack.Screen name="(tabs)" />
 							<Stack.Screen name="login" />
 						</Stack>
-					</SafeAreaProvider>
+					{/* </SafeAreaProvider> */}
 				</KeyboardProvider>
 			</BottomSheetModalProvider>
 		</GestureHandlerRootView>
@@ -110,7 +110,6 @@ const Layout = () => {
 };
 
 const prefetchSomeData = async () => {
-	console.log(getLoadedFonts());
 	queryClient.prefetchQuery({
 		queryKey: ["chat-rooms"],
 		queryFn: getChatRoomsQuery,

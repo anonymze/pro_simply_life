@@ -29,7 +29,6 @@ export default function Page() {
 	const [selectedCategories, setSelectedCategories] = React.useState<ContactCategory[]>([]);
 	const [input, setInput] = React.useState<string>("");
 	const mapRef = React.useRef<AppleMaps.MapView>(null);
-	const { top } = useSafeAreaInsets();
 
 	const queries = useQueries({
 		queries: [
@@ -74,7 +73,7 @@ export default function Page() {
 
 	return (
 		<>
-			<View className="flex-row items-center gap-4 bg-white p-4" style={{ paddingTop: top + 5 }}>
+			<View className="flex-row items-center gap-4 bg-white px-4 pb-4 pt-safe-offset-3">
 				<View className="flex-1 flex-row items-center">
 					<InputSearch
 						clearable={false}
