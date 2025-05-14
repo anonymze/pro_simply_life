@@ -16,7 +16,7 @@ export default function CardLinkTablet({
 }) {
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity className="flex-1 flex-shrink items-startt gap-2 rounded-xl bg-white p-3 shadow-sm shadow-defaultGray/10">
+			<TouchableOpacity className="flex-1 flex-shrink items-startt gap-2 rounded-2xl bg-white p-3 shadow-sm shadow-defaultGray/10">
 				<View className="size-16 rounded-lg bg-secondaryLight items-center justify-center">{icon}</View>
 				<View className="flex-1">
 					<Text className="text-dark text-lg font-semibold">{title}</Text>

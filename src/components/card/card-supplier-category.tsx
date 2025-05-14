@@ -33,8 +33,8 @@ export default function CardSupplierCategory({
 
 	return (
 		<Link href={link} push asChild onPressIn={onPress}>
-			<TouchableOpacity className="flex-1 gap-3 rounded-2xl bg-white p-3 shadow-sm shadow-defaultGray/10">
-				<View className="size-16 items-center justify-center rounded-xl bg-defaultGray/10">
+			<TouchableOpacity className="flex-1 gap-2 rounded-2xl bg-white p-3 shadow-sm shadow-defaultGray/10">
+				<View className="size-[4.75rem] items-center justify-center rounded-lg bg-defaultGray/10">
 					{icon ? icon : <Image source={require("@/assets/images/logo.png")} style={{ width: 24, height: 24 }} />}
 				</View>
 				<View className="flex-1">
