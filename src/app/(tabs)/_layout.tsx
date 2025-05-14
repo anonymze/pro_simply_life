@@ -1,4 +1,5 @@
 import { NotificationProvider } from "@/context/push-notifications";
+import { Pressable } from "react-native-gesture-handler";
 import BriefcaseIcon from "@/components/briefcase-icon";
 import BookIconFill from "@/components/book-fill-icon";
 import MessagesIcon from "@/components/messages-icon";
@@ -24,12 +25,16 @@ export default function AppLayout() {
 				initialRouteName="index"
 				screenOptions={{
 					headerShown: false,
+					// TODO
+					animation: "shift",
 					tabBarActiveTintColor: config.theme.extend.colors.primary,
 					tabBarLabelStyle: {
 						fontSize: 10.5,
 						marginTop: 4,
 						fontWeight: "400",
 					},
+					// @ts-expect-error
+					tabBarButton: (props) => <Pressable {...props} android_ripple={null} />,
 				}}
 			>
 				<Tabs.Screen
