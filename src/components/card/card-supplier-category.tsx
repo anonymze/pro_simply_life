@@ -26,9 +26,9 @@ export default function CardSupplierCategory({
 		return supplierCategory.product_suppliers.length === 0
 			? ""
 			: supplierCategory.product_suppliers
-					.slice(0, 3)
+					.slice(0, 2)
 					.map((supplier) => supplier.name)
-					.join(", ") + (supplierCategory.product_suppliers.length > 3 ? "..." : "");
+					.join(", ") + (supplierCategory.product_suppliers.length > 2 ? "..." : "");
 	}, [supplierCategory]);
 
 	return (

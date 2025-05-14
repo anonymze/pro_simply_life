@@ -29,9 +29,9 @@ export default function Page() {
 		return data.product_suppliers.length === 0
 			? ""
 			: data?.product_suppliers
-					.slice(0, 3)
+					.slice(0, 2)
 					.map((supplier) => supplier.name)
-					.join(", ") + (data.product_suppliers.length > 3 ? "..." : "");
+					.join(", ") + (data.product_suppliers.length > 2 ? "..." : "");
 	}, [data]);
 
 	// flatten all suppliers from all categories
