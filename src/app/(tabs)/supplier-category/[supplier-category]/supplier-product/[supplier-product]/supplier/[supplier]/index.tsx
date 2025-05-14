@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronRight, Download, EyeIcon, FileIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
+import { ArrowRight, ChevronRight, Download, EyeIcon, FileIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon, } from "lucide-react-native";
 import { ActivityIndicator, Alert, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { HrefObject, Link, router, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
@@ -29,17 +29,15 @@ export default function Page() {
 
 	if (!data) return null;
 
+	console.log(data.brochure);
+
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
 				<View className="mb-4 flex-row items-center gap-2">
-					<Text className="text-sm font-semibold text-primary ">
-						{supplierCategoryName}
-					</Text>
+					<Text className="text-sm font-semibold text-primary ">{supplierCategoryName}</Text>
 					<ChevronRight size={14} color={config.theme.extend.colors.primary} />
-					<Text className="text-sm font-semibold text-primary">
-						{supplierProductName}
-					</Text>
+					<Text className="text-sm font-semibold text-primary">{supplierProductName}</Text>
 				</View>
 				<ImagePlaceholder
 					transition={300}
@@ -89,6 +87,22 @@ export default function Page() {
 									"supplier-product": supplierProductId,
 									supplier: supplierId,
 									logs: JSON.stringify(data.connexion),
+								},
+							}}
+						/>
+					)}
+					{data.brochure && (
+						<Brochure
+							brochure={data.brochure}
+							updatedAt={data.updatedAt}
+							link={{
+								pathname:
+									"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+								params: {
+									"supplier-category": supplierCategoryId,
+									"supplier-product": supplierProductId,
+									supplier: supplierId,
+									pdf: data.brochure.filename,
 								},
 							}}
 						/>
@@ -202,7 +216,11 @@ const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: s
 						className="rounded-full bg-primaryUltraLight p-3"
 					>
 						{loadingOpen ? (
-							<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
+							<ActivityIndicator
+								size="small"
+								style={{ width: 16, height: 16 }}
+								color={config.theme.extend.colors.primary}
+							/>
 						) : (
 							<EyeIcon size={16} color={config.theme.extend.colors.primary} />
 						)}

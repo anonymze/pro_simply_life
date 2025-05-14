@@ -1,9 +1,7 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { HrefObject, Link, LinkProps } from "expo-router";
 import { SupplierCategory } from "@/types/supplier";
-import { ArrowRight } from "lucide-react-native";
+import { HrefObject, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
-import config from "tailwind.config";
 import { Image } from "expo-image";
 import React from "react";
 

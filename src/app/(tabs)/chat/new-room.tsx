@@ -86,7 +86,7 @@ export default function Page() {
 								onChangeText={field.handleChange}
 							/>
 							{field.state.meta.errors.length > 0 && (
-								<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
+								<Text className="text-red-500 text-sm">{field.state.meta.errors[0]?.message}</Text>
 							)}
 						</React.Fragment>
 					)}
@@ -107,9 +107,6 @@ export default function Page() {
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>
-							{field.state.meta.errors.length > 0 && (
-								<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
-							)}
 						</React.Fragment>
 					)}
 				</form.Field>
