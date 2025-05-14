@@ -2,6 +2,7 @@ import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-qu
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import CardSupplierCategory from "@/components/card/card-supplier-category";
 import CardSupplierProduct from "@/components/card/card-supplier-product";
+import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { Supplier, SupplierCategory } from "@/types/supplier";
 import { withQueryWrapper } from "@/utils/libs/react-query";
@@ -11,9 +12,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import { Text, View } from "react-native";
+import { Dimensions } from "react-native";
 import config from "tailwind.config";
 import React from "react";
 
+
+const { width: screenWidth } = Dimensions.get("window");
 
 export default function Page() {
 	return withQueryWrapper(
@@ -50,7 +54,7 @@ export default function Page() {
 			}, [allSuppliers, search]);
 
 			return (
-				<BackgroundLayout className="px-4 pt-safe">
+				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Répertoire des fournisseurs" />
 					<InputSearch
 						placeholder="Rechercher un fournisseur..."
@@ -68,24 +72,54 @@ export default function Page() {
 							showsVerticalScrollIndicator={false}
 							style={{ backgroundColor: config.theme.extend.colors.background }}
 						>
-							<View className="mt-5 gap-2">
-								{data?.docs?.map((supplierCategory) => (
-									<CardSupplierCategory
-										key={supplierCategory.id}
-										supplierCategory={supplierCategory}
-										icon={
-											<ImagePlaceholder source={supplierCategory.logo?.url ?? ""} style={{ width: 26, height: 26, borderRadius: 4 }} />
-										}
-										link={{
-											pathname: `/supplier-category/[supplier-category]/supplier-product`,
-											params: {
-												"supplier-category": supplierCategory.id,
-												"supplier-category-name": supplierCategory.name,
-											},
-										}}
-									/>
-								))}
-							</View>
+							<TabletMediaQuery screenWidth={screenWidth}>
+								<View className="mt-5 flex-row flex-wrap">
+									{data?.docs?.map((supplierCategory) => (
+										<View key={supplierCategory.id} className="w-1/2 p-1.5">
+											<CardSupplierCategory
+												supplierCategory={supplierCategory}
+												icon={
+													<ImagePlaceholder
+														source={supplierCategory.logo?.url ?? ""}
+														style={{ width: 24, height: 24, borderRadius: 4 }}
+													/>
+												}
+												link={{
+													pathname: `/supplier-category/[supplier-category]/supplier-product`,
+													params: {
+														"supplier-category": supplierCategory.id,
+														"supplier-category-name": supplierCategory.name,
+													},
+												}}
+											/>
+										</View>
+									))}
+								</View>
+							</TabletMediaQuery>
+							<MobileMediaQuery screenWidth={screenWidth}>
+								<View className="mt-5 flex-row flex-wrap">
+									{data?.docs?.map((supplierCategory) => (
+										<View key={supplierCategory.id} className="w-1/2 p-1">
+											<CardSupplierCategory
+												supplierCategory={supplierCategory}
+												icon={
+													<ImagePlaceholder
+														source={supplierCategory.logo?.url ?? ""}
+														style={{ width: 28, height: 28, borderRadius: 4 }}
+													/>
+												}
+												link={{
+													pathname: `/supplier-category/[supplier-category]/supplier-product`,
+													params: {
+														"supplier-category": supplierCategory.id,
+														"supplier-category-name": supplierCategory.name,
+													},
+												}}
+											/>
+										</View>
+									))}
+								</View>
+							</MobileMediaQuery>
 						</ScrollView>
 					) : (
 						<React.Fragment>

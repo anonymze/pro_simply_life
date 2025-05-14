@@ -1,13 +1,9 @@
-import Animated, { useSharedValue, withDelay, withRepeat, withTiming, useAnimatedStyle, interpolate, } from "react-native-reanimated";
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { LucideIcon } from "lucide-react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Link, LinkProps } from "expo-router";
-import { Service } from "@/routes/services";
-import React, { useEffect } from "react";
-import { Image } from "expo-image";
+import React from "react";
 
 
-export default function CardLink({
+export default function CardLinkTablet({
 	icon,
 	title,
 	description,
@@ -20,8 +16,8 @@ export default function CardLink({
 }) {
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity className="flex-1 flex-row items-center gap-3 rounded-2xl bg-white p-2 shadow-sm shadow-defaultGray/10">
-				<View className="size-14 rounded-lg bg-secondaryLight items-center justify-center">{icon}</View>
+			<TouchableOpacity className="flex-1 flex-shrink items-startt gap-2 rounded-xl bg-white p-3 shadow-sm shadow-defaultGray/10">
+				<View className="size-16 rounded-lg bg-secondaryLight items-center justify-center">{icon}</View>
 				<View className="flex-1">
 					<Text className="text-dark text-lg font-semibold">{title}</Text>
 					<Text className="text-sm text-defaultGray">{description}</Text>

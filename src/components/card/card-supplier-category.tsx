@@ -33,15 +33,15 @@ export default function CardSupplierCategory({
 
 	return (
 		<Link href={link} push asChild onPressIn={onPress}>
-			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
-				<View className="size-[4.6rem] items-center justify-center rounded-lg bg-defaultGray/10">
+			<TouchableOpacity className="flex-1 gap-3 rounded-2xl bg-white p-3 shadow-sm shadow-defaultGray/10">
+				<View className="size-16 items-center justify-center rounded-xl bg-defaultGray/10">
 					{icon ? icon : <Image source={require("@/assets/images/logo.png")} style={{ width: 24, height: 24 }} />}
 				</View>
 				<View className="flex-1">
 					<Text className="text-lg font-semibold text-dark">{supplierCategory.name}</Text>
 					{description && <Text className="text-sm text-defaultGray">{description}</Text>}
 				</View>
-				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+				{/* <ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10, alignSelf: "flex-end" }} /> */}
 			</TouchableOpacity>
 		</Link>
 	);

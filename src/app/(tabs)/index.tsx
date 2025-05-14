@@ -1,5 +1,5 @@
+import { BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, KeyRoundIcon, } from "lucide-react-native";
 import { Text, View, Dimensions, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
-import { BuildingIcon, CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon } from "lucide-react-native";
 import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
 import CardLinkTablet from "@/components/card/card-link-tablet";
 import ProfileDashboard from "@/components/profile-dashboard";
@@ -124,14 +124,12 @@ export default function Page() {
 					</Link>
 					<Title title="Fonctionnalités" />
 					<TabletMediaQuery screenWidth={screenWidth}>
-						<View className="flex-row flex-wrap gap-2">
-							<View className="flex-row flex-wrap">
-								{links.map((link) => (
-									<View key={link.title} className="w-1/2 bg-background p-1">
-										<CardLink icon={link.icon} title={link.title} description={link.description} link={link.link} />
-									</View>
-								))}
-							</View>
+						<View className="flex-row flex-wrap">
+							{links.map((link) => (
+								<View key={link.title} className="w-1/2 bg-background p-1.5">
+									<CardLink icon={link.icon} title={link.title} description={link.description} link={link.link} />
+								</View>
+							))}
 						</View>
 					</TabletMediaQuery>
 					<MobileMediaQuery screenWidth={screenWidth}>
@@ -151,31 +149,32 @@ export default function Page() {
 
 const links = [
 	{
-		icon: <NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />,
+		icon: <NewspaperIcon size={24} color={config.theme.extend.colors.secondaryDark} />,
 		title: "Fundesys",
-		description: "Newsletter hebdomadaire de Fundesys",
+		description: "Newsletter hebdomadaire",
 		link: "/",
 	},
 	{
-		icon: <BuildingIcon size={21} color={config.theme.extend.colors.secondaryDark} />,
+		icon: <NewspaperIcon size={24} color={config.theme.extend.colors.secondaryDark} />,
+		title: "Fidnet",
+		description: "Newsletter hebdomadaire",
+		link: "/",
+	},
+	{
+		icon: <KeyRoundIcon size={24} color={config.theme.extend.colors.secondaryDark} />,
 		title: "Bureaux",
 		description: "Réservation de bureaux",
 		link: "/",
 	},
 	{
-		icon: <CalendarIcon size={20} color={config.theme.extend.colors.secondaryDark} />,
+		icon: <CalendarIcon size={24} color={config.theme.extend.colors.secondaryDark} />,
 		title: "Évènements",
 		description: "Dates à ne pas manquer",
 		link: "/",
 	},
+
 	{
-		icon: <NewspaperIcon size={20} color={config.theme.extend.colors.secondaryDark} />,
-		title: "Fidnet",
-		description: "Newsletter hebdomadaire de Fidnet",
-		link: "/",
-	},
-	{
-		icon: <MapPinnedIcon size={20} color={config.theme.extend.colors.secondaryDark} />,
+		icon: <MapPinnedIcon size={24} color={config.theme.extend.colors.secondaryDark} />,
 		title: "Contacts",
 		description: "Carte des contacts utiles",
 		link: "/contact",

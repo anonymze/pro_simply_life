@@ -1,13 +1,12 @@
-import { BookOpenIcon, BriefcaseBusinessIcon, MessageCircleMoreIcon } from "lucide-react-native";
 import { NotificationProvider } from "@/context/push-notifications";
 import BriefcaseIcon from "@/components/briefcase-icon";
 import BookIconFill from "@/components/book-fill-icon";
 import MessagesIcon from "@/components/messages-icon";
 import HeaderLayout from "@/layouts/headert-layout";
-import { Redirect, Stack, Tabs } from "expo-router";
 import { getStorageUserInfos } from "@/utils/store";
 import HomeIcon from "@/components/home-icon";
 import BookIcon from "@/components/book-icon";
+import { Redirect, Tabs } from "expo-router";
 import config from "tailwind.config";
 import React from "react";
 
@@ -46,7 +45,7 @@ export default function AppLayout() {
 					options={{
 						headerShown: false,
 						tabBarIcon: ({ color }) => {
-							return <HomeIcon color={color} fill={color === config.theme.extend.colors.primary ? color : "none"} />
+							return <HomeIcon color={color} fill={color === config.theme.extend.colors.primary ? color : "none"} />;
 						},
 						title: "Accueil",
 					}}
@@ -66,9 +65,9 @@ export default function AppLayout() {
 						title: "Fournisseurs",
 						tabBarIcon: ({ color }) => {
 							if (color === config.theme.extend.colors.primary) {
-								return <BookIconFill color={color} />
+								return <BookIconFill color={color} />;
 							}
-							return <BookIcon color={color} />
+							return <BookIcon color={color} />;
 						},
 					}}
 				/>
