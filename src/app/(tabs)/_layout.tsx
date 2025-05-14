@@ -1,5 +1,8 @@
 import { BookOpenIcon, BriefcaseBusinessIcon, MessageCircleMoreIcon } from "lucide-react-native";
 import { NotificationProvider } from "@/context/push-notifications";
+import BriefcaseIcon from "@/components/briefcase-icon";
+import BookIconFill from "@/components/book-fill-icon";
+import MessagesIcon from "@/components/messages-icon";
 import HeaderLayout from "@/layouts/headert-layout";
 import { Redirect, Stack, Tabs } from "expo-router";
 import { getStorageUserInfos } from "@/utils/store";
@@ -24,8 +27,9 @@ export default function AppLayout() {
 					headerShown: false,
 					tabBarActiveTintColor: config.theme.extend.colors.primary,
 					tabBarLabelStyle: {
-						fontSize: 10,
+						fontSize: 10.5,
 						marginTop: 4,
+						fontWeight: "400",
 					},
 				}}
 			>
@@ -41,7 +45,9 @@ export default function AppLayout() {
 					}}
 					options={{
 						headerShown: false,
-						tabBarIcon: ({ color }) => <HomeIcon color={color} />,
+						tabBarIcon: ({ color }) => {
+							return <HomeIcon color={color} fill={color === config.theme.extend.colors.primary ? color : "none"} />
+						},
 						title: "Accueil",
 					}}
 				/>
@@ -51,14 +57,19 @@ export default function AppLayout() {
 						title: "Groupe Valorem",
 						headerShown: true,
 						header: () => <HeaderLayout title="Organigramme" backButton={false} />,
-						tabBarIcon: ({ color }) => <BriefcaseBusinessIcon color={color} size={21} />,
+						tabBarIcon: ({ color }) => <BriefcaseIcon color={color} />,
 					}}
 				/>
 				<Tabs.Screen
 					name="supplier-category"
 					options={{
 						title: "Fournisseurs",
-						tabBarIcon: ({ color }) => <BookIcon color={color} />,
+						tabBarIcon: ({ color }) => {
+							if (color === config.theme.extend.colors.primary) {
+								return <BookIconFill color={color} />
+							}
+							return <BookIcon color={color} />
+						},
 					}}
 				/>
 				<Tabs.Screen
@@ -72,7 +83,7 @@ export default function AppLayout() {
 					name="chat"
 					options={{
 						title: "Messages",
-						tabBarIcon: ({ color }) => <MessageCircleMoreIcon color={color} size={21} strokeWidth={2} />,
+						tabBarIcon: ({ color }) => <MessagesIcon color={color} />,
 					}}
 				/>
 				{/* <Tabs.Screen
