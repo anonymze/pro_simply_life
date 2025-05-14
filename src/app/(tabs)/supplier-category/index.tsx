@@ -1,13 +1,12 @@
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
 import CardSupplierCategory from "@/components/card/card-supplier-category";
+import CardSearchSupplier from "@/components/card/card-search-supplier";
 import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import CardSupplier from "@/components/card/card-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
-import { Supplier } from "@/types/supplier";
 import Title from "@/components/ui/title";
 import { Text, View } from "react-native";
 import { Dimensions } from "react-native";
@@ -142,29 +141,3 @@ export default function Page() {
 	)();
 }
 
-const CardSearchSupplier = ({
-	supplier,
-}: {
-	supplier: Supplier & { productName: string; productId: string; categoryName: string };
-}) => {
-	return (
-		<View>
-			<Text className="text-md mb-3 font-semibold text-defaultGray">{supplier.productName}</Text>
-			<CardSupplier
-				icon={
-					<ImagePlaceholder source={supplier.logo_mini?.url ?? ""} style={{ width: 26, height: 26, borderRadius: 4 }} />
-				}
-				supplier={supplier}
-				link={{
-					pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
-					params: {
-						"supplier-category": supplier.productId,
-						"supplier-category-name": supplier.categoryName,
-						"supplier-product-name": supplier.productName,
-						supplier: supplier.id,
-					},
-				}}
-			/>
-		</View>
-	);
-};

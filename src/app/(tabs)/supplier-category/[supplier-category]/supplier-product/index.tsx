@@ -1,14 +1,11 @@
 import { getSupplierCategoryQuery } from "@/api/queries/supplier-categories-queries";
 import CardSupplierProduct from "@/components/card/card-supplier-product";
 import CardSearchSupplier from "@/components/card/card-search-supplier";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
-import CardSupplier from "@/components/card/card-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import { Supplier } from "@/types/supplier";
 import Title from "@/components/ui/title";
 import { Text, View } from "react-native";
 import config from "tailwind.config";
