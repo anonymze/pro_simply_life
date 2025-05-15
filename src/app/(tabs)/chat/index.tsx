@@ -73,7 +73,7 @@ export default function Page() {
 						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
 							<View className="flex-row items-center justify-between gap-4">
-								{userHierarchy[userInfos?.user?.role!] < 1 && (
+								{userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 && (
 									<TouchableOpacity
 										onPress={() => {
 											Alert.alert(

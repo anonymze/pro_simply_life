@@ -1,10 +1,15 @@
 import HeaderLayout from "@/layouts/headert-layout";
+import { getStorageUserInfos } from "@/utils/store";
 import { truncateText } from "@/utils/helper";
+import { userHierarchy } from "@/types/user";
 import { Platform } from "react-native";
 import { Stack } from "expo-router";
+import React from "react";
 
 
 export default function ChatLayout() {
+	const userInfos = React.useMemo(() => getStorageUserInfos(), []);
+
 	return (
 		<Stack
 			screenOptions={{
@@ -16,7 +21,7 @@ export default function ChatLayout() {
 			<Stack.Screen
 				name="index"
 				options={{
-					header: () => <HeaderLayout backButton={false} title="Conversations" sheet={{ link: "/chat/new-room" }} />,
+					header: () => <HeaderLayout backButton={false} title="Conversations" sheet={userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 ? { link: "/chat/new-room" } : undefined} />,
 				}}
 			/>
 			<Stack.Screen

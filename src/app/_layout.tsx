@@ -87,7 +87,7 @@ const Layout = () => {
 		<GestureHandlerRootView>
 			<BottomSheetModalProvider>
 				<KeyboardProvider>
-					<StatusBar style="dark" translucent animated />
+					<StatusBar style="dark" translucent />
 					{/* already added by expo router on every route */}
 					{/* <SafeAreaProvider> */}
 						<Stack

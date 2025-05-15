@@ -151,10 +151,7 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 
-changement icone + push notifs + depp link + traduction
+push notifs + deep link + traduction
 Unit tests
 reset expiration token on success
-
-
-CARTE google + video list + push notif
 
