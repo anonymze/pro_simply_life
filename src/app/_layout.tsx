@@ -13,9 +13,9 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Sentry from "@sentry/react-native";
 import { queryClient } from "@/api/_queries";
 import { StatusBar } from "expo-status-bar";
+import * as Updates from "expo-updates";
 import * as Network from "expo-network";
 import { Stack } from "expo-router";
-// import { Image } from "expo-image";
 import React from "react";
 
 
@@ -73,6 +73,7 @@ export default Sentry.wrap(function RootLayout() {
 });
 
 const Layout = () => {
+	const { isUpdateAvailable, isUpdatePending } = Updates.useUpdates();
 
 	// refetch on app focus
 	React.useEffect(() => {
@@ -80,8 +81,21 @@ const Layout = () => {
 		// Image.prefetch(require("@/assets/images/icon.png")).catch(() => {});
 		const subscription = AppState.addEventListener("change", onAppStateChange);
 		SplashScreen.hideAsync();
+
 		return () => subscription.remove();
 	}, []);
+
+	React.useEffect(() => {
+		if (isUpdatePending) {
+			Updates.reloadAsync();
+		}
+	}, [isUpdatePending]);
+
+	React.useEffect(() => {
+		if (isUpdateAvailable) {
+			Updates.fetchUpdateAsync();
+		}
+	}, [isUpdateAvailable]);
  
 	return (
 		<GestureHandlerRootView>
