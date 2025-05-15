@@ -3,6 +3,7 @@ import { registerForPushNotificationsAsync } from "@/utils/register-push-notific
 import { EventSubscription } from "expo-modules-core";
 import * as Notifications from "expo-notifications";
 
+
 interface NotificationContextType {
 	expoPushToken: string | null;
 	notification: Notifications.Notification | null;
@@ -53,10 +54,10 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 
 		return () => {
 			if (notificationListener.current) {
-				Notifications.removeNotificationSubscription(notificationListener.current);
+				notificationListener.current.remove();
 			}
 			if (responseListener.current) {
-				Notifications.removeNotificationSubscription(responseListener.current);
+				responseListener.current.remove();
 			}
 		};
 	}, []);
