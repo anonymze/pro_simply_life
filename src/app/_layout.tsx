@@ -85,12 +85,14 @@ const Layout = () => {
 		return () => subscription.remove();
 	}, []);
 
+	// TODO
 	React.useEffect(() => {
 		if (isUpdatePending) {
 			Updates.reloadAsync();
 		}
 	}, [isUpdatePending]);
 
+	// TODO
 	React.useEffect(() => {
 		if (isUpdateAvailable) {
 			Updates.fetchUpdateAsync();
