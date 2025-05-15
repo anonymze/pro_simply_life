@@ -32,6 +32,12 @@ importers:
       '@shopify/flash-list':
         specifier: 1.7.6
         version: 1.7.6(@babel/runtime@7.27.1)(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@tanstack/db':
+        specifier: ^0.0.2
+        version: 0.0.2(@electric-sql/client@1.0.4)(typescript@5.8.3)
+      '@tanstack/db-collections':
+        specifier: ^0.0.2
+        version: 0.0.2(@electric-sql/client@1.0.4)(typescript@5.8.3)
       '@tanstack/react-form':
         specifier: ^1.9.0
         version: 1.9.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -704,6 +710,20 @@ packages:
   '@egjs/hammerjs@2.0.17':
     resolution: {integrity: sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==}
     engines: {node: '>=0.8.0'}
+
+  '@electric-sql/client@1.0.4':
+    resolution: {integrity: sha512-kyywKJNYvbzuAXfykPm537axuFjvpCxGWCKfOLeziNNMEM5LY81UfpEV450gKqPN2Fws51VL0tLgRTTYEPOzrg==}
+
+  '@electric-sql/d2ts@0.1.5':
+    resolution: {integrity: sha512-Rmhlmp5G7P229Ul1LLxmnTgY51DIFEw4YJeouyZ9Dg+4nGbOvNAFx2tnb+ghGH77Cd4oMjxqB+94+YasPdu9nA==}
+    peerDependencies:
+      '@electric-sql/client': '>=1.0.0-beta.4'
+      better-sqlite3: ^11.7.0
+    peerDependenciesMeta:
+      '@electric-sql/client':
+        optional: true
+      better-sqlite3:
+        optional: true
 
   '@expo/cli@0.24.13':
     resolution: {integrity: sha512-2LSdbvYs+WmUljnplQXMCUyNzyX4H+F4l8uExfA1hud25Bl5kyaGrx1jjtgNxMTXmfmMjvgBdK798R50imEhkA==}
@@ -1433,6 +1453,11 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
+  '@rollup/rollup-darwin-arm64@4.40.2':
+    resolution: {integrity: sha512-Gzf1Hn2Aoe8VZzevHostPX23U7N5+4D36WJNHK88NZHCJr7aVMG4fadqkIf72eqVPGjGc0HJHNuUaUcxiR+N/w==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@sentry-internal/browser-utils@8.54.0':
     resolution: {integrity: sha512-DKWCqb4YQosKn6aD45fhKyzhkdG7N6goGFDeyTaJFREJDFVDXiNDsYZu30nJ6BxMM7uQIaARhPAC5BXfoED3pQ==}
     engines: {node: '>=14.18'}
@@ -1548,11 +1573,28 @@ packages:
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
 
+  '@standard-schema/spec@1.0.0':
+    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
+
+  '@tanstack/db-collections@0.0.2':
+    resolution: {integrity: sha512-puyyE4MOj0oTKHY/rmc/n+xyvlGN8Cd65UqT3u/OGXQpj4ZswVfy63/h7LYf4LEM3eYGktMNwv0jScU7Xp5rGw==}
+    peerDependencies:
+      '@electric-sql/client': '>=1.0.0'
+      typescript: '>=4.7'
+
+  '@tanstack/db@0.0.2':
+    resolution: {integrity: sha512-9B2jF9x8LxWpFY5hAkljVh4zdE/ldt9kg7gWngJZaGYrBAy3CpK5v/wrVgnc3/OqNJQA5cjc57L0684ab4EXCA==}
+    peerDependencies:
+      typescript: '>=4.7'
+
   '@tanstack/form-core@1.9.0':
     resolution: {integrity: sha512-lEXXQdIMW7PcybwnzJ+6VaEC65tWV/ZCgYfR5nC+lApXSlLPN+bp1fJanIclsw5U4dnx3DOxeOy/uzXwJ02wDQ==}
 
   '@tanstack/query-core@5.75.0':
     resolution: {integrity: sha512-rk8KQuCdhoRkzjRVF3QxLgAfFUyS0k7+GCQjlGEpEGco+qazJ0eMH6aO1DjDjibH7/ik383nnztua3BG+lOnwg==}
+
+  '@tanstack/query-core@5.76.0':
+    resolution: {integrity: sha512-FN375hb8ctzfNAlex5gHI6+WDXTNpe0nbxp/d2YJtnP+IBM6OUm7zcaoCW6T63BawGOYZBbKC0iPvr41TteNVg==}
 
   '@tanstack/react-form@1.9.0':
     resolution: {integrity: sha512-jbd3QsohonHF93750uuFLTcv1pZeMOmfKP5kZu/VIwc3aZ1Y6NRsesx/CBhdPZD79ApCPZ7WfUmsKMLIER29gw==}
@@ -2655,6 +2697,10 @@ packages:
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
+
+  fractional-indexing@3.2.0:
+    resolution: {integrity: sha512-PcOxmqwYCW7O2ovKRU8OoQQj2yqTfEB/yeTYk4gPid6dN5ODRfU1hXd9tTVZzax/0NkO7AxpHykvZnT1aYp/BQ==}
+    engines: {node: ^14.13.1 || >=16.0.0}
 
   freeport-async@2.0.0:
     resolution: {integrity: sha512-K7od3Uw45AJg00XUmy15+Hae2hOcgKcmN3/EF6Y7i01O0gaqiRx8sUSpsb9+BRNL8RPBrhzPsVfy8q9ADlJuWQ==}
@@ -5239,6 +5285,16 @@ snapshots:
     dependencies:
       '@types/hammerjs': 2.0.46
 
+  '@electric-sql/client@1.0.4':
+    optionalDependencies:
+      '@rollup/rollup-darwin-arm64': 4.40.2
+
+  '@electric-sql/d2ts@0.1.5(@electric-sql/client@1.0.4)':
+    dependencies:
+      fractional-indexing: 3.2.0
+    optionalDependencies:
+      '@electric-sql/client': 1.0.4
+
   '@expo/cli@0.24.13':
     dependencies:
       '@0no-co/graphql.web': 1.1.2
@@ -6303,6 +6359,9 @@ snapshots:
     transitivePeerDependencies:
       - pdfjs-dist
 
+  '@rollup/rollup-darwin-arm64@4.40.2':
+    optional: true
+
   '@sentry-internal/browser-utils@8.54.0':
     dependencies:
       '@sentry/core': 8.54.0
@@ -6423,11 +6482,35 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
+  '@standard-schema/spec@1.0.0': {}
+
+  '@tanstack/db-collections@0.0.2(@electric-sql/client@1.0.4)(typescript@5.8.3)':
+    dependencies:
+      '@electric-sql/client': 1.0.4
+      '@tanstack/db': 0.0.2(@electric-sql/client@1.0.4)(typescript@5.8.3)
+      '@tanstack/query-core': 5.76.0
+      '@tanstack/store': 0.7.0
+      typescript: 5.8.3
+    transitivePeerDependencies:
+      - better-sqlite3
+
+  '@tanstack/db@0.0.2(@electric-sql/client@1.0.4)(typescript@5.8.3)':
+    dependencies:
+      '@electric-sql/d2ts': 0.1.5(@electric-sql/client@1.0.4)
+      '@standard-schema/spec': 1.0.0
+      '@tanstack/store': 0.7.0
+      typescript: 5.8.3
+    transitivePeerDependencies:
+      - '@electric-sql/client'
+      - better-sqlite3
+
   '@tanstack/form-core@1.9.0':
     dependencies:
       '@tanstack/store': 0.7.0
 
   '@tanstack/query-core@5.75.0': {}
+
+  '@tanstack/query-core@5.76.0': {}
 
   '@tanstack/react-form@1.9.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -7709,6 +7792,8 @@ snapshots:
       mime-types: 2.1.35
 
   forwarded@0.2.0: {}
+
+  fractional-indexing@3.2.0: {}
 
   freeport-async@2.0.0: {}
 
