@@ -74,7 +74,7 @@ export default function Page() {
 			<BackgroundLayout className="px-4">
 				{hasMoreInformation && (
 					<Picker
-						style={{ width: 260, marginBottom: 1, marginTop: 20, marginHorizontal: "auto" }}
+						style={{ width: 260, marginTop: 20, marginHorizontal: "auto" }}
 						variant="segmented"
 						options={["Contact", "Produit"]}
 						selectedIndex={null}
@@ -97,8 +97,8 @@ export default function Page() {
 				)}
 				<ScrollView
 					showsVerticalScrollIndicator={false}
-					style={{ backgroundColor: config.theme.extend.colors.background }}
-					contentContainerStyle={{ paddingBottom: 10, paddingTop: 16 }}
+					style={{ backgroundColor: config.theme.extend.colors.background, marginTop: 16 }}
+					contentContainerStyle={{ paddingBottom: 10 }}
 				>
 					{!hasMoreInformation ? (
 						<ContactInfo
