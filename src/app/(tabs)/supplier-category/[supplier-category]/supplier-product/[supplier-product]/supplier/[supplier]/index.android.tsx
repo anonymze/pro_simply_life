@@ -1,6 +1,5 @@
 import { ArrowRight, ChevronRight, Download, EyeIcon, FileIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon, } from "lucide-react-native";
 import { ActivityIndicator, Alert, Linking, ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
-import Animated, { Easing, useSharedValue, withTiming } from "react-native-reanimated";
 import { HrefObject, Link, router, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
@@ -14,12 +13,8 @@ import config from "tailwind.config";
 import React from "react";
 
 
-const heightContact = 224;
-const heightOtherInformation = 744;
-
 export default function Page() {
-	const scrollRef = React.useRef<Animated.ScrollView>(null);
-	const heightScrollView = useSharedValue(heightContact);
+	const scrollRef = React.useRef<ScrollView>(null);
 
 	const {
 		supplier: supplierId,
@@ -72,93 +67,102 @@ export default function Page() {
 				</View> */}
 			</View>
 			<BackgroundLayout className="px-4">
-				{hasMoreInformation && (
-					<Picker
-						style={{ width: 260, marginTop: 20, marginHorizontal: "auto", }}
+				{(hasMoreInformation || data.brochure) && (
+						<Picker
+						style={{ width: 260, marginTop: 20, marginHorizontal: "auto", marginBottom: 10}}
 						variant="segmented"
 						options={["Contact", "Produit"]}
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
 								scrollRef.current?.scrollTo({ x: 0, animated: true });
-								heightScrollView.value = withTiming(heightContact, {
-									easing: Easing.bezier(0.25, 0.1, 0.25, 1.0),
-									// duration: 300,
-								});
 							} else {
 								scrollRef.current?.scrollToEnd({ animated: true });
-								heightScrollView.value = withTiming(heightOtherInformation, {
-									easing: Easing.bezier(0.25, 0.1, 0.25, 1.0),
-									// duration: 300,
-								});
 							}
 						}}
 					/>
 				)}
 				<ScrollView
 					showsVerticalScrollIndicator={false}
-					style={{ backgroundColor: config.theme.extend.colors.background, marginTop: 16 }}
+					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!hasMoreInformation ? (
-						<ContactInfo
-							phone={data.contact_info?.phone}
-							email={data.contact_info?.email}
-							firstname={data.contact_info?.firstname}
-							lastname={data.contact_info?.lastname}
-						/>
+					{!hasMoreInformation && !data.brochure ? (
+						<View className="mt-4 gap-4">
+							<ContactInfo
+								phone={data.contact_info?.phone}
+								email={data.contact_info?.email}
+								firstname={data.contact_info?.firstname}
+								lastname={data.contact_info?.lastname}
+							/>
+							{(data.connexion?.email || data.connexion?.password) && (
+								<Logs
+									link={{
+										pathname:
+											"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+										params: {
+											"supplier-category": supplierCategoryId,
+											"supplier-product": supplierProductId,
+											supplier: supplierId,
+											logs: JSON.stringify(data.connexion),
+										},
+									}}
+								/>
+							)}
+						</View>
 					) : (
-						<Animated.ScrollView
+						<ScrollView
 							ref={scrollRef}
 							horizontal
 							showsHorizontalScrollIndicator={false}
 							scrollEnabled={false}
 							decelerationRate={"fast"}
-							style={{ height: heightScrollView }}
 							contentContainerStyle={{ gap: 16 }}
 						>
-							<View style={{ width: Dimensions.get("window").width - 28, height: heightContact }}>
+							<View className="gap-2" style={{ width: Dimensions.get("window").width - 28 }}>
 								<ContactInfo
 									phone={data.contact_info?.phone}
 									email={data.contact_info?.email}
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
 								/>
+								{(data.connexion?.email || data.connexion?.password) && (
+									<Logs
+										link={{
+											pathname:
+												"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+											params: {
+												"supplier-category": supplierCategoryId,
+												"supplier-product": supplierProductId,
+												supplier: supplierId,
+												logs: JSON.stringify(data.connexion),
+											},
+										}}
+									/>
+								)}
 							</View>
-							<View style={{ width: Dimensions.get("window").width - 28, height: heightOtherInformation }}>
-								<OtherInformation otherInformation={data.other_information} />
+							<View style={{ width: Dimensions.get("window").width - 28 }}>
+								<View className="gap-4">
+									{data.brochure && (
+										<Brochure
+											brochure={data.brochure}
+											updatedAt={data.updatedAt}
+											link={{
+												pathname:
+													"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+												params: {
+													"supplier-category": supplierCategoryId,
+													"supplier-product": supplierProductId,
+													supplier: supplierId,
+													pdf: data.brochure.filename,
+												},
+											}}
+										/>
+									)}
+									{hasMoreInformation && <OtherInformation otherInformation={data.other_information} />}
+								</View>
 							</View>
-						</Animated.ScrollView>
-					)}
-					{(data.connexion?.email || data.connexion?.password) && (
-						<Logs
-							link={{
-								pathname:
-									"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-								params: {
-									"supplier-category": supplierCategoryId,
-									"supplier-product": supplierProductId,
-									supplier: supplierId,
-									logs: JSON.stringify(data.connexion),
-								},
-							}}
-						/>
-					)}
-					{data.brochure && (
-						<Brochure
-							brochure={data.brochure}
-							updatedAt={data.updatedAt}
-							link={{
-								pathname:
-									"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
-								params: {
-									"supplier-category": supplierCategoryId,
-									"supplier-product": supplierProductId,
-									supplier: supplierId,
-									pdf: data.brochure.filename,
-								},
-							}}
-						/>
+						</ScrollView>
 					)}
 				</ScrollView>
 			</BackgroundLayout>
@@ -169,7 +173,7 @@ export default function Page() {
 const Logs = ({ link }: { link: HrefObject }) => {
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity className="mt-4 w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
+			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
 				<View className="size-14 items-center justify-center rounded-lg bg-secondaryLight">
 					<KeyRoundIcon size={18} color={config.theme.extend.colors.secondaryDark} />
 				</View>
@@ -187,7 +191,7 @@ const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: s
 	const [loadingOpen, setLoadingOpen] = React.useState(false);
 
 	return (
-		<View className="mt-4 w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="font-semibold text-sm text-defaultGray">Brochure</Text>
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="flex-shrink flex-row items-center gap-2">
@@ -307,7 +311,7 @@ const ContactInfo = ({
 	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
 
 	return (
-		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="font-semibold text-sm text-defaultGray">Prénom et Nom</Text>
 			<Text className="font-semibold text-base text-dark">
 				{firstname} {lastname?.toUpperCase()}
