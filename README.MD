@@ -26,6 +26,9 @@ eas build:configure
 // link project to the account developer with an identifier
 eas credentials
 
+// creates or update branch production then update the channel production in testflight
+eas update --channel production
+
 // native build on eas host (preview for internal testing with testFlight for exemple)
 eas build --profile preview
 
@@ -151,7 +154,7 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 
-push notifs + deep link + traduction
+channel + push notifs + deep link + traduction
 Unit tests
 reset expiration token on success
 

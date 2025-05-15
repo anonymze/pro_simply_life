@@ -74,6 +74,7 @@ export default function Page() {
 				<ScrollView
 					className="flex-1"
 					showsVerticalScrollIndicator={false}
+					contentContainerStyle={{ paddingBottom: 10 }}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 				>
 					<View className="mt-5 gap-2">

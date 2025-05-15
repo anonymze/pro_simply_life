@@ -55,6 +55,7 @@ export default function Page() {
 				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
+				contentContainerStyle={{ paddingBottom: 10 }}
 			>
 				<View className="gap-2">
 					{Object.keys(groupedSuppliers).map((letter) => (

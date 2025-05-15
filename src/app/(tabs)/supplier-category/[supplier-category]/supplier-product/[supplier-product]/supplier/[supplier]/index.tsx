@@ -14,13 +14,12 @@ import config from "tailwind.config";
 import React from "react";
 
 
-const heightContact = 195;
-const heightOtherInformation = 794;
-
+const heightContact = 224;
+const heightOtherInformation = 744;
 
 export default function Page() {
 	const scrollRef = React.useRef<Animated.ScrollView>(null);
-	const heightScrollView = useSharedValue(195);
+	const heightScrollView = useSharedValue(heightContact);
 
 	const {
 		supplier: supplierId,
@@ -44,9 +43,9 @@ export default function Page() {
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
 				<View className="mb-4 flex-row items-center gap-2">
-					<Text className="text-sm font-semibold text-primary ">{supplierCategoryName}</Text>
+					<Text className="font-semibold text-sm text-primary ">{supplierCategoryName}</Text>
 					<ChevronRight size={14} color={config.theme.extend.colors.primary} />
-					<Text className="text-sm font-semibold text-primary">{supplierProductName}</Text>
+					<Text className="font-semibold text-sm text-primary">{supplierProductName}</Text>
 				</View>
 				<ImagePlaceholder
 					transition={300}
@@ -55,7 +54,7 @@ export default function Page() {
 					style={{ width: "95%", height: 60 }}
 				/>
 				<View className="mt-4 flex-row items-center gap-3">
-					<Text className="text-xl font-bold">{data.name}</Text>
+					<Text className="font-bold text-xl">{data.name}</Text>
 					{data.website && (
 						<TouchableOpacity
 							className="rounded-full bg-primaryUltraLight p-2.5"
@@ -72,10 +71,10 @@ export default function Page() {
 					})}
 				</View> */}
 			</View>
-			<BackgroundLayout className="px-4 pt-4">
+			<BackgroundLayout className="px-4">
 				{hasMoreInformation && (
 					<Picker
-						style={{ width: 260, marginBottom: 10, marginTop: 5, marginHorizontal: "auto" }}
+						style={{ width: 260, marginBottom: 1, marginTop: 20, marginHorizontal: "auto" }}
 						variant="segmented"
 						options={["Contact", "Produit"]}
 						selectedIndex={null}
@@ -99,7 +98,7 @@ export default function Page() {
 				<ScrollView
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
-					contentContainerStyle={{ paddingBottom: 10 }}
+					contentContainerStyle={{ paddingBottom: 10, paddingTop: 16 }}
 				>
 					{!hasMoreInformation ? (
 						<ContactInfo
@@ -175,7 +174,7 @@ const Logs = ({ link }: { link: HrefObject }) => {
 					<KeyRoundIcon size={18} color={config.theme.extend.colors.secondaryDark} />
 				</View>
 				<View className="flex-1">
-					<Text className="text-lg font-semibold text-dark">Identifiants de connexion</Text>
+					<Text className="font-semibold text-lg text-dark">Identifiants de connexion</Text>
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
@@ -189,15 +188,15 @@ const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: s
 
 	return (
 		<View className="mt-4 w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="text-sm font-semibold text-defaultGray">Brochure</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Brochure</Text>
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="flex-shrink flex-row items-center gap-2">
 					<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
 						<FileIcon size={18} color={config.theme.extend.colors.defaultGray} />
 					</View>
 					<View className="flex-shrink">
-						<Text className="text-sm font-semibold text-dark">{brochure.filename}</Text>
-						<Text className="text-sm font-semibold text-defaultGray">
+						<Text className="font-semibold text-sm text-dark">{brochure.filename}</Text>
+						<Text className="font-semibold text-sm text-defaultGray">
 							{new Date(updatedAt).toLocaleDateString("fr-FR", {
 								day: "2-digit",
 								month: "2-digit",
@@ -304,46 +303,37 @@ const ContactInfo = ({
 	firstname?: string | null;
 	lastname?: string | null;
 }) => {
-	const numbers = phone?.split(",").map((number) => number.replace(/^\s+|\s+$/g, ""));
+	const numbersString = phone?.replace(",", " / ");
+	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
+
 	return (
 		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="text-sm font-semibold text-defaultGray">Prénom et Nom</Text>
-			<Text className="text-base font-semibold text-dark">
+			<Text className="font-semibold text-sm text-defaultGray">Prénom et Nom</Text>
+			<Text className="font-semibold text-base text-dark">
 				{firstname} {lastname?.toUpperCase()}
 			</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="text-sm font-semibold text-defaultGray">Téléphone</Text>
-					{numbers?.map((number) => {
-						if (!number) return null;
-
-						return (
-							<Text key={number} className="text-base font-semibold text-dark">
-								{number}
-							</Text>
-						);
-					})}
+					<Text className="font-semibold text-sm text-defaultGray">Téléphone</Text>
+					<Text className="font-semibold text-base text-dark">{numbersString}</Text>
 				</View>
-				{numbers?.map((number) => {
-					if (!number) return null;
-
-					return (
-						<TouchableOpacity
-							key={number}
-							onPress={() => Linking.openURL(`tel:${number}`)}
-							className="rounded-full bg-primaryUltraLight p-3"
-						>
-							<PhoneIcon size={16} color={config.theme.extend.colors.primary} />
-						</TouchableOpacity>
-					);
-				})}
+				{phone && (
+					<TouchableOpacity
+						onPress={() => {
+							Linking.openURL(`tel:${numbers?.[0]}`);
+						}}
+						className="rounded-full bg-primaryUltraLight p-3"
+					>
+						<PhoneIcon size={16} color={config.theme.extend.colors.primary} />
+					</TouchableOpacity>
+				)}
 			</View>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="text-sm font-semibold text-defaultGray">E-mail</Text>
-					<Text className="text-base font-semibold text-dark">{email}</Text>
+					<Text className="font-semibold text-sm text-defaultGray">E-mail</Text>
+					<Text className="font-semibold text-base text-dark">{email}</Text>
 				</View>
 				{email && (
 					<TouchableOpacity
@@ -361,42 +351,35 @@ const ContactInfo = ({
 const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["other_information"] }) => {
 	return (
 		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="text-sm font-semibold text-defaultGray">Thématique</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.theme}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Thématique</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.theme}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Remarque</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.annotation}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Remarque</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.annotation}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Frais de souscription</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.subscription_fee}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Frais de souscription</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.subscription_fee}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Durée</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.duration}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Durée</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.duration}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Rentabilité</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.rentability}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Rentabilité</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.rentability}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Rentabilité N1</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.rentability_n1}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Rentabilité N1</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.rentability_n1}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Commission</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.commission}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Commission</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.commission}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Commission pour l'offre publique</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.commission_public_offer}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Commission pour l'offre publique</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.commission_public_offer}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">Commission pour le groupe Valorem</Text>
-			<Text className="text-base font-semibold text-dark">{otherInformation.commission_offer_group_valorem}</Text>
+			<Text className="font-semibold text-sm text-defaultGray">Commission pour le groupe Valorem</Text>
+			<Text className="font-semibold text-base text-dark">{otherInformation.commission_offer_group_valorem}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="text-sm font-semibold text-defaultGray">SCPI</Text>
-			{otherInformation.scpi?.split(",").map((scpi) => {
-				if (!scpi) return null;
-				return (
-					<Text key={scpi} className="text-sm font-semibold text-dark">
-						{scpi.replace(/^\s+|\s+$/g, "")}
-					</Text>
-				);
-			})}
+			<Text className="font-semibold text-sm text-defaultGray">SCPI</Text>
+			<Text className="font-semibold text-sm text-dark">{otherInformation.scpi}</Text>
 		</View>
 	);
 };

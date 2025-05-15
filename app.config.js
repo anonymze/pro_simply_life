@@ -138,6 +138,9 @@ export default {
 				},
 			],
 		],
+		updates: {
+			url: "https://u.expo.dev/71cf24a7-3efc-4fe5-9b69-f37c315aebbc",
+		},
 		extra: {
 			eas: {
 				projectId: "71cf24a7-3efc-4fe5-9b69-f37c315aebbc",
