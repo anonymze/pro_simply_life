@@ -4,15 +4,20 @@ import CardSearchSupplier from "@/components/card/card-search-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
+import { Dimensions, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
+import { Picker } from "@expo/ui/swift-ui";
 import Title from "@/components/ui/title";
-import { Text, View } from "react-native";
+import { Media } from "@/types/media";
 import config from "tailwind.config";
 import React from "react";
 
+import { Brochure } from "./[supplier-product]/supplier/[supplier]";
+
 
 export default function Page() {
+	const scrollRef = React.useRef<ScrollView>(null);
 	const [search, setSearch] = React.useState("");
 	const { "supplier-category": supplierCategoryId, "supplier-category-name": supplierCategoryName } =
 		useLocalSearchParams();
@@ -61,58 +66,166 @@ export default function Page() {
 		<BackgroundLayout className="px-4 pt-4">
 			<Title className="mb-2 mt-0" title={data.name} />
 			<Text className="mb-5 text-xs text-defaultGray">{description}</Text>
-			<InputSearch
-				placeholder="Rechercher un fournisseur..."
-				onSubmitEditing={(input) => {
-					setSearch(input.nativeEvent.text);
-				}}
-				onClear={() => {
-					setSearch("");
-				}}
-			/>
-			{search.length < 3 ? (
+
+			{!!data?.offers?.length && (
+				<Picker
+					style={{ width: 260, marginBottom: 16, marginHorizontal: "auto" }}
+					variant="segmented"
+					options={["Produits", "Offres du moment"]}
+					selectedIndex={null}
+					onOptionSelected={({ nativeEvent: { index } }) => {
+						if (index === 0) {
+							scrollRef.current?.scrollTo({ x: 0, animated: true });
+						} else {
+							scrollRef.current?.scrollToEnd({ animated: true });
+						}
+					}}
+				/>
+			)}
+
+			{!!data?.offers?.length ? (
 				<ScrollView
-					className="flex-1"
-					showsVerticalScrollIndicator={false}
-					contentContainerStyle={{ paddingBottom: 10 }}
-					style={{ backgroundColor: config.theme.extend.colors.background }}
+					ref={scrollRef}
+					horizontal
+					showsHorizontalScrollIndicator={false}
+					scrollEnabled={false}
+					decelerationRate={"fast"}
+					contentContainerStyle={{ gap: 16 }}
 				>
-					<View className="mt-5 gap-2">
-						{data.product_suppliers.map((supplierProduct) => (
-							<CardSupplierProduct
-								key={supplierProduct.id}
-								supplierProduct={supplierProduct}
-								link={{
-									pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
-									params: {
-										"supplier-category": supplierCategoryId,
-										"supplier-category-name": supplierCategoryName,
-										"supplier-product": supplierProduct.id,
-										"supplier-product-name": supplierProduct.name,
-									},
-								}}
-							/>
-						))}
+					<View style={{ width: Dimensions.get("window").width - 28 }}>
+						<InputSearch
+							placeholder="Rechercher un fournisseur..."
+							onSubmitEditing={(input) => {
+								setSearch(input.nativeEvent.text);
+							}}
+							onClear={() => {
+								setSearch("");
+							}}
+						/>
+
+						{search.length < 3 ? (
+							<ScrollView
+								className="flex-1"
+								showsVerticalScrollIndicator={false}
+								contentContainerStyle={{ paddingBottom: 10 }}
+								style={{ backgroundColor: config.theme.extend.colors.background }}
+							>
+								<View className="mt-5 gap-2">
+									{data.product_suppliers.map((supplierProduct) => (
+										<CardSupplierProduct
+											key={supplierProduct.id}
+											supplierProduct={supplierProduct}
+											link={{
+												pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+												params: {
+													"supplier-category": supplierCategoryId,
+													"supplier-category-name": supplierCategoryName,
+													"supplier-product": supplierProduct.id,
+													"supplier-product-name": supplierProduct.name,
+												},
+											}}
+										/>
+									))}
+								</View>
+							</ScrollView>
+						) : (
+							<>
+								{!filteredData?.length ? (
+									<View className="flex-1 items-center justify-center ">
+										<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
+									</View>
+								) : (
+									<ScrollView
+										className="flex-1"
+										showsVerticalScrollIndicator={false}
+										style={{ backgroundColor: config.theme.extend.colors.background }}
+									>
+										<View className="mt-5 gap-5">
+											{filteredData.map((supplier) => (
+												<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
+											))}
+										</View>
+									</ScrollView>
+								)}
+							</>
+						)}
+					</View>
+					<View className="gap-2" style={{ width: Dimensions.get("window").width - 28 }}>
+						{!!data?.offers?.length &&
+							data.offers.map((offer) => (
+								<Brochure
+								title="Plaquette"
+									key={offer.id}
+									brochure={offer.file}
+									updatedAt={data.updatedAt}
+									link={{
+										pathname: "/supplier-category/[supplier-category]/supplier-product/pdf/[pdf]",
+										params: {
+											"supplier-category": supplierCategoryId,
+											pdf: offer.file.filename,
+										},
+									}}
+								/>
+							))}
 					</View>
 				</ScrollView>
 			) : (
 				<>
-					{!filteredData?.length ? (
-						<View className="flex-1 items-center justify-center ">
-							<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
-						</View>
-					) : (
+					<InputSearch
+						placeholder="Rechercher un fournisseur..."
+						onSubmitEditing={(input) => {
+							setSearch(input.nativeEvent.text);
+						}}
+						onClear={() => {
+							setSearch("");
+						}}
+					/>
+
+					{search.length < 3 ? (
 						<ScrollView
 							className="flex-1"
 							showsVerticalScrollIndicator={false}
+							contentContainerStyle={{ paddingBottom: 10 }}
 							style={{ backgroundColor: config.theme.extend.colors.background }}
 						>
-							<View className="mt-5 gap-5">
-								{filteredData.map((supplier) => (
-									<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
+							<View className="mt-5 gap-2">
+								{data.product_suppliers.map((supplierProduct) => (
+									<CardSupplierProduct
+										key={supplierProduct.id}
+										supplierProduct={supplierProduct}
+										link={{
+											pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+											params: {
+												"supplier-category": supplierCategoryId,
+												"supplier-category-name": supplierCategoryName,
+												"supplier-product": supplierProduct.id,
+												"supplier-product-name": supplierProduct.name,
+											},
+										}}
+									/>
 								))}
 							</View>
 						</ScrollView>
+					) : (
+						<>
+							{!filteredData?.length ? (
+								<View className="flex-1 items-center justify-center ">
+									<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
+								</View>
+							) : (
+								<ScrollView
+									className="flex-1"
+									showsVerticalScrollIndicator={false}
+									style={{ backgroundColor: config.theme.extend.colors.background }}
+								>
+									<View className="mt-5 gap-5">
+										{filteredData.map((supplier) => (
+											<CardSearchSupplier key={supplier.productId + supplier.id} supplier={supplier} />
+										))}
+									</View>
+								</ScrollView>
+							)}
+						</>
 					)}
 				</>
 			)}

@@ -30,6 +30,13 @@ export default function SupplierLayout() {
 			/>
 			<Stack.Screen
 				options={{
+					presentation: "modal",
+					headerShown: false,
+				}}
+				name="[supplier-category]/supplier-product/pdf/[pdf]"
+			/>
+			<Stack.Screen
+				options={{
 					headerShown: true,
 					gestureEnabled: false,
 					header: () => <HeaderLayout backgroundColor="bg-white" />,

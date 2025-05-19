@@ -50,7 +50,7 @@ export interface SupplierCategory {
 	offers?:
 		| {
 				name: string;
-				file: string | Media;
+				file: Media;
 				description?: string | null;
 				id?: string | null;
 		  }[]

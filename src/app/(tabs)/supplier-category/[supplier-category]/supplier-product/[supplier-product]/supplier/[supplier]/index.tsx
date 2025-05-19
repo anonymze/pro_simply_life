@@ -186,13 +186,13 @@ const Logs = ({ link }: { link: HrefObject }) => {
 	);
 };
 
-const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: string; link: HrefObject }) => {
+export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { brochure: Media; updatedAt: string; link: HrefObject; title?: string }) => {
 	const [loadingDownload, setLoadingDownload] = React.useState(false);
 	const [loadingOpen, setLoadingOpen] = React.useState(false);
 
 	return (
 		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="font-semibold text-sm text-defaultGray">Brochure</Text>
+			<Text className="font-semibold text-sm text-defaultGray">{title}</Text>
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="flex-shrink flex-row items-center gap-2">
 					<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">

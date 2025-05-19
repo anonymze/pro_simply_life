@@ -157,4 +157,5 @@ http://localhost:8081/\_expo/atlas
 channel + push notifs + deep link + traduction
 Unit tests
 reset expiration token on success
+rester appuyer pour copier coller un text (numéros de tels)
 
