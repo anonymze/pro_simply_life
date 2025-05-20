@@ -56,11 +56,10 @@ export default function AppLayout() {
 					}}
 				/>
 				<Tabs.Screen
-					name="organigramme"
+					name="organigramme/index"
 					options={{
 						title: "Groupe Valorem",
-						headerShown: true,
-						header: () => <HeaderLayout title="Organigramme" backButton={false} />,
+						headerShown: false,
 						tabBarIcon: ({ color }) => <BriefcaseIcon color={color} />,
 					}}
 				/>

@@ -78,7 +78,7 @@ export default function Page() {
 												icon={
 													<ImagePlaceholder
 														source={supplierCategory.logo?.url ?? ""}
-														style={{ width: 28, height: 28, borderRadius: 4 }}
+														style={{ width: 30, height: 30, borderRadius: 4 }}
 													/>
 												}
 												link={{
@@ -102,7 +102,7 @@ export default function Page() {
 												icon={
 													<ImagePlaceholder
 														source={supplierCategory.logo?.url ?? ""}
-														style={{ width: 28, height: 28, borderRadius: 4 }}
+														style={{ width: 30, height: 30, borderRadius: 4 }}
 													/>
 												}
 												link={{

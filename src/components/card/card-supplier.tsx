@@ -21,8 +21,8 @@ export default function CardSupplier({
 	}, [link]);
 
 return (
-		<Link href={link} push asChild onPressIn={onPress}>
-			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl  p-2 bg-white shadow-sm shadow-defaultGray/10">
+		<Link href={link} push asChild >
+			<TouchableOpacity onPressIn={onPress} className="w-full flex-row items-center gap-3 rounded-xl  p-2 bg-white shadow-sm shadow-defaultGray/10">
 				<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
 					{icon}
 				</View>

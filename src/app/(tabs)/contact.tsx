@@ -77,7 +77,7 @@ export default function Page() {
 				<View className="flex-1 flex-row items-center">
 					<InputSearch
 						clearable={false}
-						placeholder="Rechercher contact..."
+						placeholder="Rechercher un contact..."
 						onSubmitEditing={(e) => {
 							setInput(e.nativeEvent.text);
 						}}
