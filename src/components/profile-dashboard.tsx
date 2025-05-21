@@ -51,7 +51,7 @@ export default function ProfileDashboard({
 								// androidIconName="arrow_down_float"
 								ios={{
 									name: "questionmark.circle",
-									pointSize: 20,
+									pointSize: 21,
 									paletteColors: [
 										{
 											dark: config.theme.extend.colors.primary,
@@ -70,6 +70,7 @@ export default function ProfileDashboard({
 								ios={{
 									name: "rectangle.portrait.and.arrow.right",
 									pointSize: 18,
+									weight: "semibold",
 									paletteColors: [
 										{
 											dark: config.theme.extend.colors.primary,
