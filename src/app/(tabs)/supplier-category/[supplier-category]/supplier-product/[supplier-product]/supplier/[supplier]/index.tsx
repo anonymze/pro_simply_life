@@ -314,14 +314,14 @@ const ContactInfo = ({
 	return (
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="font-semibold text-sm text-defaultGray">Prénom et Nom</Text>
-			<Text className="font-semibold text-base text-dark">
+			<Text selectable className="font-semibold text-base text-dark">
 				{firstname} {lastname?.toUpperCase()}
 			</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
 					<Text className="font-semibold text-sm text-defaultGray">Téléphone</Text>
-					<Text className="font-semibold text-base text-dark">{numbersString}</Text>
+					<Text selectable className="font-semibold text-base text-dark">{numbersString}</Text>
 				</View>
 				{phone && (
 					<TouchableOpacity
@@ -338,7 +338,7 @@ const ContactInfo = ({
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
 					<Text className="font-semibold text-sm text-defaultGray">E-mail</Text>
-					<Text className="font-semibold text-base text-dark">{email}</Text>
+					<Text selectable className="font-semibold text-base text-dark">{email}</Text>
 				</View>
 				{email && (
 					<TouchableOpacity

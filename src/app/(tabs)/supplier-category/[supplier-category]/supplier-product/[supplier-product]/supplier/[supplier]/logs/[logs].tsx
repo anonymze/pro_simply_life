@@ -1,10 +1,9 @@
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Redirect, useLocalSearchParams } from "expo-router";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CopyIcon, PhoneIcon } from "lucide-react-native";
 import * as Clipboard from "expo-clipboard";
-import { StatusBar } from "expo-status-bar";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 
@@ -29,8 +28,8 @@ const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: st
 		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="text-sm font-semibold text-defaultGray">Identifiant</Text>
-					<Text className="text-base font-semibold text-dark">{connexion?.email}</Text>
+					<Text className="font-semibold text-sm text-defaultGray">Identifiant</Text>
+					<Text className="font-semibold text-base text-dark">{connexion?.email}</Text>
 				</View>
 				{connexion.password && (
 					<TouchableOpacity
@@ -48,8 +47,8 @@ const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: st
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="text-sm font-semibold text-defaultGray">Mot de passe</Text>
-					<Text className="text-base font-semibold text-dark">{connexion?.password}</Text>
+					<Text className="font-semibold text-sm text-defaultGray">Mot de passe</Text>
+					<Text className="font-semibold text-base text-dark">{connexion?.password}</Text>
 				</View>
 				{connexion.password && (
 					<TouchableOpacity
