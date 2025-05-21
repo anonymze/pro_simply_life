@@ -31,7 +31,7 @@ export default function Page() {
 					placeholderContentFit="cover"
 					source={data.photo?.url}
 					// contentPosition="top"
-					style={{ width: 140, height: 140, borderRadius: 99 }}
+					style={{ width: 150, height: 150, borderRadius: 99 }}
 				/>
 				<View className="mt-4 items-center gap-3">
 					<Text className="font-bold text-xl">{data.firstname + " " + data.lastname}</Text>

@@ -1,34 +1,28 @@
 import { Text, TouchableOpacity, View } from "react-native";
+import { ArrowRight } from "lucide-react-native";
 import { HrefObject, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
+import config from "tailwind.config";
 import { User } from "@/types/user";
-import { Image } from "expo-image";
 import React from "react";
 
-import ImagePlaceholder from "../ui/image-placeholder";
 
-
-export default function CardEmployee({ user, width, link }: { user: User; width: number; link: HrefObject }) {
+export default function CardSupplier({ icon, user, link }: { icon: React.ReactNode; user: User; link: HrefObject }) {
 	const onPress = React.useCallback(() => {
-		queryClient.setQueryData(["app-user", user.id], user);
-	}, [user]);
+		queryClient.setQueryData(["user", user.id], user);
+	}, [link]);
+
 	return (
-		<Link href={link} asChild>
+		<Link href={link} push asChild>
 			<TouchableOpacity
 				onPressIn={onPress}
-				className="items-center gap-2 rounded-2xl bg-primary pb-2 pt-3"
-				style={{ width }}
+				className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
-				<ImagePlaceholder
-					transition={300}
-					contentFit="cover"
-					// contentPosition="top"
-					placeholder={user.photo?.blurhash}
-					placeholderContentFit="cover"
-					style={{ width: width - 24, height: width, borderRadius: 8 }}
-					source={user.photo?.url}
-				/>
-				<Text className="font-semibold text-lg text-white">{user.firstname + " " + user.lastname}</Text>
+				{icon}
+				<View className="flex-1">
+					<Text className="font-semibold text-lg text-dark">{user.firstname + " " + user.lastname}</Text>
+				</View>
+				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
 		</Link>
 	);
