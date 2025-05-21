@@ -19,7 +19,7 @@ const { width: screenWidth } = Dimensions.get("window");
 export default function Page() {
 	return withQueryWrapper(
 		{
-			queryKey: ["supplier-categories", { depth: 3 }],
+			queryKey: ["supplier-categories"],
 			queryFn: getSupplierCategoriesQuery,
 		},
 		({ data }) => {

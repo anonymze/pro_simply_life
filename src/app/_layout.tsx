@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { Platform, AppState, AppStateStatus } from "react-native";
+import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
@@ -34,12 +35,12 @@ Sentry.init({
 
 // here we set if we should show the alert of push notifications even if the app is running
 Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
+	handleNotification: async () => ({
+		shouldPlaySound: false,
+		shouldSetBadge: false,
+		shouldShowBanner: true,
+		shouldShowList: true,
+	}),
 });
 
 // keep the splash screen visible while we fetch resources
@@ -74,13 +75,23 @@ export default Sentry.wrap(function RootLayout() {
 
 const Layout = () => {
 	const { isUpdateAvailable, isUpdatePending } = Updates.useUpdates();
+	const [ready, setReady] = React.useState(false);
 
 	// refetch on app focus
 	React.useEffect(() => {
 		prefetchSomeData();
 		// Image.prefetch(require("@/assets/images/icon.png")).catch(() => {});
 		const subscription = AppState.addEventListener("change", onAppStateChange);
-		SplashScreen.hideAsync();
+
+		queryClient
+			.prefetchQuery({
+				queryKey: ["supplier-categories"],
+				queryFn: getSupplierCategoriesQuery,
+			})
+			.finally(() => {
+				setReady(true);
+				SplashScreen.hideAsync();
+			});
 
 		return () => subscription.remove();
 	}, []);
@@ -98,7 +109,9 @@ const Layout = () => {
 			Updates.fetchUpdateAsync();
 		}
 	}, [isUpdateAvailable]);
- 
+
+	if (!ready) null;
+
 	return (
 		<GestureHandlerRootView>
 			<BottomSheetModalProvider>
@@ -106,17 +119,17 @@ const Layout = () => {
 					<StatusBar style="dark" translucent />
 					{/* already added by expo router on every route */}
 					{/* <SafeAreaProvider> */}
-						<Stack
-							screenOptions={{
-								headerShown: false,
-								animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
-								gestureEnabled: false,
-								fullScreenGestureEnabled: false,
-							}}
-						>
-							<Stack.Screen name="(tabs)" />
-							<Stack.Screen name="login" />
-						</Stack>
+					<Stack
+						screenOptions={{
+							headerShown: false,
+							animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
+							gestureEnabled: false,
+							fullScreenGestureEnabled: false,
+						}}
+					>
+						<Stack.Screen name="(tabs)" />
+						<Stack.Screen name="login" />
+					</Stack>
 					{/* </SafeAreaProvider> */}
 				</KeyboardProvider>
 			</BottomSheetModalProvider>
@@ -129,8 +142,12 @@ const prefetchSomeData = async () => {
 		queryKey: ["chat-rooms"],
 		queryFn: getChatRoomsQuery,
 	});
+	// queryClient.prefetchQuery({
+	// 	queryKey: ["supplier-categories"],
+	// 	queryFn: getSupplierCategoriesQuery,
+	// });
 	queryClient.prefetchQuery({
-		queryKey: ["supplier-categories", { depth: 3 }],
-		queryFn: getSupplierCategoriesQuery,
+		queryKey: ["app-users"],
+		queryFn: getAppUsersQuery,
 	});
 };

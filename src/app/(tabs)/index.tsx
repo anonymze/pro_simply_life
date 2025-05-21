@@ -25,12 +25,12 @@ export default function Page() {
 
 	return (
 		<SafeAreaView className="flex-1 bg-background" edges={["top", "right", "left"]}>
+			<BackgroundLayout className="p-4">
 			<ScrollView
 				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 			>
-				<BackgroundLayout className="p-4">
 					<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
 					<Title title="Vie d'agence Valorem" />
 					<Carousel data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}>
@@ -72,8 +72,8 @@ export default function Page() {
 							))}
 						</View>
 					</MobileMediaQuery>
-				</BackgroundLayout>
 			</ScrollView>
+				</BackgroundLayout>
 		</SafeAreaView>
 	);
 }

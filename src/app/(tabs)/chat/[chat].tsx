@@ -1,16 +1,15 @@
-import Animated, { useAnimatedStyle, useSharedValue, withTiming, withSpring, withSequence, Easing, SharedValue, } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, withSequence, Easing, SharedValue, } from "react-native-reanimated";
 import { createMessageQuery, createMessageWithFilesQuery, getMessagesQuery } from "@/api/queries/message-queries";
 import { View, TextInput, Text, Platform, TouchableOpacity, Pressable, Alert } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { ImageIcon, PaperclipIcon, SendIcon } from "lucide-react-native";
 import { Redirect, Stack, useLocalSearchParams } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UIImagePickerPresentationStyle } from "expo-image-picker";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Message, MessageOptimistic } from "@/types/chat";
-import { FlatList } from "react-native-gesture-handler";
 import { getStorageUserInfos } from "@/utils/store";
 import * as ImagePicker from "expo-image-picker";
 import { FlashList } from "@shopify/flash-list";

@@ -122,7 +122,7 @@ export default function Page() {
 									showsVerticalScrollIndicator={false}
 									style={{ backgroundColor: config.theme.extend.colors.background }}
 								>
-									<View className="gap-2 mt-2">
+									<View className="gap-2 mt-2 ">
 										{Object.keys(groupedUsers!).map((letter) => (
 											<View key={letter} className="gap-2">
 												<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>

@@ -7,7 +7,7 @@ import { api } from "../_config";
 
 export async function getSupplierCategoriesQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, filters] = queryKey;
-	const response = await api.get<PaginatedResponse<SupplierCategory>>("/api/supplier-categories", { params: filters });
+	const response = await api.get<PaginatedResponse<SupplierCategory>>("/api/supplier-categories", { params: { depth: 3 } });
 	return response.data;
 }
 
