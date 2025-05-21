@@ -64,7 +64,7 @@ export default function Page() {
 				{/* TODO: remove this */}
 				<Button title="BY PASS CONNEXION (doit se connecter au moins 1 fois)" onPress={() => router.push("/")} />
 				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 200 }} contentFit="contain" />
-				<Text className="text-center text-lg font-semibold">{i18n[languageCode]("SUBTITLE_LOGIN")}</Text>
+				<Text className="text-center font-semibold text-lg">{i18n[languageCode]("SUBTITLE_LOGIN")}</Text>
 
 				<View className="mt-8 w-full gap-3">
 					<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_EMAIL_LOGIN")}</Text>
@@ -76,7 +76,7 @@ export default function Page() {
 									autoCapitalize="none"
 									keyboardType="email-address"
 									textContentType="oneTimeCode"
-									placeholder="test@email.com"
+									placeholder="example@email.fr"
 									autoCorrect={false}
 									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400"
 									defaultValue={field.state.value}
@@ -101,7 +101,6 @@ export default function Page() {
 									autoCapitalize="none"
 									keyboardType="default"
 									textContentType="oneTimeCode"
-									placeholder="**********"
 									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
