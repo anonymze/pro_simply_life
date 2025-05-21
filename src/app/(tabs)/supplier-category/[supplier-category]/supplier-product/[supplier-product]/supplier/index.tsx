@@ -67,6 +67,7 @@ export default function Page() {
 										<ImagePlaceholder
 											transition={300}
 											contentFit="contain"
+											placeholder={supplier.logo_mini?.blurhash}
 											source={supplier.logo_mini?.url}
 											style={{ width: 26, height: 26, borderRadius: 4 }}
 										/>

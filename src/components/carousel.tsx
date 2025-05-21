@@ -1,16 +1,15 @@
 import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
-import { cn } from "@/utils/cn";
 import React from "react";
 
-import CardEvent from "./card-event";
+import CardEvent from "./card/card-event";
 
 
 const screenWidth = Dimensions.get("window").width;
 const horizontalPadding = 38;
 const cardWidth = screenWidth - horizontalPadding;
 
-export default function Carousel({ data }: { data: any[] }) {
+export default function Carousel<T>({ data, children }: { data: T[]; children: (data: T[], cardWidth: number) => React.ReactNode }) {
 	const [currentIndex, setCurrentIndex] = React.useState(0);
 
 	const handleScrollEnd = React.useCallback(
@@ -21,7 +20,7 @@ export default function Carousel({ data }: { data: any[] }) {
 		},
 		[cardWidth],
 	);
-	
+
 	return (
 		<>
 			<ScrollView
@@ -38,28 +37,19 @@ export default function Carousel({ data }: { data: any[] }) {
 				scrollEventThrottle={undefined}
 				style={{ flexGrow: 0 }}
 			>
-				{data.map((item) => (
-					<CardEvent
-						key={item}
-						date="2025-05-05"
-						title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						type="Masterclass"
-						description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste	obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero	officia!"
-						width={cardWidth}
-					/>
-				))}
+				{children(data, cardWidth)}
 			</ScrollView>
 			<View className="mt-4 flex-row items-center gap-2">
-				{data.map((item, idx) => (
-					<Animated.View 
-						key={item} 
+				{data.map((_, idx) => (
+					<Animated.View
+						key={idx}
 						style={useAnimatedStyle(() => ({
-							backgroundColor: withSpring(
-								currentIndex === idx ? '#000' : 'rgba(0, 0, 0, 0.3)',
-								{ damping: 15, stiffness: 150 }
-							),
+							backgroundColor: withSpring(currentIndex === idx ? "#000" : "rgba(0, 0, 0, 0.3)", {
+								damping: 15,
+								stiffness: 150,
+							}),
 						}))}
-						className="size-1.5 rounded-full"
+						className="size-[0.42rem] rounded-full"
 					/>
 				))}
 			</View>

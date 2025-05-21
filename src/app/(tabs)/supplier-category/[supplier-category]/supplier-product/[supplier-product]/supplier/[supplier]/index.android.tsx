@@ -46,6 +46,7 @@ export default function Page() {
 					transition={300}
 					contentFit="contain"
 					source={data.logo_full?.url}
+					placeholder={data.logo_full?.blurhash}
 					style={{ width: "95%", height: 60 }}
 				/>
 				<View className="mt-4 flex-row items-center gap-3">

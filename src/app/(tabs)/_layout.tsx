@@ -25,7 +25,6 @@ export default function AppLayout() {
 				initialRouteName="index"
 				screenOptions={{
 					headerShown: false,
-					// TODO
 					animation: "shift",
 					tabBarActiveTintColor: config.theme.extend.colors.primary,
 					tabBarLabelStyle: {
@@ -56,7 +55,7 @@ export default function AppLayout() {
 					}}
 				/>
 				<Tabs.Screen
-					name="organigramme/index"
+					name="organigramme"
 					options={{
 						title: "Groupe Valorem",
 						headerShown: false,

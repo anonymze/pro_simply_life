@@ -77,6 +77,8 @@ export default function Page() {
 												supplierCategory={supplierCategory}
 												icon={
 													<ImagePlaceholder
+														transition={0}
+														placeholder={supplierCategory.logo?.blurhash}
 														source={supplierCategory.logo?.url ?? ""}
 														style={{ width: 30, height: 30, borderRadius: 4 }}
 													/>
@@ -101,6 +103,8 @@ export default function Page() {
 												supplierCategory={supplierCategory}
 												icon={
 													<ImagePlaceholder
+														transition={0}
+														placeholder={supplierCategory.logo?.blurhash}
 														source={supplierCategory.logo?.url ?? ""}
 														style={{ width: 30, height: 30, borderRadius: 4 }}
 													/>

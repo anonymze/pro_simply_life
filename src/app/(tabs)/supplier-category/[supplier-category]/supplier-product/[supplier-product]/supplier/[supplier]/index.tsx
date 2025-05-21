@@ -45,6 +45,7 @@ export default function Page() {
 				<ImagePlaceholder
 					transition={300}
 					contentFit="contain"
+					placeholder={data.logo_full?.blurhash}
 					source={data.logo_full?.url}
 					style={{ width: "95%", height: 60 }}
 				/>

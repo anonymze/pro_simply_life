@@ -27,3 +27,10 @@ export const userHierarchy: Record<UserRole, number> = {
 	independent: 2,
 	visitor: 3,
 } as const;
+
+export const userRoleLabels: Record<UserRole, string> = {
+	associate: "Associé",
+	employee: "Employé",
+	independent: "Indépendant",
+	visitor: "Visiteur",
+} as const;
