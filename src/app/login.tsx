@@ -76,7 +76,7 @@ export default function Page() {
 									autoCapitalize="none"
 									keyboardType="email-address"
 									textContentType="oneTimeCode"
-									placeholder="example@email.fr"
+									placeholder="exemple@email.fr"
 									autoCorrect={false}
 									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400"
 									defaultValue={field.state.value}
