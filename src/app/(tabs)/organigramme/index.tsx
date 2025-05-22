@@ -2,10 +2,12 @@ import CardEmployeeCarousel from "@/components/card/card-employee-carousel";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
+import IndependantIcon from "@/components/independant-icon";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import CardEmployee from "@/components/card/card-employee";
 import BackgroundLayout from "@/layouts/background-layout";
 import InputSearch from "@/components/ui/input-search";
+import EmployeesIcon from "@/components/emloyees-icon";
 import Carousel from "@/components/carousel";
 import Title from "@/components/ui/title";
 import { HrefObject } from "expo-router";
@@ -90,7 +92,7 @@ export default function Page() {
 							<View className="mt-6 gap-2">
 								<Card
 									title="Employés"
-									icon={require("@/assets/icons/employee.svg")}
+									icon={<EmployeesIcon />}
 									link={{
 										pathname: "/organigramme",
 										params: {
@@ -100,7 +102,7 @@ export default function Page() {
 								/>
 								<Card
 									title="Indépendants"
-									icon={require("@/assets/icons/independant.svg")}
+									icon={<IndependantIcon />}
 									link={{
 										pathname: "/organigramme",
 										params: {
@@ -165,7 +167,7 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
 				<View className="size-14 items-center justify-center rounded-lg bg-secondaryLight">
-					<ImagePlaceholder source={icon} placeholder={icon} style={{ width: 24, height: 24 }} />
+					{icon}
 				</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-dark">{title}</Text>
@@ -174,3 +176,9 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 		</Link>
 	);
 };
+
+// 
+
+//
+
+//

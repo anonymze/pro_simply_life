@@ -4,11 +4,12 @@ import Svg, { Path, SvgProps } from 'react-native-svg';
 export default function EmployeesIcon(props: SvgProps) {
   return (
     <Svg
-      viewBox="0 0 24 24"
-      fill="none"
-      strokeWidth="1.5"
-      stroke="#816514"
-      className="size-6"
+    width={24}
+    height={24}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#816514"
+    strokeWidth={1.5}
       {...props}
     >
       <Path
