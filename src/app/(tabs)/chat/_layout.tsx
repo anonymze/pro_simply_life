@@ -1,15 +1,13 @@
+import { Platform, Text, TouchableOpacity, View } from "react-native";
+import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
 import HeaderLayout from "@/layouts/headert-layout";
-import { getStorageUserInfos } from "@/utils/store";
+import { Link, router, Stack } from "expo-router";
 import { truncateText } from "@/utils/helper";
-import { userHierarchy } from "@/types/user";
-import { Platform } from "react-native";
-import { Stack } from "expo-router";
-import React from "react";
+import { cn } from "@/utils/libs/tailwind";
+import config from "tailwind.config";
 
 
 export default function ChatLayout() {
-	const userInfos = React.useMemo(() => getStorageUserInfos(), []);
-
 	return (
 		<Stack
 			screenOptions={{
@@ -21,17 +19,35 @@ export default function ChatLayout() {
 			<Stack.Screen
 				name="index"
 				options={{
-					header: () => <HeaderLayout backButton={false} title="Conversations" sheet={userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 ? { link: "/chat/new-room" } : undefined} />,
+					headerShown: false,
 				}}
 			/>
 			<Stack.Screen
 				name="new-room"
 				options={{
-					headerShown: Platform.OS === "ios" ? false : true,
+					headerShown: true,
 					sheetGrabberVisible: true,
-					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
-					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
-					header: () => <HeaderLayout />,
+					presentation: "modal",
+					// sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					header: () => (
+						<View className={cn("pt-8 flex-row items-center justify-between bg-background px-2 pb-2")}>
+							<Link className="w-24 p-2" dismissTo href="../" asChild>
+								<TouchableOpacity>
+									<Text className="font-semibold text-sm text-primary">Annuler</Text>
+								</TouchableOpacity>
+							</Link>
+
+							<Text className="font-bold text-lg">Nouveau groupe</Text>
+							<TouchableOpacity
+								className="w-24 items-end p-2"
+								onPress={() => {
+									// router.push(sheet.link);
+								}}
+							>
+									<Text className="font-semibold text-sm text-primary">Suivant</Text>
+							</TouchableOpacity>
+						</View>
+					),
 				}}
 			/>
 			<Stack.Screen

@@ -1,18 +1,26 @@
 import { deleteChatRoomQuery, getChatRoomsQuery } from "@/api/queries/chat-room-queries";
-import { ChevronRightIcon, LockIcon, TrashIcon } from "lucide-react-native";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { getMessagesQuery } from "@/api/queries/message-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
+import { LockIcon, PlusIcon } from "lucide-react-native";
 import { FlatList } from "react-native-gesture-handler";
+import EmployeesIcon from "@/components/emloyees-icon";
+import MessagesIcon from "@/components/messages-icon";
 import { PaginatedResponse } from "@/types/response";
+import * as DropdownMenu from "zeego/dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 import { getStorageUserInfos } from "@/utils/store";
+import * as ContextMenu from "zeego/context-menu";
+import { HrefObject, Link } from "expo-router";
 import { userHierarchy } from "@/types/user";
 import { queryClient } from "@/api/_queries";
+import Title from "@/components/ui/title";
 import { ChatRoom } from "@/types/chat";
-import { Link } from "expo-router";
+import { logout } from "@/utils/auth";
+import config from "tailwind.config";
+import { Image } from "expo-image";
 import React from "react";
 
 
@@ -25,7 +33,7 @@ export default function Page() {
 			queryFn: getChatRoomsQuery,
 		},
 		({ data }) => {
-			const userInfos = getStorageUserInfos();
+			const userInfos = React.useMemo(() => getStorageUserInfos(), []);
 			const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
 			const mutationChatRoom = useMutation({
 				mutationFn: deleteChatRoomQuery,
@@ -66,51 +74,76 @@ export default function Page() {
 			}, []);
 
 			return (
-				<BackgroundLayout className="p-4">
+				<BackgroundLayout className="pt-safe">
+					<View className="flex-row items-center justify-between px-4">
+						<Title title="Messages" />
+						{userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 && (
+							<Link href="/chat/new-room" asChild>
+								<TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
+									<PlusIcon size={18} color={config.theme.extend.colors.primary} />
+								</TouchableOpacity>
+							</Link>
+						)}
+					</View>
 					<FlatList
+						className="px-4 pt-5"
 						showsVerticalScrollIndicator={false}
 						data={data.docs}
 						keyExtractor={(item) => item.id}
-						renderItem={({ item }) => (
-							<View className="flex-row items-center justify-between gap-4">
-								{userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 && (
-									<TouchableOpacity
-										onPress={() => {
-											Alert.alert(
-												i18n[languageCode]("CHAT_ROOM_DELETE"),
-												i18n[languageCode]("CHAT_ROOM_DELETE_CONFIRMATION"),
-												[
-													{ text: i18n[languageCode]("CANCEL"), style: "cancel" },
-													{
-														text: i18n[languageCode]("DELETE"),
-														style: "destructive",
-														onPress: () => mutationChatRoom.mutate(item.id),
-													},
-												],
-											);
-										}}
-									>
-										<TrashIcon size={24} color="#000" />
-									</TouchableOpacity>
-								)}
-								<Link
-									href={{
+						renderItem={({ item }) => {
+							if (userHierarchy[userInfos?.user?.role ?? "visitor"] < 1) {
+								return (
+									<DropdownMenu.Root>
+										{/* @ts-expect-error */}
+										<DropdownMenu.Trigger action="longpress">
+											<Card
+												icon={<EmployeesIcon color={config.theme.extend.colors.secondaryDark} />}
+												title={item.name}
+												description={item.description ?? ""}
+												link={{
+													pathname: "/chat/[chat]",
+													params: { chat: item.id, title: item.name },
+												}}
+											/>
+										</DropdownMenu.Trigger>
+										<DropdownMenu.Content>
+											<DropdownMenu.Item key="delete" onSelect={() => mutationChatRoom.mutate(item.id)}>
+												<DropdownMenu.ItemTitle>Supprimer</DropdownMenu.ItemTitle>
+												<DropdownMenu.ItemIcon
+													// androidIconName="arrow_down_float"
+													ios={{
+														name: "trash",
+														pointSize: 18,
+														paletteColors: [
+															{
+																dark: "red",
+																light: "red",
+															},
+														],
+													}}
+												/>
+											</DropdownMenu.Item>
+										</DropdownMenu.Content>
+									</DropdownMenu.Root>
+								);
+							}
+
+							return (
+								<Card
+									icon={<MessagesIcon color={config.theme.extend.colors.secondaryDark} />}
+									title={item.name}
+									description={item.description ?? ""}
+									link={{
 										pathname: "/chat/[chat]",
 										params: { chat: item.id, title: item.name },
 									}}
-									className="flex-1"
-								>
-									<View className="w-full flex-row items-center justify-between gap-4 rounded-xl bg-black p-5">
-										<ItemTitleAndDescription name={item.name} description={item.description} private={item.private} />
-										<ChevronRightIcon size={24} color="#fff" />
-									</View>
-								</Link>
-							</View>
-						)}
-						contentInsetAdjustmentBehavior="automatic"
+								/>
+							);
+						}}
+						// contentInsetAdjustmentBehavior="automatic"
 						contentContainerStyle={{
-							gap: 20,
-							padding: 20,
+							gap: 10,
+							paddingBottom: 16,
 						}}
 						onViewableItemsChanged={({ viewableItems }) => {
 							// prefetch messages for visible chat rooms
@@ -125,44 +158,6 @@ export default function Page() {
 					/>
 				</BackgroundLayout>
 			);
-
-			// <LegendList
-			// 		initialScrollIndex={data.docs.length - 1}
-			// 		alignItemsAtEnd={true}
-			// 		data={data.docs}
-			// 		renderItem={({ item }) => (
-			// 			<Link
-			// 				style={{ marginTop: 20 }}
-			// 				href={{
-			// 					pathname: "/chat/[chat]",
-			// 					params: { chat: item.id },
-			// 				}}
-			// 			>
-			// 				<View
-			// 					style={{
-			// 						gap: 6,
-			// 						padding: 16,
-			// 						width: "100%",
-			// 						borderRadius: 16,
-			// 						alignItems: "center",
-			// 						flexDirection: "row",
-			// 						backgroundColor: "#000",
-			// 						justifyContent: "space-between",
-			// 					}}
-			// 				>
-			// 					<ItemTitleAndDescription name={item.name} description={item.description} private={item.private} />
-			// 					<ChevronRightIcon size={24} color="#fff" />
-			// 				</View>
-			// 			</Link>
-			// 		)}
-			// 		estimatedItemSize={data.docs.length}
-			// 		keyExtractor={(item) => item.id}
-			// 		recycleItems={false}
-			// 		maintainScrollAtEnd={true}
-			// 		maintainScrollAtEndThreshold={0.1}
-			// 		contentInsetAdjustmentBehavior="automatic"
-			// 		contentContainerStyle={{ padding: 20 }}
-			// 	/>
 		},
 	)();
 }
@@ -188,3 +183,30 @@ function ItemTitleAndDescription({
 		</View>
 	);
 }
+
+const Card = ({
+	link,
+	icon,
+	title,
+	description,
+}: {
+	link: HrefObject;
+	icon: any;
+	title: string;
+	description: string;
+}) => {
+	return (
+		<Link href={link} push asChild>
+			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
+				<View className="size-14 items-center justify-center rounded-full bg-secondaryLight p-3.5">{icon}</View>
+				<View className="flex-1">
+					<Text className="font-semibold text-lg text-dark">{title}</Text>
+					<Text className="text-sm text-defaultGray">{description}</Text>
+				</View>
+				<View className="mr-3 size-5 items-center justify-center rounded-full bg-primary">
+					<Text className="font-semibold text-xs text-white">1</Text>
+				</View>
+			</TouchableOpacity>
+		</Link>
+	);
+};

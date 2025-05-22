@@ -47,7 +47,8 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 			{!me && (
 				<Image
 					placeholderContentFit="contain"
-					placeholder={require("@/assets/icons/placeholder_user.svg")}
+					contentFit="contain"
+					placeholder={item.app_user.photo?.blurhash ?? require("@/assets/icons/placeholder_user.svg")}
 					source={item.app_user.photo?.url}
 					style={{ width: 28, height: 28, borderRadius: 99, objectFit: "contain" }}
 				/>
@@ -61,7 +62,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 			>
 				<View className="flex-shrink gap-1">
 					{!me && stateMessage.lastMessageUser && (
-						<Text className="text-sm font-bold text-primaryLight">{`${item.app_user.firstname} ${item.app_user.lastname}`}</Text>
+						<Text className="font-bold text-sm text-primaryLight">{`${item.app_user.firstname} ${item.app_user.lastname}`}</Text>
 					)}
 					{item.message && <Text className="flex-shrink self-start text-white">{item.message}</Text>}
 					{item.file ? (
@@ -72,6 +73,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 										// @ts-ignore
 										source={item.file.uri}
 										transition={300}
+										placeholderContentFit="cover"
 										contentFit="cover"
 										style={styles.image}
 									/>
@@ -188,24 +190,15 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 										// @ts-ignore
 										placeholder={item.file.blurhash}
 										placeholderContentFit="cover"
+										contentFit="cover"
 										// @ts-ignore
 										source={item.file.url}
 										transition={300}
-										contentFit="cover"
 										style={styles.image}
 									/>
 								) : // TODO: add video
 								item.file.mimeType?.startsWith("image") ? (
-									<Image
-										// @ts-ignore
-										placeholder={item.file.blurhash}
-										placeholderContentFit="cover"
-										// @ts-ignore
-										source={item.file.url}
-										transition={300}
-										contentFit="cover"
-										style={styles.image}
-									/>
+									<></>
 								) : (
 									<View style={styles.image} className="items-center justify-center">
 										<Text className="text-center text-white">{i18n[languageCode]("FILE_NOT_SUPPORTED")}</Text>

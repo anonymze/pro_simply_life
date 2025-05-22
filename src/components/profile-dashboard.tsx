@@ -44,7 +44,6 @@ export default function ProfileDashboard({
 						</TouchableOpacity>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
-						<DropdownMenu.Label />
 						<DropdownMenu.Item key="help" onSelect={() => console.log("item-1 selected")}>
 							<DropdownMenu.ItemTitle>Centre d'aide</DropdownMenu.ItemTitle>
 							<DropdownMenu.ItemIcon

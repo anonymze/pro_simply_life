@@ -81,7 +81,7 @@ export default function Page() {
 								keyboardType="default"
 								textContentType="oneTimeCode"
 								placeholder="Ex : fournisseurs"
-								className="w-full rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75"
+								className="w-full rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75 border border-transparent focus:border-primary"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>
@@ -99,11 +99,12 @@ export default function Page() {
 					{(field) => (
 						<React.Fragment>
 							<TextInput
+								multiline={true}
 								returnKeyType="done"
 								autoCapitalize="none"
 								keyboardType="default"
 								placeholder="Ex : informations sur les fournisseurs"
-								className="w-full rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75"
+								className="w-full min-h-24 rounded-lg p-5 bg-defaultGray/15 text-dark placeholder:text-defaultGray/75 border border-transparent focus:border-primary"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>

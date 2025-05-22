@@ -1,4 +1,5 @@
 import { NotificationProvider } from "@/context/push-notifications";
+import MessagesFillIcon from "@/components/messages-fill-icon";
 import { Pressable } from "react-native-gesture-handler";
 import BriefcaseIcon from "@/components/briefcase-icon";
 import BookIconFill from "@/components/book-fill-icon";
@@ -22,7 +23,8 @@ export default function AppLayout() {
 	return (
 		<NotificationProvider>
 			<Tabs
-				initialRouteName="index"
+				// TODO
+				initialRouteName="chat"
 				screenOptions={{
 					headerShown: false,
 					animation: "shift",
@@ -85,7 +87,12 @@ export default function AppLayout() {
 					name="chat"
 					options={{
 						title: "Messages",
-						tabBarIcon: ({ color }) => <MessagesIcon color={color} />,
+						tabBarIcon: ({ color }) => {
+							if (color === config.theme.extend.colors.primary) {
+								return <MessagesFillIcon color={color} />;
+							}
+							return <MessagesIcon color={color} />;
+						},
 					}}
 				/>
 				{/* <Tabs.Screen

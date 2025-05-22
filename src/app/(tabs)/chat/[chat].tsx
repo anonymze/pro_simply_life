@@ -275,6 +275,7 @@ export default function Page() {
 
 							// disableRecycling={true}
 							onEndReached={() => {
+								// TODO
 								console.log("onEndReached");
 								// add more messages when on end scroll
 								if (!!messages.length && messages.length >= maxMessages) {

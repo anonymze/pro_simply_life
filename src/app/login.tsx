@@ -78,7 +78,7 @@ export default function Page() {
 									textContentType="oneTimeCode"
 									placeholder="exemple@email.fr"
 									autoCorrect={false}
-									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400"
+									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400 border border-transparent focus:border-primary"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
 								/>
@@ -101,7 +101,7 @@ export default function Page() {
 									autoCapitalize="none"
 									keyboardType="default"
 									textContentType="oneTimeCode"
-									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400"
+									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400 border border-transparent focus:border-primary"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
 								/>
