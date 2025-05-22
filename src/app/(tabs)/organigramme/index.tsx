@@ -75,7 +75,7 @@ export default function Page() {
 									return data.map((item) => (
 										<CardEmployeeCarousel
 											key={item.id}
-											width={200}
+											width={160}
 											user={item}
 											link={{
 												pathname: "/organigramme/[organigramme]",

@@ -15,7 +15,7 @@ export default function CardEmployeeCarousel({ user, width, link }: { user: User
 		<Link href={link} asChild>
 			<TouchableOpacity
 				onPressIn={onPress}
-				className="items-center gap-2 rounded-2xl bg-primary pb-2 pt-3"
+				className="items-center gap-2 rounded-2xl bg-primary pb-2 pt-2"
 				style={{ width }}
 			>
 				<ImagePlaceholder
@@ -24,7 +24,7 @@ export default function CardEmployeeCarousel({ user, width, link }: { user: User
 					// contentPosition="top"
 					placeholder={user.photo?.blurhash}
 					placeholderContentFit="cover"
-					style={{ width: width - 24, height: width, borderRadius: 8 }}
+					style={{ width: width - 16, height: width, borderRadius: 8 }}
 					source={user.photo?.url}
 				/>
 				<Text className="font-semibold text-lg text-white">{user.firstname + " " + user.lastname}</Text>
