@@ -78,7 +78,7 @@ export function NewConversation() {
 								keyboardType="default"
 								textContentType="oneTimeCode"
 								placeholder="Ex : fournisseurs"
-								className="w-full rounded-lg bg-defaultGray/15 p-5 text-dark placeholder:text-defaultGray/75"
+								className="w-full rounded-lg bg-defaultGray/15 p-5 text-dark placeholder:text-defaultGray/75 border border-transparent focus:border-primary"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>

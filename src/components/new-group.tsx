@@ -12,9 +12,43 @@ import EmployeesIcon from "./emloyees-icon";
 
 const lengthSearch = 3;
 
-export function NewGroup({ data }: { data: User[] }) {
+type Action = 
+	| { type: 'ADD'; ids: User['id'][] }
+	| { type: 'REMOVE'; ids: User['id'][] }
+	| { type: 'CLEAR' };
+
+function useSelectionReducer(onSelectionChange?: (hasSelection: boolean) => void) {
+	const [selectedIds, dispatch] = React.useReducer(
+		(state: Set<User['id']>, action: Action): Set<User['id']> => {
+			const newSet = new Set(state);
+			
+			switch (action.type) {
+				case 'ADD':
+					action.ids.forEach(id => newSet.add(id));
+					break;
+				case 'REMOVE':
+					action.ids.forEach(id => newSet.delete(id));
+					break;
+				case 'CLEAR':
+					newSet.clear();
+					break;
+			}
+			
+			return newSet;
+		},
+		new Set()
+	);
+
+	React.useEffect(() => {
+		onSelectionChange?.(selectedIds.size > 0);
+	}, [selectedIds, onSelectionChange]);
+
+	return [selectedIds, dispatch] as const;
+}
+
+export function NewGroup({ data, onSelectionChange }: { data: User[]; onSelectionChange?: (hasSelection: boolean) => void }) {
 	const [search, setSearch] = React.useState("");
-	const [selectedIds, setSelectedIds] = React.useState<Set<User["id"]>>(new Set());
+	const [selectedIds, dispatch] = useSelectionReducer(onSelectionChange);
 
 	const { associates, employees, independents } = React.useMemo(
 		() =>
@@ -65,8 +99,6 @@ export function NewGroup({ data }: { data: User[] }) {
 			);
 	}, [data, filteredUsers]);
 
-	console.log(groupedUsers);
-
 	return (
 		<>
 			<InputSearch
@@ -93,7 +125,7 @@ export function NewGroup({ data }: { data: User[] }) {
 								icon={<EmployeesIcon />}
 								title="Associés"
 								description={associates.length + " personnes"}
-								setSelectedIds={setSelectedIds}
+								dispatch={dispatch}
 								selectedIds={selectedIds}
 							/>
 							<CardGroup
@@ -101,7 +133,7 @@ export function NewGroup({ data }: { data: User[] }) {
 								icon={<EmployeesIcon />}
 								title="Employés"
 								description={employees.length + " personnes"}
-								setSelectedIds={setSelectedIds}
+								dispatch={dispatch}
 								selectedIds={selectedIds}
 							/>
 							<CardGroup
@@ -109,7 +141,7 @@ export function NewGroup({ data }: { data: User[] }) {
 								icon={<IndependentIcon />}
 								title="Indépendants"
 								description={independents.length + " personnes"}
-								setSelectedIds={setSelectedIds}
+								dispatch={dispatch}
 								selectedIds={selectedIds}
 							/>
 						</View>
@@ -119,7 +151,7 @@ export function NewGroup({ data }: { data: User[] }) {
 							<View key={letter} className="gap-2">
 								<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
 								{groupedUsers[letter].map((user) => (
-									<CardIndividual key={user.id} user={user} selectedIds={selectedIds} setSelectedIds={setSelectedIds} />
+									<CardIndividual key={user.id} user={user} selectedIds={selectedIds} dispatch={dispatch} />
 								))}
 							</View>
 						))}
@@ -139,17 +171,19 @@ const CardGroup = ({
 	icon,
 	title,
 	description,
-	setSelectedIds,
+	dispatch,
 	selectedIds,
 }: {
 	users: User[];
 	icon: any;
 	title: string;
 	description: string;
-	setSelectedIds: (ids: Set<User["id"]>) => void;
-	selectedIds: Set<User["id"]>;
+	dispatch: React.Dispatch<Action>;
+	selectedIds: Set<User['id']>;
 }) => {
 	const ref = React.useRef<BouncyCheckboxHandle>(null);
+	const isChecked = users.every((user) => selectedIds.has(user.id));
+
 	return (
 		<Pressable
 			onPress={() => ref.current?.onCheckboxPress()}
@@ -161,6 +195,7 @@ const CardGroup = ({
 				<Text className="text-sm text-defaultGray">{description}</Text>
 			</View>
 			<BouncyCheckbox
+				isChecked={isChecked}
 				ref={ref}
 				size={18}
 				fillColor={config.theme.extend.colors.primary}
@@ -169,17 +204,11 @@ const CardGroup = ({
 				bounceEffectOut={1}
 				style={{ marginLeft: "auto", width: 30, height: 30 }}
 				innerIconStyle={{ borderWidth: 2, borderColor: config.theme.extend.colors.primary }}
-				onPress={(isChecked: boolean) => {
-					if (isChecked) {
-						// have to create a new reference to the set
-						const newSet = new Set(selectedIds);
-						users.forEach((user) => newSet.add(user.id));
-						setSelectedIds(newSet);
-					} else {
-						const newSet = new Set(selectedIds);
-						users.forEach((user) => newSet.delete(user.id));
-						setSelectedIds(newSet);
-					}
+				onPress={(isChecked) => {
+					dispatch({
+						type: isChecked ? 'ADD' : 'REMOVE',
+						ids: users.map(user => user.id)
+					});
 				}}
 			/>
 		</Pressable>
@@ -189,13 +218,15 @@ const CardGroup = ({
 const CardIndividual = ({
 	user,
 	selectedIds,
-	setSelectedIds,
+	dispatch,
 }: {
 	user: User;
-	selectedIds: Set<User["id"]>;
-	setSelectedIds: (ids: Set<User["id"]>) => void;
+	selectedIds: Set<User['id']>;
+	dispatch: React.Dispatch<Action>;
 }) => {
 	const ref = React.useRef<BouncyCheckboxHandle>(null);
+	const isChecked = selectedIds.has(user.id);
+
 	return (
 		<Pressable onPress={() => ref.current?.onCheckboxPress()} className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
 			<ImagePlaceholder
@@ -212,6 +243,7 @@ const CardIndividual = ({
 				<Text className="text-sm text-defaultGray">{userRoleLabels[user.role]}</Text>
 			</View>
 			<BouncyCheckbox
+				isChecked={isChecked}
 				ref={ref}
 				size={18}
 				fillColor={config.theme.extend.colors.primary}
@@ -220,17 +252,11 @@ const CardIndividual = ({
 				bounceEffectOut={1}
 				style={{ marginLeft: "auto", width: 30, height: 30 }}
 				innerIconStyle={{ borderWidth: 2, borderColor: config.theme.extend.colors.primary }}
-				onPress={(isChecked: boolean) => {
-					if (isChecked) {
-						// have to create a new reference to the set
-						const newSet = new Set(selectedIds);
-						newSet.add(user.id);
-						setSelectedIds(newSet);
-					} else {
-						const newSet = new Set(selectedIds);
-						newSet.delete(user.id);
-						setSelectedIds(newSet);
-					}
+				onPress={(isChecked) => {
+					dispatch({
+						type: isChecked ? 'ADD' : 'REMOVE',
+						ids: [user.id]
+					});
 				}}
 			/>
 		</Pressable>
