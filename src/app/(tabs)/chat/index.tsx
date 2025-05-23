@@ -1,8 +1,8 @@
 import { deleteChatRoomQuery, getChatRoomsQuery } from "@/api/queries/chat-room-queries";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
-import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { getMessagesQuery } from "@/api/queries/message-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
+import { Text, TouchableOpacity, View } from "react-native";
+import { getLanguageCodeLocale } from "@/i18n/translations";
 import BackgroundLayout from "@/layouts/background-layout";
 import { LockIcon, PlusIcon } from "lucide-react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -12,15 +12,12 @@ import { PaginatedResponse } from "@/types/response";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 import { getStorageUserInfos } from "@/utils/store";
-import * as ContextMenu from "zeego/context-menu";
 import { HrefObject, Link } from "expo-router";
 import { userHierarchy } from "@/types/user";
 import { queryClient } from "@/api/_queries";
 import Title from "@/components/ui/title";
 import { ChatRoom } from "@/types/chat";
-import { logout } from "@/utils/auth";
 import config from "tailwind.config";
-import { Image } from "expo-image";
 import React from "react";
 
 

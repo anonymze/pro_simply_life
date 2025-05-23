@@ -1,10 +1,7 @@
-import { Platform, Text, TouchableOpacity, View } from "react-native";
-import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
 import HeaderLayout from "@/layouts/headert-layout";
-import { Link, router, Stack } from "expo-router";
 import { truncateText } from "@/utils/helper";
-import { cn } from "@/utils/libs/tailwind";
-import config from "tailwind.config";
+import { Platform } from "react-native";
+import { Stack } from "expo-router";
 
 
 export default function ChatLayout() {
@@ -25,29 +22,9 @@ export default function ChatLayout() {
 			<Stack.Screen
 				name="new-room"
 				options={{
-					headerShown: true,
+					headerShown: false,
 					sheetGrabberVisible: true,
 					presentation: "modal",
-					// sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
-					header: () => (
-						<View className={cn("pt-8 flex-row items-center justify-between bg-background px-2 pb-2")}>
-							<Link className="w-24 p-2" dismissTo href="../" asChild>
-								<TouchableOpacity>
-									<Text className="font-semibold text-sm text-primary">Annuler</Text>
-								</TouchableOpacity>
-							</Link>
-
-							<Text className="font-bold text-lg">Nouveau groupe</Text>
-							<TouchableOpacity
-								className="w-24 items-end p-2"
-								onPress={() => {
-									// router.push(sheet.link);
-								}}
-							>
-									<Text className="font-semibold text-sm text-primary">Suivant</Text>
-							</TouchableOpacity>
-						</View>
-					),
 				}}
 			/>
 			<Stack.Screen

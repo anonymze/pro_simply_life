@@ -79,19 +79,23 @@ const Layout = () => {
 
 	// refetch on app focus
 	React.useEffect(() => {
-		prefetchSomeData();
 		// Image.prefetch(require("@/assets/images/icon.png")).catch(() => {});
 		const subscription = AppState.addEventListener("change", onAppStateChange);
 
-		queryClient
-			.prefetchQuery({
+		Promise.all([
+			queryClient.prefetchQuery({
+				queryKey: ["app-users"],
+				queryFn: getAppUsersQuery,
+			}),
+			queryClient.prefetchQuery({
 				queryKey: ["supplier-categories"],
 				queryFn: getSupplierCategoriesQuery,
-			})
-			.finally(() => {
-				setReady(true);
-				SplashScreen.hideAsync();
-			});
+			}),
+		]).finally(() => {
+			prefetchSomeData();
+			setReady(true);
+			SplashScreen.hideAsync();
+		});
 
 		return () => subscription.remove();
 	}, []);
@@ -146,8 +150,8 @@ const prefetchSomeData = async () => {
 	// 	queryKey: ["supplier-categories"],
 	// 	queryFn: getSupplierCategoriesQuery,
 	// });
-	queryClient.prefetchQuery({
-		queryKey: ["app-users"],
-		queryFn: getAppUsersQuery,
-	});
+	// queryClient.prefetchQuery({
+	// 	queryKey: ["app-users"],
+	// 	queryFn: getAppUsersQuery,
+	// });
 };
