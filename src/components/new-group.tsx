@@ -1,5 +1,6 @@
 import BouncyCheckbox, { BouncyCheckboxHandle } from "react-native-bouncy-checkbox";
 import { Text, View, ScrollView, TouchableOpacity, Pressable } from "react-native";
+import { ActionReducer } from "@/app/(tabs)/chat/new-room";
 import { User, userRoleLabels } from "@/types/user";
 import config from "tailwind.config";
 import React from "react";
@@ -12,43 +13,16 @@ import EmployeesIcon from "./emloyees-icon";
 
 const lengthSearch = 3;
 
-type Action = { type: "ADD"; ids: User["id"][] } | { type: "REMOVE"; ids: User["id"][] } | { type: "CLEAR" };
-
-function useSelectionReducer(onSelectionChange?: (hasSelection: boolean) => void) {
-	const [selectedIds, dispatch] = React.useReducer((state: Set<User["id"]>, action: Action): Set<User["id"]> => {
-		const newSet = new Set(state);
-
-		switch (action.type) {
-			case "ADD":
-				action.ids.forEach((id) => newSet.add(id));
-				break;
-			case "REMOVE":
-				action.ids.forEach((id) => newSet.delete(id));
-				break;
-			case "CLEAR":
-				newSet.clear();
-				break;
-		}
-
-		return newSet;
-	}, new Set());
-
-	React.useEffect(() => {
-		onSelectionChange?.(selectedIds.size > 0);
-	}, [selectedIds, onSelectionChange]);
-
-	return [selectedIds, dispatch] as const;
-}
-
 export function NewGroup({
 	data,
-	onSelectionChange,
+	selectedIds,
+	dispatch,
 }: {
 	data: User[];
-	onSelectionChange?: (hasSelection: boolean) => void;
+	selectedIds: Set<User["id"]>;
+	dispatch: React.Dispatch<ActionReducer>;
 }) {
 	const [search, setSearch] = React.useState("");
-	const [selectedIds, dispatch] = useSelectionReducer(onSelectionChange);
 
 	const { associates, employees, independents } = React.useMemo(
 		() =>
@@ -178,7 +152,7 @@ const CardGroup = ({
 	icon: any;
 	title: string;
 	description: string;
-	dispatch: React.Dispatch<Action>;
+	dispatch: React.Dispatch<ActionReducer>;
 	selectedIds: Set<User["id"]>;
 }) => {
 	const ref = React.useRef<BouncyCheckboxHandle>(null);
@@ -222,7 +196,7 @@ const CardIndividual = ({
 }: {
 	user: User;
 	selectedIds: Set<User["id"]>;
-	dispatch: React.Dispatch<Action>;
+	dispatch: React.Dispatch<ActionReducer>;
 }) => {
 	const ref = React.useRef<BouncyCheckboxHandle>(null);
 	const isChecked = selectedIds.has(user.id);

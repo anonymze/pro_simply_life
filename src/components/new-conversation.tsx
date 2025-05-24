@@ -14,9 +14,15 @@ import React from "react";
 import { z } from "zod";
 
 
-export function NewConversation({ currentUser }: { currentUser: User }) {
-	const appUser = React.useMemo(() => getStorageUserInfos(), []);
+export function NewConversation({ 
+	currentUser,
+	selectedIds,
+}: { 
+	currentUser: User;
+	selectedIds: User["id"][];
+}) {
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
+	console.log(selectedIds);
 
 	const mutationChatRoom = useMutation({
 		mutationFn: createChatRoomQuery,
@@ -58,8 +64,8 @@ export function NewConversation({ currentUser }: { currentUser: User }) {
 		onSubmit: ({ value }) => {
 			mutationChatRoom.mutate({
 				...value,
-				app_user: appUser?.user.id || "",
-				guests: [],
+				app_user: currentUser.id,
+				guests: selectedIds,
 				color: null,
 			});
 		},
