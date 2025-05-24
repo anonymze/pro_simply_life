@@ -46,17 +46,17 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 		>
 			{!me && (
 				<Image
-					placeholderContentFit="contain"
-					contentFit="contain"
+					placeholderContentFit="cover"
+					contentFit="cover"
 					placeholder={item.app_user.photo?.blurhash ?? require("@/assets/icons/placeholder_user.svg")}
 					source={item.app_user.photo?.url}
-					style={{ width: 28, height: 28, borderRadius: 99, objectFit: "contain" }}
+					style={{ width: 30, height: 30, borderRadius: 99 }}
 				/>
 			)}
 			<View
 				className={cn(
-					"flex-shrink flex-row gap-3 rounded-xl p-2.5",
-					me ? "bg-greenChat" : "bg-grayChat",
+					"flex-shrink flex-row gap-3 rounded-tr-xl rounded-bl-xl p-2.5",
+					me ? "bg-primary rounded-tl-xl" : "bg-white rounded-br-xl",
 					item.file && "p-1.5",
 				)}
 			>
@@ -64,7 +64,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 					{!me && stateMessage.lastMessageUser && (
 						<Text className="font-bold text-sm text-primaryLight">{`${item.app_user.firstname} ${item.app_user.lastname}`}</Text>
 					)}
-					{item.message && <Text className="flex-shrink self-start text-white">{item.message}</Text>}
+					{item.message && <Text className={cn("flex-shrink self-start", me ? "text-white" : "text-black")}>{item.message}</Text>}
 					{item.file ? (
 						optimistic ? (
 							<>
@@ -209,11 +209,11 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 					) : null}
 				</View>
 				<View className={cn("flex-row gap-1 self-end", item.file && "absolute bottom-2 right-2")}>
-					<Text className="text-xs text-gray-200">
+					<Text className={cn("text-xs", me ? "text-lightGray" : "text-defaultGray")}>
 						{new Date(item.createdAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
 					</Text>
 					{me &&
-						(optimistic ? <CheckIcon size={14} color="#e5e5e5e5" /> : <CheckCheckIcon size={14} color="#55c0ff" />)}
+						(optimistic ? <CheckIcon size={14} color={config.theme.extend.colors.lightGray} /> : <CheckCheckIcon size={14} color={config.theme.extend.colors.secondaryLight} />)}
 				</View>
 			</View>
 		</View>

@@ -14,7 +14,7 @@ import React from "react";
 
 
 export default function Page() {
-	const appUser = React.useMemo(() => getStorageUserInfos(), []);
+	const appUser = getStorageUserInfos();
 	const [selectedIds, dispatch] = React.useReducer(selectionReducer, new Set());
 	const [nextStep, setNextStep] = React.useState(false);
 	const scrollRef = React.useRef<ScrollView>(null);
@@ -40,6 +40,8 @@ export default function Page() {
 			</View>
 		);
 	}
+
+	console.log(appUser);
 
 	return (
 		<BackgroundLayout className="p-4">

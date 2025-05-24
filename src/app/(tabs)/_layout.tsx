@@ -10,11 +10,10 @@ import HomeIcon from "@/components/home-icon";
 import BookIcon from "@/components/book-icon";
 import { Redirect, Tabs } from "expo-router";
 import config from "tailwind.config";
-import React from "react";
 
 
 export default function AppLayout() {
-	const userInfos = React.useMemo(() => getStorageUserInfos(), []);
+	const userInfos = getStorageUserInfos();
 
 	if (!userInfos || !userInfos.token) {
 		return <Redirect href="/login" />;

@@ -23,7 +23,7 @@ import React from "react";
 export const MAX_MESSAGES = 25;
 
 export default function Page() {
-	const userInfos = React.useMemo(() => getStorageUserInfos(), []);
+	const userInfos = getStorageUserInfos();
 
 	return withQueryWrapper<ChatRoom>(
 		{
@@ -83,7 +83,7 @@ export default function Page() {
 				<BackgroundLayout className="pt-safe">
 					<View className="flex-row items-center justify-between px-4">
 						<Title title="Messages" />
-						{userHierarchy[userInfos?.user.role ?? "visitor"] < 1 && (
+						{userHierarchy[userInfos?.user.role ?? "visitor"] < 2 && (
 							<Link href="/chat/new-room" asChild>
 								<TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
 									<PlusIcon size={18} color={config.theme.extend.colors.primary} />
@@ -103,7 +103,7 @@ export default function Page() {
 							data={data.docs}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item }) => {
-								if (userHierarchy[userInfos?.user.role ?? "visitor"] < 1 || item.app_user.id === userInfos?.user.id) {
+								if (userHierarchy[userInfos?.user.role ?? "visitor"] < 2 || item.app_user.id === userInfos?.user.id) {
 									return (
 										<DropdownMenu.Root>
 											{/* @ts-expect-error */}
@@ -195,9 +195,9 @@ const Card = ({
 					<Text className="font-semibold text-lg text-dark">{title}</Text>
 					<Text className="text-sm text-defaultGray">{description}</Text>
 				</View>
-				<View className="mr-3 size-5 items-center justify-center rounded-full bg-primary">
+				{/* <View className="mr-3 size-5 items-center justify-center rounded-full bg-primary">
 					<Text className="font-semibold text-xs text-white">1</Text>
-				</View>
+				</View> */}
 			</TouchableOpacity>
 		</Link>
 	);

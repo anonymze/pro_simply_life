@@ -30,7 +30,7 @@ export default function ChatLayout() {
 			<Stack.Screen
 				name="[chat]"
 				options={{
-					header: (props) => <HeaderLayout title={truncateText(props.options.title || "", 22)} />,
+					header: (props) => <HeaderLayout backgroundColor="bg-white" title={truncateText(props.options.title || "", 22)} />,
 				}}
 			/>
 		</Stack>

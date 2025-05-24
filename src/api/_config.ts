@@ -2,6 +2,7 @@ import { getStorageUserInfos } from "@/utils/store";
 import axios, { isAxiosError } from "axios";
 import { logout } from "@/utils/auth";
 
+
 const ORIGIN_MOBILE = "simply-life-app://mobile";
 
 /**
@@ -32,7 +33,7 @@ api.interceptors.response.use(
 		// if the user is not authenticated, or the token is expired, logout
 		if (error.response?.status === 403) {
 			const userInfos = getStorageUserInfos();
-			if (userInfos?.exp && userInfos.exp < Date.now() / 1000) logout({ alert: true });
+			if (userInfos && userInfos.exp < Date.now() / 1000) logout({ alert: true });
 		}
 
 		// always reject the promise to let react query or other handlers process the error

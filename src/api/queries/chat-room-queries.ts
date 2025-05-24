@@ -9,7 +9,9 @@ import { api } from "../_config";
 
 export async function getChatRoomsQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, filters] = queryKey;
-	const response = await api.get<PaginatedResponse<ChatRoom>>("/api/chat-rooms", { params: filters });
+	const response = await api.get<PaginatedResponse<ChatRoom>>("/api/chat-rooms", { params: {
+		limit: 0,
+	} });
 	return response.data;
 }
 

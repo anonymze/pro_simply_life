@@ -5,6 +5,8 @@
 npx expo prebuild --clean
 eas build --profile development --platform android
 
+CASCADE CHAT ROOMS USER AND MESSAGES CHATROOMS
+
 ## Web
 
 npx expo export --platform web --output-dir ./build

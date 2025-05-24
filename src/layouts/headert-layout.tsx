@@ -10,6 +10,7 @@ import { Text } from "react-native";
 
 interface HeaderLayoutProps extends Partial<LinkProps> {
 	title?: string;
+	description?: string;
 	sheet?: {
 		link: LinkProps["href"];
 	};
@@ -17,24 +18,38 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 	backButton?: boolean;
 }
 
-export default function HeaderLayout({ title, sheet, backgroundColor, backButton = true }: HeaderLayoutProps) {
+export default function HeaderLayout({
+	title,
+	description,
+	sheet,
+	backgroundColor,
+	backButton = true,
+}: HeaderLayoutProps) {
 	return (
-		<View className={cn("flex-row items-center justify-between bg-background px-2 pb-2 pt-safe", backgroundColor)}>
+		<View className={cn("pt-safe flex-row items-center justify-between bg-background px-2 pb-2", backgroundColor)}>
 			{backButton ? (
-				<Link className="p-2 w-24" dismissTo href="../" asChild>
+				<Link className="w-24 p-2" dismissTo href="../" asChild>
 					<TouchableOpacity className="flex-row items-center gap-3">
 						<ArrowLeftIcon size={20} color={config.theme.extend.colors.primary} />
-						<Text className="text-sm font-semibold text-primary">Retour</Text>
+						<Text className="font-semibold text-sm text-primary">Retour</Text>
 					</TouchableOpacity>
 				</Link>
 			) : (
 				<View className="w-24" />
 			)}
 
-			<Text className="text-lg font-bold">{title}</Text>
+			{description ? (
+				<View className="">
+					<Text className="font-bold text-lg">{title}</Text>
+					<Text className="text-sm text-defaultGray">{description}</Text>
+				</View>
+			) : (
+				<Text className="font-bold text-lg">{title}</Text>
+			)}
+
 			{sheet ? (
 				<TouchableOpacity
-					className="p-2 w-24 items-end"
+					className="w-24 items-end p-2"
 					onPress={() => {
 						router.push(sheet.link);
 					}}

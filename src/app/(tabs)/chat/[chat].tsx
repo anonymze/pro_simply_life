@@ -29,8 +29,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Page() {
 	const { chat: chatId, title } = useLocalSearchParams<{ chat?: string; title?: string }>();
-
-	const appUser = React.useMemo(() => getStorageUserInfos(), []);
+	const appUser = getStorageUserInfos();
 
 	if (!chatId || !appUser) {
 		return <Redirect href="/chat" />;
@@ -129,9 +128,6 @@ export default function Page() {
 			if (mutationMessages.isPending || mutationMessagesFile.isPending) return false;
 			return 6000;
 		},
-		select: (data) => {
-			return data;
-		},
 	});
 
 	const formSchema = React.useMemo(
@@ -216,11 +212,11 @@ export default function Page() {
 	}, []);
 
 	const animatedStyle = useAnimatedStyle(() => {
-		const spacing = 12;
+		const spacing = 20;
 		return {
-			transform: [{ translateY: height.value ? height.value + bottomSafeAreaView - spacing : 0 }],
+			transform: [{ translateY: height.value ? height.value + 60 + spacing : 0 }],
 			// otherwise the top of the list is cut
-			marginTop: height.value ? -(height.value + bottomSafeAreaView - spacing) : 0,
+			marginTop: height.value ?  -height.value - 60 - spacing : 0,
 		};
 	});
 
@@ -295,7 +291,7 @@ export default function Page() {
 					)}
 
 					<View className="flex-row items-center gap-0.5">
-						<View className={cn("mb-3 flex-shrink flex-row items-center rounded-xl border border-lightGray")}>
+						<View className="mb-4 bg-darkGray flex-shrink flex-row items-center border border-transparent rounded-xl">
 							<form.Field name="message">
 								{(field) => (
 									<TextInput
@@ -306,7 +302,7 @@ export default function Page() {
 										submitBehavior="newline"
 										multiline={true}
 										placeholder={`${i18n[languageCode]("MESSAGE")}...`}
-										className="flex-1 p-3 pr-0"
+										className="flex-1 pl-3 py-[1.1rem] pr-0 placeholder:text-defaultGray"
 										onChangeText={field.handleChange}
 										defaultValue={field.state.value}
 									/>
@@ -361,7 +357,7 @@ const SendButton = React.memo(
 				}}
 				className={cn("p-1.5 pr-0 mb-3")}
 			>
-				<SendIcon size={20} color={config.theme.extend.colors.primaryLight} />
+				<SendIcon size={21} color={config.theme.extend.colors.primaryLight} />
 			</AnimatedPressable>
 		);
 	},
