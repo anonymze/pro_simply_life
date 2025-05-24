@@ -23,18 +23,15 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className="px-4 pb-4 pt-10">
-			<View className="items-center gap-2 rounded-2xl bg-white p-4 mb-4">
+			<View className="mb-4 items-center gap-2 rounded-2xl bg-white p-4">
 				<View className="size-20 items-center justify-center rounded-full bg-secondaryLight">
 					<EmployeesIcon width={36} height={36} color={config.theme.extend.colors.primary} />
 				</View>
 				<Text className="font-bold text-xl text-dark">{chatRoom.name}</Text>
 				<Text className="text-md text-defaultGray">{chatRoom.description}</Text>
 			</View>
-			<ContactInfo
-					firstname={chatRoom.app_user.firstname}
-					lastname={chatRoom.app_user.lastname}
-				/>
-			<View className="mt-5 flex-row items-center justify-between">
+			<ContactInfo firstname={chatRoom.app_user.firstname} lastname={chatRoom.app_user.lastname} />
+			<View className="mt-4 flex-row items-center justify-between">
 				<Text className="font-semibold text-xl">{chatRoom.guests.length} Membres</Text>
 				{/* <Link href="/chat/new-room" asChild> */}
 				<TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
@@ -43,7 +40,7 @@ export default function Page() {
 				{/* </Link> */}
 			</View>
 			<ScrollView
-				className="flex-1 mt-4"
+				className="mt-4 flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 				contentContainerStyle={{ paddingBottom: 16 }}
@@ -69,20 +66,13 @@ const Card = ({ icon, title }: { icon: any; title: string }) => {
 	);
 };
 
-const ContactInfo = ({
-	firstname,
-	lastname,
-}: {
-	firstname?: string | null;
-	lastname?: string | null;
-}) => {
+const ContactInfo = ({ firstname, lastname }: { firstname?: string | null; lastname?: string | null }) => {
 	return (
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="font-semibold text-sm text-defaultGray">Créateur du groupe de conversation</Text>
 			<Text selectable className="font-semibold text-base text-dark">
 				{firstname} {lastname?.toUpperCase()}
 			</Text>
-		
 		</View>
 	);
 };
