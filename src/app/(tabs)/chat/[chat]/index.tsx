@@ -10,6 +10,7 @@ import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Message, MessageOptimistic } from "@/types/chat";
+import HeaderLayout from "@/layouts/headert-layout";
 import { getStorageUserInfos } from "@/utils/store";
 import * as ImagePicker from "expo-image-picker";
 import { FlashList } from "@shopify/flash-list";
@@ -22,13 +23,17 @@ import { cn } from "@/utils/cn";
 import React from "react";
 import { z } from "zod";
 
-import { MAX_MESSAGES } from "./index";
+import { MAX_MESSAGES } from "../index";
 
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Page() {
-	const { chat: chatId, title } = useLocalSearchParams<{ chat?: string; title?: string }>();
+	const {
+		chat: chatId,
+		title,
+		description,
+	} = useLocalSearchParams<{ chat?: string; title?: string; description?: string }>();
 	const appUser = getStorageUserInfos();
 
 	if (!chatId || !appUser) {
@@ -38,7 +43,6 @@ export default function Page() {
 	const [maxMessages, setMaxMessages] = React.useState(MAX_MESSAGES);
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
 	const { height } = useReanimatedKeyboardAnimation();
-	const bottomSafeAreaView = useSafeAreaInsets().bottom;
 	const translateY = useSharedValue(0);
 	const translateX = useSharedValue(0);
 	const opacity = useSharedValue(1);
@@ -216,7 +220,7 @@ export default function Page() {
 		return {
 			transform: [{ translateY: height.value ? height.value + 60 + spacing : 0 }],
 			// otherwise the top of the list is cut
-			marginTop: height.value ?  -height.value - 60 - spacing : 0,
+			marginTop: height.value ? -height.value - 60 - spacing : 0,
 		};
 	});
 
@@ -229,7 +233,7 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className="px-6">
-			<TitleHeader title={title} />
+			<TitleHeader title={title || ""} description={description || ""} chatId={chatId} />
 			{/* <View className={cn("absolute left-4 top-4 size-4 bg-red-500", websocketConnected && "bg-green-500")} /> */}
 			<Animated.View className="flex-1" style={animatedStyle}>
 				<View className="flex-1">
@@ -291,7 +295,7 @@ export default function Page() {
 					)}
 
 					<View className="flex-row items-center gap-0.5">
-						<View className="mb-4 bg-darkGray flex-shrink flex-row items-center border border-transparent rounded-xl">
+						<View className="bg-darkGray mb-4 flex-shrink flex-row items-center rounded-xl border border-transparent">
 							<form.Field name="message">
 								{(field) => (
 									<TextInput
@@ -302,7 +306,7 @@ export default function Page() {
 										submitBehavior="newline"
 										multiline={true}
 										placeholder={`${i18n[languageCode]("MESSAGE")}...`}
-										className="flex-1 pl-3 py-[1.1rem] pr-0 placeholder:text-defaultGray"
+										className="flex-1 py-[1.1rem] pl-3 pr-0 placeholder:text-defaultGray"
 										onChangeText={field.handleChange}
 										defaultValue={field.state.value}
 									/>
@@ -355,7 +359,7 @@ const SendButton = React.memo(
 					opacity: loadingMessages ? 0.5 : opacity,
 					transform: [{ translateX }, { translateY }],
 				}}
-				className={cn("p-1.5 pr-0 mb-3")}
+				className={cn("mb-3 p-1.5 pr-0")}
 			>
 				<SendIcon size={21} color={config.theme.extend.colors.primaryLight} />
 			</AnimatedPressable>
@@ -381,6 +385,24 @@ const Actions = React.memo(({ pickImage }: { pickImage: () => void }) => {
 	);
 });
 
-const TitleHeader = React.memo(({ title }: { title: string | undefined }) => {
-	return <Stack.Screen options={{ title }} />;
+const TitleHeader = React.memo(({ title, description, chatId }: { title: string; description: string; chatId: string }) => {
+	return (
+		<Stack.Screen
+			options={{
+				header: () => (
+					<HeaderLayout
+						chat={{
+							description,
+							link: {
+								pathname: "/chat/[chat]/details",
+								params: { chat: chatId, title, description },
+							},
+						}}
+						backgroundColor="bg-white"
+						title={title}
+					/>
+				),
+			}}
+		/>
+	);
 });

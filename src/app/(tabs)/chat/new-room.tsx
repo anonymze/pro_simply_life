@@ -41,8 +41,6 @@ export default function Page() {
 		);
 	}
 
-	console.log(appUser);
-
 	return (
 		<BackgroundLayout className="p-4">
 			<View className={cn("flex-row items-center justify-between bg-background pb-4 pt-4")}>

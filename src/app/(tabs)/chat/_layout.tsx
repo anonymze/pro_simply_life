@@ -1,5 +1,4 @@
 import HeaderLayout from "@/layouts/headert-layout";
-import { truncateText } from "@/utils/helper";
 import { Platform } from "react-native";
 import { Stack } from "expo-router";
 
@@ -28,9 +27,17 @@ export default function ChatLayout() {
 				}}
 			/>
 			<Stack.Screen
-				name="[chat]"
+				name="[chat]/index"
 				options={{
-					header: (props) => <HeaderLayout backgroundColor="bg-white" title={truncateText(props.options.title || "", 22)} />,
+					header: (props) => <HeaderLayout backgroundColor="bg-white" title={props.options.title} />,
+				}}
+			/>
+			<Stack.Screen
+				name="[chat]/details"
+				options={{
+					presentation: "modal",
+					sheetGrabberVisible: true,
+					headerShown: false,
 				}}
 			/>
 		</Stack>

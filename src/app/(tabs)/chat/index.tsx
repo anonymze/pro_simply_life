@@ -34,13 +34,14 @@ export default function Page() {
 					...data,
 					docs: data.docs.filter((chatRoom) => {
 						return (
-							chatRoom.app_user.id === userInfos?.user.id || chatRoom.guests.some((guest) => guest === userInfos?.user.id)
+							chatRoom.app_user.id === userInfos?.user.id ||
+							chatRoom.guests.some((guest) => guest === userInfos?.user.id)
 						);
 					}),
 				};
 			},
 		},
-		({ data })=> {
+		({ data }) => {
 			const mutationChatRoom = useMutation({
 				mutationFn: deleteChatRoomQuery,
 				// when mutate is called:
@@ -111,10 +112,10 @@ export default function Page() {
 												<Card
 													icon={<EmployeesIcon color={config.theme.extend.colors.secondaryDark} />}
 													title={item.name}
-													description={item.description ?? ""}
+													description={item.description}
 													link={{
 														pathname: "/chat/[chat]",
-														params: { chat: item.id, title: item.name },
+														params: { chat: item.id, title: item.name, description: item.description },
 													}}
 												/>
 											</DropdownMenu.Trigger>
@@ -144,10 +145,10 @@ export default function Page() {
 									<Card
 										icon={<MessagesIcon color={config.theme.extend.colors.secondaryDark} />}
 										title={item.name}
-										description={item.description ?? ""}
+										description={item.description}
 										link={{
 											pathname: "/chat/[chat]",
-											params: { chat: item.id, title: item.name },
+											params: { chat: item.id, title: item.name, description: item.description },
 										}}
 									/>
 								);
@@ -185,7 +186,7 @@ const Card = ({
 	link: HrefObject;
 	icon: any;
 	title: string;
-	description: string;
+	description: string | null;
 }) => {
 	return (
 		<Link href={link} push asChild>
@@ -193,7 +194,7 @@ const Card = ({
 				<View className="size-14 items-center justify-center rounded-full bg-secondaryLight">{icon}</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-dark">{title}</Text>
-					<Text className="text-sm text-defaultGray">{description}</Text>
+					<Text className="text-sm text-defaultGray">{description ?? ""}</Text>
 				</View>
 				{/* <View className="mr-3 size-5 items-center justify-center rounded-full bg-primary">
 					<Text className="font-semibold text-xs text-white">1</Text>
