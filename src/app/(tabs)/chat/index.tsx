@@ -23,20 +23,24 @@ import React from "react";
 export const MAX_MESSAGES = 25;
 
 export default function Page() {
+	const userInfos = React.useMemo(() => getStorageUserInfos(), []);
+
 	return withQueryWrapper<ChatRoom>(
 		{
 			queryKey: ["chat-rooms"],
 			queryFn: getChatRoomsQuery,
+			select: (data) => {
+				return {
+					...data,
+					docs: data.docs.filter((chatRoom) => {
+						return (
+							chatRoom.app_user.id === userInfos?.user.id || chatRoom.guests.some((guest) => guest === userInfos?.user.id)
+						);
+					}),
+				};
+			},
 		},
-		({ data }) => {
-			const userInfos = React.useMemo(() => getStorageUserInfos(), []);
-
-			const filterDataByGuestAndCreator = data.docs.filter((chatRoom) => {
-				return (
-					chatRoom.app_user.id === userInfos?.user?.id || chatRoom.guests.some((guest) => guest === userInfos?.user?.id)
-				);
-			});
-
+		({ data })=> {
 			const mutationChatRoom = useMutation({
 				mutationFn: deleteChatRoomQuery,
 				// when mutate is called:
@@ -79,7 +83,7 @@ export default function Page() {
 				<BackgroundLayout className="pt-safe">
 					<View className="flex-row items-center justify-between px-4">
 						<Title title="Messages" />
-						{userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 && (
+						{userHierarchy[userInfos?.user.role ?? "visitor"] < 1 && (
 							<Link href="/chat/new-room" asChild>
 								<TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
 									<PlusIcon size={18} color={config.theme.extend.colors.primary} />
@@ -87,19 +91,19 @@ export default function Page() {
 							</Link>
 						)}
 					</View>
-					{filterDataByGuestAndCreator.length === 0 && (
+					{data.docs.length === 0 && (
 						<View className="flex-1 items-center justify-center">
 							<Text className="text-sm text-defaultGray">Pas de contenu</Text>
 						</View>
 					)}
-					{filterDataByGuestAndCreator.length > 0 && (
+					{data.docs.length > 0 && (
 						<FlatList
 							className="px-4 pt-5"
 							showsVerticalScrollIndicator={false}
-							data={filterDataByGuestAndCreator}
+							data={data.docs}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item }) => {
-								if (userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 || item.app_user.id === userInfos?.user?.id) {
+								if (userHierarchy[userInfos?.user.role ?? "visitor"] < 1 || item.app_user.id === userInfos?.user.id) {
 									return (
 										<DropdownMenu.Root>
 											{/* @ts-expect-error */}

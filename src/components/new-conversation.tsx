@@ -4,7 +4,6 @@ import { createChatRoomQuery } from "@/api/queries/chat-room-queries";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { PaginatedResponse } from "@/types/response";
 import { useMutation } from "@tanstack/react-query";
-import { getStorageUserInfos } from "@/utils/store";
 import { useForm } from "@tanstack/react-form";
 import { queryClient } from "@/api/_queries";
 import { ChatRoom } from "@/types/chat";
@@ -22,7 +21,6 @@ export function NewConversation({
 	selectedIds: User["id"][];
 }) {
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
-	console.log(selectedIds);
 
 	const mutationChatRoom = useMutation({
 		mutationFn: createChatRoomQuery,
