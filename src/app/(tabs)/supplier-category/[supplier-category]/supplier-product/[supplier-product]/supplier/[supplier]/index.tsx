@@ -14,7 +14,8 @@ import React from "react";
 
 
 export default function Page() {
-	const scrollRef = React.useRef<ScrollView>(null);
+	const horizontalScrollRef = React.useRef<ScrollView>(null);
+	const verticalScrollRef = React.useRef<ScrollView>(null);
 
 	const {
 		supplier: supplierId,
@@ -76,14 +77,17 @@ export default function Page() {
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
-								scrollRef.current?.scrollTo({ x: 0, animated: true });
+								horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							} else {
-								scrollRef.current?.scrollToEnd({ animated: true });
+								horizontalScrollRef.current?.scrollToEnd({ animated: true });
+								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							}
 						}}
 					/>
 				)}
 				<ScrollView
+					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
@@ -113,7 +117,7 @@ export default function Page() {
 						</View>
 					) : (
 						<ScrollView
-							ref={scrollRef}
+							ref={horizontalScrollRef}
 							horizontal
 							showsHorizontalScrollIndicator={false}
 							scrollEnabled={false}

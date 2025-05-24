@@ -76,7 +76,7 @@ export default function Page() {
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
-								scrollRef.current?.scrollTo({ x: 0, animated: true });
+								scrollRef.current?.scrollTo({ x: 0, y: 0, animated: true });
 							} else {
 								scrollRef.current?.scrollToEnd({ animated: true });
 							}
