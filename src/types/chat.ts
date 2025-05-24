@@ -3,14 +3,14 @@ import * as ImagePicker from "expo-image-picker";
 import { Media } from "./media";
 import { User } from "./user";
 
+
 export interface ChatRoom {
 	id: string;
-	app_user: User["id"];
+	app_user: User;
+	guests: User["id"][];
 	name: string;
 	description: string | null;
-	private: boolean | null;
 	color: string | null;
-	category: string | null;
 	createdAt: string;
 	updatedAt: string;
 }

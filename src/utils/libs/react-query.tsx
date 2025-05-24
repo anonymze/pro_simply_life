@@ -13,10 +13,11 @@ export function withQueryWrapper<T>(
 		refetchInterval?: number;
 	},
 	Component: React.ComponentType<{ data: PaginatedResponse<T> }>,
+	ignoreNullable?: boolean,
 ) {
 	// need to return this anonymous capitalized (convention for components name) function component to call the hooks, because withQueryWrapper is a regular function
 	return function ComponentWrapperQuery() {
-		const { data, isLoading, isError, error } = useQuery({
+		const { data, isLoading, isError, isFetching } = useQuery({
 			queryKey: query.queryKey,
 			queryFn: query.queryFn,
 			refetchInterval: query.refetchInterval,
@@ -40,7 +41,15 @@ export function withQueryWrapper<T>(
 			);
 		}
 
-		if (!data?.docs?.length) {
+		if (!data) {
+			return (
+				<View className="flex-1 items-center justify-center">
+					<Text className="text-sm text-defaultGray">Erreur</Text>
+				</View>
+			);
+		}
+
+		if (!data?.docs?.length && !ignoreNullable) {
 			return (
 				<View className="flex-1 items-center justify-center">
 					<Text className="text-sm text-defaultGray">Pas de contenu</Text>
@@ -48,6 +57,6 @@ export function withQueryWrapper<T>(
 			);
 		}
 
-		return <Component data={data} />;
+		return <Component data={data!} />;
 	};
 }

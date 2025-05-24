@@ -2,8 +2,10 @@ import { PaginatedResponse, SuccessCreateResponse } from "@/types/response";
 import { APIOmittedParams } from "@/types/payload";
 import { QueryKey } from "@tanstack/react-query";
 import { ChatRoom } from "@/types/chat";
+import { User } from "@/types/user";
 
 import { api } from "../_config";
+
 
 export async function getChatRoomsQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, filters] = queryKey;
@@ -11,7 +13,9 @@ export async function getChatRoomsQuery({ queryKey }: { queryKey: QueryKey }) {
 	return response.data;
 }
 
-export async function createChatRoomQuery(params: APIOmittedParams<ChatRoom>) {
+export async function createChatRoomQuery(
+	params: Pick<ChatRoom, "name" | "description" | "guests" | "color"> & { app_user: User["id"] },
+) {
 	const response = await api.post<SuccessCreateResponse<ChatRoom>>("/api/chat-rooms", params);
 	return response.data;
 }

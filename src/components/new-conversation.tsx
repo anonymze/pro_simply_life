@@ -9,11 +9,12 @@ import { useForm } from "@tanstack/react-form";
 import { queryClient } from "@/api/_queries";
 import { ChatRoom } from "@/types/chat";
 import { router } from "expo-router";
+import { User } from "@/types/user";
 import React from "react";
 import { z } from "zod";
 
 
-export function NewConversation() {
+export function NewConversation({ currentUser }: { currentUser: User }) {
 	const appUser = React.useMemo(() => getStorageUserInfos(), []);
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
 
@@ -58,9 +59,8 @@ export function NewConversation() {
 			mutationChatRoom.mutate({
 				...value,
 				app_user: appUser?.user.id || "",
-				private: false,
+				guests: [],
 				color: null,
-				category: null,
 			});
 		},
 	});

@@ -12,32 +12,26 @@ import EmployeesIcon from "./emloyees-icon";
 
 const lengthSearch = 3;
 
-type Action = 
-	| { type: 'ADD'; ids: User['id'][] }
-	| { type: 'REMOVE'; ids: User['id'][] }
-	| { type: 'CLEAR' };
+type Action = { type: "ADD"; ids: User["id"][] } | { type: "REMOVE"; ids: User["id"][] } | { type: "CLEAR" };
 
 function useSelectionReducer(onSelectionChange?: (hasSelection: boolean) => void) {
-	const [selectedIds, dispatch] = React.useReducer(
-		(state: Set<User['id']>, action: Action): Set<User['id']> => {
-			const newSet = new Set(state);
-			
-			switch (action.type) {
-				case 'ADD':
-					action.ids.forEach(id => newSet.add(id));
-					break;
-				case 'REMOVE':
-					action.ids.forEach(id => newSet.delete(id));
-					break;
-				case 'CLEAR':
-					newSet.clear();
-					break;
-			}
-			
-			return newSet;
-		},
-		new Set()
-	);
+	const [selectedIds, dispatch] = React.useReducer((state: Set<User["id"]>, action: Action): Set<User["id"]> => {
+		const newSet = new Set(state);
+
+		switch (action.type) {
+			case "ADD":
+				action.ids.forEach((id) => newSet.add(id));
+				break;
+			case "REMOVE":
+				action.ids.forEach((id) => newSet.delete(id));
+				break;
+			case "CLEAR":
+				newSet.clear();
+				break;
+		}
+
+		return newSet;
+	}, new Set());
 
 	React.useEffect(() => {
 		onSelectionChange?.(selectedIds.size > 0);
@@ -46,7 +40,13 @@ function useSelectionReducer(onSelectionChange?: (hasSelection: boolean) => void
 	return [selectedIds, dispatch] as const;
 }
 
-export function NewGroup({ data, onSelectionChange }: { data: User[]; onSelectionChange?: (hasSelection: boolean) => void }) {
+export function NewGroup({
+	data,
+	onSelectionChange,
+}: {
+	data: User[];
+	onSelectionChange?: (hasSelection: boolean) => void;
+}) {
 	const [search, setSearch] = React.useState("");
 	const [selectedIds, dispatch] = useSelectionReducer(onSelectionChange);
 
@@ -179,7 +179,7 @@ const CardGroup = ({
 	title: string;
 	description: string;
 	dispatch: React.Dispatch<Action>;
-	selectedIds: Set<User['id']>;
+	selectedIds: Set<User["id"]>;
 }) => {
 	const ref = React.useRef<BouncyCheckboxHandle>(null);
 	const isChecked = users.every((user) => selectedIds.has(user.id));
@@ -206,8 +206,8 @@ const CardGroup = ({
 				innerIconStyle={{ borderWidth: 2, borderColor: config.theme.extend.colors.primary }}
 				onPress={(isChecked) => {
 					dispatch({
-						type: isChecked ? 'ADD' : 'REMOVE',
-						ids: users.map(user => user.id)
+						type: isChecked ? "ADD" : "REMOVE",
+						ids: users.map((user) => user.id),
 					});
 				}}
 			/>
@@ -221,14 +221,17 @@ const CardIndividual = ({
 	dispatch,
 }: {
 	user: User;
-	selectedIds: Set<User['id']>;
+	selectedIds: Set<User["id"]>;
 	dispatch: React.Dispatch<Action>;
 }) => {
 	const ref = React.useRef<BouncyCheckboxHandle>(null);
 	const isChecked = selectedIds.has(user.id);
 
 	return (
-		<Pressable onPress={() => ref.current?.onCheckboxPress()} className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
+		<Pressable
+			onPress={() => ref.current?.onCheckboxPress()}
+			className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
+		>
 			<ImagePlaceholder
 				contentFit="cover"
 				placeholderContentFit="cover"
@@ -254,8 +257,8 @@ const CardIndividual = ({
 				innerIconStyle={{ borderWidth: 2, borderColor: config.theme.extend.colors.primary }}
 				onPress={(isChecked) => {
 					dispatch({
-						type: isChecked ? 'ADD' : 'REMOVE',
-						ids: [user.id]
+						type: isChecked ? "ADD" : "REMOVE",
+						ids: [user.id],
 					});
 				}}
 			/>

@@ -2,9 +2,7 @@ import { deleteChatRoomQuery, getChatRoomsQuery } from "@/api/queries/chat-room-
 import { getMessagesQuery } from "@/api/queries/message-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import { Text, TouchableOpacity, View } from "react-native";
-import { getLanguageCodeLocale } from "@/i18n/translations";
 import BackgroundLayout from "@/layouts/background-layout";
-import { LockIcon, PlusIcon } from "lucide-react-native";
 import { FlatList } from "react-native-gesture-handler";
 import EmployeesIcon from "@/components/emloyees-icon";
 import MessagesIcon from "@/components/messages-icon";
@@ -12,6 +10,7 @@ import { PaginatedResponse } from "@/types/response";
 import * as DropdownMenu from "zeego/dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 import { getStorageUserInfos } from "@/utils/store";
+import { PlusIcon } from "lucide-react-native";
 import { HrefObject, Link } from "expo-router";
 import { userHierarchy } from "@/types/user";
 import { queryClient } from "@/api/_queries";
@@ -31,7 +30,13 @@ export default function Page() {
 		},
 		({ data }) => {
 			const userInfos = React.useMemo(() => getStorageUserInfos(), []);
-			const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
+
+			const filterDataByGuestAndCreator = data.docs.filter((chatRoom) => {
+				return (
+					chatRoom.app_user.id === userInfos?.user?.id || chatRoom.guests.some((guest) => guest === userInfos?.user?.id)
+				);
+			});
+
 			const mutationChatRoom = useMutation({
 				mutationFn: deleteChatRoomQuery,
 				// when mutate is called:
@@ -82,103 +87,89 @@ export default function Page() {
 							</Link>
 						)}
 					</View>
-					<FlatList
-						className="px-4 pt-5"
-						showsVerticalScrollIndicator={false}
-						data={data.docs}
-						keyExtractor={(item) => item.id}
-						renderItem={({ item }) => {
-							if (userHierarchy[userInfos?.user?.role ?? "visitor"] < 1) {
-								return (
-									<DropdownMenu.Root>
-										{/* @ts-expect-error */}
-										<DropdownMenu.Trigger action="longpress">
-											<Card
-												icon={<EmployeesIcon color={config.theme.extend.colors.secondaryDark} />}
-												title={item.name}
-												description={item.description ?? ""}
-												link={{
-													pathname: "/chat/[chat]",
-													params: { chat: item.id, title: item.name },
-												}}
-											/>
-										</DropdownMenu.Trigger>
-										<DropdownMenu.Content>
-											<DropdownMenu.Item key="delete" onSelect={() => mutationChatRoom.mutate(item.id)}>
-												<DropdownMenu.ItemTitle>Supprimer</DropdownMenu.ItemTitle>
-												<DropdownMenu.ItemIcon
-													// androidIconName="arrow_down_float"
-													ios={{
-														name: "trash",
-														pointSize: 18,
-														paletteColors: [
-															{
-																dark: "red",
-																light: "red",
-															},
-														],
+					{filterDataByGuestAndCreator.length === 0 && (
+						<View className="flex-1 items-center justify-center">
+							<Text className="text-sm text-defaultGray">Pas de contenu</Text>
+						</View>
+					)}
+					{filterDataByGuestAndCreator.length > 0 && (
+						<FlatList
+							className="px-4 pt-5"
+							showsVerticalScrollIndicator={false}
+							data={filterDataByGuestAndCreator}
+							keyExtractor={(item) => item.id}
+							renderItem={({ item }) => {
+								if (userHierarchy[userInfos?.user?.role ?? "visitor"] < 1 || item.app_user.id === userInfos?.user?.id) {
+									return (
+										<DropdownMenu.Root>
+											{/* @ts-expect-error */}
+											<DropdownMenu.Trigger action="longpress">
+												<Card
+													icon={<EmployeesIcon color={config.theme.extend.colors.secondaryDark} />}
+													title={item.name}
+													description={item.description ?? ""}
+													link={{
+														pathname: "/chat/[chat]",
+														params: { chat: item.id, title: item.name },
 													}}
 												/>
-											</DropdownMenu.Item>
-										</DropdownMenu.Content>
-									</DropdownMenu.Root>
-								);
-							}
+											</DropdownMenu.Trigger>
+											<DropdownMenu.Content>
+												<DropdownMenu.Item key="delete" onSelect={() => mutationChatRoom.mutate(item.id)}>
+													<DropdownMenu.ItemTitle>Supprimer</DropdownMenu.ItemTitle>
+													<DropdownMenu.ItemIcon
+														// androidIconName="arrow_down_float"
+														ios={{
+															name: "trash",
+															pointSize: 18,
+															paletteColors: [
+																{
+																	dark: "red",
+																	light: "red",
+																},
+															],
+														}}
+													/>
+												</DropdownMenu.Item>
+											</DropdownMenu.Content>
+										</DropdownMenu.Root>
+									);
+								}
 
-							return (
-								<Card
-									icon={<MessagesIcon color={config.theme.extend.colors.secondaryDark} />}
-									title={item.name}
-									description={item.description ?? ""}
-									link={{
-										pathname: "/chat/[chat]",
-										params: { chat: item.id, title: item.name },
-									}}
-								/>
-							);
-						}}
-						// contentInsetAdjustmentBehavior="automatic"
-						contentContainerStyle={{
-							gap: 10,
-							paddingBottom: 16,
-						}}
-						onViewableItemsChanged={({ viewableItems }) => {
-							// prefetch messages for visible chat rooms
-							for (const item of viewableItems) {
-								if (!item.isViewable) continue;
-								prefetchMessages(item.item.id);
-							}
-						}}
-						viewabilityConfig={{
-							itemVisiblePercentThreshold: 75, // item is considered visible when 75% visible
-						}}
-					/>
+								return (
+									<Card
+										icon={<MessagesIcon color={config.theme.extend.colors.secondaryDark} />}
+										title={item.name}
+										description={item.description ?? ""}
+										link={{
+											pathname: "/chat/[chat]",
+											params: { chat: item.id, title: item.name },
+										}}
+									/>
+								);
+							}}
+							// contentInsetAdjustmentBehavior="automatic"
+							contentContainerStyle={{
+								gap: 10,
+								paddingBottom: 16,
+							}}
+							onViewableItemsChanged={({ viewableItems }) => {
+								// prefetch messages for visible chat rooms
+								for (const item of viewableItems) {
+									if (!item.isViewable) continue;
+									prefetchMessages(item.item.id);
+								}
+							}}
+							viewabilityConfig={{
+								itemVisiblePercentThreshold: 75, // item is considered visible when 75% visible
+							}}
+						/>
+					)}
 				</BackgroundLayout>
 			);
 		},
+		true,
 	)();
-}
-
-function ItemTitle({ name, private: isPrivate }: Pick<ChatRoom, "name" | "private">) {
-	return (
-		<View className="flex-row items-center gap-4">
-			<Text className="text-lg text-white">{name}</Text>
-			{isPrivate && <LockIcon size={20} color="#fff" />}
-		</View>
-	);
-}
-
-function ItemTitleAndDescription({
-	name,
-	description,
-	private: isPrivate,
-}: Pick<ChatRoom, "name" | "description" | "private">) {
-	return (
-		<View className="flex-shrink gap-2">
-			<ItemTitle name={name} private={isPrivate} />
-			<Text className="flex-shrink text-sm text-white">{description}</Text>
-		</View>
-	);
 }
 
 const Card = ({
