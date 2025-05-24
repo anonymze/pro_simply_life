@@ -23,13 +23,17 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className="px-4 pb-4 pt-10">
-			<View className="items-center gap-2 rounded-2xl bg-white p-4">
+			<View className="items-center gap-2 rounded-2xl bg-white p-4 mb-4">
 				<View className="size-20 items-center justify-center rounded-full bg-secondaryLight">
 					<EmployeesIcon width={36} height={36} color={config.theme.extend.colors.primary} />
 				</View>
 				<Text className="font-bold text-xl text-dark">{chatRoom.name}</Text>
 				<Text className="text-md text-defaultGray">{chatRoom.description}</Text>
 			</View>
+			<ContactInfo
+					firstname={chatRoom.app_user.firstname}
+					lastname={chatRoom.app_user.lastname}
+				/>
 			<View className="mt-5 flex-row items-center justify-between">
 				<Text className="font-semibold text-xl">{chatRoom.guests.length} Membres</Text>
 				{/* <Link href="/chat/new-room" asChild> */}
@@ -49,12 +53,6 @@ export default function Page() {
 						<Card key={guest} icon={<IndependantIcon />} title={guest} />
 					))}
 				</View>
-				<ContactInfo
-					phone={chatRoom.app_user.phone}
-					email={chatRoom.app_user.email}
-					firstname={chatRoom.app_user.firstname}
-					lastname={chatRoom.app_user.lastname}
-				/>
 			</ScrollView>
 		</BackgroundLayout>
 	);
@@ -72,61 +70,19 @@ const Card = ({ icon, title }: { icon: any; title: string }) => {
 };
 
 const ContactInfo = ({
-	phone,
-	email,
 	firstname,
 	lastname,
 }: {
-	phone?: string | null;
-	email?: string | null;
 	firstname?: string | null;
 	lastname?: string | null;
 }) => {
-	const numbersString = phone?.replace(",", " / ");
-	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
-
 	return (
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="font-semibold text-sm text-defaultGray">Créateur du groupe de conversation</Text>
 			<Text selectable className="font-semibold text-base text-dark">
 				{firstname} {lastname?.toUpperCase()}
 			</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">Téléphone</Text>
-					<Text selectable className="font-semibold text-base text-dark">
-						{numbersString}
-					</Text>
-				</View>
-				{phone && (
-					<TouchableOpacity
-						onPress={() => {
-							Linking.openURL(`tel:${numbers?.[0]}`);
-						}}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						<PhoneIcon size={16} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
-				)}
-			</View>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">E-mail</Text>
-					<Text selectable className="font-semibold text-base text-dark">
-						{email}
-					</Text>
-				</View>
-				{email && (
-					<TouchableOpacity
-						onPress={() => Linking.openURL(`mailto:${email}`)}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						<MailIcon size={16} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
-				)}
-			</View>
+		
 		</View>
 	);
 };
