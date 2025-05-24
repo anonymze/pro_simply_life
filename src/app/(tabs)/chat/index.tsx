@@ -74,10 +74,16 @@ export default function Page() {
 			});
 
 			const prefetchMessages = React.useCallback(async (chatId: string) => {
-				await queryClient.prefetchQuery({
-					queryKey: ["messages", chatId, MAX_MESSAGES],
-					queryFn: getMessagesQuery,
-				});
+				// Check if messages are already in cache
+				const existingData = queryClient.getQueryData(["messages", chatId, MAX_MESSAGES]);
+
+				// Only prefetch if data doesn't exist in cache
+				if (!existingData) {
+					await queryClient.prefetchQuery({
+						queryKey: ["messages", chatId, MAX_MESSAGES],
+						queryFn: getMessagesQuery,
+					});
+				}
 			}, []);
 
 			return (
@@ -110,6 +116,7 @@ export default function Page() {
 											{/* @ts-expect-error */}
 											<DropdownMenu.Trigger action="longpress">
 												<Card
+													chatRoom={item}
 													icon={<EmployeesIcon color={config.theme.extend.colors.secondaryDark} />}
 													title={item.name}
 													description={item.description}
@@ -143,6 +150,7 @@ export default function Page() {
 
 								return (
 									<Card
+										chatRoom={item}
 										icon={<MessagesIcon color={config.theme.extend.colors.secondaryDark} />}
 										title={item.name}
 										description={item.description}
@@ -182,15 +190,24 @@ const Card = ({
 	icon,
 	title,
 	description,
+	chatRoom,
 }: {
+	chatRoom: ChatRoom;
 	link: HrefObject;
 	icon: any;
 	title: string;
 	description: string | null;
 }) => {
+	const onPress = React.useCallback(() => {
+		queryClient.setQueryData(["chat-rooms", chatRoom.id], chatRoom);
+	}, [chatRoom]);
+
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
+			<TouchableOpacity
+				onPress={onPress}
+				className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
+			>
 				<View className="size-14 items-center justify-center rounded-full bg-secondaryLight">{icon}</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-dark">{title}</Text>

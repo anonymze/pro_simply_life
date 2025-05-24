@@ -15,6 +15,12 @@ export async function getChatRoomsQuery({ queryKey }: { queryKey: QueryKey }) {
 	return response.data;
 }
 
+export async function getChatRoomQuery({ queryKey }: { queryKey: QueryKey }) {
+	const [, chatRoomId] = queryKey;
+	const response = await api.get<ChatRoom>(`/api/chat-rooms/${chatRoomId}`);
+	return response.data;
+}
+
 export async function createChatRoomQuery(
 	params: Pick<ChatRoom, "name" | "description" | "guests" | "color"> & { app_user: User["id"] },
 ) {

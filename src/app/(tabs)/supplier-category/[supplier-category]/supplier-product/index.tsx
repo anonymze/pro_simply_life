@@ -9,7 +9,6 @@ import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { Picker } from "@expo/ui/swift-ui";
 import Title from "@/components/ui/title";
-import { Media } from "@/types/media";
 import config from "tailwind.config";
 import React from "react";
 
