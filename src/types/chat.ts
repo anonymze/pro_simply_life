@@ -7,7 +7,7 @@ import { User } from "./user";
 export interface ChatRoom {
 	id: string;
 	app_user: User;
-	guests: User["id"][];
+	guests: (Omit<User, "photo"> & { photo: string })[];
 	name: string;
 	description: string | null;
 	color: string | null;

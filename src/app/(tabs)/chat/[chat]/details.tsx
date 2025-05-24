@@ -5,6 +5,7 @@ import { getChatRoomQuery } from "@/api/queries/chat-room-queries";
 import IndependantIcon from "@/components/independant-icon";
 import BackgroundLayout from "@/layouts/background-layout";
 import EmployeesIcon from "@/components/emloyees-icon";
+import { User, userRoleLabels } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
 import config from "tailwind.config";
 import { Text } from "react-native";
@@ -47,7 +48,7 @@ export default function Page() {
 			>
 				<View className="mb-4 gap-2">
 					{chatRoom.guests.map((guest) => (
-						<Card key={guest} icon={<IndependantIcon />} title={guest} />
+						<Card key={guest.id} icon={<IndependantIcon />} firstname={guest.firstname} lastname={guest.lastname} role={guest.role} />
 					))}
 				</View>
 			</ScrollView>
@@ -55,12 +56,13 @@ export default function Page() {
 	);
 }
 
-const Card = ({ icon, title }: { icon: any; title: string }) => {
+const Card = ({ icon, firstname, lastname, role }: { icon: any; firstname: string; lastname: string; role: User["role"] }) => {
 	return (
 		<View className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2">
 			<View className="size-14 items-center justify-center rounded-lg bg-secondaryLight">{icon}</View>
 			<View className="flex-1">
-				<Text className="font-semibold text-lg text-dark">{title}</Text>
+				<Text className="font-semibold text-lg text-dark">{firstname} {lastname}</Text>
+				<Text className="text-sm text-defaultGray">{userRoleLabels[role]}</Text>
 			</View>
 		</View>
 	);

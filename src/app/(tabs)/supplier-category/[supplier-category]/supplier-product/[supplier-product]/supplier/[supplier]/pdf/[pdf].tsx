@@ -21,9 +21,6 @@ export default function Page() {
 				source={file.uri}
 				distanceBetweenPages={16}
 				maxZoom={5}
-				// onPageChange={(current, total) => {
-				// 	console.log(current, total);
-				// }}
 			/>
 		</View>
 	);

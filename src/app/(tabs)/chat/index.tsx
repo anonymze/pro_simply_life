@@ -35,7 +35,7 @@ export default function Page() {
 					docs: data.docs.filter((chatRoom) => {
 						return (
 							chatRoom.app_user.id === userInfos?.user.id ||
-							chatRoom.guests.some((guest) => guest === userInfos?.user.id)
+							chatRoom.guests.some((guest) => guest.id === userInfos?.user.id)
 						);
 					}),
 				};
