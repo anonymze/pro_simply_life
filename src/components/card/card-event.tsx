@@ -42,3 +42,46 @@ export default function CardEvent({
 		</View>
 	);
 }
+
+
+// // import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+// // import { LinearGradient } from 'expo-linear-gradient';
+// import { View } from "react-native";
+
+
+// // const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+
+// export default function CardEvent({
+// 	date,
+// 	title,
+// 	type,
+// 	description,
+// 	width,
+// }: {
+// 	date: string;
+// 	title: string;
+// 	type: string;
+// 	description: string;
+// 	width: number;
+// }) {
+// 	return (
+// 		<View className="h-[180] overflow-hidden rounded-2xl bg-[#1a1a1a]" style={{ width }}>
+// 			<View className="h-20 w-full bg-[#262626]"></View>
+// 			<View className="-mt-8 ml-5 size-16 rounded-xl bg-[#262626]"></View>
+// 			<View className="mx-5 mt-3.5 gap-1">
+// 				<View className="h-4 w-1/3 rounded-[0.2rem] bg-[#262626]"></View>
+// 				<View className="h-3 w-1/2 rounded-[0.15rem] bg-[#262626]"></View>
+// 				{/* <ShimmerPlaceholder
+// 					style={{ 
+// 						height: 24, 
+// 						width: '100%', 
+// 						borderRadius: 3,
+// 						backgroundColor: '#262626'
+// 					}}
+// 					shimmerColors={['#262626', '#666666', '#262626']}
+// 					visible={false}
+// 				/> */}
+// 			</View>
+// 		</View>
+// 	);
+// }
