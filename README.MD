@@ -1,5 +1,8 @@
 # SIMPLY LIFE
 
+TODO : icones app -> messages table cascade + chatrooms cascade
+
+
 ## Development
 
 npx expo prebuild --clean

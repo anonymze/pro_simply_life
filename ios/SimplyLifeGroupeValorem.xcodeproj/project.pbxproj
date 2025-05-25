@@ -7,45 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0408E05E78964977B1C032B3 /* DMSans18pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 395606352D53416AB079CF35 /* DMSans18pt-Medium.ttf */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		17EF344054DC45CE860D0F8B /* DMSans18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BC832E374CB40C4A4EBA0DC /* DMSans18pt-Bold.ttf */; };
-		19B59793C09C4827BC7481EB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D6992C9F59243F0A5559BE8 /* InfoPlist.strings */; };
-		320849D987764751AAD201AE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A97CA8D6D1A149EC82C9B2A6 /* InfoPlist.strings */; };
-		3912A2F0C3FC2874DFA1D1A1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B559500CBAADEF9104A1018A /* PrivacyInfo.xcprivacy */; };
-		39BE5DE8B1593C2F25665FA6 /* libPods-SimplyLifeGroupeValorem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84CA79DF0B4E0201C0AFB5E6 /* libPods-SimplyLifeGroupeValorem.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		400C321DD0F24CB6AAA651B6 /* DMSans18pt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C8D7BE81A449A1B961A8F9 /* DMSans18pt-Italic.ttf */; };
-		A8EFF86A70A2086AF77541D0 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF4DD41CE2B69DD490F0AA5 /* ExpoModulesProvider.swift */; };
-		B04C88AE8E584A8095FEC8A0 /* DMSans18pt-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B4363A354064ED692CC081B /* DMSans18pt-Light.ttf */; };
+		5BAB4A947DA5991D1154BF3A /* libPods-SimplyLifeGroupeValorem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 254E21A8B6708FC73FAF8411 /* libPods-SimplyLifeGroupeValorem.a */; };
+		7226F5507F88913C84EFECB5 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33BAC4DDBCEA80B502C687 /* ExpoModulesProvider.swift */; };
+		747240A378FE4A7CBB01AEC1 /* DMSans18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26C79E7A2FF44E2B9D8072BA /* DMSans18pt-Bold.ttf */; };
+		886A1E536F1240E199127412 /* DMSans18pt-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA023C6084CD4B908E76487C /* DMSans18pt-Light.ttf */; };
+		8E0506D6480643DB834D64AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95CDDE5169CC45D1A7A0D72D /* InfoPlist.strings */; };
+		9C000736B89C481C8261C7AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08CB120F70F040298D5320FC /* InfoPlist.strings */; };
+		A714C97E89654671BEFFAC4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDA5626069AB444FBFF3AA24 /* InfoPlist.strings */; };
+		B7D6962DC8B3B79E95CC4466 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 71C239088028DE68FC2F3C2C /* PrivacyInfo.xcprivacy */; };
+		B8B44477DD5441DBA94CC3AD /* DMSans18pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDC11092DDCF420DA0466B06 /* DMSans18pt-Regular.ttf */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		CBE976D483B14FFA819FE33C /* DMSans18pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 638D746D268046EA9A90E5E9 /* DMSans18pt-Regular.ttf */; };
+		C5883292E793488CB57FBB87 /* DMSans18pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6592D37A96854B90B3DAAD06 /* DMSans18pt-Medium.ttf */; };
+		DBA40D6BA3974D3C8FBD4405 /* DMSans18pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D25C3C9F43D24588BEDAC366 /* DMSans18pt-SemiBold.ttf */; };
+		E9A0A84BF7024A5AB8449B9A /* DMSans18pt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A17AE3A0DFC94204A1B6B89A /* DMSans18pt-Italic.ttf */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
-		F43245644CF54FBCA87FF90A /* DMSans18pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4286B12B0E424A849560209C /* DMSans18pt-SemiBold.ttf */; };
-		F7B2CC11798D47E0B2CFC91F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDC30F2BF81E403986F7A9F7 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08CB120F70F040298D5320FC /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* SimplyLifeGroupeValorem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplyLifeGroupeValorem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SimplyLifeGroupeValorem/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SimplyLifeGroupeValorem/Info.plist; sourceTree = "<group>"; };
-		2BC832E374CB40C4A4EBA0DC /* DMSans18pt-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Bold.ttf"; path = "../src/assets/fonts/DMSans18pt-Bold.ttf"; sourceTree = "<group>"; };
-		36C8D7BE81A449A1B961A8F9 /* DMSans18pt-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Italic.ttf"; path = "../src/assets/fonts/DMSans18pt-Italic.ttf"; sourceTree = "<group>"; };
-		395606352D53416AB079CF35 /* DMSans18pt-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Medium.ttf"; path = "../src/assets/fonts/DMSans18pt-Medium.ttf"; sourceTree = "<group>"; };
-		4286B12B0E424A849560209C /* DMSans18pt-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-SemiBold.ttf"; path = "../src/assets/fonts/DMSans18pt-SemiBold.ttf"; sourceTree = "<group>"; };
-		638D746D268046EA9A90E5E9 /* DMSans18pt-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Regular.ttf"; path = "../src/assets/fonts/DMSans18pt-Regular.ttf"; sourceTree = "<group>"; };
-		7B4363A354064ED692CC081B /* DMSans18pt-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Light.ttf"; path = "../src/assets/fonts/DMSans18pt-Light.ttf"; sourceTree = "<group>"; };
-		84CA79DF0B4E0201C0AFB5E6 /* libPods-SimplyLifeGroupeValorem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimplyLifeGroupeValorem.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D6992C9F59243F0A5559BE8 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A97CA8D6D1A149EC82C9B2A6 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		254E21A8B6708FC73FAF8411 /* libPods-SimplyLifeGroupeValorem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimplyLifeGroupeValorem.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26C79E7A2FF44E2B9D8072BA /* DMSans18pt-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Bold.ttf"; path = "../src/assets/fonts/DMSans18pt-Bold.ttf"; sourceTree = "<group>"; };
+		6592D37A96854B90B3DAAD06 /* DMSans18pt-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Medium.ttf"; path = "../src/assets/fonts/DMSans18pt-Medium.ttf"; sourceTree = "<group>"; };
+		6A33BAC4DDBCEA80B502C687 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-SimplyLifeGroupeValorem/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		71C239088028DE68FC2F3C2C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = SimplyLifeGroupeValorem/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		95CDDE5169CC45D1A7A0D72D /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A17AE3A0DFC94204A1B6B89A /* DMSans18pt-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Italic.ttf"; path = "../src/assets/fonts/DMSans18pt-Italic.ttf"; sourceTree = "<group>"; };
+		AA023C6084CD4B908E76487C /* DMSans18pt-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Light.ttf"; path = "../src/assets/fonts/DMSans18pt-Light.ttf"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = SimplyLifeGroupeValorem/SplashScreen.storyboard; sourceTree = "<group>"; };
-		AA96D34EC6499330AD8E61B0 /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.debug.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.debug.xcconfig"; sourceTree = "<group>"; };
-		B559500CBAADEF9104A1018A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = SimplyLifeGroupeValorem/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		C0D629C0F6D8F56ED1BFD501 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.release.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.release.xcconfig"; sourceTree = "<group>"; };
+		BDA5626069AB444FBFF3AA24 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CAB25D3B081BB518B8F68E6B /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.debug.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.debug.xcconfig"; sourceTree = "<group>"; };
+		CDC11092DDCF420DA0466B06 /* DMSans18pt-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Regular.ttf"; path = "../src/assets/fonts/DMSans18pt-Regular.ttf"; sourceTree = "<group>"; };
+		D1923097C062352433475AC6 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.release.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.release.xcconfig"; sourceTree = "<group>"; };
+		D25C3C9F43D24588BEDAC366 /* DMSans18pt-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-SemiBold.ttf"; path = "../src/assets/fonts/DMSans18pt-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		EDC30F2BF81E403986F7A9F7 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		EFF4DD41CE2B69DD490F0AA5 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-SimplyLifeGroupeValorem/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SimplyLifeGroupeValorem/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* SimplyLifeGroupeValorem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SimplyLifeGroupeValorem-Bridging-Header.h"; path = "SimplyLifeGroupeValorem/SimplyLifeGroupeValorem-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,22 +55,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39BE5DE8B1593C2F25665FA6 /* libPods-SimplyLifeGroupeValorem.a in Frameworks */,
+				5BAB4A947DA5991D1154BF3A /* libPods-SimplyLifeGroupeValorem.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		000D5FA3C4714B01AB1CB62C /* es.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				A97CA8D6D1A149EC82C9B2A6 /* InfoPlist.strings */,
-			);
-			name = es.lproj;
-			path = "";
-			sourceTree = "<group>";
-		};
 		13B07FAE1A68108700A75B9A /* SimplyLifeGroupeValorem */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,7 +71,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				B559500CBAADEF9104A1018A /* PrivacyInfo.xcprivacy */,
+				71C239088028DE68FC2F3C2C /* PrivacyInfo.xcprivacy */,
 			);
 			name = SimplyLifeGroupeValorem;
 			sourceTree = "<group>";
@@ -89,17 +80,58 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				84CA79DF0B4E0201C0AFB5E6 /* libPods-SimplyLifeGroupeValorem.a */,
+				254E21A8B6708FC73FAF8411 /* libPods-SimplyLifeGroupeValorem.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		561CEF11D8CEB9987CAF16A5 /* ExpoModulesProviders */ = {
+		46D1AB506530F8CEF840C7D7 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				836B220374DAFC9C82C06825 /* SimplyLifeGroupeValorem */,
+				8B8A79AF9DBD4BC3321DF606 /* SimplyLifeGroupeValorem */,
 			);
 			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		5FC22489199C49A2A87DDA0D /* fr.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				BDA5626069AB444FBFF3AA24 /* InfoPlist.strings */,
+			);
+			name = fr.lproj;
+			path = "";
+			sourceTree = "<group>";
+		};
+		7B56413113A8465D9B5EF671 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CDC11092DDCF420DA0466B06 /* DMSans18pt-Regular.ttf */,
+				26C79E7A2FF44E2B9D8072BA /* DMSans18pt-Bold.ttf */,
+				A17AE3A0DFC94204A1B6B89A /* DMSans18pt-Italic.ttf */,
+				AA023C6084CD4B908E76487C /* DMSans18pt-Light.ttf */,
+				6592D37A96854B90B3DAAD06 /* DMSans18pt-Medium.ttf */,
+				D25C3C9F43D24588BEDAC366 /* DMSans18pt-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
+		7C2CE55A18FB478891ECE446 /* es.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				95CDDE5169CC45D1A7A0D72D /* InfoPlist.strings */,
+			);
+			name = es.lproj;
+			path = "";
+			sourceTree = "<group>";
+		};
+		82D05443F6944903BF548E86 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				08CB120F70F040298D5320FC /* InfoPlist.strings */,
+			);
+			name = en.lproj;
+			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -109,14 +141,6 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
-		836B220374DAFC9C82C06825 /* SimplyLifeGroupeValorem */ = {
-			isa = PBXGroup;
-			children = (
-				EFF4DD41CE2B69DD490F0AA5 /* ExpoModulesProvider.swift */,
-			);
-			name = SimplyLifeGroupeValorem;
-			sourceTree = "<group>";
-		};
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
@@ -124,9 +148,9 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				E88303653CA94AE98F67A4C3 /* Resources */,
-				EBB298D76733E1EC860C4E0D /* Pods */,
-				561CEF11D8CEB9987CAF16A5 /* ExpoModulesProviders */,
+				7B56413113A8465D9B5EF671 /* Resources */,
+				DB89184E42399ED66EEB8C58 /* Pods */,
+				46D1AB506530F8CEF840C7D7 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -141,55 +165,31 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8B8A79AF9DBD4BC3321DF606 /* SimplyLifeGroupeValorem */ = {
+			isa = PBXGroup;
+			children = (
+				6A33BAC4DDBCEA80B502C687 /* ExpoModulesProvider.swift */,
+			);
+			name = SimplyLifeGroupeValorem;
+			sourceTree = "<group>";
+		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
-				D2680D682BF24F459B40F8CC /* en.lproj */,
-				E643591051A24FE49FAA3063 /* fr.lproj */,
-				000D5FA3C4714B01AB1CB62C /* es.lproj */,
+				82D05443F6944903BF548E86 /* en.lproj */,
+				5FC22489199C49A2A87DDA0D /* fr.lproj */,
+				7C2CE55A18FB478891ECE446 /* es.lproj */,
 			);
 			name = Supporting;
 			path = SimplyLifeGroupeValorem/Supporting;
 			sourceTree = "<group>";
 		};
-		D2680D682BF24F459B40F8CC /* en.lproj */ = {
+		DB89184E42399ED66EEB8C58 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8D6992C9F59243F0A5559BE8 /* InfoPlist.strings */,
-			);
-			name = en.lproj;
-			path = "";
-			sourceTree = "<group>";
-		};
-		E643591051A24FE49FAA3063 /* fr.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				EDC30F2BF81E403986F7A9F7 /* InfoPlist.strings */,
-			);
-			name = fr.lproj;
-			path = "";
-			sourceTree = "<group>";
-		};
-		E88303653CA94AE98F67A4C3 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				638D746D268046EA9A90E5E9 /* DMSans18pt-Regular.ttf */,
-				2BC832E374CB40C4A4EBA0DC /* DMSans18pt-Bold.ttf */,
-				36C8D7BE81A449A1B961A8F9 /* DMSans18pt-Italic.ttf */,
-				7B4363A354064ED692CC081B /* DMSans18pt-Light.ttf */,
-				395606352D53416AB079CF35 /* DMSans18pt-Medium.ttf */,
-				4286B12B0E424A849560209C /* DMSans18pt-SemiBold.ttf */,
-			);
-			name = Resources;
-			path = "";
-			sourceTree = "<group>";
-		};
-		EBB298D76733E1EC860C4E0D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				AA96D34EC6499330AD8E61B0 /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */,
-				C0D629C0F6D8F56ED1BFD501 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */,
+				CAB25D3B081BB518B8F68E6B /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */,
+				D1923097C062352433475AC6 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -203,14 +203,14 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SimplyLifeGroupeValorem" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				3C286D4E218556E2567D3608 /* [Expo] Configure project */,
+				69F466B6B22DB7C2593BDB52 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				A2DD0354AB5345A3B85DA864 /* Upload Debug Symbols to Sentry */,
-				09F11B7565EC77BD5440071F /* [CP] Embed Pods Frameworks */,
+				78C763086E7D4C248C9C458C /* Upload Debug Symbols to Sentry */,
+				041316F5C79D9CCCB8E022A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -230,8 +230,8 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = MZKWJD856F;
 						LastSwiftMigration = 1250;
+						DevelopmentTeam = "MZKWJD856F";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -262,16 +262,16 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				19B59793C09C4827BC7481EB /* InfoPlist.strings in Resources */,
-				F7B2CC11798D47E0B2CFC91F /* InfoPlist.strings in Resources */,
-				320849D987764751AAD201AE /* InfoPlist.strings in Resources */,
-				CBE976D483B14FFA819FE33C /* DMSans18pt-Regular.ttf in Resources */,
-				17EF344054DC45CE860D0F8B /* DMSans18pt-Bold.ttf in Resources */,
-				400C321DD0F24CB6AAA651B6 /* DMSans18pt-Italic.ttf in Resources */,
-				B04C88AE8E584A8095FEC8A0 /* DMSans18pt-Light.ttf in Resources */,
-				0408E05E78964977B1C032B3 /* DMSans18pt-Medium.ttf in Resources */,
-				F43245644CF54FBCA87FF90A /* DMSans18pt-SemiBold.ttf in Resources */,
-				3912A2F0C3FC2874DFA1D1A1 /* PrivacyInfo.xcprivacy in Resources */,
+				9C000736B89C481C8261C7AA /* InfoPlist.strings in Resources */,
+				A714C97E89654671BEFFAC4F /* InfoPlist.strings in Resources */,
+				8E0506D6480643DB834D64AB /* InfoPlist.strings in Resources */,
+				B8B44477DD5441DBA94CC3AD /* DMSans18pt-Regular.ttf in Resources */,
+				747240A378FE4A7CBB01AEC1 /* DMSans18pt-Bold.ttf in Resources */,
+				E9A0A84BF7024A5AB8449B9A /* DMSans18pt-Italic.ttf in Resources */,
+				886A1E536F1240E199127412 /* DMSans18pt-Light.ttf in Resources */,
+				C5883292E793488CB57FBB87 /* DMSans18pt-Medium.ttf in Resources */,
+				DBA40D6BA3974D3C8FBD4405 /* DMSans18pt-SemiBold.ttf in Resources */,
+				B7D6962DC8B3B79E95CC4466 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +292,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n/bin/sh `\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('@sentry/react-native/package.json')) + '/scripts/sentry-xcode.sh'\"` `\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
+		};
+		041316F5C79D9CCCB8E022A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -315,25 +333,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		09F11B7565EC77BD5440071F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3C286D4E218556E2567D3608 /* [Expo] Configure project */ = {
+		69F466B6B22DB7C2593BDB52 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -351,6 +351,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-SimplyLifeGroupeValorem/expo-configure-project.sh\"\n";
+		};
+		78C763086E7D4C248C9C458C /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh `${NODE_BINARY:-node} --print \"require('path').dirname(require.resolve('@sentry/react-native/package.json')) + '/scripts/sentry-xcode-debug-files.sh'\"`";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -408,20 +422,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A2DD0354AB5345A3B85DA864 /* Upload Debug Symbols to Sentry */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Debug Symbols to Sentry";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh `${NODE_BINARY:-node} --print \"require('path').dirname(require.resolve('@sentry/react-native/package.json')) + '/scripts/sentry-xcode-debug-files.sh'\"`";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -430,7 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				A8EFF86A70A2086AF77541D0 /* ExpoModulesProvider.swift in Sources */,
+				7226F5507F88913C84EFECB5 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,15 +439,12 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA96D34EC6499330AD8E61B0 /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */;
+			baseConfigurationReference = CAB25D3B081BB518B8F68E6B /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SimplyLifeGroupeValorem/SimplyLifeGroupeValorem.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MZKWJD856F;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -473,20 +470,20 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				DEVELOPMENT_TEAM = "MZKWJD856F";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0D629C0F6D8F56ED1BFD501 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */;
+			baseConfigurationReference = D1923097C062352433475AC6 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SimplyLifeGroupeValorem/SimplyLifeGroupeValorem.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MZKWJD856F;
 				INFOPLIST_FILE = SimplyLifeGroupeValorem/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -506,6 +503,9 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				DEVELOPMENT_TEAM = "MZKWJD856F";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 			};
 			name = Release;
 		};
