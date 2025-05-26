@@ -8,14 +8,10 @@ import DrawPad, { DrawPadHandle } from "./drawpad";
 import MaskedText from "./masket-text";
 
 
-const ICON_PROPS: LucideProps = {
-	size: 21,
-	strokeWidth: 1.8,
-};
 const BTN_HEIGHT = 38;
 const isWeb = Platform.OS === "web";
 
-export default function Board() {
+export default function Signature() {
 	const padRef = useRef<DrawPadHandle>(null);
 	const pathLength = useSharedValue<number>(0);
 	const playing = useSharedValue<boolean>(false);

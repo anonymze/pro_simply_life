@@ -55,7 +55,6 @@ export default function Page() {
 						</TouchableOpacity>
 					</Link>
 
-					<Board />
 					<Title title="Fonctionnalités" />
 					<TabletMediaQuery screenWidth={screenWidth}>
 						<View className="flex-row flex-wrap">
