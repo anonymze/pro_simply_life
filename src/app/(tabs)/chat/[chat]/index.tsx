@@ -122,7 +122,11 @@ export default function Page() {
 		},
 	});
 
-	const { data: messages, isLoading: loadingMessages } = useQuery({
+	const {
+		data: messages,
+		isLoading: loadingMessages,
+		isFetching: isFetchingMessages,
+	} = useQuery({
 		queryKey: ["messages", chatId, maxMessages],
 		queryFn: getMessagesQuery,
 		placeholderData: (prev) => prev,
@@ -275,8 +279,6 @@ export default function Page() {
 
 							// disableRecycling={true}
 							onEndReached={() => {
-								// TODO
-								console.log("onEndReached");
 								// add more messages when on end scroll
 								if (!!messages.length && messages.length >= maxMessages) {
 									setMaxMessages((props) => props + 20);
@@ -295,7 +297,7 @@ export default function Page() {
 					)}
 
 					<View className="flex-row items-center gap-0.5">
-						<View className="bg-darkGray mb-4 flex-shrink flex-row items-center rounded-xl border border-transparent">
+						<View className="mb-4 flex-shrink flex-row items-center rounded-xl border border-transparent bg-darkGray">
 							<form.Field name="message">
 								{(field) => (
 									<TextInput
@@ -385,24 +387,26 @@ const Actions = React.memo(({ pickImage }: { pickImage: () => void }) => {
 	);
 });
 
-const TitleHeader = React.memo(({ title, description, chatId }: { title: string; description: string; chatId: string }) => {
-	return (
-		<Stack.Screen
-			options={{
-				header: () => (
-					<HeaderLayout
-						chat={{
-							description,
-							link: {
-								pathname: "/chat/[chat]/details",
-								params: { chat: chatId, title, description },
-							},
-						}}
-						backgroundColor="bg-white"
-						title={title}
-					/>
-				),
-			}}
-		/>
-	);
-});
+const TitleHeader = React.memo(
+	({ title, description, chatId }: { title: string; description: string; chatId: string }) => {
+		return (
+			<Stack.Screen
+				options={{
+					header: () => (
+						<HeaderLayout
+							chat={{
+								description,
+								link: {
+									pathname: "/chat/[chat]/details",
+									params: { chat: chatId, title, description },
+								},
+							}}
+							backgroundColor="bg-white"
+							title={title}
+						/>
+					),
+				}}
+			/>
+		);
+	},
+);
