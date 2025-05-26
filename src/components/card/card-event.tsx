@@ -40,12 +40,10 @@
 // 		</View>
 // 	);
 // }
-import { createShimmerPlaceholder, ShimmerPlaceholderProps } from "react-native-shimmer-placeholder";
-import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
 
+import { SkeletonPlaceholder } from "../skeleton-placeholder";
 
-const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 export default function CardEvent({
 	date,
@@ -62,7 +60,7 @@ export default function CardEvent({
 }) {
 	return (
 		<View className="h-[180] overflow-hidden rounded-2xl bg-[#1a1a1a]" style={{ width }}>
-			<SkeletonPlaceholder height={70} width={width} style={{ borderRadius: 16 }} />
+			<SkeletonPlaceholder height={70} width={width}/>
 			<SkeletonPlaceholder height={64} width={64} style={{ borderRadius: 8, marginTop: -44, marginLeft: 18 }} />
 			<View className="mx-5 mt-3.5 gap-1">
 				<SkeletonPlaceholder width={width / 3} height={16} style={{ borderRadius: 3 }} />
@@ -73,23 +71,3 @@ export default function CardEvent({
 	);
 }
 
-const SkeletonPlaceholder = ({
-	width,
-	height,
-	style,
-}: {
-	width: number;
-	height: number;
-	style?: ShimmerPlaceholderProps["style"];
-}) => {
-	return (
-		<ShimmerPlaceholder
-			style={style}
-			shimmerColors={["#262626", "#303030", "#262626"]}
-			duration={1600}
-			isReversed
-			height={height}
-			width={width}
-		/>
-	);
-};
