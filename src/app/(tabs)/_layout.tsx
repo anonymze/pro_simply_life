@@ -23,7 +23,7 @@ export default function AppLayout() {
 		<NotificationProvider>
 			<Tabs
 				// TODO
-				initialRouteName="chat"
+				initialRouteName="index"
 				screenOptions={{
 					headerShown: false,
 					animation: "shift",

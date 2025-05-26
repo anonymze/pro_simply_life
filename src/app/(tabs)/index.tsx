@@ -1,11 +1,11 @@
 import { CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, KeyRoundIcon } from "lucide-react-native";
 import { Text, View, Dimensions, TouchableOpacity } from "react-native";
 import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
+import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import ProfileDashboard from "@/components/profile-dashboard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
-import { Link, useLocalSearchParams } from "expo-router";
 import CardEvent from "@/components/card/card-event";
 import CardLink from "@/components/card/card-link";
 import Carousel from "@/components/carousel";
@@ -24,14 +24,13 @@ export default function Page() {
 	>;
 
 	return (
-		<SafeAreaView className="flex-1 bg-background" edges={["top", "right", "left"]}>
-			<BackgroundLayout className="pt-4 px-4">
-			<ScrollView
-				className="flex-1"
-				showsVerticalScrollIndicator={false}
-				style={{ backgroundColor: config.theme.extend.colors.background }}
-				contentContainerStyle={{ paddingBottom: 10 }}
-			>
+			<BackgroundLayout className="px-4 pt-safe mt-4">
+				<ScrollView
+					className="flex-1"
+					showsVerticalScrollIndicator={false}
+					style={{ backgroundColor: config.theme.extend.colors.background }}
+					contentContainerStyle={{ paddingBottom: 10 }}
+				>
 					<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
 					<Title title="Vie d'agence Valorem" />
 					<Carousel data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}>
@@ -73,13 +72,17 @@ export default function Page() {
 							))}
 						</View>
 					</MobileMediaQuery>
-			</ScrollView>
-				</BackgroundLayout>
-		</SafeAreaView>
+				</ScrollView>
+			</BackgroundLayout>
 	);
 }
 
-const links = [
+const links: {
+	icon: React.ReactNode;
+	title: string;
+	description: string;
+	link: LinkProps["href"];
+}[] = [
 	{
 		icon: <NewspaperIcon size={24} color={config.theme.extend.colors.secondaryDark} />,
 		title: "Fundesys",
