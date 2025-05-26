@@ -1,5 +1,5 @@
+import { Linking, Platform, ScrollView, TouchableOpacity, View } from "react-native";
 import { HrefObject, Link, Redirect, useLocalSearchParams } from "expo-router";
-import { Linking, ScrollView, TouchableOpacity, View } from "react-native";
 import { MailIcon, PhoneIcon, PlusIcon } from "lucide-react-native";
 import { getChatRoomQuery } from "@/api/queries/chat-room-queries";
 import IndependantIcon from "@/components/independant-icon";
@@ -9,6 +9,7 @@ import { User, userRoleLabels } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
 import config from "tailwind.config";
 import { Text } from "react-native";
+import { cn } from "@/utils/cn";
 
 
 export default function Page() {
@@ -23,7 +24,7 @@ export default function Page() {
 	if (!chatRoom) return null;
 
 	return (
-		<BackgroundLayout className="px-4 pb-4 pt-10">
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-10" : "pt-2")}>
 			<View className="mb-4 items-center gap-2 rounded-2xl bg-white p-4">
 				<View className="size-20 items-center justify-center rounded-full bg-secondaryLight">
 					<EmployeesIcon width={36} height={36} color={config.theme.extend.colors.primary} />

@@ -67,9 +67,9 @@ export default function Page() {
 
 			{!!data?.offers?.length && (
 				<Picker
-					style={{ width: 260, marginTop: 0, marginHorizontal: "auto", marginBottom: 10 }}
+					style={{ width: 280, marginTop: 0, marginHorizontal: "auto", marginBottom: 10 }}
 					variant="segmented"
-					options={["Contact", "Produit"]}
+					options={["Produits", "Offres du moment"]}
 					selectedIndex={null}
 					onOptionSelected={({ nativeEvent: { index } }) => {
 						if (index === 0) {

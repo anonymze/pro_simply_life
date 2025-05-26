@@ -7,12 +7,11 @@ import InputSearch from "@/components/ui/input-search";
 import { Dimensions, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
+import { Brochure } from "@/components/brochure";
 import { Picker } from "@expo/ui/swift-ui";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
-
-import { Brochure } from "./[supplier-product]/supplier/[supplier]";
 
 
 export default function Page() {
@@ -153,7 +152,7 @@ export default function Page() {
 						{!!data?.offers?.length &&
 							data.offers.map((offer) => (
 								<Brochure
-								title="Plaquette"
+									title="Plaquette"
 									key={offer.id}
 									brochure={offer.file}
 									updatedAt={data.updatedAt}

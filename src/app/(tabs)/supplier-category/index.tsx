@@ -14,8 +14,6 @@ import config from "tailwind.config";
 import React from "react";
 
 
-const { width: screenWidth } = Dimensions.get("window");
-
 export default function Page() {
 	return withQueryWrapper(
 		{
@@ -76,7 +74,7 @@ export default function Page() {
 											supplierCategory={supplierCategory}
 											icon={
 												<ImagePlaceholder
-													transition={0}
+												transition={200}
 													placeholder={supplierCategory.logo?.blurhash}
 													source={supplierCategory.logo?.url ?? ""}
 													style={{ width: 30, height: 30, borderRadius: 4 }}

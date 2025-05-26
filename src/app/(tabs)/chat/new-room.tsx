@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, ScrollView, Dimensions, ActivityIndicator } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView, Dimensions, ActivityIndicator, Platform } from "react-native";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { NewConversation } from "@/components/new-conversation";
 import { withQueryWrapper } from "@/utils/libs/react-query";
@@ -42,8 +42,8 @@ export default function Page() {
 	}
 
 	return (
-		<BackgroundLayout className="p-4">
-			<View className={cn("flex-row items-center justify-between bg-background pb-4 pt-4")}>
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-10" : "pt-safe")}>
+			<View className={cn("flex-row items-center justify-between bg-background pb-4")}>
 				<View className="w-24 p-2">
 					<TouchableOpacity
 						onPress={() => {

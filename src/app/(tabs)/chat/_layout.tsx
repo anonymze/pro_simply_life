@@ -37,7 +37,8 @@ export default function ChatLayout() {
 				options={{
 					presentation: "modal",
 					sheetGrabberVisible: true,
-					headerShown: false,
+					header: () => <HeaderLayout />,
+					headerShown: Platform.OS === "ios" ? false : true,
 				}}
 			/>
 		</Stack>
