@@ -17,7 +17,7 @@ export default function CardEvent({
 	width: number;
 }) {
 	return (
-		<View className="h-[180] gap-4  rounded-2xl bg-primary p-4" style={{ width }}>
+		<View className="h-[180] gap-4  rounded-2xl bg-primary p-4" style={{ width: width }}>
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="rounded-[0.3rem] bg-primaryLight px-1.5 py-1">
 					<Text className="text-xs font-semibold text-white">{type}</Text>

@@ -31,9 +31,9 @@ export default function Carousel<T>({ data, children }: { data: T[]; children: (
 				decelerationRate={0.1}
 				snapToOffsets={data.map((_, idx) => {
 					if (idx === 0) return 0;
-					return cardWidth * idx + 16 * idx;
+					return cardWidth * idx - 4 * idx;
 				})}
-				contentContainerStyle={{ paddingRight: 24, gap: 16 }} // keep right padding for last card
+				contentContainerStyle={{ paddingRight: 42, gap: 16 }} // keep right padding for last card
 				scrollEventThrottle={undefined}
 				style={{ flexGrow: 0 }}
 			>
