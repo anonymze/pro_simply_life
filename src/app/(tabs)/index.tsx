@@ -9,6 +9,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import CardEvent from "@/components/card/card-event";
 import CardLink from "@/components/card/card-link";
 import Carousel from "@/components/carousel";
+import Board from "@/components/signature";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import { User } from "@/types/user";
@@ -53,6 +54,8 @@ export default function Page() {
 							<ArrowRight size={16} color={config.theme.extend.colors.defaultGray} />
 						</TouchableOpacity>
 					</Link>
+
+					<Board />
 					<Title title="Fonctionnalités" />
 					<TabletMediaQuery screenWidth={screenWidth}>
 						<View className="flex-row flex-wrap">
