@@ -83,13 +83,6 @@ export default function AppLayout() {
 					}}
 				/>
 				<Tabs.Screen
-					name="bracket"
-					options={{
-						header: () => <HeaderLayout title="Bracket" />,
-						href: null,
-					}}
-				/>
-				<Tabs.Screen
 					name="chat"
 					options={{
 						title: "Messages",
