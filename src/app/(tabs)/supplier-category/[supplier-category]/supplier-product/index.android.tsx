@@ -6,13 +6,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
 import { Dimensions, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
-import { Picker } from "@expo/ui/swift-ui";
+import { Brochure } from "@/components/brochure";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
-
-import { Brochure } from "./[supplier-product]/supplier/[supplier]";
 
 
 export default function Page() {
@@ -68,13 +67,13 @@ export default function Page() {
 
 			{!!data?.offers?.length && (
 				<Picker
-					style={{ width: 260, marginBottom: 16, marginHorizontal: "auto" }}
+					style={{ width: 260, marginTop: 0, marginHorizontal: "auto", marginBottom: 10 }}
 					variant="segmented"
-					options={["Produits", "Offres du moment"]}
+					options={["Contact", "Produit"]}
 					selectedIndex={null}
 					onOptionSelected={({ nativeEvent: { index } }) => {
 						if (index === 0) {
-							scrollRef.current?.scrollTo({ x: 0, animated: true });
+							scrollRef.current?.scrollTo({ x: 0, y: 0, animated: true });
 						} else {
 							scrollRef.current?.scrollToEnd({ animated: true });
 						}
@@ -153,7 +152,7 @@ export default function Page() {
 						{!!data?.offers?.length &&
 							data.offers.map((offer) => (
 								<Brochure
-								title="Plaquette"
+									title="Plaquette"
 									key={offer.id}
 									brochure={offer.file}
 									updatedAt={data.updatedAt}

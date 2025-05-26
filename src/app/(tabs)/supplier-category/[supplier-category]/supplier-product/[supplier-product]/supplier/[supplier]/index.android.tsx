@@ -7,6 +7,7 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { downloadFile, getFile } from "@/utils/download";
 import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
+// import type { HrefObject } from "expo-router";
 import { Supplier } from "@/types/supplier";
 import type { Media } from "@/types/media";
 import config from "tailwind.config";

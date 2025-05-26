@@ -67,60 +67,32 @@ export default function Page() {
 						<ScrollView
 							className="flex-1"
 							showsVerticalScrollIndicator={false}
-							style={{ backgroundColor: config.theme.extend.colors.background }}
+							style={{ backgroundColor: config.theme.extend.colors.background, marginTop: 16 }}
 						>
-							<TabletMediaQuery screenWidth={screenWidth}>
-								<View className="mt-4 flex-row flex-wrap">
-									{data?.docs?.map((supplierCategory) => (
-										<View key={supplierCategory.id} className="w-1/2 p-1.5">
-											<CardSupplierCategory
-												supplierCategory={supplierCategory}
-												icon={
-													<ImagePlaceholder
-														transition={0}
-														placeholder={supplierCategory.logo?.blurhash}
-														source={supplierCategory.logo?.url ?? ""}
-														style={{ width: 30, height: 30, borderRadius: 4 }}
-													/>
-												}
-												link={{
-													pathname: `/supplier-category/[supplier-category]/supplier-product`,
-													params: {
-														"supplier-category": supplierCategory.id,
-														"supplier-category-name": supplierCategory.name,
-													},
-												}}
-											/>
-										</View>
-									))}
-								</View>
-							</TabletMediaQuery>
-							<MobileMediaQuery screenWidth={screenWidth}>
-								<View className="mt-4 flex-row flex-wrap">
-									{data?.docs?.map((supplierCategory) => (
-										<View key={supplierCategory.id} className="w-1/2 p-1">
-											<CardSupplierCategory
-												supplierCategory={supplierCategory}
-												icon={
-													<ImagePlaceholder
-														transition={0}
-														placeholder={supplierCategory.logo?.blurhash}
-														source={supplierCategory.logo?.url ?? ""}
-														style={{ width: 30, height: 30, borderRadius: 4 }}
-													/>
-												}
-												link={{
-													pathname: `/supplier-category/[supplier-category]/supplier-product`,
-													params: {
-														"supplier-category": supplierCategory.id,
-														"supplier-category-name": supplierCategory.name,
-													},
-												}}
-											/>
-										</View>
-									))}
-								</View>
-							</MobileMediaQuery>
+							<View className="flex-row flex-wrap">
+								{data?.docs?.map((supplierCategory) => (
+									<View key={supplierCategory.id} className="w-1/2 p-1">
+										<CardSupplierCategory
+											supplierCategory={supplierCategory}
+											icon={
+												<ImagePlaceholder
+													transition={0}
+													placeholder={supplierCategory.logo?.blurhash}
+													source={supplierCategory.logo?.url ?? ""}
+													style={{ width: 30, height: 30, borderRadius: 4 }}
+												/>
+											}
+											link={{
+												pathname: `/supplier-category/[supplier-category]/supplier-product`,
+												params: {
+													"supplier-category": supplierCategory.id,
+													"supplier-category-name": supplierCategory.name,
+												},
+											}}
+										/>
+									</View>
+								))}
+							</View>
 						</ScrollView>
 					) : (
 						<>
