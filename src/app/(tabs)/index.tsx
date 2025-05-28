@@ -1,25 +1,27 @@
+import CardSupplierProduct from "@/components/card/card-supplier-product";
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import BuildingFillIcon from "@/components/svg/building-fill-icon";
 import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
+import { ArrowRight, MapPinnedIcon } from "lucide-react-native";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
-import { useNotification } from "@/context/push-notifications";
 import ProfileDashboard from "@/components/profile-dashboard";
 import { View, TouchableOpacity, Text } from "react-native";
 import BookFillIcon from "@/components/svg/book-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import CardEvent from "@/components/card/card-event";
-import { MapPinnedIcon } from "lucide-react-native";
 import CardLink from "@/components/card/card-link";
 import Carousel from "@/components/carousel";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import { User } from "@/types/user";
 
+import supplierProduct from "./supplier-category/[supplier-category]/supplier-product";
+
 
 export default function Page() {
-	const { expoPushToken, notification } = useNotification();
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
@@ -39,7 +41,7 @@ export default function Page() {
 				<Title title="Fonctionnalités" />
 				<View className="flex-row flex-wrap gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
 					{links.map((link) => (
-						<View key={link.title} className="w-1/3 items-center">
+						<View key={link.title} className="w-1/3 items-center ">
 							<CardLink
 								icon={link.icon}
 								title={link.title}
@@ -50,6 +52,41 @@ export default function Page() {
 						</View>
 					))}
 				</View>
+				<Title title="Newsletter" />
+				<Link
+					href={{
+						pathname: "/",
+					}}
+					push
+					asChild
+				>
+					<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
+						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10">
+							<ImagePlaceholder />
+						</View>
+						<View className="flex-1">
+							<Text className="font-semibold text-lg text-primary">Fundesys</Text>
+						</View>
+						<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+					</TouchableOpacity>
+				</Link>
+				<Link
+					href={{
+						pathname: "/",
+					}}
+					push
+					asChild
+				>
+					<TouchableOpacity className="w-full flex-row mt-3 items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
+						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10">
+							<ImagePlaceholder />
+						</View>
+						<View className="flex-1">
+							<Text className="font-semibold text-lg text-primary">Fidnet</Text>
+						</View>
+						<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+					</TouchableOpacity>
+				</Link>
 				<View className="mb-4 mt-7 flex-row items-center justify-between">
 					<Title title="Vie d'agence Valorem" className="mb-0 mt-0" />
 					<Link href="/" asChild>

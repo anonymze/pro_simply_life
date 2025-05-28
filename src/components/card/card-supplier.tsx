@@ -27,7 +27,7 @@ return (
 					{icon}
 				</View>
 				<View className="flex-1">
-					<Text className="text-lg font-semibold text-dark">{supplier.name}</Text>
+					<Text className="text-lg font-semibold text-primary">{supplier.name}</Text>
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
