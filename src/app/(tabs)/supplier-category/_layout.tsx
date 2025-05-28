@@ -58,7 +58,7 @@ export default function SupplierLayout() {
 					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
 					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
 					headerShown: Platform.OS === "ios" ? true : false,
-					header: () => Platform.OS === "ios" ? <HeaderGrabberIos className="mb-0" /> : <HeaderLayout backgroundColor="bg-white" />,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos noMarginBottom /> : <HeaderLayout backgroundColor="bg-white" />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]"
 			/>
