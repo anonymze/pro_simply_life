@@ -1,6 +1,7 @@
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import BuildingFillIcon from "@/components/svg/building-fill-icon";
+import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
 import { useNotification } from "@/context/push-notifications";
 import ProfileDashboard from "@/components/profile-dashboard";
@@ -97,26 +98,33 @@ const links: {
 		link: "/",
 		backgroundIcon: "bg-[#EBE9FE]",
 	},
+	{
+		icon: <ReceiptFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
+		title: "Commissions",
+		description: "Carte",
+		link: "/",
+		backgroundIcon: "bg-[#E0EAFF]",
+	},
 
 	{
 		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
 		title: "Bureaux",
 		description: "Réservation",
 		link: "/",
-		backgroundIcon: "bg-[#ECFAF5]",
+		backgroundIcon: "bg-[#E4F5D7]",
 	},
 	{
 		icon: <EventsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Évènements",
 		description: "Vie d'agence",
 		link: "/",
-		backgroundIcon: "bg-[#FFEAD5]",
+		backgroundIcon: "bg-[#FCE7F6]",
 	},
 	{
 		icon: <MapPinnedIcon size={40} color={config.theme.extend.colors.primary} />,
 		title: "Contacts",
 		description: "Carte",
 		link: "/contact",
-		backgroundIcon: "bg-[#E0EAFF]",
+		backgroundIcon: "bg-[#FFEAD5]",
 	},
 ];
