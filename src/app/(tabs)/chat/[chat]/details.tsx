@@ -24,7 +24,7 @@ export default function Page() {
 	if (!chatRoom) return null;
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-10" : "pt-2")}>
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-2")}>
 			<View className="mb-4 items-center gap-2 rounded-2xl bg-white p-4">
 				<View className="size-20 items-center justify-center rounded-full bg-secondaryLight">
 					<EmployeesIcon width={36} height={36} color={config.theme.extend.colors.primary} />
