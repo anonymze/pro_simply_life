@@ -4,6 +4,7 @@ import "@/styles/app.css";
 import { onlineManager, QueryClientProvider, focusManager } from "@tanstack/react-query";
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { NotificationProvider } from "@/context/push-notifications";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { Platform, AppState, AppStateStatus } from "react-native";
@@ -117,27 +118,29 @@ const Layout = () => {
 	if (!ready) null;
 
 	return (
-		<GestureHandlerRootView>
-			<BottomSheetModalProvider>
-				<KeyboardProvider>
-					<StatusBar style="dark" translucent />
-					{/* already added by expo router on every route */}
-					{/* <SafeAreaProvider> */}
-					<Stack
-						screenOptions={{
-							headerShown: false,
-							animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
-							gestureEnabled: false,
-							fullScreenGestureEnabled: false,
-						}}
-					>
-						<Stack.Screen name="(tabs)" />
-						<Stack.Screen name="login" />
-					</Stack>
-					{/* </SafeAreaProvider> */}
-				</KeyboardProvider>
-			</BottomSheetModalProvider>
-		</GestureHandlerRootView>
+		<NotificationProvider>
+			<GestureHandlerRootView>
+				<BottomSheetModalProvider>
+					<KeyboardProvider>
+						<StatusBar style="dark" translucent />
+						{/* already added by expo router on every route */}
+						{/* <SafeAreaProvider> */}
+						<Stack
+							screenOptions={{
+								headerShown: false,
+								animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
+								gestureEnabled: false,
+								fullScreenGestureEnabled: false,
+							}}
+						>
+							<Stack.Screen name="(tabs)" />
+							<Stack.Screen name="login" />
+						</Stack>
+						{/* </SafeAreaProvider> */}
+					</KeyboardProvider>
+				</BottomSheetModalProvider>
+			</GestureHandlerRootView>
+		</NotificationProvider>
 	);
 };
 

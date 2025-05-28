@@ -2,6 +2,7 @@ import Animated, { FadeInDown, FadeOut, FadeOutUp, useAnimatedStyle } from "reac
 import { ActivityIndicator, Alert, Pressable, Text, View, TextInput, Button } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
+import { useNotification } from "@/context/push-notifications";
 import BackgroundLayout from "@/layouts/background-layout";
 import { loginQuery } from "@/api/queries/login-queries";
 import { useMutation } from "@tanstack/react-query";
@@ -14,6 +15,7 @@ import { z } from "zod";
 
 
 export default function Page() {
+	const { expoPushToken } = useNotification();
 	const { height } = useReanimatedKeyboardAnimation();
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
 	const mutationLogin = useMutation({

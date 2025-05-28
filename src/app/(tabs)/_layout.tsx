@@ -1,5 +1,4 @@
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
-import { NotificationProvider } from "@/context/push-notifications";
 import MessagesFillIcon from "@/components/svg/messages-fill-icon";
 import BriefcaseIcon from "@/components/svg/briefcase-icon";
 import BookIconFill from "@/components/svg/book-fill-icon";
@@ -21,7 +20,7 @@ export default function AppLayout() {
 	}
 
 	return (
-		<NotificationProvider>
+
 			<Tabs
 				// TODO
 				initialRouteName="index"
@@ -108,6 +107,5 @@ export default function AppLayout() {
 					}}
 				/> */}
 			</Tabs>
-		</NotificationProvider>
 	);
 }

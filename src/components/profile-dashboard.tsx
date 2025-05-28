@@ -25,9 +25,9 @@ export default function ProfileDashboard({
 			{photo ? (
 				<ImagePlaceholder
 					transition={300}
-					contentFit="contain"
+					contentFit="cover"
 					source={photo?.url}
-					style={{ width: 40, height: 40 }}
+					style={{ width: 40, height: 40, borderRadius: 99 }}
 				/>
 			) : (
 				<View className="size-12 items-center justify-center rounded-full bg-secondary">
