@@ -18,8 +18,6 @@ import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import { User } from "@/types/user";
 
-import supplierProduct from "./supplier-category/[supplier-category]/supplier-product";
-
 
 export default function Page() {
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
