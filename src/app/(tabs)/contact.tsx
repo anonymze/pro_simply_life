@@ -73,11 +73,11 @@ export default function Page() {
 
 	return (
 		<>
-			<View className="flex-row items-center gap-4 bg-white px-4 pb-4 pt-safe-offset-3">
+			<View className="flex-row items-center gap-4 bg-white px-4 pb-4">
 				<View className="flex-1 flex-row items-center">
 					<InputSearch
 						clearable={false}
-						placeholder="Rechercher un contact..."
+						placeholder="Rechercher..."
 						onSubmitEditing={(e) => {
 							setInput(e.nativeEvent.text);
 						}}

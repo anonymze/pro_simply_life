@@ -83,7 +83,8 @@ export default function AppLayout() {
 				<Tabs.Screen
 					name="contact"
 					options={{
-						header: () => <HeaderLayout title="Contacts" />,
+						headerShown: true,
+						header: () => <HeaderLayout backgroundColor="bg-white" />,
 						href: null,
 					}}
 				/>

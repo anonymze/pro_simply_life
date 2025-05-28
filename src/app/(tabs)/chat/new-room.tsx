@@ -56,7 +56,7 @@ export default function Page() {
 					</TouchableOpacity>
 				</View>
 
-				<Text className="font-bold text-lg">Nouveau groupe</Text>
+				<Text className="font-bold text-lg text-primary">Nouveau groupe</Text>
 
 				{!nextStep ? (
 					<TouchableOpacity
