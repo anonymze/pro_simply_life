@@ -3,10 +3,14 @@ import CardSupplierCategory from "@/components/card/card-supplier-category";
 import CardSearchSupplier from "@/components/card/card-search-supplier";
 import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
+import ImmobilierIcon from "@/components/svg/immobilier-icon";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
+import SCPIIcon from "@/components/svg/scpi-icon";
+import CifIcon from "@/components/svg/cif-icon";
+import { HeartIcon } from "lucide-react-native";
 import Title from "@/components/ui/title";
 import { Text, View } from "react-native";
 import { Dimensions } from "react-native";
@@ -73,12 +77,15 @@ export default function Page() {
 										<CardSupplierCategory
 											supplierCategory={supplierCategory}
 											icon={
-												<ImagePlaceholder
-												transition={200}
-													placeholder={supplierCategory.logo?.blurhash}
-													source={supplierCategory.logo?.url ?? ""}
-													style={{ width: 30, height: 30, borderRadius: 4 }}
-												/>
+												supplierCategory.name === "IAS" ? (
+													<HeartIcon size={26} color={config.theme.extend.colors.secondaryDark} />
+												) : supplierCategory.name === "SCPI" ? (
+													<SCPIIcon width={30} height={30} color={config.theme.extend.colors.secondaryDark} />
+												) : supplierCategory.name === "Immobilier" ? (
+													<ImmobilierIcon width={30} height={30} color={config.theme.extend.colors.secondaryDark} />
+												) : (
+													<CifIcon width={30} height={30} color={config.theme.extend.colors.secondaryDark} />
+												)
 											}
 											link={{
 												pathname: `/supplier-category/[supplier-category]/supplier-product`,

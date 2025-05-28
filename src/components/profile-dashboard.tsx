@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import * as DropdownMenu from "zeego/dropdown-menu";
+import { MenuIcon } from "lucide-react-native";
 import { Media } from "@/types/media";
 import { logout } from "@/utils/auth";
 import config from "tailwind.config";
@@ -39,7 +40,7 @@ export default function ProfileDashboard({
 					<DropdownMenu.Trigger>
 						<TouchableOpacity className="p-3">
 							<View className="size-9 items-center justify-center rounded-full bg-white shadow-sm shadow-defaultGray/20">
-								<Text className="text-defaultGray">?</Text>
+								<MenuIcon size={18} color={config.theme.extend.colors.dark} />
 							</View>
 						</TouchableOpacity>
 					</DropdownMenu.Trigger>

@@ -1,13 +1,13 @@
 import { NotificationProvider } from "@/context/push-notifications";
-import MessagesFillIcon from "@/components/messages-fill-icon";
+import MessagesFillIcon from "@/components/svg/messages-fill-icon";
+import BriefcaseIcon from "@/components/svg/briefcase-icon";
+import BookIconFill from "@/components/svg/book-fill-icon";
+import MessagesIcon from "@/components/svg/messages-icon";
 import { Pressable } from "react-native-gesture-handler";
-import BriefcaseIcon from "@/components/briefcase-icon";
-import BookIconFill from "@/components/book-fill-icon";
-import MessagesIcon from "@/components/messages-icon";
 import HeaderLayout from "@/layouts/headert-layout";
 import { getStorageUserInfos } from "@/utils/store";
-import HomeIcon from "@/components/home-icon";
-import BookIcon from "@/components/book-icon";
+import HomeIcon from "@/components/svg/home-icon";
+import BookIcon from "@/components/svg/book-icon";
 import { Redirect, Tabs } from "expo-router";
 import config from "tailwind.config";
 
@@ -58,7 +58,7 @@ export default function AppLayout() {
 				<Tabs.Screen
 					name="organigramme"
 					options={{
-						title: "Groupe Valorem",
+						title: "Organigramme",
 						headerShown: false,
 						tabBarIcon: ({ color }) => <BriefcaseIcon color={color} />,
 					}}

@@ -44,8 +44,7 @@ export interface SupplierProduct {
 
 export interface SupplierCategory {
 	id: string;
-	name: string;
-	logo?: Media | null;
+	name: "IAS" | "SCPI" | "Immobilier" | "CIF";
 	product_suppliers: SupplierProduct[];
 	offers?:
 		| {

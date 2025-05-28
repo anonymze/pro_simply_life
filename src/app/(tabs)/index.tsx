@@ -33,7 +33,7 @@ export default function Page() {
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
 					<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
-					<Text>{expoPushToken} !</Text>
+					<Text>{expoPushToken}</Text>
 					<Text>{JSON.stringify(notification, null, 2)}</Text>
 					<Title title="Vie d'agence Valorem" />
 					<Carousel data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}>
