@@ -31,7 +31,7 @@ export default function ProfileDashboard({
 			)}
 			<View>
 				<Text className="text-sm text-defaultGray">Bonjour,</Text>
-				<Text className="font-semibold text-base text-dark">
+				<Text className="font-semibold text-lg text-primary">
 					{firstname} {lastname}
 				</Text>
 			</View>

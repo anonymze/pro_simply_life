@@ -8,43 +8,43 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		13E59298A74B48EAB1BC817D /* PlusJakartaSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 933483DF1C7B42F3AE801FBC /* PlusJakartaSans-Regular.ttf */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		5BAB4A947DA5991D1154BF3A /* libPods-SimplyLifeGroupeValorem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 254E21A8B6708FC73FAF8411 /* libPods-SimplyLifeGroupeValorem.a */; };
-		7226F5507F88913C84EFECB5 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33BAC4DDBCEA80B502C687 /* ExpoModulesProvider.swift */; };
-		747240A378FE4A7CBB01AEC1 /* DMSans18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26C79E7A2FF44E2B9D8072BA /* DMSans18pt-Bold.ttf */; };
-		886A1E536F1240E199127412 /* DMSans18pt-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA023C6084CD4B908E76487C /* DMSans18pt-Light.ttf */; };
-		8E0506D6480643DB834D64AB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95CDDE5169CC45D1A7A0D72D /* InfoPlist.strings */; };
-		9C000736B89C481C8261C7AA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08CB120F70F040298D5320FC /* InfoPlist.strings */; };
-		A714C97E89654671BEFFAC4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDA5626069AB444FBFF3AA24 /* InfoPlist.strings */; };
-		B7D6962DC8B3B79E95CC4466 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 71C239088028DE68FC2F3C2C /* PrivacyInfo.xcprivacy */; };
-		B8B44477DD5441DBA94CC3AD /* DMSans18pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDC11092DDCF420DA0466B06 /* DMSans18pt-Regular.ttf */; };
+		5091E812D3AD4099A7775777 /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB739FDE7B27411A94DE4062 /* PlusJakartaSans-Medium.ttf */; };
+		65DC09029789D4D30DD8B916 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4264FF59690AA782474D2A59 /* ExpoModulesProvider.swift */; };
+		74E371078846444BA5D8CE51 /* PlusJakartaSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FF5620FC63E42EA8C365EE1 /* PlusJakartaSans-SemiBold.ttf */; };
+		880D755669C84D848971D061 /* PlusJakartaSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AD9B91F3F4D4DFCA2F15E90 /* PlusJakartaSans-Bold.ttf */; };
+		9C9B39E7236B1EE81FD54436 /* libPods-SimplyLifeGroupeValorem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8055FCD15C2C98D2B1B786A6 /* libPods-SimplyLifeGroupeValorem.a */; };
+		A63E3400D1F8440C819B1A58 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 97101A1E73814F9C906FFEF2 /* InfoPlist.strings */; };
+		ACCFA6F149551D1D3712F843 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8595B2096114CA9A6BF89DEC /* PrivacyInfo.xcprivacy */; };
+		B22FEDE5B03C4A0E98E87FBD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0627EE055FD045D4B26F79E1 /* InfoPlist.strings */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C5883292E793488CB57FBB87 /* DMSans18pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6592D37A96854B90B3DAAD06 /* DMSans18pt-Medium.ttf */; };
-		DBA40D6BA3974D3C8FBD4405 /* DMSans18pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D25C3C9F43D24588BEDAC366 /* DMSans18pt-SemiBold.ttf */; };
-		E9A0A84BF7024A5AB8449B9A /* DMSans18pt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A17AE3A0DFC94204A1B6B89A /* DMSans18pt-Italic.ttf */; };
+		BB8929CE59A44599BB914160 /* PlusJakartaSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8060339EE0D40458554A329 /* PlusJakartaSans-Light.ttf */; };
+		BF4E023FDED04DE5B81E81CE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 803AAD53202D432DAE7323E0 /* InfoPlist.strings */; };
+		C9B43852F2024B53AEBC0A33 /* PlusJakartaSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 50BB61F8883A4A1B83383CEE /* PlusJakartaSans-Italic.ttf */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		08CB120F70F040298D5320FC /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0627EE055FD045D4B26F79E1 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		07FEEA390C45175CFF18B8B3 /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.debug.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.debug.xcconfig"; sourceTree = "<group>"; };
+		0AD9B91F3F4D4DFCA2F15E90 /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Bold.ttf"; path = "../src/assets/fonts/PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* SimplyLifeGroupeValorem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplyLifeGroupeValorem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SimplyLifeGroupeValorem/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SimplyLifeGroupeValorem/Info.plist; sourceTree = "<group>"; };
-		254E21A8B6708FC73FAF8411 /* libPods-SimplyLifeGroupeValorem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimplyLifeGroupeValorem.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		26C79E7A2FF44E2B9D8072BA /* DMSans18pt-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Bold.ttf"; path = "../src/assets/fonts/DMSans18pt-Bold.ttf"; sourceTree = "<group>"; };
-		6592D37A96854B90B3DAAD06 /* DMSans18pt-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Medium.ttf"; path = "../src/assets/fonts/DMSans18pt-Medium.ttf"; sourceTree = "<group>"; };
-		6A33BAC4DDBCEA80B502C687 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-SimplyLifeGroupeValorem/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		71C239088028DE68FC2F3C2C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = SimplyLifeGroupeValorem/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		95CDDE5169CC45D1A7A0D72D /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A17AE3A0DFC94204A1B6B89A /* DMSans18pt-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Italic.ttf"; path = "../src/assets/fonts/DMSans18pt-Italic.ttf"; sourceTree = "<group>"; };
-		AA023C6084CD4B908E76487C /* DMSans18pt-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Light.ttf"; path = "../src/assets/fonts/DMSans18pt-Light.ttf"; sourceTree = "<group>"; };
+		4264FF59690AA782474D2A59 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-SimplyLifeGroupeValorem/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		50BB61F8883A4A1B83383CEE /* PlusJakartaSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Italic.ttf"; path = "../src/assets/fonts/PlusJakartaSans-Italic.ttf"; sourceTree = "<group>"; };
+		6FF5620FC63E42EA8C365EE1 /* PlusJakartaSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-SemiBold.ttf"; path = "../src/assets/fonts/PlusJakartaSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		803AAD53202D432DAE7323E0 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8055FCD15C2C98D2B1B786A6 /* libPods-SimplyLifeGroupeValorem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimplyLifeGroupeValorem.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8595B2096114CA9A6BF89DEC /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = SimplyLifeGroupeValorem/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		933483DF1C7B42F3AE801FBC /* PlusJakartaSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Regular.ttf"; path = "../src/assets/fonts/PlusJakartaSans-Regular.ttf"; sourceTree = "<group>"; };
+		97101A1E73814F9C906FFEF2 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = SimplyLifeGroupeValorem/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		BDA5626069AB444FBFF3AA24 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CAB25D3B081BB518B8F68E6B /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.debug.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.debug.xcconfig"; sourceTree = "<group>"; };
-		CDC11092DDCF420DA0466B06 /* DMSans18pt-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-Regular.ttf"; path = "../src/assets/fonts/DMSans18pt-Regular.ttf"; sourceTree = "<group>"; };
-		D1923097C062352433475AC6 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.release.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.release.xcconfig"; sourceTree = "<group>"; };
-		D25C3C9F43D24588BEDAC366 /* DMSans18pt-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans18pt-SemiBold.ttf"; path = "../src/assets/fonts/DMSans18pt-SemiBold.ttf"; sourceTree = "<group>"; };
+		C8060339EE0D40458554A329 /* PlusJakartaSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Light.ttf"; path = "../src/assets/fonts/PlusJakartaSans-Light.ttf"; sourceTree = "<group>"; };
+		C8F23E73B850C4C82FB25FCB /* Pods-SimplyLifeGroupeValorem.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplyLifeGroupeValorem.release.xcconfig"; path = "Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem.release.xcconfig"; sourceTree = "<group>"; };
+		CB739FDE7B27411A94DE4062 /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Medium.ttf"; path = "../src/assets/fonts/PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SimplyLifeGroupeValorem/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* SimplyLifeGroupeValorem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SimplyLifeGroupeValorem-Bridging-Header.h"; path = "SimplyLifeGroupeValorem/SimplyLifeGroupeValorem-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BAB4A947DA5991D1154BF3A /* libPods-SimplyLifeGroupeValorem.a in Frameworks */,
+				9C9B39E7236B1EE81FD54436 /* libPods-SimplyLifeGroupeValorem.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +71,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				71C239088028DE68FC2F3C2C /* PrivacyInfo.xcprivacy */,
+				8595B2096114CA9A6BF89DEC /* PrivacyInfo.xcprivacy */,
 			);
 			name = SimplyLifeGroupeValorem;
 			sourceTree = "<group>";
@@ -80,55 +80,42 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				254E21A8B6708FC73FAF8411 /* libPods-SimplyLifeGroupeValorem.a */,
+				8055FCD15C2C98D2B1B786A6 /* libPods-SimplyLifeGroupeValorem.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		46D1AB506530F8CEF840C7D7 /* ExpoModulesProviders */ = {
+		302F251EB47BDBE614EC1F19 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				8B8A79AF9DBD4BC3321DF606 /* SimplyLifeGroupeValorem */,
+				ECAFCFBEB8301B45E84585DD /* SimplyLifeGroupeValorem */,
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
-		5FC22489199C49A2A87DDA0D /* fr.lproj */ = {
+		5E0DC00598164619CCC25A5F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BDA5626069AB444FBFF3AA24 /* InfoPlist.strings */,
+				07FEEA390C45175CFF18B8B3 /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */,
+				C8F23E73B850C4C82FB25FCB /* Pods-SimplyLifeGroupeValorem.release.xcconfig */,
 			);
-			name = fr.lproj;
-			path = "";
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
-		7B56413113A8465D9B5EF671 /* Resources */ = {
+		6D634154241741218ECADE07 /* es.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				CDC11092DDCF420DA0466B06 /* DMSans18pt-Regular.ttf */,
-				26C79E7A2FF44E2B9D8072BA /* DMSans18pt-Bold.ttf */,
-				A17AE3A0DFC94204A1B6B89A /* DMSans18pt-Italic.ttf */,
-				AA023C6084CD4B908E76487C /* DMSans18pt-Light.ttf */,
-				6592D37A96854B90B3DAAD06 /* DMSans18pt-Medium.ttf */,
-				D25C3C9F43D24588BEDAC366 /* DMSans18pt-SemiBold.ttf */,
-			);
-			name = Resources;
-			path = "";
-			sourceTree = "<group>";
-		};
-		7C2CE55A18FB478891ECE446 /* es.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				95CDDE5169CC45D1A7A0D72D /* InfoPlist.strings */,
+				0627EE055FD045D4B26F79E1 /* InfoPlist.strings */,
 			);
 			name = es.lproj;
 			path = "";
 			sourceTree = "<group>";
 		};
-		82D05443F6944903BF548E86 /* en.lproj */ = {
+		72ED011718A1409EA663DDD6 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				08CB120F70F040298D5320FC /* InfoPlist.strings */,
+				97101A1E73814F9C906FFEF2 /* InfoPlist.strings */,
 			);
 			name = en.lproj;
 			path = "";
@@ -148,9 +135,9 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				7B56413113A8465D9B5EF671 /* Resources */,
-				DB89184E42399ED66EEB8C58 /* Pods */,
-				46D1AB506530F8CEF840C7D7 /* ExpoModulesProviders */,
+				CB4A1C6B06004D83A9AF79E3 /* Resources */,
+				5E0DC00598164619CCC25A5F /* Pods */,
+				302F251EB47BDBE614EC1F19 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -165,34 +152,47 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8B8A79AF9DBD4BC3321DF606 /* SimplyLifeGroupeValorem */ = {
-			isa = PBXGroup;
-			children = (
-				6A33BAC4DDBCEA80B502C687 /* ExpoModulesProvider.swift */,
-			);
-			name = SimplyLifeGroupeValorem;
-			sourceTree = "<group>";
-		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
-				82D05443F6944903BF548E86 /* en.lproj */,
-				5FC22489199C49A2A87DDA0D /* fr.lproj */,
-				7C2CE55A18FB478891ECE446 /* es.lproj */,
+				72ED011718A1409EA663DDD6 /* en.lproj */,
+				C9BD421EFD664F0EA6B1069C /* fr.lproj */,
+				6D634154241741218ECADE07 /* es.lproj */,
 			);
 			name = Supporting;
 			path = SimplyLifeGroupeValorem/Supporting;
 			sourceTree = "<group>";
 		};
-		DB89184E42399ED66EEB8C58 /* Pods */ = {
+		C9BD421EFD664F0EA6B1069C /* fr.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				CAB25D3B081BB518B8F68E6B /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */,
-				D1923097C062352433475AC6 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */,
+				803AAD53202D432DAE7323E0 /* InfoPlist.strings */,
 			);
-			name = Pods;
-			path = Pods;
+			name = fr.lproj;
+			path = "";
+			sourceTree = "<group>";
+		};
+		CB4A1C6B06004D83A9AF79E3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				933483DF1C7B42F3AE801FBC /* PlusJakartaSans-Regular.ttf */,
+				0AD9B91F3F4D4DFCA2F15E90 /* PlusJakartaSans-Bold.ttf */,
+				50BB61F8883A4A1B83383CEE /* PlusJakartaSans-Italic.ttf */,
+				C8060339EE0D40458554A329 /* PlusJakartaSans-Light.ttf */,
+				CB739FDE7B27411A94DE4062 /* PlusJakartaSans-Medium.ttf */,
+				6FF5620FC63E42EA8C365EE1 /* PlusJakartaSans-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
+		ECAFCFBEB8301B45E84585DD /* SimplyLifeGroupeValorem */ = {
+			isa = PBXGroup;
+			children = (
+				4264FF59690AA782474D2A59 /* ExpoModulesProvider.swift */,
+			);
+			name = SimplyLifeGroupeValorem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,14 +203,14 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SimplyLifeGroupeValorem" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				69F466B6B22DB7C2593BDB52 /* [Expo] Configure project */,
+				0354D1D850C5EF704B12C039 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				78C763086E7D4C248C9C458C /* Upload Debug Symbols to Sentry */,
-				041316F5C79D9CCCB8E022A9 /* [CP] Embed Pods Frameworks */,
+				4A245F389DAF46CE96634B9B /* Upload Debug Symbols to Sentry */,
+				B666E2395829A4011F770C78 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -230,8 +230,8 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = MZKWJD856F;
 						LastSwiftMigration = 1250;
+						DevelopmentTeam = "MZKWJD856F";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -262,16 +262,16 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				9C000736B89C481C8261C7AA /* InfoPlist.strings in Resources */,
-				A714C97E89654671BEFFAC4F /* InfoPlist.strings in Resources */,
-				8E0506D6480643DB834D64AB /* InfoPlist.strings in Resources */,
-				B8B44477DD5441DBA94CC3AD /* DMSans18pt-Regular.ttf in Resources */,
-				747240A378FE4A7CBB01AEC1 /* DMSans18pt-Bold.ttf in Resources */,
-				E9A0A84BF7024A5AB8449B9A /* DMSans18pt-Italic.ttf in Resources */,
-				886A1E536F1240E199127412 /* DMSans18pt-Light.ttf in Resources */,
-				C5883292E793488CB57FBB87 /* DMSans18pt-Medium.ttf in Resources */,
-				DBA40D6BA3974D3C8FBD4405 /* DMSans18pt-SemiBold.ttf in Resources */,
-				B7D6962DC8B3B79E95CC4466 /* PrivacyInfo.xcprivacy in Resources */,
+				A63E3400D1F8440C819B1A58 /* InfoPlist.strings in Resources */,
+				BF4E023FDED04DE5B81E81CE /* InfoPlist.strings in Resources */,
+				B22FEDE5B03C4A0E98E87FBD /* InfoPlist.strings in Resources */,
+				13E59298A74B48EAB1BC817D /* PlusJakartaSans-Regular.ttf in Resources */,
+				880D755669C84D848971D061 /* PlusJakartaSans-Bold.ttf in Resources */,
+				C9B43852F2024B53AEBC0A33 /* PlusJakartaSans-Italic.ttf in Resources */,
+				BB8929CE59A44599BB914160 /* PlusJakartaSans-Light.ttf in Resources */,
+				5091E812D3AD4099A7775777 /* PlusJakartaSans-Medium.ttf in Resources */,
+				74E371078846444BA5D8CE51 /* PlusJakartaSans-SemiBold.ttf in Resources */,
+				ACCFA6F149551D1D3712F843 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,23 +293,24 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n/bin/sh `\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('@sentry/react-native/package.json')) + '/scripts/sentry-xcode.sh'\"` `\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
 		};
-		041316F5C79D9CCCB8E022A9 /* [CP] Embed Pods Frameworks */ = {
+		0354D1D850C5EF704B12C039 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-SimplyLifeGroupeValorem/expo-configure-project.sh\"\n";
 		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -333,26 +334,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		69F466B6B22DB7C2593BDB52 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-SimplyLifeGroupeValorem/expo-configure-project.sh\"\n";
-		};
-		78C763086E7D4C248C9C458C /* Upload Debug Symbols to Sentry */ = {
+		4A245F389DAF46CE96634B9B /* Upload Debug Symbols to Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -422,6 +404,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B666E2395829A4011F770C78 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimplyLifeGroupeValorem/Pods-SimplyLifeGroupeValorem-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -430,7 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				7226F5507F88913C84EFECB5 /* ExpoModulesProvider.swift in Sources */,
+				65DC09029789D4D30DD8B916 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,15 +439,12 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CAB25D3B081BB518B8F68E6B /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */;
+			baseConfigurationReference = 07FEEA390C45175CFF18B8B3 /* Pods-SimplyLifeGroupeValorem.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SimplyLifeGroupeValorem/SimplyLifeGroupeValorem.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MZKWJD856F;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -473,20 +470,20 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				DEVELOPMENT_TEAM = "MZKWJD856F";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1923097C062352433475AC6 /* Pods-SimplyLifeGroupeValorem.release.xcconfig */;
+			baseConfigurationReference = C8F23E73B850C4C82FB25FCB /* Pods-SimplyLifeGroupeValorem.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SimplyLifeGroupeValorem/SimplyLifeGroupeValorem.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MZKWJD856F;
 				INFOPLIST_FILE = SimplyLifeGroupeValorem/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -506,6 +503,9 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				DEVELOPMENT_TEAM = "MZKWJD856F";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 			};
 			name = Release;
 		};

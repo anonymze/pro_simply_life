@@ -78,12 +78,12 @@ export default {
 				"expo-font",
 				{
 					fonts: [
-						"./src/assets/fonts/DMSans18pt-Regular.ttf",
-						"./src/assets/fonts/DMSans18pt-Bold.ttf",
-						"./src/assets/fonts/DMSans18pt-Italic.ttf",
-						"./src/assets/fonts/DMSans18pt-Light.ttf",
-						"./src/assets/fonts/DMSans18pt-Medium.ttf",
-						"./src/assets/fonts/DMSans18pt-SemiBold.ttf",
+						"./src/assets/fonts/PlusJakartaSans-Regular.ttf",
+						"./src/assets/fonts/PlusJakartaSans-Bold.ttf",
+						"./src/assets/fonts/PlusJakartaSans-Italic.ttf",
+						"./src/assets/fonts/PlusJakartaSans-Light.ttf",
+						"./src/assets/fonts/PlusJakartaSans-Medium.ttf",
+						"./src/assets/fonts/PlusJakartaSans-SemiBold.ttf",
 					],
 				},
 			],

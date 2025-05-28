@@ -67,12 +67,12 @@
     <integer>4294967295</integer>
     <key>UIAppFonts</key>
     <array>
-      <string>DMSans18pt-Regular.ttf</string>
-      <string>DMSans18pt-Bold.ttf</string>
-      <string>DMSans18pt-Italic.ttf</string>
-      <string>DMSans18pt-Light.ttf</string>
-      <string>DMSans18pt-Medium.ttf</string>
-      <string>DMSans18pt-SemiBold.ttf</string>
+      <string>PlusJakartaSans-Regular.ttf</string>
+      <string>PlusJakartaSans-Bold.ttf</string>
+      <string>PlusJakartaSans-Italic.ttf</string>
+      <string>PlusJakartaSans-Light.ttf</string>
+      <string>PlusJakartaSans-Medium.ttf</string>
+      <string>PlusJakartaSans-SemiBold.ttf</string>
     </array>
     <key>UIBackgroundModes</key>
     <array>
