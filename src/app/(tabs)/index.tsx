@@ -1,10 +1,10 @@
-import { View, Dimensions, TouchableOpacity, Text } from "react-native";
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import BuildingFillIcon from "@/components/svg/building-fill-icon";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
 import { useNotification } from "@/context/push-notifications";
 import ProfileDashboard from "@/components/profile-dashboard";
+import { View, TouchableOpacity, Text } from "react-native";
 import BookFillIcon from "@/components/svg/book-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
@@ -16,8 +16,6 @@ import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import { User } from "@/types/user";
 
-
-const screenWidth = Dimensions.get("window").width;
 
 export default function Page() {
 	const { expoPushToken, notification } = useNotification();

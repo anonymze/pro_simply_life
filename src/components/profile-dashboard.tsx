@@ -6,6 +6,8 @@ import { logout } from "@/utils/auth";
 import config from "tailwind.config";
 import { Image } from "expo-image";
 
+import ImagePlaceholder from "./ui/image-placeholder";
+
 
 export default function ProfileDashboard({
 	firstname,
@@ -21,7 +23,12 @@ export default function ProfileDashboard({
 	return (
 		<View className="flex-row items-center gap-3">
 			{photo ? (
-				<Image source={photo.url} placeholder={require("@/assets/icons/placeholder_user.svg")} />
+				<ImagePlaceholder
+					transition={300}
+					contentFit="contain"
+					source={photo?.url}
+					style={{ width: 40, height: 40 }}
+				/>
 			) : (
 				<View className="size-12 items-center justify-center rounded-full bg-secondary">
 					<Text className="text-sm uppercase tracking-[-1px] text-white">

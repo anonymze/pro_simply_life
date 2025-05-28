@@ -1,8 +1,6 @@
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
 import CardSupplierCategory from "@/components/card/card-supplier-category";
 import CardSearchSupplier from "@/components/card/card-search-supplier";
-import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
 import ImmobilierIcon from "@/components/svg/immobilier-icon";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -13,7 +11,6 @@ import CifIcon from "@/components/svg/cif-icon";
 import { HeartIcon } from "lucide-react-native";
 import Title from "@/components/ui/title";
 import { Text, View } from "react-native";
-import { Dimensions } from "react-native";
 import config from "tailwind.config";
 import React from "react";
 
