@@ -228,7 +228,7 @@ export default function SignPdf({
 					// 								htmlFor={`file-input-${fieldId}`}
 					// 								className="flex h-full w-full items-center justify-center border-2 border-dashed"
 					// 								style={{
-					// 									borderColor: config.theme.extend.colors.primaryDark,
+					// 									borderColor: config.theme.extend.colors.primary,
 					// 									backgroundColor: config.theme.extend.colors.primary,
 					// 								}}
 					// 							>

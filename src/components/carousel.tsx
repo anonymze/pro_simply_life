@@ -1,5 +1,7 @@
 import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
+import config from "tailwind.config";
+import { cn } from "@/utils/cn";
 import React from "react";
 
 
@@ -38,17 +40,17 @@ export default function Carousel<T>({ data, children }: { data: T[]; children: (
 			>
 				{children(data, cardWidth - gap)}
 			</ScrollView>
-			<View className="mt-4 flex-row items-center gap-2">
+			<View className="mt-4 flex-row items-center gap-3 justify-center">
 				{data.map((_, idx) => (
 					<Animated.View
 						key={idx}
 						style={useAnimatedStyle(() => ({
-							backgroundColor: withSpring(currentIndex === idx ? "#000" : "rgba(0, 0, 0, 0.3)", {
+							backgroundColor: withSpring(currentIndex === idx ? config.theme.extend.colors.primary : config.theme.extend.colors.lightGray, {
 								damping: 15,
 								stiffness: 150,
 							}),
 						}))}
-						className="size-[0.42rem] rounded-full"
+						className={cn("size-[0.42rem] rounded-full", currentIndex === idx && "size-[0.50rem]")}
 					/>
 				))}
 			</View>

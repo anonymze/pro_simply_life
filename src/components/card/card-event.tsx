@@ -1,43 +1,49 @@
-import { ArrowRight, CalendarIcon } from "lucide-react-native";
+import { ArrowRight, CalendarIcon, ClockIcon } from "lucide-react-native";
 import { truncateText } from "@/utils/helper";
 import { Text, View } from "react-native";
+import config from "tailwind.config";
 
 
 export default function CardEvent({
-	date,
+	eventStart,
+	eventEnd,
 	title,
 	type,
 	description,
 	width,
 }: {
-	date: string;
+	eventStart: Date;
+	eventEnd: Date;
 	title: string;
 	type: string;
 	description: string;
 	width: number;
 }) {
 	return (
-		<View className="h-[180] gap-4  rounded-2xl bg-primary p-4" style={{ width: width }}>
-			<View className="flex-row items-center justify-between gap-2">
-				<View className="rounded-[0.3rem] bg-primaryLight px-1.5 py-1">
-					<Text className="text-xs font-semibold text-white">{type}</Text>
+		<View className="h-[190] gap-4  rounded-2xl bg-white p-4" style={{ width: width }}>
+			<View className="flex-row gap-2">
+				<View className="h-32 w-24 items-center justify-center gap-1 rounded-xl bg-secondary">
+					<Text className="font-bold text-3xl text-primary">{new Date(eventStart).getDate()}</Text>
+					<Text className="text-primary">{new Date(eventStart).toLocaleDateString("fr-FR", { month: "long" })}</Text>
 				</View>
-				<View className="flex-row items-center gap-2">
-					<CalendarIcon strokeWidth={2.5} size={14} color="white" />
-					<Text className="text-xs font-semibold text-white">
-						{new Date(date).toLocaleDateString("fr-FR", {
-							day: "2-digit",
-							month: "long",
-							year: "numeric",
-						})}
-					</Text>
+				<View className="flex-shrink gap-2">
+					<View className="mt-1 self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
+						<Text className="font-semibold text-xs text-primaryLight">{type}</Text>
+					</View>
+					<Text className="font-bold text-lg text-primary">{truncateText(title, 40)}</Text>
+					<View className="flex-row items-center gap-2">
+						<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
+						<Text className="text-lg text-primary">
+							{new Date(eventStart).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} -{" "}
+							{new Date(eventEnd).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+						</Text>
+					</View>
 				</View>
 			</View>
-			<Text className="text-md font-bold text-white">{truncateText(title, 70)}</Text>
-			<Text className="text-sm text-white">{truncateText(description, 90)}</Text>
+			<View className="mt-1 border-t border-darkGray" />
 			<View className="mt-auto flex-row items-center gap-2">
-				<Text className="text-sm font-semibold text-white">En savoir plus</Text>
-				<ArrowRight strokeWidth={2.5} size={16} color="white" />
+				<Text className="font-semibold text-primary">En savoir plus</Text>
+				<ArrowRight strokeWidth={2.5} size={16} color={config.theme.extend.colors.primary} />
 			</View>
 		</View>
 	);
@@ -49,7 +55,6 @@ export default function CardEvent({
 // import React from "react";
 
 // import { SkeletonPlaceholder } from "../skeleton-placeholder";
-
 
 // export default function CardEvent({
 // 	date,

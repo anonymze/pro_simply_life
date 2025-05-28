@@ -34,7 +34,7 @@ export default function Page() {
 				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
-				contentContainerStyle={{ paddingBottom: 10 }}
+				contentContainerStyle={{ paddingBottom: 16 }}
 			>
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
 
@@ -100,8 +100,9 @@ export default function Page() {
 						return data.map((item) => (
 							<CardEvent
 								key={item}
-								date="2025-05-05"
-								title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!"
+								eventStart={new Date()}
+								eventEnd={new Date(new Date().setDate(new Date().getDate() + 1))}
+								title="Réunion mensuelle du Groupe Valorem !"
 								type="Masterclass"
 								description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!"
 								width={cardWidth}
