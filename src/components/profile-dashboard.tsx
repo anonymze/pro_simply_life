@@ -40,7 +40,7 @@ export default function ProfileDashboard({
 					<DropdownMenu.Trigger>
 						<TouchableOpacity className="p-3">
 							<View className="size-9 items-center justify-center rounded-full bg-white shadow-sm shadow-defaultGray/20">
-								<MenuIcon size={18} color={config.theme.extend.colors.dark} />
+								<MenuIcon size={18} color={config.theme.extend.colors.primary} />
 							</View>
 						</TouchableOpacity>
 					</DropdownMenu.Trigger>

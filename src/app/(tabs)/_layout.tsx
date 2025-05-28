@@ -1,3 +1,4 @@
+import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
 import { NotificationProvider } from "@/context/push-notifications";
 import MessagesFillIcon from "@/components/svg/messages-fill-icon";
 import BriefcaseIcon from "@/components/svg/briefcase-icon";
@@ -60,7 +61,12 @@ export default function AppLayout() {
 					options={{
 						title: "Organigramme",
 						headerShown: false,
-						tabBarIcon: ({ color }) => <BriefcaseIcon color={color} />,
+						tabBarIcon: ({ color }) => {
+							if (color === config.theme.extend.colors.primary) {
+								return <BriefcaseFillIcon color={color} />;
+							}
+							return <BriefcaseIcon color={color} />;
+						},
 					}}
 				/>
 				<Tabs.Screen

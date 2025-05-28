@@ -1,5 +1,7 @@
 import { Text, TouchableOpacity, View } from "react-native";
+import { truncateText } from "@/utils/helper";
 import { Link, LinkProps } from "expo-router";
+import { cn } from "@/utils/cn";
 import React from "react";
 
 
@@ -8,20 +10,20 @@ export default function CardLinkTablet({
 	title,
 	description,
 	link,
+	backgroundIcon,
 }: {
 	icon: React.ReactNode;
 	title: string;
 	description: string;
 	link: LinkProps["href"];
+	backgroundIcon: string;
 }) {
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity className="flex-1 flex-shrink items-startt gap-2 rounded-2xl bg-white p-3 shadow-sm shadow-defaultGray/10">
-				<View className="size-16 rounded-lg bg-secondaryLight items-center justify-center">{icon}</View>
-				<View className="flex-1">
-					<Text className="text-dark text-lg font-semibold">{title}</Text>
-					<Text className="text-sm text-defaultGray">{description}</Text>
-				</View>
+			<TouchableOpacity className="rounded-2xl gap-1">
+				<View className={cn("size-24 items-center justify-center rounded-2xl bg-primaryUltraLight", backgroundIcon)}>{icon}</View>
+				<Text className="font-semibold text-primary mt-2 text-center">{truncateText(title, 10)}</Text>
+				<Text className="text font-medium text-lightGray text-center">{truncateText(description, 10)}</Text>
 			</TouchableOpacity>
 		</Link>
 	);
