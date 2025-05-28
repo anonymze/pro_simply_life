@@ -39,7 +39,7 @@ export function withQueryWrapper<T>(
 				<ActivityIndicator
 					className="absolute bottom-0 left-0 right-0 top-0"
 					size="large"
-					color={config.theme.extend.colors.defaultGray}
+					color={config.theme.extend.colors.primary}
 				/>
 			);
 		}

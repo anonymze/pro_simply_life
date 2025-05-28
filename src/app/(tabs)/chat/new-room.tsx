@@ -77,7 +77,7 @@ export default function Page() {
 			</View>
 			{isLoading ? (
 				<View className="flex-1 items-center justify-center">
-					<ActivityIndicator size="large" color={config.theme.extend.colors.defaultGray} />
+					<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
 				</View>
 			) : (
 				<ScrollView

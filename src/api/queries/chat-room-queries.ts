@@ -24,7 +24,7 @@ export async function getChatRoomQuery({ queryKey }: { queryKey: QueryKey }) {
 }
 
 export async function createChatRoomQuery(
-	params: Pick<ChatRoom, "name" | "description" | "guests" | "color"> & { app_user: User["id"] },
+	params: Pick<ChatRoom, "name" | "description" | "color"> & { app_user: User["id"], guests: User["id"][] },
 ) {
 	const response = await api.post<SuccessCreateResponse<ChatRoom>>("/api/chat-rooms", params);
 	return response.data;

@@ -126,7 +126,7 @@ export function NewConversation({
 							}
 						})}
 					>
-						<ActivityIndicator size="small" color="white" />
+						<ActivityIndicator size="small" color="#fff" />
 					</Animated.View>
 				) : (
 					<Animated.Text entering={FadeInDown.springify().duration(1200)} className="text-center text-white">
