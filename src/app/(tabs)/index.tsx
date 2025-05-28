@@ -36,16 +36,17 @@ export default function Page() {
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
 
 				<Title title="Fonctionnalités" />
-				<View className="flex-row flex-wrap gap-5 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
+				<View className="flex-row flex-wrap gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
 					{links.map((link) => (
-						<CardLink
-							key={link.title}
-							icon={link.icon}
-							title={link.title}
-							description={link.description}
-							link={link.link}
-							backgroundIcon={link.backgroundIcon}
-						/>
+						<View key={link.title} className="w-1/3 items-center">
+							<CardLink
+								icon={link.icon}
+								title={link.title}
+								description={link.description}
+								link={link.link}
+								backgroundIcon={link.backgroundIcon}
+							/>
+						</View>
 					))}
 				</View>
 				<View className="mb-4 mt-7 flex-row items-center justify-between">
@@ -83,39 +84,39 @@ const links: {
 	backgroundIcon: string;
 }[] = [
 	{
-		icon: <BookFillIcon color={"#44B5D9"} width={42} height={42} />,
+		icon: <BookFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Fournisseurs",
 		description: "Newsletter",
 		link: "/",
-		backgroundIcon: "bg-[#EBFAFE]",
+		backgroundIcon: "bg-[#E0F2FE]",
 	},
 	{
-		icon: <BriefcaseFillIcon color={"#EB618D"} width={42} height={42} />,
+		icon: <BriefcaseFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Organigramme",
 		description: "Organigramme",
 		link: "/",
-		backgroundIcon: "bg-[#FDF1F4]",
+		backgroundIcon: "bg-[#EBE9FE]",
 	},
 
 	{
-		icon: <BuildingFillIcon color={"#3BA779"} width={44} height={44} />,
+		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
 		title: "Bureaux",
 		description: "Réservation",
 		link: "/",
 		backgroundIcon: "bg-[#ECFAF5]",
 	},
 	{
-		icon: <EventsFillIcon color={"#2359CF"} width={42} height={42} />,
+		icon: <EventsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Évènements",
 		description: "Vie d'agence",
 		link: "/",
-		backgroundIcon: "bg-[#EBF2FF]",
+		backgroundIcon: "bg-[#FFEAD5]",
 	},
 	{
-		icon: <MapPinnedIcon size={40} color={"#E3BD48"} />,
+		icon: <MapPinnedIcon size={40} color={config.theme.extend.colors.primary} />,
 		title: "Contacts",
 		description: "Carte",
 		link: "/contact",
-		backgroundIcon: "bg-[#FDF5DC]",
+		backgroundIcon: "bg-[#E0EAFF]",
 	},
 ];
