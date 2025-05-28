@@ -26,7 +26,7 @@ export async function registerForPushNotificationsAsync() {
 	}
 
 	if (finalStatus !== "granted") {
-		Alert.alert("Permission not granted", "Please grant permission to receive push notifications");
+		Alert.alert("Permission notifications refusée", "Vous ne serez pas notifiés sur différentes fonctionnalités de l'application.");
 	}
 
 	const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
