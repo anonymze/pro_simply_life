@@ -2,6 +2,7 @@ import { CalendarIcon, NewspaperIcon, ArrowRight, MapPinnedIcon, KeyRoundIcon } 
 import { Text, View, Dimensions, TouchableOpacity } from "react-native";
 import { MobileMediaQuery, TabletMediaQuery } from "@/utils/responsive";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
+import { useNotification } from "@/context/push-notifications";
 import ProfileDashboard from "@/components/profile-dashboard";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
@@ -16,6 +17,7 @@ import { User } from "@/types/user";
 const screenWidth = Dimensions.get("window").width;
 
 export default function Page() {
+	const { expoPushToken, notification } = useNotification();
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
@@ -31,6 +33,8 @@ export default function Page() {
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
 					<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
+					<Text>{expoPushToken} !</Text>
+					<Text>{JSON.stringify(notification, null, 2)}</Text>
 					<Title title="Vie d'agence Valorem" />
 					<Carousel data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}>
 						{(data, cardWidth) => {

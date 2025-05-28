@@ -4,6 +4,7 @@ import Constants from "expo-constants";
 import * as Device from "expo-device";
 import config from "tailwind.config";
 
+
 export async function registerForPushNotificationsAsync() {
 	if (Platform.OS === "android") {
 		await Notifications.setNotificationChannelAsync("default", {

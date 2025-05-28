@@ -2,6 +2,15 @@
 
 TODO : icones app -> messages table cascade + chatrooms cascade
 
+# QUICK TUTO NOTIFICATIONS
+
+ANDOIRD : register android project on firebase -> generate new private key in service accounts (firebase file) -> setup the SHA-1 in general
+do eas credentials -> google account -> provide the firebase file
+provide local path for google.json in app.config (becareful do not share file with .gitignore, BUT dont ignore file in easignore)
+
+IOS : in ios in certificates & identifier go to identifier and see your project, verify push notifications is active
+always in certificate & identifier -> "keys" you should have an apple push notifcations, this file have to be provided in eas expo website -> credentials -> ios -> pushkey
+this whole configuration for ios is done automaticly when you create your first build apparently (make sure you have registered 1 iOS device on the apple portal device before running the eas build)
 
 ## Development
 

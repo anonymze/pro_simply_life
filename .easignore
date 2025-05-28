@@ -22,9 +22,13 @@ web-build/
 x
 .idea
 
-./resources/
+resources/android
+resources/ios
 
 .env.local
+
+expo-env.d.ts
+# @end expo-cli
 
 
 
