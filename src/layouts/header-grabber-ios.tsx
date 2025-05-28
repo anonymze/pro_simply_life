@@ -13,7 +13,7 @@ export default function HeaderGrabberIos({
 }) {
 	return (
 		<View className={cn("bg-background", className)} style={style}>
-			<View className={cn("w-10 h-1.5 mx-auto bg-primary mt-3 rounded-full", noMarginBottom && "mb-0")}/>
+			<View className={cn("w-10 h-1.5 mx-auto bg-primary mt-3 mb-5 rounded-full", noMarginBottom && "mb-0")}/>
 		</View>
 	);
 }
