@@ -24,7 +24,7 @@ export default function CardEvent({
 			<View className="flex-row gap-5">
 				<View className="h-32 w-24 items-center justify-center gap-1 rounded-xl bg-secondary">
 					<Text className="font-bold text-3xl text-primary">{new Date(eventStart).getDate()}</Text>
-					<Text className="text-primary">{new Date(eventStart).toLocaleDateString("fr-FR", { month: "long" })}</Text>
+					<Text className="text-primary">{new Date(eventStart).toLocaleDateString("fr-FR", { month: "long"  })}</Text>
 				</View>
 				<View className="flex-shrink gap-2">
 					<View className="mt-1 self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
@@ -33,7 +33,7 @@ export default function CardEvent({
 					<Text className="font-bold text-lg text-primary">{truncateText(title, 40)}</Text>
 					<View className="flex-row items-center gap-2">
 						<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
-						<Text className="text-lg text-primary">
+						<Text className="text-lg text-primaryLight">
 							{new Date(eventStart).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} -{" "}
 							{new Date(eventEnd).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
 						</Text>
