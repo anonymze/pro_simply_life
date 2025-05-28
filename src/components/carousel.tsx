@@ -45,7 +45,7 @@ export default function Carousel<T>({ data, children }: { data: T[]; children: (
 					<Animated.View
 						key={idx}
 						style={useAnimatedStyle(() => ({
-							backgroundColor: withSpring(currentIndex === idx ? config.theme.extend.colors.primary : config.theme.extend.colors.lightGray, {
+							backgroundColor: withSpring(currentIndex === idx ? "#4E5BA6" : "#D5D9EB", {
 								damping: 15,
 								stiffness: 150,
 							}),
