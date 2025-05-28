@@ -48,8 +48,8 @@ export default function SupplierLayout() {
 			<Stack.Screen
 				options={{
 					presentation: "modal",
-					header: () => <HeaderLayout backgroundColor="bg-white" />,
-					headerShown: Platform.OS === "ios" ? false : true,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos className="bg-white" /> : <HeaderLayout backgroundColor="bg-white" />,
+					headerShown: true,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]"
 			/>
@@ -57,8 +57,8 @@ export default function SupplierLayout() {
 				options={{
 					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
 					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
-					headerShown: Platform.OS === "ios" ? true : false,
-					header: () => Platform.OS === "ios" ? <HeaderGrabberIos noMarginBottom /> : <HeaderLayout backgroundColor="bg-white" />,
+					headerShown: true,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos noMarginBottom /> : <HeaderLayout  />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]"
 			/>
