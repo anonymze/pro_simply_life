@@ -51,7 +51,7 @@ export default function Page() {
 		validators: {
 			onSubmit: formSchema,
 		},
-		onSubmit: ({ value }) => mutationLogin.mutate(value),
+		onSubmit: ({ value }) => mutationLogin.mutate({ ...value, expoPushToken }),
 	});
 
 	const animatedStyle = useAnimatedStyle(() => {
