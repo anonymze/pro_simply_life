@@ -209,11 +209,11 @@ const ContactInfo = ({
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="font-semibold text-sm text-defaultGray">Prénom et Nom</Text>
 			<Text selectable className="font-semibold text-base text-dark">
-				{firstname} {lastname?.toUpperCase()}
+				{firstname} {lastname?.toUpperCase()} 
 			</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2">
+				<View className="gap-2 flex-shrink">
 					<Text className="font-semibold text-sm text-defaultGray">Téléphone</Text>
 					<Text selectable className="font-semibold text-base text-dark">{numbersString}</Text>
 				</View>
@@ -230,7 +230,7 @@ const ContactInfo = ({
 			</View>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2">
+				<View className="gap-2 flex-grow-0 flex-shrink">
 					<Text className="font-semibold text-sm text-defaultGray">E-mail</Text>
 					<Text selectable className="font-semibold text-base text-dark">{email}</Text>
 				</View>
