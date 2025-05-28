@@ -53,7 +53,7 @@ export default function ProfileDashboard({
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Item key="help" onSelect={() => console.log("item-1 selected")}>
-							<DropdownMenu.ItemTitle>Centre d'aide</DropdownMenu.ItemTitle>
+							<DropdownMenu.ItemTitle>Guide du débutant</DropdownMenu.ItemTitle>
 							<DropdownMenu.ItemIcon
 								// androidIconName="arrow_down_float"
 								ios={{
@@ -80,8 +80,8 @@ export default function ProfileDashboard({
 									weight: "semibold",
 									paletteColors: [
 										{
-											dark: config.theme.extend.colors.primary,
-											light: config.theme.extend.colors.primary,
+											dark: "#B42318",
+											light: "#B42318",
 										},
 									],
 								}}
