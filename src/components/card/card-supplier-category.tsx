@@ -9,9 +9,10 @@ import React from "react";
 export default function CardSupplierCategory({
 	icon,
 	supplierCategory,
-
+	backgroundIcon,
 	link,
 }: {
+	backgroundIcon?: string;
 	icon?: React.ReactNode;
 	supplierCategory: SupplierCategory;
 	link: HrefObject;
@@ -30,15 +31,17 @@ export default function CardSupplierCategory({
 	}, [supplierCategory]);
 
 	return (
-		<Link href={link} push asChild >
-			<TouchableOpacity onPressIn={onPress} className="flex-1 gap-2 rounded-2xl bg-white p-3 shadow-sm shadow-defaultGray/10">
-				<View className="size-[4.75rem] items-center justify-center rounded-lg bg-secondaryLight">
+		<Link href={link} push asChild>
+			<TouchableOpacity
+				onPressIn={onPress}
+				className="flex-1 items-center rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10"
+			>
+				<View className="size-24 items-center justify-center rounded-2xl" style={{ backgroundColor: backgroundIcon }}>
 					{icon ? icon : <Image source={require("@/assets/images/logo.png")} style={{ width: 24, height: 24 }} />}
 				</View>
-				<View className="flex-1">
-					<Text className="text-lg font-semibold text-dark">{supplierCategory.name}</Text>
-					{description && <Text className="text-sm text-defaultGray">{description}</Text>}
-				</View>
+				<Text className="font-semibold text-lg text-primary mt-3">{supplierCategory.name}</Text>
+				{description && <Text className="text-primaryLight text-center">{description}</Text>}
+
 				{/* <ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10, alignSelf: "flex-end" }} /> */}
 			</TouchableOpacity>
 		</Link>

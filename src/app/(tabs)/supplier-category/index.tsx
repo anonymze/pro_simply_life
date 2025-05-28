@@ -1,14 +1,14 @@
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
+import BuildingDoubleFillIcon from "@/components/svg/building-double-fill-icon";
 import CardSupplierCategory from "@/components/card/card-supplier-category";
 import CardSearchSupplier from "@/components/card/card-search-supplier";
-import ImmobilierIcon from "@/components/svg/immobilier-icon";
+import ImmobilierFillIcon from "@/components/svg/immobilier-fill-icon";
+import HeartFillIcon from "@/components/svg/heart-fill-icon";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import InputSearch from "@/components/ui/input-search";
-import SCPIIcon from "@/components/svg/scpi-icon";
-import CifIcon from "@/components/svg/cif-icon";
-import { HeartIcon } from "lucide-react-native";
+import CifFillIcon from "@/components/svg/cif-icon";
 import Title from "@/components/ui/title";
 import { Text, View } from "react-native";
 import config from "tailwind.config";
@@ -70,18 +70,27 @@ export default function Page() {
 						>
 							<View className="flex-row flex-wrap">
 								{data?.docs?.map((supplierCategory) => (
-									<View key={supplierCategory.id} className="w-1/2 p-1">
+									<View key={supplierCategory.id} className="w-1/2 p-2">
 										<CardSupplierCategory
+											backgroundIcon={
+												supplierCategory.name === "IAS"
+													? "#E0F2FE"
+													: supplierCategory.name === "SCPI"
+														? "#E4F5D7"
+														: supplierCategory.name === "Immobilier"
+															? "#FCE7F6"
+															: "#EBE9FE"
+											}
 											supplierCategory={supplierCategory}
 											icon={
 												supplierCategory.name === "IAS" ? (
-													<HeartIcon size={26} color={config.theme.extend.colors.secondaryDark} />
+													<HeartFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
 												) : supplierCategory.name === "SCPI" ? (
-													<SCPIIcon width={30} height={30} color={config.theme.extend.colors.secondaryDark} />
+													<BuildingDoubleFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
 												) : supplierCategory.name === "Immobilier" ? (
-													<ImmobilierIcon width={30} height={30} color={config.theme.extend.colors.secondaryDark} />
+													<ImmobilierFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
 												) : (
-													<CifIcon width={30} height={30} color={config.theme.extend.colors.secondaryDark} />
+													<CifFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
 												)
 											}
 											link={{

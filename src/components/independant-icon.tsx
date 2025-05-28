@@ -1,4 +1,5 @@
 import Svg, { Path, SvgProps } from 'react-native-svg';
+import config from 'tailwind.config';
 
 
 export default function IndependantIcon(props: SvgProps) {
@@ -8,7 +9,7 @@ export default function IndependantIcon(props: SvgProps) {
       height={24}
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#816514"
+      stroke={config.theme.extend.colors.primary}
       strokeWidth={1.5}
       {...props}
     >

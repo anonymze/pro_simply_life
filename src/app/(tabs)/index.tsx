@@ -61,8 +61,8 @@ export default function Page() {
 					asChild
 				>
 					<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
-						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10">
-							<ImagePlaceholder />
+						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10 overflow-hidden">
+							<ImagePlaceholder source={require("@/assets/images/fundesys.png")} style={{ width: "100%", height: "100%" }} />
 						</View>
 						<View className="flex-1">
 							<Text className="font-semibold text-lg text-primary">Fundesys</Text>
@@ -77,9 +77,9 @@ export default function Page() {
 					push
 					asChild
 				>
-					<TouchableOpacity className="w-full flex-row mt-3 items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
-						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10">
-							<ImagePlaceholder />
+					<TouchableOpacity className="mt-3 w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
+						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10 overflow-hidden">
+							<ImagePlaceholder contentFit="contain" source={require("@/assets/icons/fidnet.svg")} style={{ width: "100%", height: "100%" }} />
 						</View>
 						<View className="flex-1">
 							<Text className="font-semibold text-lg text-primary">Fidnet</Text>
