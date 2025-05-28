@@ -184,5 +184,4 @@ Unit tests
 reset expiration token on success
 rester appuyer pour copier coller un text (numéros de tels)
 
-LOAD MAP WHEN PAGE CHARGED
 HEADER GRABBER ON MODAL IOS

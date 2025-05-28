@@ -42,7 +42,7 @@ export default function Page() {
 	}
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-10" : "pt-safe")}>
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
 			<View className={cn("flex-row items-center justify-between bg-background pb-4")}>
 				<View className="w-24 p-2">
 					<TouchableOpacity

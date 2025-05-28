@@ -1,3 +1,4 @@
+import HeaderGrabberIos from "@/layouts/header-grabber-ios";
 import HeaderLayout from "@/layouts/headert-layout";
 import { Platform } from "react-native";
 import { Stack } from "expo-router";
@@ -31,8 +32,8 @@ export default function SupplierLayout() {
 			<Stack.Screen
 				options={{
 					presentation: "modal",
-					header: () => <HeaderLayout backgroundColor="bg-white" />,
-					headerShown: Platform.OS === "ios" ? false : true,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos className="bg-white" /> : <HeaderLayout backgroundColor="bg-white" />,
+					headerShown: true,
 				}}
 				name="[supplier-category]/supplier-product/pdf/[pdf]"
 			/>
@@ -55,10 +56,9 @@ export default function SupplierLayout() {
 			<Stack.Screen
 				options={{
 					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
-					sheetGrabberVisible: true,
 					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
-					headerShown: Platform.OS === "ios" ? false : true,
-					header: () => <HeaderLayout />,
+					headerShown: Platform.OS === "ios" ? true : false,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos className="mb-0" /> : <HeaderLayout backgroundColor="bg-white" />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]"
 			/>

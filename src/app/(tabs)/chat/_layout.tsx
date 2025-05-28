@@ -1,3 +1,4 @@
+import HeaderGrabberIos from "@/layouts/header-grabber-ios";
 import HeaderLayout from "@/layouts/headert-layout";
 import { Platform } from "react-native";
 import { Stack } from "expo-router";
@@ -21,9 +22,9 @@ export default function ChatLayout() {
 			<Stack.Screen
 				name="new-room"
 				options={{
-					headerShown: false,
-					sheetGrabberVisible: true,
+					headerShown: Platform.OS === "ios" ? true : false,
 					presentation: "modal",
+					header: () => <HeaderGrabberIos />,
 				}}
 			/>
 			<Stack.Screen
