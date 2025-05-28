@@ -176,17 +176,18 @@ const Logs = ({ link }: { link: HrefObject }) => {
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
-				<View className="size-14 items-center justify-center rounded-lg bg-secondaryLight">
-					<KeyRoundIcon size={18} color={config.theme.extend.colors.secondaryDark} />
+				<View className="size-14 items-center justify-center rounded-lg bg-darkGray">
+					<KeyRoundIcon size={20} color={config.theme.extend.colors.primary} />
 				</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-dark">Identifiants de connexion</Text>
+					<Text className="font-semibold text-lg text-primary">Identifiants de connexion</Text>
 				</View>
-				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+				{/* <ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} /> */}
 			</TouchableOpacity>
 		</Link>
 	);
 };
+
 
 const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: string; link: HrefObject }) => {
 	const [loadingDownload, setLoadingDownload] = React.useState(false);
@@ -194,14 +195,14 @@ const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: s
 
 	return (
 		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="font-semibold text-sm text-defaultGray">Brochure</Text>
+			<Text className="text-sm text-primaryLight">Brochure</Text>
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="flex-shrink flex-row items-center gap-2">
 					<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
 						<FileIcon size={18} color={config.theme.extend.colors.defaultGray} />
 					</View>
 					<View className="flex-shrink">
-						<Text className="font-semibold text-sm text-dark">{brochure.filename}</Text>
+						<Text className="font-semibold text-sm text-primary">{brochure.filename}</Text>
 						<Text className="font-semibold text-sm text-defaultGray">
 							{new Date(updatedAt).toLocaleDateString("fr-FR", {
 								day: "2-digit",
@@ -314,8 +315,8 @@ const ContactInfo = ({
 
 	return (
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="font-semibold text-sm text-defaultGray">Prénom et Nom</Text>
-			<Text className="font-semibold text-base text-dark">
+			<Text className="text-sm text-primaryLight">Prénom et Nom</Text>
+			<Text className="font-semibold text-base text-primary">
 				{firstname} {lastname?.toUpperCase()}
 			</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
@@ -357,35 +358,36 @@ const ContactInfo = ({
 const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["other_information"] }) => {
 	return (
 		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="font-semibold text-sm text-defaultGray">Thématique</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.theme}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.theme}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Remarque</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.annotation}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.annotation}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Frais de souscription</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.subscription_fee}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Frais de souscription</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.subscription_fee}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Durée</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.duration}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Durée</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.duration}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Rentabilité</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.rentability}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Rentabilité</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.rentability}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Rentabilité N1</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.rentability_n1}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Rentabilité N1</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.rentability_n1}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Commission</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.commission}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Commission</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.commission}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Commission pour l'offre publique</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.commission_public_offer}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Commission pour l'offre publique</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.commission_public_offer}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">Commission pour le groupe Valorem</Text>
-			<Text className="font-semibold text-base text-dark">{otherInformation.commission_offer_group_valorem}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Commission pour le groupe Valorem</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.commission_offer_group_valorem}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-defaultGray">SCPI</Text>
-			<Text className="font-semibold text-sm text-dark">{otherInformation.scpi}</Text>
+			<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
+			<Text className="font-semibold text-sm text-primary">{otherInformation.scpi}</Text>
 		</View>
 	);
 };
+

@@ -30,7 +30,7 @@ export default function HeaderLayout({ title, chat, sheet, backgroundColor, back
 				<Link className={cn("w-24 p-2", chat && "w-10")} dismissTo href="../" asChild>
 					<TouchableOpacity className="flex-row items-center gap-3">
 						<ArrowLeftIcon size={20} color={config.theme.extend.colors.primary} />
-						{!chat && <Text className="font-semibold text-sm text-primary">Retour</Text>}
+						{!chat && <Text className="font-semibold text-primary">Retour</Text>}
 					</TouchableOpacity>
 				</Link>
 			) : (

@@ -49,7 +49,7 @@ export default function Page() {
 	return (
 		<BackgroundLayout className="px-4 pt-4">
 			<Title className="mb-2 mt-0" title={data.name} />
-			<Text className="mb-5 text-xs text-defaultGray">Liste des fournisseurs</Text>
+			<Text className="mb-5 text-sm text-defaultGray">Liste des fournisseurs</Text>
 			{/* <InputSearch onSubmitEditing={() => {}} /> */}
 			<ScrollView
 				className="flex-1"

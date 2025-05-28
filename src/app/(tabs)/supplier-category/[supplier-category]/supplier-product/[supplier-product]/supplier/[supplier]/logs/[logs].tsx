@@ -28,8 +28,8 @@ const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: st
 		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">Identifiant</Text>
-					<Text className="font-semibold text-base text-dark">{connexion?.email}</Text>
+					<Text className="text-sm text-primaryLight">Identifiant</Text>
+					<Text className="font-semibold text-base text-primary">{connexion?.email}</Text>
 				</View>
 				{connexion.password && (
 					<TouchableOpacity
@@ -47,8 +47,8 @@ const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: st
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">Mot de passe</Text>
-					<Text className="font-semibold text-base text-dark">{connexion?.password}</Text>
+					<Text className="text-sm text-primaryLight">Mot de passe</Text>
+					<Text className="font-semibold text-base text-primary">{connexion?.password}</Text>
 				</View>
 				{connexion.password && (
 					<TouchableOpacity
