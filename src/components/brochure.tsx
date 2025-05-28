@@ -20,8 +20,8 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 						<FileIcon size={18} color={config.theme.extend.colors.defaultGray} />
 					</View>
 					<View className="flex-shrink">
-						<Text className="font-semibold text-sm text-dark">{brochure.filename}</Text>
-						<Text className="font-semibold text-sm text-defaultGray">
+						<Text className="font-semibold text-sm text-primary">{brochure.filename}</Text>
+						<Text className="font-semibold text-sm text-primaryLight">
 							{new Date(updatedAt).toLocaleDateString("fr-FR", {
 								day: "2-digit",
 								month: "2-digit",

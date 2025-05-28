@@ -170,7 +170,7 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 					{icon}
 				</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-dark">{title}</Text>
+					<Text className="font-semibold text-lg text-primary">{title}</Text>
 				</View>
 			</TouchableOpacity>
 		</Link>

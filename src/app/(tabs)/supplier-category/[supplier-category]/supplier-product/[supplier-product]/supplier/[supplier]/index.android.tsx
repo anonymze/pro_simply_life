@@ -323,7 +323,7 @@ const ContactInfo = ({
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
 					<Text className="font-semibold text-sm text-defaultGray">Téléphone</Text>
-					<Text className="font-semibold text-base text-dark">{numbersString}</Text>
+					<Text className="font-semibold text-base text-primary">{numbersString}</Text>
 				</View>
 				{phone && (
 					<TouchableOpacity
@@ -339,8 +339,8 @@ const ContactInfo = ({
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">E-mail</Text>
-					<Text className="font-semibold text-base text-dark">{email}</Text>
+					<Text className="font-semibold text-sm text-primaryLight">E-mail</Text>
+					<Text className="font-semibold text-base text-primary">{email}</Text>
 				</View>
 				{email && (
 					<TouchableOpacity

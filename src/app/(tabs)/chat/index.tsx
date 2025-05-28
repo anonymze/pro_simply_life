@@ -210,7 +210,7 @@ const Card = ({
 			>
 				<View className="size-14 items-center justify-center rounded-full bg-secondaryLight">{icon}</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-dark">{title}</Text>
+					<Text className="font-semibold text-lg text-primary">{title}</Text>
 					<Text className="text-sm text-defaultGray">{description ?? ""}</Text>
 				</View>
 				{/* <View className="mr-3 size-5 items-center justify-center rounded-full bg-primary">

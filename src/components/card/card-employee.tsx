@@ -20,7 +20,7 @@ export default function CardSupplier({ icon, user, link }: { icon: React.ReactNo
 			>
 				{icon}
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-dark">{user.firstname + " " + user.lastname}</Text>
+					<Text className="font-semibold text-lg text-primary">{user.firstname + " " + user.lastname}</Text>
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>

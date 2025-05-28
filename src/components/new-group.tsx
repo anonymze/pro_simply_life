@@ -165,7 +165,7 @@ const CardGroup = ({
 		>
 			<View className="size-14 items-center justify-center rounded-full bg-secondaryLight">{icon}</View>
 			<View className="mr-auto">
-				<Text className="font-semibold text-lg text-dark">{title}</Text>
+				<Text className="font-semibold text-lg text-primary">{title}</Text>
 				<Text className="text-sm text-defaultGray">{description}</Text>
 			</View>
 			<BouncyCheckbox
@@ -214,7 +214,7 @@ const CardIndividual = ({
 				style={{ width: 44, height: 44, borderRadius: 99 }}
 			/>
 			<View className="mr-auto">
-				<Text className="font-semibold text-lg text-dark">
+				<Text className="font-semibold text-lg text-primary">
 					{user.firstname} {user.lastname}
 				</Text>
 				<Text className="text-sm text-defaultGray">{userRoleLabels[user.role]}</Text>
