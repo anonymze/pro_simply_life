@@ -26,7 +26,7 @@ export async function registerForPushNotificationsAsync() {
 	}
 
 	if (finalStatus !== "granted") {
-		Alert.alert("Permission notification refusée", "Vous ne serez pas notifiés sur différentes fonctionnalités de l'application.");
+		// Alert.alert("Permission notification refusée", "Vous ne serez pas notifiés sur différentes fonctionnalités de l'application.");
 	}
 
 	const projectId = Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
