@@ -69,6 +69,14 @@ export default function AppLayout() {
 					}}
 				/>
 				<Tabs.Screen
+					name="reservation"
+					options={{
+						title: "Réservation",
+						headerShown: false,
+						href: null,
+					}}
+				/>
+				<Tabs.Screen
 					name="supplier-category"
 					options={{
 						title: "Fournisseurs",

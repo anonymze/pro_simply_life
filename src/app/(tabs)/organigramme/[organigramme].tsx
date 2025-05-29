@@ -47,8 +47,8 @@ export default function Page() {
 
 const Tag = ({ title }: { title: string }) => {
 	return (
-		<View className="rounded-md bg-defaultGray/10 px-2 py-1.5">
-			<Text className="font-semibold text-xs text-defaultGray">{title}</Text>
+		<View className="rounded-md bg-darkGray px-2 py-1.5">
+			<Text className="font-semibold text-xs text-primaryLight">{title}</Text>
 		</View>
 	);
 };
@@ -61,7 +61,7 @@ const ContactInfo = ({ phone, email }: { phone?: string | null; email?: string |
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">Téléphone</Text>
+					<Text className="text-sm text-primaryLight">Téléphone</Text>
 					<Text className="font-semibold text-base text-primary">{numbersString}</Text>
 				</View>
 				{phone && (
@@ -78,7 +78,7 @@ const ContactInfo = ({ phone, email }: { phone?: string | null; email?: string |
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">E-mail</Text>
+					<Text className="text-sm text-primaryLight">E-mail</Text>
 					<Text className="font-semibold text-base text-primary">{email}</Text>
 				</View>
 				{email && (
