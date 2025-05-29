@@ -159,10 +159,10 @@ const ActionBar = ({
 				]}
 			>
 				<TouchableOpacity onPress={onUndo} hitSlop={10}>
-					<Undo color={config.theme.extend.colors.secondaryDark} size={20} />
+					<Undo color={config.theme.extend.colors.primary} size={20} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={onErase} hitSlop={10}>
-					<Eraser color={config.theme.extend.colors.secondaryDark} size={20} />
+					<Eraser color={config.theme.extend.colors.primary} size={20} />
 				</TouchableOpacity>
 			</Animated.View>
 			<View>
@@ -253,10 +253,10 @@ const HeaderBar = ({
 				]}
 			>
 				<TouchableOpacity onPress={onPreview} hitSlop={10}>
-					<Eye color={config.theme.extend.colors.secondaryDark} size={22} />
+					<Eye color={config.theme.extend.colors.primary} size={22} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={onReset} hitSlop={10}>
-					<RotateCcw color={config.theme.extend.colors.secondaryDark} size={19} />
+					<RotateCcw color={config.theme.extend.colors.primary} size={19} />
 				</TouchableOpacity>
 			</Animated.View>
 		</View>

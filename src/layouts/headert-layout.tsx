@@ -40,12 +40,12 @@ export default function HeaderLayout({ title, chat, sheet, backgroundColor, back
 			{chat ? (
 				<Link href={chat.link}>
 					<View className="flex-row items-center gap-3">
-						<View className="size-12 items-center justify-center rounded-full bg-secondaryLight">
+						<View className="size-12 items-center justify-center rounded-full bg-primaryUltraLight">
 							<EmployeesIcon color={config.theme.extend.colors.primary} />
 						</View>
 						<View className="">
 							<Text className="font-bold text-lg">{truncateText(title || "", 26)}</Text>
-							<Text className="text-sm text-defaultGray">{truncateText(chat?.description || "", 30)}</Text>
+							<Text className="text-sm text-primaryLight">{truncateText(chat?.description || "", 30)}</Text>
 						</View>
 					</View>
 				</Link>

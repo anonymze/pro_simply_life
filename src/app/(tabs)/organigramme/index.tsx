@@ -166,7 +166,7 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
-				<View className="size-14 items-center justify-center rounded-lg bg-secondaryLight">
+				<View className="size-14 items-center justify-center rounded-lg bg-primaryUltraLight">
 					{icon}
 				</View>
 				<View className="flex-1">

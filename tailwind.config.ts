@@ -29,8 +29,6 @@ const config = {
 				primaryUltraLight: "#EBF2FF",
 				background: "#f4f5f6",
 				secondary: "#FCE7F6",
-				secondaryLight: "#fef2cd",
-				secondaryDark: "#816514",
 				defaultGray: "#6A829A",
 				lightGray: "#AFB5D9",
 				darkGray: "#EAECF5",

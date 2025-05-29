@@ -8,7 +8,7 @@ export default function EmployeesIcon(props: SvgProps) {
     height={24}
     viewBox="0 0 24 24"
     fill="none"
-    stroke="#000"
+    stroke="currentColor"
     strokeWidth={1.5}
       {...props}
     >

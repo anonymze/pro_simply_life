@@ -163,7 +163,7 @@ const CardGroup = ({
 			onPress={() => ref.current?.onCheckboxPress()}
 			className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 		>
-			<View className="size-14 items-center justify-center rounded-full bg-secondaryLight">{icon}</View>
+			<View className="size-14 items-center justify-center rounded-full bg-primaryUltraLight">{icon}</View>
 			<View className="mr-auto">
 				<Text className="font-semibold text-lg text-primary">{title}</Text>
 				<Text className="text-sm text-defaultGray">{description}</Text>

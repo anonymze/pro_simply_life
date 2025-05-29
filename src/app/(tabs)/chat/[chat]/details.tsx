@@ -26,7 +26,7 @@ export default function Page() {
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-2")}>
 			<View className="mb-4 items-center gap-2 rounded-2xl bg-white p-4">
-				<View className="size-20 items-center justify-center rounded-full bg-secondaryLight">
+				<View className="size-20 items-center justify-center rounded-full bg-primaryUltraLight">
 					<EmployeesIcon width={36} height={36} color={config.theme.extend.colors.primary} />
 				</View>
 				<Text className="font-bold text-xl text-primary">{chatRoom.name}</Text>
@@ -60,7 +60,7 @@ export default function Page() {
 const Card = ({ icon, firstname, lastname, role }: { icon: any; firstname: string; lastname: string; role: User["role"] }) => {
 	return (
 		<View className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2">
-			<View className="size-14 items-center justify-center rounded-lg bg-secondaryLight">{icon}</View>
+			<View className="size-14 items-center justify-center rounded-lg bg-primaryUltraLight">{icon}</View>
 			<View className="flex-1">
 				<Text className="font-semibold text-lg text-primary">{firstname} {lastname}</Text>
 				<Text className="text-sm text-defaultGray">{userRoleLabels[role]}</Text>

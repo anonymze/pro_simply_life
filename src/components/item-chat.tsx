@@ -55,8 +55,8 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 			)}
 			<View
 				className={cn(
-					"flex-shrink flex-row gap-3 rounded-tr-xl rounded-bl-xl p-2.5",
-					me ? "bg-primary rounded-tl-xl" : "bg-white rounded-br-xl",
+					"flex-shrink flex-row gap-3 rounded-bl-xl rounded-tr-xl p-2.5",
+					me ? "rounded-tl-xl bg-primary" : "rounded-br-xl bg-white",
 					item.file && "p-1.5",
 				)}
 			>
@@ -64,7 +64,9 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 					{!me && stateMessage.lastMessageUser && (
 						<Text className="font-bold text-sm text-primaryLight">{`${item.app_user.firstname} ${item.app_user.lastname}`}</Text>
 					)}
-					{item.message && <Text className={cn("flex-shrink self-start", me ? "text-white" : "text-black")}>{item.message}</Text>}
+					{item.message && (
+						<Text className={cn("flex-shrink self-start", me ? "text-white" : "text-black")}>{item.message}</Text>
+					)}
 					{item.file ? (
 						optimistic ? (
 							<>
@@ -213,7 +215,11 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 						{new Date(item.createdAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
 					</Text>
 					{me &&
-						(optimistic ? <CheckIcon size={14} color={config.theme.extend.colors.lightGray} /> : <CheckCheckIcon size={14} color={config.theme.extend.colors.secondaryLight} />)}
+						(optimistic ? (
+							<CheckIcon size={14} color={config.theme.extend.colors.lightGray} />
+						) : (
+							<CheckCheckIcon size={14} color={config.theme.extend.colors.primaryUltraLight} />
+						))}
 				</View>
 			</View>
 		</View>

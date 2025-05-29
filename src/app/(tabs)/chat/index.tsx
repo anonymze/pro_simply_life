@@ -117,7 +117,7 @@ export default function Page() {
 											<DropdownMenu.Trigger action="longpress">
 												<Card
 													chatRoom={item}
-													icon={<EmployeesIcon color={config.theme.extend.colors.secondaryDark} />}
+													icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
 													title={item.name}
 													description={item.description}
 													link={{
@@ -151,7 +151,7 @@ export default function Page() {
 								return (
 									<Card
 										chatRoom={item}
-										icon={<MessagesIcon color={config.theme.extend.colors.secondaryDark} />}
+										icon={<MessagesIcon color={config.theme.extend.colors.primary} />}
 										title={item.name}
 										description={item.description}
 										link={{
@@ -208,7 +208,7 @@ const Card = ({
 				onPress={onPress}
 				className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
-				<View className="size-14 items-center justify-center rounded-full bg-secondaryLight">{icon}</View>
+				<View className="size-14 items-center justify-center rounded-full bg-primaryUltraLight">{icon}</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{title}</Text>
 					<Text className="text-sm text-defaultGray">{description ?? ""}</Text>
