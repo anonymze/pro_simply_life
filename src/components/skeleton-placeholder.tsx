@@ -9,15 +9,17 @@ export const SkeletonPlaceholder = ({
 	width,
 	height,
 	style,
+	shimmerColors,
 }: {
-	width: number;
-	height: number;
+	shimmerColors?: ShimmerPlaceholderProps["shimmerColors"];
+	width: ShimmerPlaceholderProps["width"];
+	height: ShimmerPlaceholderProps["height"];
 	style?: ShimmerPlaceholderProps["style"];
 }) => {
 	return (
 		<ShimmerPlaceholder
 			style={style}
-			shimmerColors={["#262626", "#303030", "#262626"]}
+			shimmerColors={shimmerColors || ["#262626", "#303030", "#262626"]}
 			duration={1600}
 			isReversed
 			height={height}
