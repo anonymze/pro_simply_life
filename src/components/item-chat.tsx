@@ -56,7 +56,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 			<View
 				className={cn(
 					"flex-shrink flex-row gap-3 rounded-bl-xl rounded-tr-xl p-2.5",
-					me ? "rounded-tl-xl bg-primary" : "rounded-br-xl bg-white",
+					me ? "rounded-tl-xl bg-backgroundChat" : "rounded-br-xl bg-white",
 					item.file && "p-1.5",
 				)}
 			>
@@ -65,7 +65,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 						<Text className="font-bold text-sm text-primaryLight">{`${item.app_user.firstname} ${item.app_user.lastname}`}</Text>
 					)}
 					{item.message && (
-						<Text className={cn("flex-shrink self-start", me ? "text-white" : "text-black")}>{item.message}</Text>
+						<Text className={cn("flex-shrink self-start", me ? "text-white" : "text-textChat")}>{item.message}</Text>
 					)}
 					{item.file ? (
 						optimistic ? (

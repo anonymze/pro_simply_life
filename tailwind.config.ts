@@ -27,6 +27,8 @@ const config = {
 				primary: "#363F72",
 				primaryLight: "#717BBC",
 				primaryUltraLight: "#EBF2FF",
+				backgroundChat: "#4E5BA6",
+				textChat: "#15202A",
 				background: "#f4f5f6",
 				secondary: "#FCE7F6",
 				defaultGray: "#6A829A",
