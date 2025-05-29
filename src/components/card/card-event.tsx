@@ -34,7 +34,7 @@ export default function CardEvent({
 	return (
 		<>
 			{isLoading ? (
-				<Animated.View key="skeleton" exiting={FadeOut.duration(3000)}>
+				<Animated.View key="skeleton" exiting={FadeOut.duration(2000)}>
 					<View className="h-[190] gap-4  rounded-2xl bg-white p-4" style={{ width }}>
 						<View className="flex-row gap-5">
 							<View className="h-32 w-24 overflow-hidden rounded-xl">
