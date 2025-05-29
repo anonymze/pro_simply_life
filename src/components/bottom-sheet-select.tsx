@@ -85,14 +85,14 @@ export const BottomSheetSelect = React.forwardRef<BottomSheet, Props>(
 									}
 								}}
 							>
-								{item.iosIcon && (
+								{Platform.OS === "ios" && item.iosIcon && (
 									<SymbolView
 										name={item.iosIcon}
 										tintColor={selectedItems.find((id) => id.id === item.id) ? "#fff" : "#000"}
 										type="hierarchical"
 									/>
 								)}
-								{item.androidIcon && (
+								{Platform.OS === "android" && item.androidIcon && (
 									<Image source={item.androidIcon} style={{ width: 26, height: 26, borderRadius: 99 }} />
 								)}
 								<Text
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
 	},
 	itemText: {
 		fontSize: 20,
+		color: config.theme.extend.colors.primary,
 	},
 	bottomSheetListContent: {
 		gap: 2,
