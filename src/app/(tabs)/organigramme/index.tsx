@@ -92,7 +92,7 @@ export default function Page() {
 							<View className="mt-6 gap-2">
 								<Card
 									title="Employés"
-									icon={<EmployeesIcon />}
+									icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
 									link={{
 										pathname: "/organigramme",
 										params: {
@@ -102,7 +102,7 @@ export default function Page() {
 								/>
 								<Card
 									title="Indépendants"
-									icon={<IndependantIcon />}
+									icon={<IndependantIcon color={config.theme.extend.colors.primary} />}
 									link={{
 										pathname: "/organigramme",
 										params: {
@@ -166,7 +166,7 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
-				<View className="size-14 items-center justify-center rounded-lg bg-primaryUltraLight">
+				<View className="size-14 items-center justify-center rounded-lg bg-darkGray">
 					{icon}
 				</View>
 				<View className="flex-1">

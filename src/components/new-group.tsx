@@ -96,7 +96,7 @@ export function NewGroup({
 							<Text className="font-medium text-lg text-defaultGray">Groupes</Text>
 							<CardGroup
 								users={associates}
-								icon={<EmployeesIcon />}
+								icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
 								title="Associés"
 								description={associates.length + " personnes"}
 								dispatch={dispatch}
@@ -104,7 +104,7 @@ export function NewGroup({
 							/>
 							<CardGroup
 								users={employees}
-								icon={<EmployeesIcon />}
+								icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
 								title="Employés"
 								description={employees.length + " personnes"}
 								dispatch={dispatch}
@@ -112,7 +112,7 @@ export function NewGroup({
 							/>
 							<CardGroup
 								users={independents}
-								icon={<IndependentIcon />}
+								icon={<IndependentIcon color={config.theme.extend.colors.primary} />}
 								title="Indépendants"
 								description={independents.length + " personnes"}
 								dispatch={dispatch}
@@ -163,7 +163,7 @@ const CardGroup = ({
 			onPress={() => ref.current?.onCheckboxPress()}
 			className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 		>
-			<View className="size-14 items-center justify-center rounded-full bg-primaryUltraLight">{icon}</View>
+			<View className="size-14 items-center justify-center rounded-full bg-darkGray">{icon}</View>
 			<View className="mr-auto">
 				<Text className="font-semibold text-lg text-primary">{title}</Text>
 				<Text className="text-sm text-defaultGray">{description}</Text>

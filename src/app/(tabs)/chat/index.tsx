@@ -92,7 +92,7 @@ export default function Page() {
 						<Title title="Messages" />
 						{userHierarchy[userInfos?.user.role ?? "visitor"] < 2 && (
 							<Link href="/chat/new-room" asChild>
-								<TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
+								<TouchableOpacity className="rounded-full bg-darkGray p-2.5">
 									<PlusIcon size={18} color={config.theme.extend.colors.primary} />
 								</TouchableOpacity>
 							</Link>
@@ -208,7 +208,7 @@ const Card = ({
 				onPress={onPress}
 				className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
-				<View className="size-14 items-center justify-center rounded-full bg-primaryUltraLight">{icon}</View>
+				<View className="size-14 items-center justify-center rounded-full bg-darkGray">{icon}</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{title}</Text>
 					<Text className="text-sm text-defaultGray">{description ?? ""}</Text>

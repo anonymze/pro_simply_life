@@ -40,7 +40,7 @@ export default function HeaderLayout({ title, chat, sheet, backgroundColor, back
 			{chat ? (
 				<Link href={chat.link}>
 					<View className="flex-row items-center gap-3">
-						<View className="size-12 items-center justify-center rounded-full bg-primaryUltraLight">
+						<View className="size-12 items-center justify-center rounded-full bg-darkGray">
 							<EmployeesIcon color={config.theme.extend.colors.primary} />
 						</View>
 						<View className="">
