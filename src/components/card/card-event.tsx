@@ -56,7 +56,7 @@ export default function CardEvent({
 					</View>
 				</Animated.View>
 			) : (
-				<Animated.View entering={FadeIn.duration(500)} className="h-[190] gap-4 rounded-2xl bg-white p-4" style={{ width: width }}>
+				<Animated.View entering={FadeIn.duration(300)} className="h-[190] gap-4 rounded-2xl bg-white p-4" style={{ width: width }}>
 					<View className="flex-row gap-5">
 						<View className="h-32 w-24 items-center justify-center gap-1 rounded-xl bg-secondary">
 							<Text className="font-bold text-3xl text-primary">{new Date(eventStart).getDate()}</Text>
