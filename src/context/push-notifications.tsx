@@ -55,6 +55,10 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 
 
 		Notifications.getLastNotificationResponseAsync().then(response => {
+			console.log(
+				"🔔 Notification received",
+			);
+			router.push("/organigramme");
 			if (response?.notification) {
 				const url = response.notification.request.content.data?.url;
 				if (url) {
