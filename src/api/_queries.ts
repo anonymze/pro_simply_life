@@ -18,8 +18,8 @@ export const queryClient = new QueryClient({
 			// refetchOnWindowFocus: true,
 			retry: 1,
 			// TODO
-			// staleTime: 60 * 30 * 1000, // 30 minutes
-			staleTime: 10,
+			staleTime: 60 * 30 * 1000, // 30 minutes
+			// staleTime: 10,
 		},
 	},
 });

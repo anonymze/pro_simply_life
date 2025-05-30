@@ -19,15 +19,12 @@ export function withQueryWrapper<T>(
 ) {
 	// need to return this anonymous capitalized (convention for components name) function component to call the hooks, because withQueryWrapper is a regular function
 	return function ComponentWrapperQuery() {
-		const { data, isLoading, isError, isFetching } = useQuery({
+		const { data, isLoading, isError } = useQuery({
 			queryKey: query.queryKey,
 			queryFn: query.queryFn,
 			select: query.select,
 			refetchInterval: query.refetchInterval,
 		});
-
-		console.log("isFetching", isFetching);
-		console.log("isLoading", isLoading);
 
 		if (isError) {
 			return (
