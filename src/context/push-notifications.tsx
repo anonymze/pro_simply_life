@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useRef, ReactNod
 import { registerForPushNotificationsAsync } from "@/utils/register-push-notifications";
 import { EventSubscription } from "expo-modules-core";
 import * as Notifications from "expo-notifications";
+import { router } from "expo-router";
 
 
 interface NotificationContextType {
@@ -49,6 +50,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 				JSON.stringify(response.notification.request.content.data, null, 2),
 			);
 			// Handle the notification response here
+			router.push("/organigramme"); 
 		});
 
 		return () => {
