@@ -37,7 +37,7 @@ export default function Page() {
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
 
 				<Title title="Fonctionnalités" />
-				<View className="flex-row flex-wrap justify-between gap-y-4 gap-x-0.5 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
+				<View className="flex-row flex-wrap justify-between gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
 					{links.map((link) => (
 						<View key={link.title} className="w-[32%] items-center ">
 							<CardLink
