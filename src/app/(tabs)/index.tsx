@@ -37,9 +37,9 @@ export default function Page() {
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
 
 				<Title title="Fonctionnalités" />
-				<View className="flex-row flex-wrap gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
+				<View className="flex-row flex-wrap justify-between gap-y-4 gap-x-0.5 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
 					{links.map((link) => (
-						<View key={link.title} className="w-1/3 items-center ">
+						<View key={link.title} className="w-[31%] items-center ">
 							<CardLink
 								icon={link.icon}
 								title={link.title}
@@ -146,7 +146,7 @@ const links: {
 		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
 		title: "Bureaux",
 		description: "Réservation",
-		link: "/",
+		link: "/reservation",
 		backgroundIcon: "bg-[#E4F5D7]",
 	},
 	{

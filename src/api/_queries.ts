@@ -2,6 +2,7 @@ import "@tanstack/react-query";
 
 import { QueryClient } from "@tanstack/react-query";
 
+
 export const queryClient = new QueryClient({
 	// queryCache: new QueryCache({
 	// 	onError: errorHandler,
@@ -12,10 +13,13 @@ export const queryClient = new QueryClient({
 
 	defaultOptions: {
 		queries: {
+			// refetchOnReconnect: true,
+			// refetchOnMount: true,
+			// refetchOnWindowFocus: true,
 			retry: 1,
 			// TODO
-			staleTime: 60 * 30 * 1000, // 30 minutes
-			// staleTime: 0,
+			// staleTime: 60 * 30 * 1000, // 30 minutes
+			staleTime: 10,
 		},
 	},
 });
