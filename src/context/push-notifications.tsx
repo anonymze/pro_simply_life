@@ -38,7 +38,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			.then((token) => setExpoPushToken(token))
 			.catch((error) => setError(error));
 
-			// when notification is received, works when app is backgorund and active
+			// when notification is received, works when app is background and active
 		notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
 			console.log("🔔 Notification Received: ", notification);
 			setNotification(notification);
