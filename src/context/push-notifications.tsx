@@ -38,24 +38,20 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			.then((token) => setExpoPushToken(token))
 			.catch((error) => setError(error));
 
+			// when notification is received, works when app is backgorund and active
 		notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
 			console.log("🔔 Notification Received: ", notification);
 			setNotification(notification);
-			router.push("/organigramme");
 		});
 
+		// when notification is clicked, can redirect inside etc...
 		responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
 			console.log(
 				"🔔 Notification Response: user interacted with notification",
 				JSON.stringify(response, null, 2),
 				JSON.stringify(response.notification.request.content.data, null, 2),
 			);
-			// Handle the notification response here
-			router.push("/organigramme"); 
 		});
-
-
-
 
 		return () => {
 			if (notificationListener.current) {
