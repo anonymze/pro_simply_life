@@ -41,6 +41,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 		notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
 			console.log("🔔 Notification Received: ", notification);
 			setNotification(notification);
+			router.push("/organigramme");
 		});
 
 		responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
@@ -54,18 +55,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 		});
 
 
-		Notifications.getLastNotificationResponseAsync().then(response => {
-			console.log(
-				"🔔 Notification received",
-			);
-			router.push("/organigramme");
-			if (response?.notification) {
-				const url = response.notification.request.content.data?.url;
-				if (url) {
-					router.push("/organigramme");
-				}
-			}
-		});
+
 
 		return () => {
 			if (notificationListener.current) {
