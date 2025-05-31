@@ -23,7 +23,7 @@ export default function CardLinkTablet({
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="rounded-2xl gap-1 items-center" hitSlop={5}>
-				<View className={cn("size-24 items-center justify-center  rounded-2xl bg-primaryUltraLight", backgroundIcon)}>{icon}</View>
+				<View className={cn("size-24 items-center justify-center rounded-2xl bg-primaryUltraLight", backgroundIcon)}>{icon}</View>
 				<Text className={cn("font-semibold text-primary mt-2", windowWidth < 380 && "text-sm")}>{truncateText(title, 12)}</Text>
 				{/* <Text className="text font-medium text-lightGray text-center">{truncateText(description, 10)}</Text> */}
 			</TouchableOpacity>

@@ -1,12 +1,15 @@
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { ArrowRight, ClockIcon } from "lucide-react-native";
+import { Dimensions, Text, View } from "react-native";
 import { truncateText } from "@/utils/helper";
-import { Text, View } from "react-native";
 import config from "tailwind.config";
+import { cn } from "@/utils/cn";
 import React from "react";
 
 import { SkeletonPlaceholder } from "../skeleton-placeholder";
 
+
+const windowWidth = Dimensions.get("window").width;
 
 export default function CardEvent({
 	title,
@@ -68,7 +71,7 @@ export default function CardEvent({
 							<View className="mt-1 self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
 								<Text className="font-semibold text-xs text-primaryLight">{type}</Text>
 							</View>
-							<Text className="font-bold text-lg text-primary">{truncateText(title, 40)}</Text>
+							<Text className={cn("font-bold text-lg text-primary", windowWidth < 380 && "text-sm")}>{truncateText(title, 40)}</Text>
 							<View className="flex-row items-center gap-2">
 								<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
 								<Text className="text-lg text-primaryLight">
