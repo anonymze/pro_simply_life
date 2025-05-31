@@ -36,7 +36,8 @@ export default function Page() {
 				contentContainerStyle={{ paddingBottom: 16 }}
 			>
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
-				{JSON.stringify(notification || "no notification")}
+				<Text>{JSON.stringify(notification || "no notification")}</Text>
+				<Text>coucou</Text>
 
 				<Title title="Fonctionnalités" />
 				<View className="flex-row flex-wrap justify-between gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
