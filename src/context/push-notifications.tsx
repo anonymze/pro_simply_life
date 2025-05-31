@@ -42,6 +42,12 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 		notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
 			console.log("🔔 Notification Received: ", notification);
 			setNotification(notification);
+
+			if (!notification) return;
+
+			if ("chatRoomId" in notification.request.content.data) {
+				router.push(`/chat/${notification.request.content.data.chatRoomId}`)
+			}
 		});
 
 		// when notification is clicked, can redirect inside etc...

@@ -20,7 +20,6 @@ import { User } from "@/types/user";
 
 
 export default function Page() {
-	const { notification } = useNotification();
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
@@ -36,8 +35,6 @@ export default function Page() {
 				contentContainerStyle={{ paddingBottom: 16 }}
 			>
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
-				<Text>{JSON.stringify(notification || "no notification")}</Text>
-				<Text>coucou</Text>
 
 				<Title title="Fonctionnalités" />
 				<View className="flex-row flex-wrap justify-between gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
