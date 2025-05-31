@@ -71,7 +71,7 @@ export default function CardEvent({
 							<View className="mt-1 self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
 								<Text className="font-semibold text-xs text-primaryLight">{type}</Text>
 							</View>
-							<Text className={cn("font-bold text-lg text-primary", windowWidth < 380 && "text-sm")}>{truncateText(title, 40)}</Text>
+							<Text className={cn("font-bold text-lg text-primary", windowWidth < 380 && "leading-0")}>{truncateText(title, 40)}</Text>
 							<View className="flex-row items-center gap-2">
 								<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
 								<Text className="text-lg text-primaryLight">
