@@ -40,23 +40,16 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 
 			// when notification is received, works when app is background and active
 		notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-			console.log("🔔 Notification Received: ", notification);
 			setNotification(notification);
-
-			if (!notification) return;
-
-			if ("chatRoomId" in notification.request.content.data) {
-				router.push(`/chat/${notification.request.content.data.chatRoomId}`)
-			}
 		});
 
 		// when notification is clicked, can redirect inside etc...
 		responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-			console.log(
-				"🔔 Notification Response: user interacted with notification",
-				JSON.stringify(response, null, 2),
-				JSON.stringify(response.notification.request.content.data, null, 2),
-			);
+			if (!response.notification) return;
+
+			if ("chatRoomId" in response.notification.request.content.data) {
+				router.push(`/chat/${response.notification.request.content.data.chatRoomId}`)
+			}
 		});
 
 		return () => {
