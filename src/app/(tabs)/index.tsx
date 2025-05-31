@@ -5,6 +5,7 @@ import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { ArrowRight, MapPinnedIcon } from "lucide-react-native";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
+import { useNotification } from "@/context/push-notifications";
 import ProfileDashboard from "@/components/profile-dashboard";
 import { View, TouchableOpacity, Text } from "react-native";
 import BookFillIcon from "@/components/svg/book-fill-icon";
@@ -19,6 +20,7 @@ import { User } from "@/types/user";
 
 
 export default function Page() {
+	const { notification } = useNotification();
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
@@ -34,6 +36,7 @@ export default function Page() {
 				contentContainerStyle={{ paddingBottom: 16 }}
 			>
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
+				{JSON.stringify(notification)}
 
 				<Title title="Fonctionnalités" />
 				<View className="flex-row flex-wrap justify-between gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
@@ -58,8 +61,11 @@ export default function Page() {
 					asChild
 				>
 					<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
-						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10 overflow-hidden">
-							<ImagePlaceholder source={require("@/assets/images/fundesys.png")} style={{ width: "100%", height: "100%" }} />
+						<View className="size-14 items-center justify-center overflow-hidden rounded-lg border border-defaultGray/10">
+							<ImagePlaceholder
+								source={require("@/assets/images/fundesys.png")}
+								style={{ width: "100%", height: "100%" }}
+							/>
 						</View>
 						<View className="flex-1">
 							<Text className="font-semibold text-lg text-primary">Fundesys</Text>
@@ -75,8 +81,12 @@ export default function Page() {
 					asChild
 				>
 					<TouchableOpacity className="mt-3 w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
-						<View className="size-14 items-center justify-center rounded-lg border border-defaultGray/10 overflow-hidden">
-							<ImagePlaceholder contentFit="contain" source={require("@/assets/icons/fidnet.svg")} style={{ width: "100%", height: "100%" }} />
+						<View className="size-14 items-center justify-center overflow-hidden rounded-lg border border-defaultGray/10">
+							<ImagePlaceholder
+								contentFit="contain"
+								source={require("@/assets/icons/fidnet.svg")}
+								style={{ width: "100%", height: "100%" }}
+							/>
 						</View>
 						<View className="flex-1">
 							<Text className="font-semibold text-lg text-primary">Fidnet</Text>
