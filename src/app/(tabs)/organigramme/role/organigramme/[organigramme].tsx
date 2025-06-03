@@ -1,5 +1,4 @@
-import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { getSupplierQuery } from "@/api/queries/supplier-queries";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { getAppUserQuery } from "@/api/queries/app-user-queries";
 import BackgroundLayout from "@/layouts/background-layout";

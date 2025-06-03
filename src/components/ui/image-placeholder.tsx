@@ -21,7 +21,7 @@ export default function ImagePlaceholder(props: ImageProps) {
 	return (
 		<Image
 			{...props}
-			transition={isCached ? 0 : props.transition ?? 250}
+			transition={isCached ? 0 : props.transition ?? 300}
 			placeholder={isCached ? undefined : props.placeholder ?? require("@/assets/images/icon.png")}
 			placeholderContentFit={props.placeholderContentFit ?? "contain"}
 		/>

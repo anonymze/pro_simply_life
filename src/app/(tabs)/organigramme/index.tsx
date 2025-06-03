@@ -2,13 +2,11 @@ import CardEmployeeCarousel from "@/components/card/card-employee-carousel";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
-import IndependantIcon from "@/components/independant-icon";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import CardEmployee from "@/components/card/card-employee";
 import BackgroundLayout from "@/layouts/background-layout";
 import InputSearch from "@/components/ui/input-search";
-import EmployeesIcon from "@/components/emloyees-icon";
-import Carousel from "@/components/carousel";
+import { queryClient } from "@/api/_queries";
 import Title from "@/components/ui/title";
 import { HrefObject } from "expo-router";
 import config from "tailwind.config";
@@ -16,6 +14,15 @@ import { User } from "@/types/user";
 import { Link } from "expo-router";
 import React from "react";
 
+
+// utility function to split array into chunks
+const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
+	const chunks: T[][] = [];
+	for (let i = 0; i < array.length; i += chunkSize) {
+		chunks.push(array.slice(i, i + chunkSize));
+	}
+	return chunks;
+};
 
 export default function Page() {
 	return withQueryWrapper<User>(
@@ -57,6 +64,31 @@ export default function Page() {
 				[data, filteredData],
 			);
 
+			const classifiedUsers = React.useMemo(() => {
+				return data.docs.reduce(
+					(acc, item) => {
+						if (!acc[item.role]) acc[item.role] = [];
+						acc[item.role].push(item);
+						return acc;
+					},
+					{
+						associate: [],
+						independent: [],
+						employee: [],
+						visitor: [],
+					} as Record<User["role"], typeof data.docs>,
+				);
+			}, [data]);
+
+			// split employees into chunks of 9
+			const employeeChunks = React.useMemo(() => {
+				return chunkArray(classifiedUsers.employee, 9);
+			}, [classifiedUsers.employee]);
+
+			const independentChunks = React.useMemo(() => {
+				return chunkArray(classifiedUsers.independent, 9);
+			}, [classifiedUsers.independent]);
+
 			return (
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Organigramme" />
@@ -71,46 +103,117 @@ export default function Page() {
 					/>
 					{search.length < 3 ? (
 						<>
-							<Text className="mb-3 mt-5 font-semibold text-xl">Associés</Text>
-							<Carousel data={data.docs.filter((item) => item.role === "associate")}>
-								{(data) => {
-									return data.map((item) => (
-										<CardEmployeeCarousel
-											key={item.id}
-											width={160}
-											user={item}
-											link={{
-												pathname: "/organigramme/[organigramme]",
-												params: {
-													organigramme: item.id,
-												},
-											}}
-										/>
-									));
-								}}
-							</Carousel>
-							<View className="mt-6 gap-2">
-								<Card
-									title="Employés"
-									icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
-									link={{
-										pathname: "/organigramme",
-										params: {
-											employee: "1",
-										},
-									}}
-								/>
-								<Card
-									title="Indépendants"
-									icon={<IndependantIcon color={config.theme.extend.colors.primary} />}
-									link={{
-										pathname: "/organigramme",
-										params: {
-											employee: "1",
-										},
-									}}
-								/>
+							<Title title="Associés" />
+							<View className="flex-row flex-wrap gap-x-8 gap-y-4">
+								{classifiedUsers.associate.map((item) => (
+									<CardEmployeeCarousel
+										key={item.id}
+										user={item}
+										link={{
+											pathname: "/organigramme/[organigramme]",
+											params: {
+												organigramme: item.id,
+											},
+										}}
+									/>
+								))}
 							</View>
+							<View className="mb-4 mt-7 flex-row items-center justify-between">
+								<Title title="Employés" className="mb-0 mt-0" />
+								<Link
+									href={{
+										pathname: "/organigramme/role/[role]",
+										params: {
+											role: "employee",
+										},
+									}}
+									asChild
+								>
+									<TouchableOpacity hitSlop={10} onPress={() => {
+										queryClient.setQueryData(["app-users", "employee"], {
+											docs: classifiedUsers.employee,
+										});
+									}}>
+										<Text className="font-semibold text-primaryLight">Voir tout</Text>
+									</TouchableOpacity>
+								</Link>
+							</View>
+							<ScrollView
+								horizontal
+								showsHorizontalScrollIndicator={false}
+								className="-mr-4"
+								decelerationRate={0.1}
+								contentContainerStyle={{ paddingRight: 16, gap: 16 }} // keep right padding for last card
+								scrollEventThrottle={undefined}
+								style={{ flexGrow: 0 }}
+							>
+								{employeeChunks.map((employeePage) => {
+									return (
+										<View key={employeePage[0].id} className="flex-row flex-wrap gap-x-8 gap-y-4">
+											{employeePage.map((employee) => (
+												<CardEmployeeCarousel
+													key={employee.id}
+													user={employee}
+													link={{
+														pathname: "/organigramme/[organigramme]",
+														params: {
+															organigramme: employee.id,
+														},
+													}}
+												/>
+											))}
+										</View>
+									);
+								})}
+							</ScrollView>
+							<View className="mb-4 mt-7 flex-row items-center justify-between">
+								<Title title="Indépendants" className="mb-0 mt-0" />
+								<Link
+									href={{
+										pathname: "/organigramme/role/[role]",
+										params: {
+											role: "independent",
+										},
+									}}
+									asChild
+								>
+									<TouchableOpacity hitSlop={10} onPress={() => {
+										queryClient.setQueryData(["app-users", "independent"], {
+											docs: classifiedUsers.independent,
+										});
+									}}>
+										<Text className="font-semibold text-primaryLight">Voir tout</Text>
+									</TouchableOpacity>
+								</Link>
+							</View>
+							<ScrollView
+								horizontal
+								showsHorizontalScrollIndicator={false}
+								className="-mr-4"
+								decelerationRate={0.1}
+								contentContainerStyle={{ paddingRight: 16, gap: 16 }} // keep right padding for last card
+								scrollEventThrottle={undefined}
+								style={{ flexGrow: 0 }}
+							>
+								{independentChunks.map((independentPage) => {
+									return (
+										<View key={independentPage[0].id} className="flex-row flex-wrap gap-x-8 gap-y-4">
+											{independentPage.map((independent) => (
+												<CardEmployeeCarousel
+													key={independent.id}
+													user={independent}
+													link={{
+														pathname: "/organigramme/[organigramme]",
+														params: {
+															organigramme: independent.id,
+														},
+													}}
+												/>
+											))}
+										</View>
+									);
+								})}
+							</ScrollView>
 						</>
 					) : (
 						<>
@@ -124,7 +227,7 @@ export default function Page() {
 									showsVerticalScrollIndicator={false}
 									style={{ backgroundColor: config.theme.extend.colors.background }}
 								>
-									<View className="gap-2 mt-2">
+									<View className="mt-2 gap-2">
 										{Object.keys(groupedUsers!).map((letter) => (
 											<View key={letter} className="gap-2">
 												<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
@@ -166,9 +269,7 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
-				<View className="size-14 items-center justify-center rounded-lg bg-darkGray">
-					{icon}
-				</View>
+				<View className="size-14 items-center justify-center rounded-lg bg-darkGray">{icon}</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{title}</Text>
 				</View>

@@ -7,7 +7,7 @@ import React from "react";
 import ImagePlaceholder from "../ui/image-placeholder";
 
 
-export default function CardEmployeeCarousel({ user, width, link }: { user: User; width: number; link: HrefObject }) {
+export default function CardEmployeeCarousel({ user, link }: { user: User; link: HrefObject }) {
 	const onPress = React.useCallback(() => {
 		queryClient.setQueryData(["app-user", user.id], user);
 	}, [user]);
@@ -15,8 +15,8 @@ export default function CardEmployeeCarousel({ user, width, link }: { user: User
 		<Link href={link} asChild>
 			<TouchableOpacity
 				onPressIn={onPress}
-				className="items-center gap-2 rounded-2xl bg-primary pb-2 pt-2"
-				style={{ width }}
+				hitSlop={5}
+				className="items-center"
 			>
 				<ImagePlaceholder
 					transition={300}
@@ -24,10 +24,11 @@ export default function CardEmployeeCarousel({ user, width, link }: { user: User
 					// contentPosition="top"
 					placeholder={user.photo?.blurhash}
 					placeholderContentFit="cover"
-					style={{ width: width - 16, height: width, borderRadius: 8 }}
 					source={user.photo?.url}
+					className="rounded-full size-20"
+					style={{ width: 65, height: 65, borderRadius: 99 }}
 				/>
-				<Text className="font-semibold text-lg text-white">{user.firstname + " " + user.lastname}</Text>
+				<Text className="text-sm text-primary mt-2">{user.firstname + " " + user.lastname}</Text>
 			</TouchableOpacity>
 		</Link>
 	);

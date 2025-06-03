@@ -9,7 +9,7 @@ import React from "react";
 
 export default function CardSupplier({ icon, user, link }: { icon: React.ReactNode; user: User; link: HrefObject }) {
 	const onPress = React.useCallback(() => {
-		queryClient.setQueryData(["user", user.id], user);
+		queryClient.setQueryData(["app-user", user.id], user);
 	}, [link]);
 
 	return (

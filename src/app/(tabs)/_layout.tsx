@@ -20,7 +20,6 @@ export default function AppLayout() {
 	}
 
 	return (
-
 			<Tabs
 				// TODO
 				initialRouteName="index"

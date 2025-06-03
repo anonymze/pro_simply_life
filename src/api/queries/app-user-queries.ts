@@ -6,14 +6,14 @@ import { api } from "../_config";
 
 
 export async function getAppUsersQuery({ queryKey }: { queryKey: QueryKey }) {
-	const [,] = queryKey;
+	const [,role] = queryKey;
 	const response = await api.get<PaginatedResponse<User>>("/api/app-users", {
 		params: {
-			// where: {
-			// 	id: {
-			// 		not_equals: appUserId,
-			// 	},
-			// },
+			where: {
+				role: {
+					equals: role,
+				},
+			},
 			// disable pagination
 			limit: 0
 		},

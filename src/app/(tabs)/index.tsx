@@ -5,7 +5,6 @@ import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { ArrowRight, MapPinnedIcon } from "lucide-react-native";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
-import { useNotification } from "@/context/push-notifications";
 import ProfileDashboard from "@/components/profile-dashboard";
 import { View, TouchableOpacity, Text } from "react-native";
 import BookFillIcon from "@/components/svg/book-fill-icon";
@@ -131,14 +130,14 @@ const links: {
 		icon: <BookFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Fournisseurs",
 		description: "Newsletter",
-		link: "/",
+		link: "/(tabs)/supplier-category",
 		backgroundIcon: "bg-[#E0F2FE]",
 	},
 	{
 		icon: <BriefcaseFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Organigramme",
 		description: "Organigramme",
-		link: "/",
+		link: "/(tabs)/organigramme",
 		backgroundIcon: "bg-[#EBE9FE]",
 	},
 	{

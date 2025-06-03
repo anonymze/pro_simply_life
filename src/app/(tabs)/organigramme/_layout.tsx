@@ -21,6 +21,20 @@ export default function OrganigrammeLayout() {
 				}}
 				name="[organigramme]"
 			/>
+			<Stack.Screen
+				options={{
+					headerShown: true,
+					header: () => <HeaderLayout backgroundColor="bg-white" />,
+				}}
+				name="role/organigramme/[organigramme]"
+			/>
+				<Stack.Screen
+					options={{
+						headerShown: true,
+						header: () => <HeaderLayout />,
+					}}
+					name="role/[role]"
+				/>
 		</Stack>
 	);
 }
