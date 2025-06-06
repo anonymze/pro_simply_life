@@ -1,13 +1,17 @@
 import { MarkingProps } from "react-native-calendars/src/calendar/day/marking";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react-native";
+import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { getEventsQuery } from "@/api/queries/event-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
+import { truncateText } from "@/utils/helper";
 import Title from "@/components/ui/title";
 import React, { useState } from "react";
 import { cssInterop } from "nativewind";
+import { Event } from "@/types/event";
 import config from "tailwind.config";
+import { Link } from "expo-router";
 
 
 // Configure French locale
@@ -46,21 +50,20 @@ export default function Page() {
 
 			const events = React.useMemo(
 				() =>
-					data?.docs.reduce((acc: Record<string, MarkingProps>, event) => {
+					data?.docs.reduce((acc: Record<string, any>, event) => {
 						acc[event.event_start.split("T")[0]] = {
 							marked: true,
 							dotColor: config.theme.extend.colors.pink,
+							event,
 						};
 						return acc;
 					}, {}),
 				[data],
 			);
 
-			console.log(events);
-
 			return (
-				<BackgroundLayout className="pt-safe px-4 pb-4">
-					<Title title="Évènements du Groupe Valorem" />
+				<BackgroundLayout className="pt-safe px-4">
+					<Title title="Évènements Groupe Valorem" />
 
 					<Calendar
 						firstDay={1}
@@ -111,7 +114,7 @@ export default function Page() {
 							...events,
 							[selectedDate]: {
 								selected: true,
-								marked: !!events[selectedDate]?.marked,
+								marked: !!events[selectedDate],
 								disableTouchEvent: true,
 								dotColor: config.theme.extend.colors.pink,
 								customStyles: {
@@ -130,8 +133,50 @@ export default function Page() {
 							},
 						}}
 					/>
+
+					<ScrollView
+						showsVerticalScrollIndicator={false}
+						contentContainerStyle={{ paddingBottom: 16 }}
+						className="mt-4"
+					>
+						{events[selectedDate] && events[selectedDate].event ? (
+							<View className="gap-3">
+								<CardEvent event={events[selectedDate].event} />
+							</View>
+						) : null}
+					</ScrollView>
 				</BackgroundLayout>
 			);
 		},
 	)();
 }
+
+const CardEvent = ({ event }: { event: Event }) => {
+	return (
+		<Link
+			href={{
+				pathname: "/event/[event]",
+				params: {
+					event: event.id,
+				},
+			}}
+			asChild
+		>
+			<TouchableOpacity className="rounded-2xl border border-darkGray bg-white p-5 shadow-sm shadow-defaultGray/10">
+				<View className="flex-shrink gap-2">
+					<View className="mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">
+						<Text className="text-md font-semibold text-primaryLight">{event.type}</Text>
+					</View>
+					<Text className="my-1.5 font-bold text-xl text-primary">{truncateText(event.title, 40)}</Text>
+					<View className="flex-row items-center gap-2">
+						<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
+						<Text className="text-lg text-primaryLight">
+							{new Date(event.event_start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} -{" "}
+							{new Date(event.event_end).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+						</Text>
+					</View>
+				</View>
+			</TouchableOpacity>
+		</Link>
+	);
+};

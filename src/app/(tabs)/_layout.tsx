@@ -76,14 +76,6 @@ export default function AppLayout() {
 					}}
 				/>
 				<Tabs.Screen
-					name="event"
-					options={{
-						title: "Événement",
-						headerShown: false,
-						href: null,
-					}}
-				/>
-				<Tabs.Screen
 					name="supplier-category"
 					options={{
 						title: "Fournisseurs",

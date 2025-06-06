@@ -1,6 +1,6 @@
 import { PaginatedResponse } from "@/types/response";
 import { QueryKey } from "@tanstack/react-query";
-import { Event } from "@/types/agency-life";
+import { Event } from "@/types/event";
 
 import { api } from "../_config";
 
