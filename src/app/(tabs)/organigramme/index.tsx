@@ -102,7 +102,11 @@ export default function Page() {
 						}}
 					/>
 					{search.length < 3 ? (
-						<>
+						<ScrollView
+						showsVerticalScrollIndicator={false}
+						contentContainerStyle={{ paddingBottom: 16 }}
+						className="mt-4"
+					>
 							<Title title="Associés" />
 							<View className="flex-row flex-wrap gap-x-8 gap-y-4">
 								{classifiedUsers.associate.map((item) => (
@@ -214,7 +218,7 @@ export default function Page() {
 									);
 								})}
 							</ScrollView>
-						</>
+						</ScrollView>
 					) : (
 						<>
 							{!filteredData?.length ? (
