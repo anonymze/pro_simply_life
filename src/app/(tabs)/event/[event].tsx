@@ -63,7 +63,7 @@ export default function Page() {
 									month: "long",
 								})}
 							</Text>
-							<Text className="text-center font-semibold text-lg text-primaryLight">
+							<Text className="text-center font-semibold text-lg text-primary">
 								{new Date(data.event_start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
 							</Text>
 						</View>
@@ -76,7 +76,7 @@ export default function Page() {
 									month: "long",
 								})}
 							</Text>
-							<Text className="text-center font-semibold text-lg text-primaryLight">
+							<Text className="text-center font-semibold text-lg text-primary">
 								{new Date(data.event_end).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
 							</Text>
 						</View>
