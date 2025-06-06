@@ -103,10 +103,10 @@ export default function Page() {
 					/>
 					{search.length < 3 ? (
 						<ScrollView
-						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{ paddingBottom: 16 }}
-						className="mt-4"
-					>
+							showsVerticalScrollIndicator={false}
+							contentContainerStyle={{ paddingBottom: 16 }}
+							className="mt-4"
+						>
 							<Title title="Associés" />
 							<View className="flex-row flex-wrap gap-x-8 gap-y-4">
 								{classifiedUsers.associate.map((item) => (
@@ -133,11 +133,14 @@ export default function Page() {
 									}}
 									asChild
 								>
-									<TouchableOpacity hitSlop={10} onPress={() => {
-										queryClient.setQueryData(["app-users", "employee"], {
-											docs: classifiedUsers.employee,
-										});
-									}}>
+									<TouchableOpacity
+										hitSlop={10}
+										onPress={() => {
+											queryClient.setQueryData(["app-users", "employee"], {
+												docs: classifiedUsers.employee,
+											});
+										}}
+									>
 										<Text className="font-semibold text-primaryLight">Voir tout</Text>
 									</TouchableOpacity>
 								</Link>
@@ -181,11 +184,14 @@ export default function Page() {
 									}}
 									asChild
 								>
-									<TouchableOpacity hitSlop={10} onPress={() => {
-										queryClient.setQueryData(["app-users", "independent"], {
-											docs: classifiedUsers.independent,
-										});
-									}}>
+									<TouchableOpacity
+										hitSlop={10}
+										onPress={() => {
+											queryClient.setQueryData(["app-users", "independent"], {
+												docs: classifiedUsers.independent,
+											});
+										}}
+									>
 										<Text className="font-semibold text-primaryLight">Voir tout</Text>
 									</TouchableOpacity>
 								</Link>
