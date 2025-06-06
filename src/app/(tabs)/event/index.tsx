@@ -167,7 +167,7 @@ const CardEvent = ({ event }: { event: Event }) => {
 					<View className="mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">
 						<Text className="text-md font-semibold text-primaryLight">{event.type}</Text>
 					</View>
-					<Text className="my-1.5 font-bold text-xl text-primary">{truncateText(event.title, 40)}</Text>
+					<Text className="my-1.5 font-bold text-lg text-primary">{truncateText(event.title, 40)}</Text>
 					<View className="flex-row items-center gap-2">
 						<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
 						<Text className="text-lg text-primaryLight">
