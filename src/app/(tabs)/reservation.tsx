@@ -151,7 +151,7 @@ export default function Page() {
 							}}
 							className="absolute bottom-5 left-0 right-0 mx-5 rounded-xl bg-primary p-4"
 						>
-							<Text className="text-center font-semibold text-xl text-white">Réserver un bureau</Text>
+							<Text className="text-center font-semibold text-lg text-white">Réserver un bureau</Text>
 						</TouchableOpacityAnimated>
 					)}
 				</BackgroundLayout>
