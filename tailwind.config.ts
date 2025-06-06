@@ -34,6 +34,7 @@ const config = {
 				defaultGray: "#6A829A",
 				lightGray: "#AFB5D9",
 				darkGray: "#EAECF5",
+				pink: "#F670C7",
 			},
 		},
 	},

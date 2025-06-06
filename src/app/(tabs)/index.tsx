@@ -159,7 +159,7 @@ const links: {
 		icon: <EventsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Évènements",
 		description: "Vie d'agence",
-		link: "/",
+		link: "/event",
 		backgroundIcon: "bg-[#FCE7F6]",
 	},
 	{

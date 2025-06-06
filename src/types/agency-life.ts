@@ -1,10 +1,10 @@
-export interface AgencyLife {
+export interface Event {
 	id: string;
 	title: string;
 	annotation?: string | null;
 	type: string;
-	"events-start": string;
-	"events-end": string;
+	event_start: string;
+	event_end: string;
 	updatedAt: string;
 	createdAt: string;
 }

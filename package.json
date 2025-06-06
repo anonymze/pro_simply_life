@@ -52,6 +52,7 @@
 		"react": "19.0.0",
 		"react-native": "0.79.2",
 		"react-native-bouncy-checkbox": "^4.1.2",
+		"react-native-calendars": "^1.1312.1",
 		"react-native-gesture-handler": "~2.24.0",
 		"react-native-ios-context-menu": "3.1.0",
 		"react-native-ios-utilities": "5.1.5",
