@@ -10,3 +10,9 @@ export async function getEventsQuery({ queryKey }: { queryKey: QueryKey }) {
 	const response = await api.get<PaginatedResponse<Event>>("/api/agency-life", { params: filters });
 	return response.data;
 }
+
+export async function getEvent({ queryKey }: { queryKey: QueryKey }) {
+	const [, eventId] = queryKey;
+	const response = await api.get<Event>(`/api/agency-life/${eventId}`);
+	return response.data;
+}

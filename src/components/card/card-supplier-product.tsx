@@ -15,8 +15,8 @@ export default function CardSupplierProduct({
 	link: HrefObject;
 }) {
 	const onPress = React.useCallback(() => {
-		queryClient.setQueryData(["supplier-product", link.params?.["supplier-product"]], supplierProduct);
-	}, [link]);
+		queryClient.setQueryData(["supplier-product", supplierProduct.id], supplierProduct);
+	}, [supplierProduct]);
 
 	return (
 		<Link href={link} push asChild>

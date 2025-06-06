@@ -6,6 +6,7 @@ import { getEventsQuery } from "@/api/queries/event-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { truncateText } from "@/utils/helper";
+import { queryClient } from "@/api/_queries";
 import Title from "@/components/ui/title";
 import React, { useState } from "react";
 import { cssInterop } from "nativewind";
@@ -152,6 +153,9 @@ export default function Page() {
 }
 
 const CardEvent = ({ event }: { event: Event }) => {
+	const onPress = React.useCallback(() => {
+		queryClient.setQueryData(["event", event.id], event);
+	}, [event]);
 	return (
 		<Link
 			href={{
@@ -162,7 +166,10 @@ const CardEvent = ({ event }: { event: Event }) => {
 			}}
 			asChild
 		>
-			<TouchableOpacity className="rounded-2xl border border-darkGray bg-white p-5 shadow-sm shadow-defaultGray/10">
+			<TouchableOpacity
+				onPressIn={onPress}
+				className="rounded-2xl border border-darkGray bg-white p-5 shadow-sm shadow-defaultGray/10"
+			>
 				<View className="flex-shrink gap-2">
 					<View className="mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">
 						<Text className="text-md font-semibold text-primaryLight">{event.type}</Text>
