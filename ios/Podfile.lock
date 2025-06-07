@@ -353,8 +353,6 @@ PODS:
   - ExpoWebBrowser (14.1.6):
     - ExpoModulesCore
   - EXStructuredHeaders (4.1.0)
-  - ExtensionStorage (1.0.0):
-    - ExpoModulesCore
   - EXUpdates (0.28.14):
     - DoubleConversion
     - EASClient
@@ -2689,7 +2687,6 @@ DEPENDENCIES:
   - ExpoVideo (from `../node_modules/expo-video/ios`)
   - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
   - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
-  - "ExtensionStorage (from `../node_modules/@bacons/apple-targets/ios`)"
   - EXUpdates (from `../node_modules/expo-updates/ios`)
   - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
   - fast_float (from `../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
@@ -2868,8 +2865,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-web-browser/ios"
   EXStructuredHeaders:
     :path: "../node_modules/expo-structured-headers/ios"
-  ExtensionStorage:
-    :path: "../node_modules/@bacons/apple-targets/ios"
   EXUpdates:
     :path: "../node_modules/expo-updates/ios"
   EXUpdatesInterface:
@@ -3084,7 +3079,6 @@ SPEC CHECKSUMS:
   ExpoVideo: 5159e3a158184c33d0ef9e7f8851908ed2fd7536
   ExpoWebBrowser: 06fb5f767f53ad53944b068cdd207984cb998712
   EXStructuredHeaders: 32bec6771c2db18c4cd47cecae530d1d06cdf972
-  ExtensionStorage: 5796de20bf181317c376d693fedb64c6781a33ba
   EXUpdates: 3f67357288e7fe5605db4b28b1f83de80b7ea395
   EXUpdatesInterface: 7ff005b7af94ee63fa452ea7bb95d7a8ff40277a
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
@@ -3182,6 +3176,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 29f74a5b77dca8c37669e1e1e867e5f4e12407df
 
-PODFILE CHECKSUM: d901cc19ef0a4d68ca7e1e156712f45c6f1abc5f
+PODFILE CHECKSUM: f58b54e7148dffbda0f6c29adb610f689be98ab1
 
 COCOAPODS: 1.16.2

@@ -174,3 +174,5 @@ channel + push notifs + deep link + traduction
 Unit tests
 reset expiration token on success
 rester appuyer pour copier coller un text (numéros de tels)
+
+webrtc ? for sharing files for chat ?

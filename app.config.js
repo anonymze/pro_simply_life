@@ -28,16 +28,14 @@ export default {
 			favicon: "./src/assets/images/icon.png",
 		},
 		ios: {
-			appleTeamId: "AF4UD5C4UU",
+			// appleTeamId: "AF4UD5C4UU",
 			supportsTablet: true,
 			bundleIdentifier: "com.anonymze.simplylife",
 			associatedDomains: ["applinks:simply-life.expo.app"],
 			CFBundleAllowMixedLocalizations: true,
-			entitlements: {
-      "com.apple.security.application-groups": [
-        "group.com.anonymze.simplylife"
-      ]
-    }
+			// entitlements: {
+			// 	"com.apple.security.application-groups": ["group.com.anonymze.simplylife"],
+			// },
 		},
 		android: {
 			edgeToEdgeEnabled: true,
@@ -80,7 +78,6 @@ export default {
 		plugins: [
 			"expo-localization",
 			"expo-router",
-			"@bacons/apple-targets",
 			[
 				"expo-font",
 				{

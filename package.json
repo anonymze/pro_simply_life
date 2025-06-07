@@ -11,7 +11,6 @@
 		"web": "expo start --web"
 	},
 	"dependencies": {
-		"@bacons/apple-targets": "^3.0.2",
 		"@expo/ui": "0.1.1-alpha.8",
 		"@gorhom/bottom-sheet": "^5.1.2",
 		"@react-native-cookies/cookies": "^6.2.1",
