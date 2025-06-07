@@ -19,6 +19,8 @@ eas build --profile development --platform android
 
 CASCADE CHAT ROOMS USER AND MESSAGES CHATROOMS
 
+npx create-target
+
 ## Web
 
 npx expo export --platform web --output-dir ./build
@@ -26,17 +28,6 @@ npx expo export --platform web --output-dir ./build
 ## Production
 
 eas build --profile production
-
-## Image
-
--keep public class com.dylanvann.fastimage.* {*;}
--keep public class com.dylanvann.fastimage.** {*;}
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
 
 ## Android emulator
 
