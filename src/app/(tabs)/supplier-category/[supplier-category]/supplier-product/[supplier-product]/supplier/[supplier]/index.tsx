@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
+import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import { Linking, ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
 import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";

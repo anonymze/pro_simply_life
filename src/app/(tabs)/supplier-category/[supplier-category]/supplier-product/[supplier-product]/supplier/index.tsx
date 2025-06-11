@@ -3,7 +3,6 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardSupplier from "@/components/card/card-supplier";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
-import InputSearch from "@/components/ui/input-search";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import Title from "@/components/ui/title";

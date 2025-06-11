@@ -1,4 +1,3 @@
-import { MarkingProps } from "react-native-calendars/src/calendar/day/marking";
 import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
@@ -7,6 +6,7 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { truncateText } from "@/utils/helper";
 import { queryClient } from "@/api/_queries";
+import { Picker } from "@expo/ui/swift-ui";
 import Title from "@/components/ui/title";
 import React, { useState } from "react";
 import { cssInterop } from "nativewind";
@@ -64,7 +64,24 @@ export default function Page() {
 
 			return (
 				<BackgroundLayout className="pt-safe px-4">
-					<Title title="Évènements Groupe Valorem" />
+					<View className="iems-center flex-row justify-between">
+						<Title title="Évènements Groupe Valorem" />
+						<Picker
+							style={{ width: 90, margin: 0, padding: 0 }}
+							variant="segmented"
+							options={["C", "L"]}
+							selectedIndex={null}
+							onOptionSelected={({ nativeEvent: { index } }) => {
+								// if (index === 0) {
+								// 	horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+								// 	verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+								// } else {
+								// 	horizontalScrollRef.current?.scrollToEnd({ animated: true });
+								// 	verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+								// }
+							}}
+						/>
+					</View>
 
 					<Calendar
 						firstDay={1}
