@@ -1,5 +1,5 @@
+import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { getEventsQuery } from "@/api/queries/event-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
@@ -48,6 +48,7 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [selectedDate, setSelectedDate] = useState("");
+			const scrollRef = React.useRef<ScrollView>(null);
 
 			const events = React.useMemo(
 				() =>
@@ -67,101 +68,117 @@ export default function Page() {
 					<View className="iems-center flex-row justify-between">
 						<Title title="Évènements Groupe Valorem" />
 						<Picker
-							style={{ width: 90, margin: 0, padding: 0 }}
+							style={{
+								width: 90,
+								alignSelf: "center",
+								marginTop: 8,
+							}}
 							variant="segmented"
 							options={["C", "L"]}
 							selectedIndex={null}
 							onOptionSelected={({ nativeEvent: { index } }) => {
-								// if (index === 0) {
-								// 	horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
-								// 	verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-								// } else {
-								// 	horizontalScrollRef.current?.scrollToEnd({ animated: true });
-								// 	verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-								// }
+								if (index === 0) {
+									scrollRef.current?.scrollTo({ x: 0, animated: true });
+								} else {
+									scrollRef.current?.scrollToEnd();
+								}
 							}}
 						/>
 					</View>
 
-					<Calendar
-						firstDay={1}
-						className="m-0 mt-5 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
-						onDayPress={(day) => {
-							setSelectedDate(day.dateString);
-						}}
-						renderArrow={(direction) => (
-							<>
-								{direction === "left" ? (
-									<ArrowLeftIcon size={20} color={config.theme.extend.colors.backgroundChat} />
-								) : (
-									<ArrowRightIcon size={20} color={config.theme.extend.colors.backgroundChat} />
-								)}
-							</>
-						)}
-						headerStyle={{
-							borderBottomWidth: 1,
-							borderBottomColor: config.theme.extend.colors.primaryUltraLight,
-							marginBottom: 10,
-							paddingBottom: 10,
-						}}
-						theme={{
-							// Header text color (month/year)
-							monthTextColor: config.theme.extend.colors.primary,
-							// Arrow colors
-							arrowColor: config.theme.extend.colors.backgroundChat,
-							// Day names color (Mon, Tue, etc.)
-							textSectionTitleColor: config.theme.extend.colors.backgroundChat,
-
-							// Day text color
-							dayTextColor: config.theme.extend.colors.backgroundChat,
-							// Today's text color
-							todayTextColor: config.theme.extend.colors.dark,
-							// Header font weight
-							textMonthFontWeight: "bold",
-							// Day names font weight
-							textDayHeaderFontWeight: "400",
-							textDayStyle: {
-								color: config.theme.extend.colors.primary,
-								fontWeight: "400",
-							},
-							// inactiv out of month dates
-							textDisabledColor: config.theme.extend.colors.lightGray,
-						}}
-						markingType={"custom"}
-						markedDates={{
-							...events,
-							[selectedDate]: {
-								selected: true,
-								marked: !!events[selectedDate],
-								disableTouchEvent: true,
-								dotColor: config.theme.extend.colors.pink,
-								customStyles: {
-									container: {
-										backgroundColor: config.theme.extend.colors.primary,
-										padding: 0,
-										borderRadius: 6,
-									},
-									text: {
-										fontSize: 14,
-										paddingBottom: 1,
-										color: "#fff",
-										fontWeight: "regular",
-									},
-								},
-							},
-						}}
-					/>
-
 					<ScrollView
-						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{ paddingBottom: 16 }}
-						className="mt-4"
+						ref={scrollRef}
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						scrollEnabled={false}
+						decelerationRate={"fast"}
+						contentContainerStyle={{ gap: 16 }}
 					>
-						{events[selectedDate] && events[selectedDate].event ? (
-							<View className="gap-3">
-								<CardEvent event={events[selectedDate].event} />
-							</View>
-						) : null}
+						<View style={{ width: Dimensions.get("window").width - 28 }}>
+							<Calendar
+								firstDay={1}
+								className="m-0 mt-5 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
+								onDayPress={(day) => {
+									setSelectedDate(day.dateString);
+								}}
+								renderArrow={(direction) => (
+									<>
+										{direction === "left" ? (
+											<ArrowLeftIcon size={20} color={config.theme.extend.colors.backgroundChat} />
+										) : (
+											<ArrowRightIcon size={20} color={config.theme.extend.colors.backgroundChat} />
+										)}
+									</>
+								)}
+								headerStyle={{
+									borderBottomWidth: 1,
+									borderBottomColor: config.theme.extend.colors.primaryUltraLight,
+									marginBottom: 10,
+									paddingBottom: 10,
+								}}
+								theme={{
+									// Header text color (month/year)
+									monthTextColor: config.theme.extend.colors.primary,
+									// Arrow colors
+									arrowColor: config.theme.extend.colors.backgroundChat,
+									// Day names color (Mon, Tue, etc.)
+									textSectionTitleColor: config.theme.extend.colors.backgroundChat,
+
+									// Day text color
+									dayTextColor: config.theme.extend.colors.backgroundChat,
+									// Today's text color
+									todayTextColor: config.theme.extend.colors.dark,
+									// Header font weight
+									textMonthFontWeight: "bold",
+									// Day names font weight
+									textDayHeaderFontWeight: "400",
+									textDayStyle: {
+										color: config.theme.extend.colors.primary,
+										fontWeight: "400",
+									},
+									// inactiv out of month dates
+									textDisabledColor: config.theme.extend.colors.lightGray,
+								}}
+								markingType={"custom"}
+								markedDates={{
+									...events,
+									[selectedDate]: {
+										selected: true,
+										marked: !!events[selectedDate],
+										disableTouchEvent: true,
+										dotColor: config.theme.extend.colors.pink,
+										customStyles: {
+											container: {
+												backgroundColor: config.theme.extend.colors.primary,
+												padding: 0,
+												borderRadius: 6,
+											},
+											text: {
+												fontSize: 14,
+												paddingBottom: 1,
+												color: "#fff",
+												fontWeight: "regular",
+											},
+										},
+									},
+								}}
+							/>
+
+							<ScrollView
+								showsVerticalScrollIndicator={false}
+								contentContainerStyle={{ paddingBottom: 16 }}
+								className="mt-4"
+							>
+								{events[selectedDate] && events[selectedDate].event ? (
+									<View className="gap-3">
+										<CardEvent event={events[selectedDate].event} />
+									</View>
+								) : null}
+							</ScrollView>
+						</View>
+						<View style={{ width: Dimensions.get("window").width - 28 }}>
+							<Text>coucou</Text>
+						</View>
 					</ScrollView>
 				</BackgroundLayout>
 			);

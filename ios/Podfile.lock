@@ -292,9 +292,9 @@ PODS:
     - ExpoModulesCore
   - ExpoFont (13.3.1):
     - ExpoModulesCore
-  - ExpoHead (5.0.7):
+  - ExpoHead (5.1.0):
     - ExpoModulesCore
-  - ExpoImage (2.2.0):
+  - ExpoImage (2.3.0):
     - ExpoModulesCore
     - libavif/libdav1d
     - SDWebImage (~> 5.21.0)
@@ -346,9 +346,9 @@ PODS:
     - ExpoModulesCore
   - ExpoSystemUI (5.0.8):
     - ExpoModulesCore
-  - ExpoUI (0.1.1-alpha.8):
+  - ExpoUI (0.1.1-alpha.9):
     - ExpoModulesCore
-  - ExpoVideo (2.2.0):
+  - ExpoVideo (2.2.1):
     - ExpoModulesCore
   - ExpoWebBrowser (14.1.6):
     - ExpoModulesCore
@@ -3062,8 +3062,8 @@ SPEC CHECKSUMS:
   ExpoDevice: 7082f03af1c588333ef1417d5aa8287081d94b24
   ExpoFileSystem: c36eb8155eb2381c83dda7dc210e3eec332368b6
   ExpoFont: abbb91a911eb961652c2b0a22eef801860425ed6
-  ExpoHead: af044f3e9c99e7d8d21bf653b4c2f2ef53a7f082
-  ExpoImage: 01564db38c4a19f61413a1fb8cc7b4464d3c7fe4
+  ExpoHead: 1e65b47330de2164c628da2bddf73d57cac123bf
+  ExpoImage: 6aa234344f378d78c0d50dc6c4d946546b8742bf
   ExpoImagePicker: 0963da31800c906e01c03e25d7c849f16ebf02a2
   ExpoKeepAwake: bf0811570c8da182bfb879169437d4de298376e7
   ExpoLinearGradient: 7734c8059972fcf691fb4330bcdf3390960a152d
@@ -3075,8 +3075,8 @@ SPEC CHECKSUMS:
   ExpoSplashScreen: 03ef991c0f9575a10269e08083cb4bd10e0989bc
   ExpoSymbols: c5612a90fb9179cdaebcd19bea9d8c69e5d3b859
   ExpoSystemUI: 29fb31c0e06eea3f5d88299d5c290101fc69f61f
-  ExpoUI: 561afff6a6325b0605822c679aa3d387c67cefe6
-  ExpoVideo: 5159e3a158184c33d0ef9e7f8851908ed2fd7536
+  ExpoUI: ed1120211f8bccd1c167020c621de0ff54cdddf1
+  ExpoVideo: 5c0715bbf3bab5760b59902e4fe4b7c4c7d11646
   ExpoWebBrowser: 06fb5f767f53ad53944b068cdd207984cb998712
   EXStructuredHeaders: 32bec6771c2db18c4cd47cecae530d1d06cdf972
   EXUpdates: 3f67357288e7fe5605db4b28b1f83de80b7ea395
