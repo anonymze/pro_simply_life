@@ -31,6 +31,7 @@ const config = {
 				textChat: "#15202A",
 				background: "#f4f5f6",
 				secondary: "#FCE7F6",
+				secondaryLight: "#fcebf7",
 				defaultGray: "#6A829A",
 				lightGray: "#AFB5D9",
 				darkGray: "#EAECF5",

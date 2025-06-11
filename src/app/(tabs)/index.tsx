@@ -6,12 +6,14 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { ArrowRight, MapPinnedIcon } from "lucide-react-native";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
 import ProfileDashboard from "@/components/profile-dashboard";
+import { getEventsQuery } from "@/api/queries/event-queries";
 import { View, TouchableOpacity, Text } from "react-native";
 import BookFillIcon from "@/components/svg/book-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ScrollView } from "react-native-gesture-handler";
 import CardEvent from "@/components/card/card-event";
 import CardLink from "@/components/card/card-link";
+import { useQuery } from "@tanstack/react-query";
 import Carousel from "@/components/carousel";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
@@ -19,6 +21,10 @@ import { User } from "@/types/user";
 
 
 export default function Page() {
+	const { data: events, isLoading: isLoadingEvents } = useQuery({
+		queryKey: ["events"],
+		queryFn: getEventsQuery,
+	});
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
@@ -103,6 +109,7 @@ export default function Page() {
 					{(data, cardWidth) => {
 						return data.map((item) => (
 							<CardEvent
+								isLoading={isLoadingEvents}
 								key={item}
 								eventStart={new Date()}
 								eventEnd={new Date(new Date().setDate(new Date().getDate() + 1))}

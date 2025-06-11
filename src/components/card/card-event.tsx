@@ -18,6 +18,7 @@ export default function CardEvent({
 	eventStart,
 	eventEnd,
 	width,
+	isLoading,
 }: {
 	eventStart: Date;
 	eventEnd: Date;
@@ -25,14 +26,9 @@ export default function CardEvent({
 	type: string;
 	description: string;
 	width: number;
+	isLoading: boolean;
 }) {
-	const [isLoading, setIsLoading] = React.useState(true);
 
-	React.useEffect(() => {
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 2000);
-	}, []);
 
 	return (
 		<>
@@ -41,14 +37,14 @@ export default function CardEvent({
 					<View className="h-[190px] gap-4  rounded-2xl bg-white p-4" style={{ width }}>
 						<View className="flex-row gap-5">
 							<View className="h-32 w-24 overflow-hidden rounded-xl">
-								<SkeletonPlaceholder height={"100%"} width={100} shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]} />
+								<SkeletonPlaceholder height={"100%"} width={100} shimmerColors={[config.theme.extend.colors.secondary, config.theme.extend.colors.secondaryLight]} />
 							</View>
 							<View className="gap-3">
 								<View className="mt-1">
-									<SkeletonPlaceholder height={21} width={75} style={{ borderRadius: 3 }} />
+									<SkeletonPlaceholder shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]} height={21} width={75} style={{ borderRadius: 3 }} />
 								</View>
-								<SkeletonPlaceholder height={43} width={200} style={{ borderRadius: 3 }} />
-								<SkeletonPlaceholder height={22} width={130} style={{ borderRadius: 3 }} />
+								<SkeletonPlaceholder shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]} height={43} width={200} style={{ borderRadius: 3 }} />
+								<SkeletonPlaceholder shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]} height={22} width={130} style={{ borderRadius: 3 }} />
 							</View>
 						</View>
 						<View className="mt-1 border-t border-darkGray" />
