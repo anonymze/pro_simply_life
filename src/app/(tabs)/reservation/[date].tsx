@@ -1,5 +1,5 @@
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Building2Icon, BuildingIcon, Calendar1Icon, ChevronDownIcon, ClockIcon, Icon } from "lucide-react-native";
+import { BuildingIcon, Calendar1Icon, CalendarArrowUpIcon, ChevronDownIcon, ClockIcon } from "lucide-react-native";
 import Animated, { FadeInDown, FadeOut, runOnJS } from "react-native-reanimated";
 import { createReservation } from "@/api/queries/reservation-queries";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
@@ -10,7 +10,6 @@ import { useMutation } from "@tanstack/react-query";
 import { getStorageUserInfos } from "@/utils/store";
 import { Reservation } from "@/types/reservation";
 import { queryClient } from "@/api/_queries";
-import { i18n } from "@/i18n/translations";
 import config from "tailwind.config";
 import { useState } from "react";
 import { cn } from "@/utils/cn";
@@ -53,6 +52,7 @@ export default function Page() {
 	const [selectedFin, setSelectedFin] = useState<string | null>(null);
 	const [title, setTitle] = useState<string | null>(null);
 	const userInfos = getStorageUserInfos();
+
 	const mutation = useMutation({
 		mutationFn: createReservation,
 		onSuccess: (data) => {
@@ -63,10 +63,10 @@ export default function Page() {
 				};
 			});
 		},
-		onError: (error) => {
+		onError: () => {
 			Alert.alert(
 				"Une erreur est survenue",
-				"Soit la réservation existe déjà à cet horaire soit vous n'avez pas correctement entrer les heures de début et de fin.",
+				"Soit une réservation existe déjà à cette tranche horaire soit vous n'avez pas correctement entrer les heures de début et de fin.",
 			);
 		},
 	});
@@ -127,16 +127,22 @@ export default function Page() {
 			<Text className="font-bold text-xl text-primary">Choisir un créneau</Text>
 
 			<View className="mt-5 gap-4">
-				<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5">
-					<Calendar1Icon size={20} color={config.theme.extend.colors.primaryLight} />
-					<Text className="text-md font-medium text-primary">
+				<View className="self-center items-center justify-center rounded-2xl bg-darkGray p-5">
+					<Calendar1Icon size={30} color={config.theme.extend.colors.primaryLight} />
+					<View className="items-center">
+					<Text className="mt-2 text-center font-semibold text-lg text-primary">
 						{new Date(date).toLocaleDateString("fr-FR", {
 							weekday: "long",
 							day: "numeric",
 							month: "long",
+						})}
+					</Text>
+					<Text className="text-center font-semibold text-lg text-primary">
+						{new Date(date).toLocaleDateString("fr-FR", {
 							year: "numeric",
 						})}
 					</Text>
+						</View>
 				</View>
 
 				<TextInput
@@ -145,11 +151,10 @@ export default function Page() {
 					textContentType="none"
 					placeholder="Titre de la réservation"
 					autoCorrect={true}
-					className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5 font-medium text-primary placeholder:text-primaryLight"
+					className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5 font-medium text-primary shadow-sm shadow-defaultGray/20 placeholder:text-primaryLight"
 					onChangeText={setTitle}
 				/>
 
-				{/* <BuildingIcon size={20} color={config.theme.extend.colors.primary} /> */}
 				<SelectDropdown
 					testID="bureau-select"
 					data={[
@@ -171,7 +176,7 @@ export default function Page() {
 					}}
 					renderButton={(selectedItem, isOpened) => {
 						return (
-							<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5">
+							<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5 shadow-sm shadow-defaultGray/20">
 								<BuildingIcon size={20} color={config.theme.extend.colors.primaryLight} />
 								<Text className="text-md flex-1 font-medium text-primary">
 									{(selectedItem && selectedItem.title) || "Sélectionner un bureau"}
@@ -201,7 +206,7 @@ export default function Page() {
 							}}
 							renderButton={(selectedItem, isOpened) => {
 								return (
-									<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5">
+									<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5 shadow-sm shadow-defaultGray/20">
 										<ClockIcon size={20} color={config.theme.extend.colors.primaryLight} />
 										<Text className="text-md flex-1 font-medium text-primary">
 											{(selectedItem && selectedItem.title) || "Début"}
@@ -231,7 +236,7 @@ export default function Page() {
 							}}
 							renderButton={(selectedItem, isOpened) => {
 								return (
-									<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5">
+									<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5 shadow-sm shadow-defaultGray/20">
 										<ClockIcon size={20} color={config.theme.extend.colors.primaryLight} />
 										<Text className="text-md flex-1 font-medium text-primary">
 											{(selectedItem && selectedItem.title) || "Fin"}

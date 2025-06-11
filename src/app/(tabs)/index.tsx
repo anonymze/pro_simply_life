@@ -1,5 +1,5 @@
+import { Link, LinkProps, router, useLocalSearchParams } from "expo-router";
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
-import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import BuildingFillIcon from "@/components/svg/building-fill-icon";
 import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
@@ -93,7 +93,7 @@ export default function Page() {
 				</Link>
 				<View className="mb-4 mt-7 flex-row items-center justify-between">
 					<Title title="Vie d'agence Valorem" className="mb-0 mt-0" />
-					<Link href="/" asChild>
+					<Link href="/(tabs)/event" asChild>
 						<TouchableOpacity hitSlop={10}>
 							<Text className="font-semibold text-primaryLight">Voir tout</Text>
 						</TouchableOpacity>
