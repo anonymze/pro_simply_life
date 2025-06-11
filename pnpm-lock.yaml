@@ -161,6 +161,9 @@ importers:
       react-native-screens:
         specifier: ~4.11.1
         version: 4.11.1(react-native@0.79.3(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      react-native-select-dropdown:
+        specifier: ^4.0.1
+        version: 4.0.1
       react-native-shimmer-placeholder:
         specifier: ^2.0.9
         version: 2.0.9(prop-types@15.8.1)(react-native-linear-gradient@2.8.3(react-native@0.79.3(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))
@@ -3938,6 +3941,9 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
+
+  react-native-select-dropdown@4.0.1:
+    resolution: {integrity: sha512-t4se17kALFcPb9wMbxig5dS1BE3pWRC6HPuFlM0J2Y6yhB1GsLqboy6an6R9rML8pRuGIJIxL29cbwEvPQwKxQ==}
 
   react-native-shimmer-placeholder@2.0.9:
     resolution: {integrity: sha512-s2pfAAO6uaybREYM2KcaxP3c2XlZvLfHfzmhMlGEoOhSKaoM92KpA1Hx0BeC75yilkliJuowqO/hFzvLB0h7hg==}
@@ -9057,6 +9063,8 @@ snapshots:
       react-native: 0.79.3(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0)
       react-native-is-edge-to-edge: 1.1.7(react-native@0.79.3(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       warn-once: 0.1.1
+
+  react-native-select-dropdown@4.0.1: {}
 
   react-native-shimmer-placeholder@2.0.9(prop-types@15.8.1)(react-native-linear-gradient@2.8.3(react-native@0.79.3(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)):
     dependencies:

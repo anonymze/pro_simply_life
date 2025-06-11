@@ -52,7 +52,7 @@ export default function Page() {
 							scrollRef.current?.scrollTo({ y: 0, animated: true });
 						}}
 					>
-						<Text className="font-semibold text-sm text-primary">{nextStep ? "Retour" : "Annuler"}</Text>
+						<Text className="font-semibold text-sm text-backgroundChat">{nextStep ? "Retour" : "Annuler"}</Text>
 					</TouchableOpacity>
 				</View>
 
@@ -67,7 +67,7 @@ export default function Page() {
 							scrollRef.current?.scrollToEnd({ animated: true });
 						}}
 					>
-						<Text className={cn("font-semibold text-sm text-primary", selectedIds.size === 0 && "text-primary/40")}>
+						<Text className={cn("font-semibold text-sm text-backgroundChat", selectedIds.size === 0 && "text-primary/40")}>
 							{nextStep ? "Créer" : "Suivant"}
 						</Text>
 					</TouchableOpacity>

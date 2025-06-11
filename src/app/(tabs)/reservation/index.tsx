@@ -1,14 +1,18 @@
-import Animated, { FadeIn, SlideInDown, SlideInUp, withSpring, withTiming } from "react-native-reanimated";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react-native";
+import { ArrowLeftIcon, ArrowRightIcon, BuildingIcon, Calendar1Icon, ClockIcon } from "lucide-react-native";
+import Animated, { withSpring, withTiming } from "react-native-reanimated";
+import { getReservationsQuery } from "@/api/queries/reservation-queries";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { getEventsQuery } from "@/api/queries/event-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
-import { Text, TouchableOpacity } from "react-native";
+import { labels } from "@/types/reservation";
+import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
 import React, { useState } from "react";
 import { cssInterop } from "nativewind";
 import config from "tailwind.config";
+import { router } from "expo-router";
 
 
 const TouchableOpacityAnimated = Animated.createAnimatedComponent(TouchableOpacity);
@@ -41,25 +45,31 @@ cssInterop(Calendar, { className: "style" });
 export default function Page() {
 	return withQueryWrapper(
 		{
-			queryKey: ["events"],
-			queryFn: getEventsQuery,
+			queryKey: ["reservations"],
+			queryFn: getReservationsQuery,
 		},
 		({ data }) => {
 			const [selectedDate, setSelectedDate] = useState("");
 
-			const events = React.useMemo(
+			const reservations = React.useMemo(
 				() =>
-					data?.docs.reduce((acc: Record<string, any>, event) => {
-						acc[event.event_start.split("T")[0]] = {
+					data?.docs.reduce((acc: Record<string, any>, reservation) => {
+						acc[reservation.day_reservation.split("T")[0]] = {
 							marked: true,
 							dotColor: config.theme.extend.colors.pink,
-							event,
+							reservation,
 						};
 						return acc;
 					}, {}),
 				[data],
 			);
-			
+
+			const reservationsByDate = React.useMemo(() => {
+				if (!selectedDate) return [];
+				return data?.docs.filter((reservation) => reservation.day_reservation.split("T")[0] === selectedDate);
+			}, [data, selectedDate]);
+
+			console.log(reservationsByDate);
 
 			return (
 				<BackgroundLayout className="pt-safe px-4">
@@ -111,10 +121,10 @@ export default function Page() {
 						}}
 						markingType={"custom"}
 						markedDates={{
-							...events,
+							...reservations,
 							[selectedDate]: {
 								selected: true,
-								marked: !!events[selectedDate],
+								marked: !!reservations[selectedDate],
 								disableTouchEvent: true,
 								dotColor: config.theme.extend.colors.pink,
 								customStyles: {
@@ -134,10 +144,65 @@ export default function Page() {
 						}}
 					/>
 
+					{!!reservationsByDate.length && (
+						<ScrollView
+							showsVerticalScrollIndicator={false}
+							contentContainerStyle={{ paddingBottom: 16 }}
+							className="mt-4"
+						>
+							<View className="gap-2 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
+								<Text className="font-semibold text-xl text-primary">Créneaux réservés</Text>
+								{reservationsByDate.map((reservation) => (
+									<View key={reservation.id} className="mt-2 flex-row items-center justify-between gap-3">
+										<View
+											className={cn(
+												"h-16 w-2 rounded-full",
+												reservation.desk === "1"
+													? "bg-secondary"
+													: reservation.desk === "2"
+														? "bg-[#FFEAD5]"
+														: "bg-[#E4F5D7]",
+											)}
+										/>
+										<View className="flex-1 gap-2">
+											<View className="flex-row items-center gap-2">
+												<BuildingIcon size={20} color={config.theme.extend.colors.primary} />
+												<Text className="text-md font-semibold text-primary">{labels[reservation.desk]}</Text>
+											</View>
+
+											<View className="flex-row items-center gap-2">
+												<ClockIcon size={15} color={config.theme.extend.colors.primaryLight} />
+												<Text className="text-md text-primaryLight">
+													{new Date(reservation.start_time_reservation).toLocaleTimeString("fr-FR", {
+														hour: "2-digit",
+														minute: "2-digit",
+													})}{" "}
+													-{" "}
+													{new Date(reservation.end_time_reservation).toLocaleTimeString("fr-FR", {
+														hour: "2-digit",
+														minute: "2-digit",
+													})}
+												</Text>
+											</View>
+										</View>
+									</View>
+								))}
+							</View>
+						</ScrollView>
+					)}
+
 					{selectedDate && (
 						<TouchableOpacityAnimated
+							onPress={() => {
+								router.push({
+									pathname: "/(tabs)/reservation/[date]",
+									params: {
+										date: selectedDate,
+									},
+								});
+							}}
 							entering={() => {
-								'worklet';
+								"worklet";
 								return {
 									initialValues: {
 										transform: [{ translateY: 100 }],
@@ -149,8 +214,9 @@ export default function Page() {
 									},
 								};
 							}}
-							className="absolute bottom-5 left-0 right-0 mx-5 rounded-xl bg-primary p-3"
+							className="absolute bottom-5 left-0 right-0 mx-5 flex-row items-center justify-center gap-2 rounded-xl bg-primary p-3"
 						>
+							<Calendar1Icon size={20} color={"#fff"} />
 							<Text className="text-center font-semibold text-lg text-white">Réserver un bureau</Text>
 						</TouchableOpacityAnimated>
 					)}
