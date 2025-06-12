@@ -1,7 +1,10 @@
+import { Dimensions, DimensionValue, Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { ArrowRight, ClockIcon } from "lucide-react-native";
-import { Dimensions, Text, View } from "react-native";
 import { truncateText } from "@/utils/helper";
+import { queryClient } from "@/api/_queries";
+import { Link, router } from "expo-router";
+import { Event } from "@/types/event";
 import config from "tailwind.config";
 import { cn } from "@/utils/cn";
 import React from "react";
@@ -9,27 +12,18 @@ import React from "react";
 import { SkeletonPlaceholder } from "../skeleton-placeholder";
 
 
-const windowWidth = Dimensions.get("window").width;
-
 export default function CardEvent({
-	title,
-	type,
-	description,
-	eventStart,
-	eventEnd,
+	event,
 	width,
 	isLoading,
 }: {
-	eventStart: Date;
-	eventEnd: Date;
-	title: string;
-	type: string;
-	description: string;
-	width: number;
+	event: Event;
+	width: DimensionValue | undefined;
 	isLoading: boolean;
 }) {
-
-
+	const onPress = React.useCallback(() => {
+		queryClient.setQueryData(["event", event.id], event);
+	}, [event]);
 	return (
 		<>
 			{isLoading ? (
@@ -37,14 +31,33 @@ export default function CardEvent({
 					<View className="h-[190px] gap-4  rounded-2xl bg-white p-4" style={{ width }}>
 						<View className="flex-row gap-5">
 							<View className="h-32 w-24 overflow-hidden rounded-xl">
-								<SkeletonPlaceholder height={"100%"} width={100} shimmerColors={[config.theme.extend.colors.secondary, config.theme.extend.colors.secondaryLight]} />
+								<SkeletonPlaceholder
+									height={"100%"}
+									width={100}
+									shimmerColors={[config.theme.extend.colors.secondary, config.theme.extend.colors.secondaryLight]}
+								/>
 							</View>
 							<View className="gap-3">
 								<View className="mt-1">
-									<SkeletonPlaceholder shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]} height={21} width={75} style={{ borderRadius: 3 }} />
+									<SkeletonPlaceholder
+										shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
+										height={21}
+										width={75}
+										style={{ borderRadius: 3 }}
+									/>
 								</View>
-								<SkeletonPlaceholder shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]} height={43} width={200} style={{ borderRadius: 3 }} />
-								<SkeletonPlaceholder shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]} height={22} width={130} style={{ borderRadius: 3 }} />
+								<SkeletonPlaceholder
+									shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
+									height={43}
+									width={200}
+									style={{ borderRadius: 3 }}
+								/>
+								<SkeletonPlaceholder
+									shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
+									height={22}
+									width={130}
+									style={{ borderRadius: 3 }}
+								/>
 							</View>
 						</View>
 						<View className="mt-1 border-t border-darkGray" />
@@ -55,34 +68,49 @@ export default function CardEvent({
 					</View>
 				</Animated.View>
 			) : (
-				<Animated.View entering={FadeIn.duration(300)} className="h-[190px] gap-4 rounded-2xl bg-white p-4" style={{ width: width }}>
-					<View className="flex-row gap-5">
-						<View className="h-32 w-24 items-center justify-center gap-1 rounded-xl bg-secondary">
-							<Text className="font-bold text-3xl text-primary">{new Date(eventStart).getDate()}</Text>
-							<Text className="text-primary">
-								{new Date(eventStart).toLocaleDateString("fr-FR", { month: "long" })}
-							</Text>
-						</View>
-						<View className="flex-shrink gap-2">
-							<View className="mt-1 self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
-								<Text className="font-semibold text-xs text-primaryLight">{type}</Text>
+				<Link
+					href={{
+						pathname: "/event/[event]",
+						params: { event: event.id },
+					}}
+					push
+					asChild
+				>
+					<TouchableOpacity onPressIn={onPress}>
+						<Animated.View
+							entering={FadeIn.duration(300)}
+							className="h-[190px] gap-4 rounded-2xl bg-white p-4"
+							style={{ width }}
+						>
+							<View className="flex-row gap-5">
+								<View className="h-32 w-24 items-center justify-center gap-1 rounded-xl bg-secondary">
+									<Text className="font-bold text-3xl text-primary">{new Date(event.event_start).getDate()}</Text>
+									<Text className="text-primary">
+										{new Date(event.event_start).toLocaleDateString("fr-FR", { month: "long" })}
+									</Text>
+								</View>
+								<View className="flex-shrink justify-center gap-2">
+									<View className="self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
+										<Text className="font-semibold text-xs text-primaryLight">{event.type}</Text>
+									</View>
+									<Text className="font-bold text-base text-primary">{truncateText(event.title, 40)}</Text>
+									<View className="flex-row items-center gap-2">
+										<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
+										<Text className="text-lg text-primaryLight">
+											{new Date(event.event_start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}{" "}
+											- {new Date(event.event_end).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
+										</Text>
+									</View>
+								</View>
 							</View>
-							<Text className="font-bold text-primary text-base">{truncateText(title, 40)}</Text>
-							<View className="flex-row items-center gap-2">
-								<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
-								<Text className="text-lg text-primaryLight">
-									{new Date(eventStart).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} -{" "}
-									{new Date(eventEnd).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
-								</Text>
+							<View className="mt-1 border-t border-darkGray" />
+							<View className="mt-auto flex-row items-center gap-2">
+								<Text className="font-semibold text-primary">En savoir plus</Text>
+								<ArrowRight strokeWidth={2.5} size={16} color={config.theme.extend.colors.primary} />
 							</View>
-						</View>
-					</View>
-					<View className="mt-1 border-t border-darkGray" />
-					<View className="mt-auto flex-row items-center gap-2">
-						<Text className="font-semibold text-primary">En savoir plus</Text>
-						<ArrowRight strokeWidth={2.5} size={16} color={config.theme.extend.colors.primary} />
-					</View>
-				</Animated.View>
+						</Animated.View>
+					</TouchableOpacity>
+				</Link>
 			)}
 		</>
 	);

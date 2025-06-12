@@ -4,6 +4,7 @@ import { Calendar, LocaleConfig } from "react-native-calendars";
 import { getEventsQuery } from "@/api/queries/event-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
+import CardList from "@/components/card/card-event";
 import { truncateText } from "@/utils/helper";
 import { queryClient } from "@/api/_queries";
 import { Picker } from "@expo/ui/swift-ui";
@@ -62,6 +63,20 @@ export default function Page() {
 					}, {}),
 				[data],
 			);
+
+			const eventsStartingFromToday = React.useMemo(() => {
+				const today = new Date();
+				today.setHours(0, 0, 0, 0); // set to start of day for accurate comparison
+
+				return (
+					data?.docs
+						.filter((event) => {
+							const eventDate = new Date(event.event_start);
+							return eventDate >= today;
+						})
+						.sort((a, b) => new Date(a.event_start).getTime() - new Date(b.event_start).getTime()) || []
+				);
+			}, [data]);
 
 			return (
 				<BackgroundLayout className="pt-safe px-4">
@@ -177,7 +192,15 @@ export default function Page() {
 							</ScrollView>
 						</View>
 						<View style={{ width: Dimensions.get("window").width - 28 }}>
-							<Text>coucou</Text>
+							<ScrollView
+								showsVerticalScrollIndicator={false}
+								contentContainerStyle={{ paddingBottom: 16, gap: 14 }}
+								className="mt-5"
+							>
+								{eventsStartingFromToday.map((event) => {
+									return <CardList isLoading={false} key={event.id} event={event} width={"100%"} />;
+								})}
+							</ScrollView>
 						</View>
 					</ScrollView>
 				</BackgroundLayout>

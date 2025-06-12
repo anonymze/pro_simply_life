@@ -110,12 +110,18 @@ export default function Page() {
 						return data.map((item) => (
 							<CardEvent
 								isLoading={isLoadingEvents}
+								event={{
+									createdAt: new Date().toISOString(),
+									updatedAt: new Date().toISOString(),
+									id: "heydzldzhdhodizhio",
+									event_start: new Date().toISOString(),
+									event_end: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+									title: "Réunion mensuelle du Groupe Valorem !",
+									type: "Masterclass",
+									annotation:
+										"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!",
+								}}
 								key={item}
-								eventStart={new Date()}
-								eventEnd={new Date(new Date().setDate(new Date().getDate() + 1))}
-								title="Réunion mensuelle du Groupe Valorem !"
-								type="Masterclass"
-								description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!"
 								width={cardWidth}
 							/>
 						));
