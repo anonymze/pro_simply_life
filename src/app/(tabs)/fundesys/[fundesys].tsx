@@ -27,10 +27,15 @@ export default function Page() {
 
 	if (!fundesys) return null;
 
-	const player = useVideoPlayer(fundesys.video.url!, (player) => {
-		// player.loop = true;
-		// player.play();
-	});
+	const player = useVideoPlayer(
+		{
+			uri: fundesys.video.url!,
+		},
+		(player) => {
+			// player.loop = true;
+			// player.play();
+		},
+	);
 
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
@@ -45,7 +50,7 @@ export default function Page() {
 			<View className="rounded-2xl bg-white p-4">
 				<Text className="text-sm text-primaryLight">Vidéo hebdo</Text>
 				<View className="mx-auto mt-3 aspect-video overflow-hidden rounded-xl ">
-					<VideoView player={player} className="h-full w-full" allowsFullscreen nativeControls={true} />
+					<VideoView player={player} className="h-full w-full" allowsFullscreen nativeControls />
 				</View>
 			</View>
 
