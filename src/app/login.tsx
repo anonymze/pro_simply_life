@@ -62,12 +62,12 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className="p-6">
-			<Animated.View className="flex-1 items-center justify-center gap-3" style={animatedStyle}>
-				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 200 }} contentFit="contain" />
-				<Text className="text-center font-semibold text-lg">{i18n[languageCode]("SUBTITLE_LOGIN")}</Text>
+			<Animated.View className="flex-1 justify-center gap-3" style={animatedStyle}>
+				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 80 }} contentFit="contain" />
+				<Text className="font-medium text-lg text-primary max-w-[90%] text-start mt-4">{i18n[languageCode]("SUBTITLE_LOGIN")}</Text>
 
 				<View className="mt-8 w-full gap-3">
-					<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_EMAIL_LOGIN")}</Text>
+					<Text className="text-md self-start text-primary">{i18n[languageCode]("INPUT_EMAIL_LOGIN")}</Text>
 					<form.Field name="email">
 						{(field) => (
 							<React.Fragment>
@@ -78,7 +78,7 @@ export default function Page() {
 									textContentType="oneTimeCode"
 									placeholder="exemple@email.fr"
 									autoCorrect={false}
-									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400 border border-transparent focus:border-primary"
+									className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
 								/>
@@ -91,7 +91,7 @@ export default function Page() {
 				</View>
 
 				<View className="mt-3 w-full gap-3">
-					<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_PASSWORD_LOGIN")}</Text>
+					<Text className="text-md self-start text-primary">{i18n[languageCode]("INPUT_PASSWORD_LOGIN")}</Text>
 					<form.Field name="password">
 						{(field) => (
 							<React.Fragment>
@@ -101,7 +101,8 @@ export default function Page() {
 									autoCapitalize="none"
 									keyboardType="default"
 									textContentType="oneTimeCode"
-									className="w-full rounded-lg bg-gray-200 p-5 placeholder:text-gray-400 border border-transparent focus:border-primary"
+									placeholder="**********"
+									className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
 								/>
@@ -115,14 +116,14 @@ export default function Page() {
 				<Pressable
 					onPress={form.handleSubmit}
 					disabled={mutationLogin.isPending}
-					className="mt-4 h-14 w-full items-center justify-center rounded-lg bg-primary disabled:opacity-70"
+					className="mt-4 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
 				>
 					{mutationLogin.isPending ? (
 						<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
 							<ActivityIndicator size="small" color="white" />
 						</Animated.View>
 					) : (
-						<Animated.Text entering={FadeInDown.springify().duration(1200)} className="text-center text-white">
+						<Animated.Text entering={FadeInDown.springify().duration(1200)} className="text-center text-white font-semibold text-lg">
 							{i18n[languageCode]("BUTTON_LOGIN")}
 						</Animated.Text>
 					)}

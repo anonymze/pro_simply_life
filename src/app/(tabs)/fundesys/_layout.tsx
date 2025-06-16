@@ -18,11 +18,22 @@ export default function FundesysLayout() {
 			<Stack.Screen
 				name="[fundesys]"
 				options={{
-					presentation: "modal",
-					sheetGrabberVisible: true,
-					header: () => (Platform.OS === "ios" ? <HeaderGrabberIos /> : <HeaderLayout />),
+					header: () => <HeaderLayout />,
 					headerShown: true,
 				}}
+			/>
+			<Stack.Screen
+				options={{
+					presentation: "modal",
+					header: () =>
+						Platform.OS === "ios" ? (
+							<HeaderGrabberIos className="bg-white" />
+						) : (
+							<HeaderLayout backgroundColor="bg-white" />
+						),
+					headerShown: true,
+				}}
+				name="pdf/[pdf]"
 			/>
 		</Stack>
 	);

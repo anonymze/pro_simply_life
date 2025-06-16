@@ -1,9 +1,10 @@
 import { CalendarArrowDownIcon, CalendarArrowUpIcon, CalendarIcon, ClockIcon, MapPinIcon } from "lucide-react-native";
+import { getEventQuery } from "@/api/queries/event-queries";
 import BackgroundLayout from "@/layouts/background-layout";
-import { getEvent } from "@/api/queries/event-queries";
+import { Platform, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import { Text, View } from "react-native";
+import { cn } from "@/utils/libs/tailwind";
 import config from "tailwind.config";
 
 
@@ -12,7 +13,7 @@ export default function Page() {
 
 	const { data } = useQuery({
 		queryKey: ["event", eventId],
-		queryFn: getEvent,
+		queryFn: getEventQuery,
 		enabled: !!eventId,
 	});
 
@@ -21,7 +22,7 @@ export default function Page() {
 	const sameDay = data.event_start.split("T")[0] === data.event_end.split("T")[0];
 
 	return (
-		<BackgroundLayout className="px-4">
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
 			<View className="gap-5">
 				<View className="items-center gap-2 rounded-2xl bg-white p-5">
 					<View className="mx-auto mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">

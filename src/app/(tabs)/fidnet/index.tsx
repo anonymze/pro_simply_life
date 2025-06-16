@@ -2,8 +2,8 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardNewsletter from "@/components/card/card-newsletter";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
+import { getFidnetsQuery } from "@/api/queries/fidnet";
 import { View, Text, ScrollView } from "react-native";
-import { getFidnetQuery } from "@/api/queries/fidnet";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
@@ -13,7 +13,7 @@ export default function Page() {
 	return withQueryWrapper(
 		{
 			queryKey: ["fidnets"],
-			queryFn: getFidnetQuery,
+			queryFn: getFidnetsQuery,
 		},
 		({ data }) => {
 			// sort and group suppliers by first letter

@@ -4,8 +4,8 @@ import { Media } from "./media";
 export interface Fundesys {
 	id: string;
 	date: string;
-	file: string | Media;
-	video: string | Media;
+	file: Media;
+	video: Media;
 	updatedAt: string;
 	createdAt: string;
 }

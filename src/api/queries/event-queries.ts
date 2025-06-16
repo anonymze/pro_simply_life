@@ -11,7 +11,7 @@ export async function getEventsQuery({ queryKey }: { queryKey: QueryKey }) {
 	return response.data;
 }
 
-export async function getEvent({ queryKey }: { queryKey: QueryKey }) {
+export async function getEventQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, eventId] = queryKey;
 	const response = await api.get<Event>(`/api/agency-life/${eventId}`);
 	return response.data;

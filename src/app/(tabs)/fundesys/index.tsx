@@ -1,8 +1,8 @@
+import { getFundesysesQuery, getFundesysQuery } from "@/api/queries/fundesys";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardNewsletter from "@/components/card/card-newsletter";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
-import { getFundesysQuery } from "@/api/queries/fundesys";
 import { View, Text, ScrollView } from "react-native";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
@@ -13,7 +13,7 @@ export default function Page() {
 	return withQueryWrapper(
 		{
 			queryKey: ["fundesyses"],
-			queryFn: getFundesysQuery,
+			queryFn: getFundesysesQuery,
 		},
 		({ data }) => {
 			// sort and group suppliers by first letter
