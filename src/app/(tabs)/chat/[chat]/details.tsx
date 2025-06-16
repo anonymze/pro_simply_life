@@ -29,30 +29,25 @@ export default function Page() {
 				};
 			});
 			router.back();
+			router.back();
 		},
-		onError: (error) => {
-			Alert.alert("Erreur", "Le groupe n'existe plus ou vous n'êtes pas autorisé à la supprimer.");
+		onError: () => {
+			Alert.alert("Erreur", "Le groupe n'existe plus ou vous n'êtes pas autorisé à le supprimer.");
 			router.back();
 		},
 	});
 
-	// const leaveChatRoom = useMutation({
-	// 	mutationFn: deleteReservationQuery,
-	// 	onSuccess: () => {
-	// 		queryClient.setQueryData(["reservations", { limit: 99 }], (old: PaginatedResponse<Reservation>) => {
-	// 			return {
-	// 				...old,
-	// 				docs: old.docs.filter((res) => res.id !== chat),
-	// 			};
-	// 		});
-	// 		// queryClient.invalidateQueries({ queryKey: ["reservation", reservationId] });
-	// 		router.back();
-	// 	},
-	// 	onError: (error) => {
-	// 		Alert.alert("Erreur", "La réservation n'existe plus ou vous n'êtes pas autorisé à la supprimer.");
-	// 		router.back();
-	// 	},
-	// });
+	const leaveChatRoom = useMutation({
+		mutationFn: deleteChatRoomQuery,
+		onSuccess: () => {
+			router.back();
+			router.back();
+		},
+		onError: (error) => {
+			Alert.alert("Erreur", "Le groupe n'existe plus ou vous n'êtes pas autorisé à le quitter.");
+			router.back();
+		},
+	});
 
 	const { data: chatRoom } = useQuery({
 		queryKey: ["chat-room", chatId],
@@ -86,7 +81,7 @@ export default function Page() {
 					<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
 						<TrashIcon size={22} color={config.theme.extend.colors.red} />
 					</View>
-					<Text className="font-semibold text-md text-red">Supprimer le groupe</Text>
+					<Text className="text-md font-semibold text-red">Supprimer le groupe</Text>
 					{deleteChatRoom.isPending && (
 						<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />
 					)}
@@ -103,7 +98,7 @@ export default function Page() {
 				<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
 					<LogOutIcon size={22} color={config.theme.extend.colors.red} />
 				</View>
-				<Text className="font-semibold text-md text-red">Quitter le groupe</Text>
+				<Text className="text-md font-semibold text-red">Quitter le groupe</Text>
 				{/* {deleteChatRoom.isPending && (
 					<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />
 				)} */}
@@ -169,7 +164,7 @@ const ContactInfo = ({ firstname, lastname }: { firstname?: string | null; lastn
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="font-semibold text-sm text-defaultGray">Créateur du groupe de conversation</Text>
 			<Text selectable className="font-semibold text-base text-primary">
-				{firstname} {lastname?.toUpperCase()}
+				{firstname} {lastname}
 			</Text>
 		</View>
 	);
