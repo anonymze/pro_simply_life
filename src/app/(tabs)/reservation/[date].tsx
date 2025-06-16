@@ -62,6 +62,10 @@ export default function Page() {
 					docs: [...prev.docs, data.doc],
 				};
 			});
+
+			setTimeout(() => {
+				router.back();
+			}, 900);
 		},
 		onError: () => {
 			Alert.alert(
@@ -106,14 +110,7 @@ export default function Page() {
 					}}
 				>
 					{mutation.isPending ? (
-						<Animated.View
-							entering={FadeInDown.springify().duration(1200)}
-							exiting={FadeOut.duration(300).withCallback((finished) => {
-								if (finished) {
-									runOnJS(router.back)();
-								}
-							})}
-						>
+						<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
 							<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
 						</Animated.View>
 					) : (
@@ -127,22 +124,22 @@ export default function Page() {
 			<Text className="font-bold text-xl text-primary">Choisir un créneau</Text>
 
 			<View className="mt-5 gap-4">
-				<View className="self-center items-center justify-center rounded-2xl bg-darkGray p-5">
+				<View className="items-center justify-center self-center rounded-2xl bg-darkGray p-5">
 					<Calendar1Icon size={30} color={config.theme.extend.colors.primaryLight} />
 					<View className="items-center">
-					<Text className="mt-2 text-center font-semibold text-lg text-primary">
-						{new Date(date).toLocaleDateString("fr-FR", {
-							weekday: "long",
-							day: "numeric",
-							month: "long",
-						})}
-					</Text>
-					<Text className="text-center font-semibold text-lg text-primary">
-						{new Date(date).toLocaleDateString("fr-FR", {
-							year: "numeric",
-						})}
-					</Text>
-						</View>
+						<Text className="mt-2 text-center font-semibold text-lg text-primary">
+							{new Date(date).toLocaleDateString("fr-FR", {
+								weekday: "long",
+								day: "numeric",
+								month: "long",
+							})}
+						</Text>
+						<Text className="text-center font-semibold text-lg text-primary">
+							{new Date(date).toLocaleDateString("fr-FR", {
+								year: "numeric",
+							})}
+						</Text>
+					</View>
 				</View>
 
 				<TextInput
