@@ -97,7 +97,7 @@ export default function Page() {
 
 				<TouchableOpacity
 					className="w-24 items-end p-2"
-					disabled={!isAllGood}
+					disabled={!isAllGood || mutation.isPending}
 					onPress={() => {
 						if (!isAllGood) return;
 						mutation.mutate({

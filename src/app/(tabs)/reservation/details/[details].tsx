@@ -93,6 +93,7 @@ export default function Page() {
 			</View>
 			{isOwner && (
 				<TouchableOpacity
+					disabled={deleteReservation.isPending}
 					onPress={() => {
 						deleteReservation.mutate(reservation.id);
 					}}
