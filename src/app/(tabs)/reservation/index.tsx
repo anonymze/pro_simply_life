@@ -3,16 +3,15 @@ import Animated, { withSpring, withTiming } from "react-native-reanimated";
 import { getReservationsQuery } from "@/api/queries/reservation-queries";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { getEventsQuery } from "@/api/queries/event-queries";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { labels } from "@/types/reservation";
 import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
-import React, { useState } from "react";
 import { cssInterop } from "nativewind";
 import config from "tailwind.config";
 import { router } from "expo-router";
+import React from "react";
 
 
 const TouchableOpacityAnimated = Animated.createAnimatedComponent(TouchableOpacity);
@@ -49,7 +48,7 @@ export default function Page() {
 			queryFn: getReservationsQuery,
 		},
 		({ data }) => {
-			const [selectedDate, setSelectedDate] = useState("");
+			const [selectedDate, setSelectedDate] = React.useState("");
 
 			const reservations = React.useMemo(
 				() =>

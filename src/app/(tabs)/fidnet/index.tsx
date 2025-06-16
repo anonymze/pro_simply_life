@@ -15,7 +15,7 @@ export default function Page() {
 		({ data }) => {
 			return (
 				<BackgroundLayout className="pt-safe px-4">
-					<Text>Fundesys</Text>
+					<Text>Fidnet</Text>
 				</BackgroundLayout>
 			);
 		},

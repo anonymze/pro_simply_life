@@ -78,7 +78,7 @@ export default function Page() {
 				</Link>
 				<Link
 					href={{
-						pathname: "/",
+						pathname: "/fidnet",
 					}}
 					push
 					asChild
