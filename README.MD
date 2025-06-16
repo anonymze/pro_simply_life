@@ -177,4 +177,4 @@ rester appuyer pour copier coller un text (numéros de tels)
 
 webrtc ? for sharing files for chat ?
 
-deep link + traduction + réservation bureau outlook + statistiques commissions + bloc note
+deep link + traduction + réservation bureau outlook + statistiques commissions + bloc note + réservation nom des bureaux 

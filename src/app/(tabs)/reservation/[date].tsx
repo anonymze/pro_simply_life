@@ -56,7 +56,8 @@ export default function Page() {
 	const mutation = useMutation({
 		mutationFn: createReservationQuery,
 		onSuccess: (data) => {
-			queryClient.setQueryData(["reservations"], (prev: PaginatedResponse<Reservation>) => {
+			console.log(data);
+			queryClient.setQueryData(["reservations", { limit: 99 }], (prev: PaginatedResponse<Reservation>) => {
 				return {
 					...prev,
 					docs: [...prev.docs, data.doc],
@@ -67,7 +68,7 @@ export default function Page() {
 				router.back();
 			}, 900);
 		},
-		onError: () => {
+		onError: (err) => {
 			Alert.alert(
 				"Une erreur est survenue",
 				"Soit une réservation existe déjà à cette tranche horaire soit vous n'avez pas correctement entrer les heures de début et de fin.",
