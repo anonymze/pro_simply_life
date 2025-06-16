@@ -199,7 +199,7 @@ const Card = ({
 	description: string | null;
 }) => {
 	const onPress = React.useCallback(() => {
-		queryClient.setQueryData(["chat-rooms", chatRoom.id], chatRoom);
+		queryClient.setQueryData(["chat-room", chatRoom.id], chatRoom);
 	}, [chatRoom]);
 
 	return (

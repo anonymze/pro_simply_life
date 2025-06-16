@@ -1,27 +1,68 @@
-import { Linking, Platform, ScrollView, TouchableOpacity, View } from "react-native";
-import { HrefObject, Link, Redirect, useLocalSearchParams } from "expo-router";
-import { MailIcon, PhoneIcon, PlusIcon } from "lucide-react-native";
-import { getChatRoomQuery } from "@/api/queries/chat-room-queries";
+import { ActivityIndicator, Alert, Platform, ScrollView, TouchableOpacity, View } from "react-native";
+import { deleteChatRoomQuery, getChatRoomQuery } from "@/api/queries/chat-room-queries";
+import { LogOutIcon, PlusIcon, TrashIcon } from "lucide-react-native";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import IndependantIcon from "@/components/independant-icon";
 import BackgroundLayout from "@/layouts/background-layout";
+import { router, useLocalSearchParams } from "expo-router";
 import EmployeesIcon from "@/components/emloyees-icon";
+import { PaginatedResponse } from "@/types/response";
 import { User, userRoleLabels } from "@/types/user";
-import { useQuery } from "@tanstack/react-query";
+import { getStorageUserInfos } from "@/utils/store";
+import { queryClient } from "@/api/_queries";
+import { ChatRoom } from "@/types/chat";
 import config from "tailwind.config";
 import { Text } from "react-native";
 import { cn } from "@/utils/cn";
 
 
 export default function Page() {
-	const { chat } = useLocalSearchParams<{ chat?: string }>();
-
-	const { data: chatRoom } = useQuery({
-		queryKey: ["chat-rooms", chat],
-		queryFn: getChatRoomQuery,
-		enabled: !!chat,
+	const { chat: chatId } = useLocalSearchParams();
+	const appUser = getStorageUserInfos();
+	const deleteChatRoom = useMutation({
+		mutationFn: deleteChatRoomQuery,
+		onSuccess: () => {
+			queryClient.setQueryData(["chat-rooms"], (old: PaginatedResponse<ChatRoom>) => {
+				return {
+					...old,
+					docs: old.docs.filter((chatRoom) => chatRoom.id !== chatId),
+				};
+			});
+			router.back();
+		},
+		onError: (error) => {
+			Alert.alert("Erreur", "Le groupe n'existe plus ou vous n'êtes pas autorisé à la supprimer.");
+			router.back();
+		},
 	});
 
-	if (!chatRoom) return null;
+	// const leaveChatRoom = useMutation({
+	// 	mutationFn: deleteReservationQuery,
+	// 	onSuccess: () => {
+	// 		queryClient.setQueryData(["reservations", { limit: 99 }], (old: PaginatedResponse<Reservation>) => {
+	// 			return {
+	// 				...old,
+	// 				docs: old.docs.filter((res) => res.id !== chat),
+	// 			};
+	// 		});
+	// 		// queryClient.invalidateQueries({ queryKey: ["reservation", reservationId] });
+	// 		router.back();
+	// 	},
+	// 	onError: (error) => {
+	// 		Alert.alert("Erreur", "La réservation n'existe plus ou vous n'êtes pas autorisé à la supprimer.");
+	// 		router.back();
+	// 	},
+	// });
+
+	const { data: chatRoom } = useQuery({
+		queryKey: ["chat-room", chatId],
+		queryFn: getChatRoomQuery,
+		enabled: !!chatId,
+	});
+
+	if (!chatRoom || !appUser) return null;
+
+	const isOwner = chatRoom.app_user.id === appUser.user.id;
 
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-2")}>
@@ -33,14 +74,50 @@ export default function Page() {
 				<Text className="text-md text-defaultGray">{chatRoom.description}</Text>
 			</View>
 			<ContactInfo firstname={chatRoom.app_user.firstname} lastname={chatRoom.app_user.lastname} />
+
+			{isOwner && (
+				<TouchableOpacity
+					disabled={deleteChatRoom.isPending}
+					onPress={() => {
+						deleteChatRoom.mutate(chatId as string);
+					}}
+					className="mt-4 flex-row items-center gap-2 rounded-xl bg-white p-1 shadow shadow-defaultGray/10"
+				>
+					<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
+						<TrashIcon size={22} color={config.theme.extend.colors.red} />
+					</View>
+					<Text className="font-semibold text-md text-red">Supprimer le groupe</Text>
+					{deleteChatRoom.isPending && (
+						<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />
+					)}
+				</TouchableOpacity>
+			)}
+
+			<TouchableOpacity
+				disabled={deleteChatRoom.isPending}
+				onPress={() => {
+					// deleteReservation.mutate(reservation.id);
+				}}
+				className="mt-4 flex-row items-center gap-2 rounded-xl bg-white p-1 shadow shadow-defaultGray/10"
+			>
+				<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
+					<LogOutIcon size={22} color={config.theme.extend.colors.red} />
+				</View>
+				<Text className="font-semibold text-md text-red">Quitter le groupe</Text>
+				{/* {deleteChatRoom.isPending && (
+					<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />
+				)} */}
+			</TouchableOpacity>
+
 			<View className="mt-4 flex-row items-center justify-between">
-				<Text className="font-semibold text-xl">{chatRoom.guests.length} Membres</Text>
+				<Text className="font-semibold text-xl text-primary">{chatRoom.guests.length} membres</Text>
 				{/* <Link href="/chat/new-room" asChild> */}
 				<TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
 					<PlusIcon size={18} color={config.theme.extend.colors.primary} />
 				</TouchableOpacity>
 				{/* </Link> */}
 			</View>
+
 			<ScrollView
 				className="mt-4 flex-1"
 				showsVerticalScrollIndicator={false}
@@ -49,7 +126,13 @@ export default function Page() {
 			>
 				<View className="mb-4 gap-2">
 					{chatRoom.guests.map((guest) => (
-						<Card key={guest.id} icon={<IndependantIcon color={config.theme.extend.colors.primary} />} firstname={guest.firstname} lastname={guest.lastname} role={guest.role} />
+						<Card
+							key={guest.id}
+							icon={<IndependantIcon color={config.theme.extend.colors.primary} />}
+							firstname={guest.firstname}
+							lastname={guest.lastname}
+							role={guest.role}
+						/>
 					))}
 				</View>
 			</ScrollView>
@@ -57,12 +140,24 @@ export default function Page() {
 	);
 }
 
-const Card = ({ icon, firstname, lastname, role }: { icon: any; firstname: string; lastname: string; role: User["role"] }) => {
+const Card = ({
+	icon,
+	firstname,
+	lastname,
+	role,
+}: {
+	icon: any;
+	firstname: string;
+	lastname: string;
+	role: User["role"];
+}) => {
 	return (
 		<View className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2">
 			<View className="size-14 items-center justify-center rounded-lg bg-darkGray">{icon}</View>
 			<View className="flex-1">
-				<Text className="font-semibold text-lg text-primary">{firstname} {lastname}</Text>
+				<Text className="font-semibold text-lg text-primary">
+					{firstname} {lastname}
+				</Text>
 				<Text className="text-sm text-defaultGray">{userRoleLabels[role]}</Text>
 			</View>
 		</View>
