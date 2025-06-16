@@ -84,11 +84,11 @@ export default function Page() {
 					asChild
 				>
 					<TouchableOpacity className="mt-3 w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
-						<View className="size-14 items-center justify-center overflow-hidden rounded-lg border border-defaultGray/10">
+						<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
 							<ImagePlaceholder
 								contentFit="contain"
 								source={require("@/assets/icons/fidnet.svg")}
-								style={{ width: "100%", height: "100%" }}
+								style={{ width: 36, height: 36, borderRadius: 4 }}
 							/>
 						</View>
 						<View className="flex-1">

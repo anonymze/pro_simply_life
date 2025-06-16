@@ -76,6 +76,22 @@ export default function AppLayout() {
 					}}
 				/>
 				<Tabs.Screen
+					name="fidnet"
+					options={{
+						title: "Fidnet",
+						headerShown: false,
+						href: null,
+					}}
+				/>
+				<Tabs.Screen
+					name="fundesys"
+					options={{
+						title: "Fundesys",
+						headerShown: false,
+						href: null,
+					}}
+				/>
+				<Tabs.Screen
 					name="event"
 					options={{
 						title: "Réservation",
