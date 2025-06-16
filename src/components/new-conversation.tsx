@@ -72,7 +72,7 @@ export function NewConversation({
 	return (
 		<>
 			<View className="w-full gap-3">
-				<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_NAME_NEW_ROOM")}</Text>
+				<Text className="text-md self-start text-primary">{i18n[languageCode]("INPUT_NAME_NEW_ROOM")}</Text>
 				<form.Field name="name">
 					{(field) => (
 						<React.Fragment>
@@ -82,7 +82,7 @@ export function NewConversation({
 								keyboardType="default"
 								textContentType="oneTimeCode"
 								placeholder="Ex : fournisseurs"
-								className="w-full rounded-lg bg-defaultGray/15 p-5 text-primary placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
+								className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>
@@ -94,7 +94,7 @@ export function NewConversation({
 				</form.Field>
 			</View>
 			<View className="mt-3 w-full gap-3">
-				<Text className="text-md self-start text-gray-500">{i18n[languageCode]("INPUT_DESCRIPTION_NEW_ROOM")}</Text>
+				<Text className="text-md self-start text-primary">{i18n[languageCode]("INPUT_DESCRIPTION_NEW_ROOM")}</Text>
 				<form.Field name="description">
 					{(field) => (
 						<React.Fragment>
@@ -104,7 +104,7 @@ export function NewConversation({
 								autoCapitalize="none"
 								keyboardType="default"
 								placeholder="Ex : informations sur les fournisseurs"
-								className="min-h-24 w-full rounded-lg border border-transparent bg-defaultGray/15 p-5 text-primary placeholder:text-primaryLight focus:border-primaryLight"
+								className="w-full min-h-24 rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>

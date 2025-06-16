@@ -24,7 +24,7 @@ export async function getChatRoomQuery({ queryKey }: { queryKey: QueryKey }) {
 }
 
 export async function createChatRoomQuery(
-	params: Pick<ChatRoom, "name" | "description" | "color"> & { app_user: User["id"], guests: User["id"][] },
+	params: Pick<ChatRoom, "name" | "description" | "color"> & { app_user: User["id"]; guests: User["id"][] },
 ) {
 	const response = await api.post<SuccessCreateResponse<ChatRoom>>("/api/chat-rooms", params);
 	return response.data;
@@ -32,5 +32,16 @@ export async function createChatRoomQuery(
 
 export async function deleteChatRoomQuery(chatRoomId: ChatRoom["id"]) {
 	const response = await api.delete(`/api/chat-rooms/${chatRoomId}`);
+	return response.data;
+}
+
+export async function leaveChatRoomQuery({
+	chatRoomId,
+	userId,
+}: {
+	chatRoomId: ChatRoom["id"];
+	userId: User["id"];
+}) {
+	const response = await api.delete(`/api/chat-rooms/leave/${chatRoomId}/${userId}`);
 	return response.data;
 }

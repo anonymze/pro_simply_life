@@ -1,5 +1,5 @@
+import { deleteChatRoomQuery, getChatRoomQuery, leaveChatRoomQuery } from "@/api/queries/chat-room-queries";
 import { ActivityIndicator, Alert, Platform, ScrollView, TouchableOpacity, View } from "react-native";
-import { deleteChatRoomQuery, getChatRoomQuery } from "@/api/queries/chat-room-queries";
 import { LogOutIcon, PlusIcon, TrashIcon } from "lucide-react-native";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import IndependantIcon from "@/components/independant-icon";
@@ -38,8 +38,16 @@ export default function Page() {
 	});
 
 	const leaveChatRoom = useMutation({
-		mutationFn: deleteChatRoomQuery,
+		mutationFn: leaveChatRoomQuery,
 		onSuccess: () => {
+			if (isOwner) {
+				queryClient.setQueryData(["chat-rooms"], (old: PaginatedResponse<ChatRoom>) => {
+					return {
+						...old,
+						docs: old.docs.filter((chatRoom) => chatRoom.id !== chatId),
+					};
+				});
+			}
 			router.back();
 			router.back();
 		},
@@ -91,7 +99,25 @@ export default function Page() {
 			<TouchableOpacity
 				disabled={deleteChatRoom.isPending}
 				onPress={() => {
-					// deleteReservation.mutate(reservation.id);
+					if (isOwner) {
+						Alert.alert(
+							"Créateur du groupe",
+							"Si vous quitté le groupe, celui-ci sera supprimé car vous êtes le créateur.",
+							[
+								{
+									text: "Annuler",
+									style: "cancel",
+								},
+								{
+									text: "Quitter",
+									style: "destructive",
+									onPress: () => leaveChatRoom.mutate({ chatRoomId: chatId as string, userId: appUser.user.id }),
+								},
+							],
+						);
+						return;
+					}
+					leaveChatRoom.mutate({ chatRoomId: chatId as string, userId: appUser.user.id });
 				}}
 				className="mt-4 flex-row items-center gap-2 rounded-xl bg-white p-1 shadow shadow-defaultGray/10"
 			>
@@ -99,9 +125,9 @@ export default function Page() {
 					<LogOutIcon size={22} color={config.theme.extend.colors.red} />
 				</View>
 				<Text className="text-md font-semibold text-red">Quitter le groupe</Text>
-				{/* {deleteChatRoom.isPending && (
+				{leaveChatRoom.isPending && (
 					<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />
-				)} */}
+				)}
 			</TouchableOpacity>
 
 			<View className="mt-4 flex-row items-center justify-between">
