@@ -45,7 +45,7 @@ cssInterop(Calendar, { className: "style" });
 export default function Page() {
 	return withQueryWrapper(
 		{
-			queryKey: ["reservations"],
+			queryKey: ["reservations", { limit: 99 }],
 			queryFn: getReservationsQuery,
 		},
 		({ data }) => {

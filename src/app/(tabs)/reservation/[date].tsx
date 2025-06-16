@@ -231,7 +231,7 @@ export default function Page() {
 							onSelect={(selectedItem) => {
 								setSelectedFin(selectedItem.value);
 							}}
-							renderButton={(selectedItem, isOpened) => {
+							renderButton={(selectedItem) => {
 								return (
 									<View className="flex-row items-center gap-3 rounded-lg bg-darkGray p-5 shadow-sm shadow-defaultGray/20">
 										<ClockIcon size={20} color={config.theme.extend.colors.primaryLight} />

@@ -24,3 +24,8 @@ export async function createReservationQuery(params: Omit<Reservation, "id" | "c
 	});
 	return response.data;
 }
+
+export async function deleteReservationQuery(reservationId: Reservation["id"]) {
+	const response = await api.delete(`/api/reservations/${reservationId}`);
+	return response.data;
+}
