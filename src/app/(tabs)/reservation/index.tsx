@@ -73,82 +73,82 @@ export default function Page() {
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Réservation de bureaux" />
 
-					<Calendar
-						firstDay={1}
-						className="m-0 mt-5 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
-						onDayPress={(day) => {
-							setSelectedDate(day.dateString);
-						}}
-						renderArrow={(direction) => (
-							<>
-								{direction === "left" ? (
-									<ArrowLeftIcon size={20} color={config.theme.extend.colors.backgroundChat} />
-								) : (
-									<ArrowRightIcon size={20} color={config.theme.extend.colors.backgroundChat} />
-								)}
-							</>
-						)}
-						headerStyle={{
-							borderBottomWidth: 1,
-							borderBottomColor: config.theme.extend.colors.primaryUltraLight,
-							marginBottom: 10,
-							paddingBottom: 10,
-						}}
-						theme={{
-							// Header text color (month/year)
-							monthTextColor: config.theme.extend.colors.primary,
-							// Arrow colors
-							arrowColor: config.theme.extend.colors.backgroundChat,
-							// Day names color (Mon, Tue, etc.)
-							textSectionTitleColor: config.theme.extend.colors.backgroundChat,
+					<ScrollView
+						showsVerticalScrollIndicator={false}
+						contentContainerStyle={{ paddingBottom: 80 }}
+						className="mt-5"
+					>
+						<Calendar
+							firstDay={1}
+							className="m-0 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
+							onDayPress={(day) => {
+								setSelectedDate(day.dateString);
+							}}
+							renderArrow={(direction) => (
+								<>
+									{direction === "left" ? (
+										<ArrowLeftIcon size={20} color={config.theme.extend.colors.backgroundChat} />
+									) : (
+										<ArrowRightIcon size={20} color={config.theme.extend.colors.backgroundChat} />
+									)}
+								</>
+							)}
+							headerStyle={{
+								borderBottomWidth: 1,
+								borderBottomColor: config.theme.extend.colors.primaryUltraLight,
+								marginBottom: 10,
+								paddingBottom: 10,
+							}}
+							theme={{
+								// Header text color (month/year)
+								monthTextColor: config.theme.extend.colors.primary,
+								// Arrow colors
+								arrowColor: config.theme.extend.colors.backgroundChat,
+								// Day names color (Mon, Tue, etc.)
+								textSectionTitleColor: config.theme.extend.colors.backgroundChat,
 
-							// Day text color
-							dayTextColor: config.theme.extend.colors.backgroundChat,
-							// Today's text color
-							todayTextColor: config.theme.extend.colors.dark,
-							// Header font weight
-							textMonthFontWeight: "bold",
-							// Day names font weight
-							textDayHeaderFontWeight: "400",
-							textDayStyle: {
-								color: config.theme.extend.colors.primary,
-								fontWeight: "400",
-							},
-							// inactiv out of month dates
-							textDisabledColor: config.theme.extend.colors.lightGray,
-						}}
-						markingType={"custom"}
-						markedDates={{
-							...reservations,
-							[selectedDate]: {
-								selected: true,
-								marked: !!reservations[selectedDate],
-								disableTouchEvent: true,
-								dotColor: config.theme.extend.colors.pink,
-								customStyles: {
-									container: {
-										backgroundColor: config.theme.extend.colors.primary,
-										padding: 0,
-										borderRadius: 6,
-									},
-									text: {
-										fontSize: 14,
-										paddingBottom: 1,
-										color: "#fff",
-										fontWeight: "regular",
+								// Day text color
+								dayTextColor: config.theme.extend.colors.backgroundChat,
+								// Today's text color
+								todayTextColor: config.theme.extend.colors.dark,
+								// Header font weight
+								textMonthFontWeight: "bold",
+								// Day names font weight
+								textDayHeaderFontWeight: "400",
+								textDayStyle: {
+									color: config.theme.extend.colors.primary,
+									fontWeight: "400",
+								},
+								// inactiv out of month dates
+								textDisabledColor: config.theme.extend.colors.lightGray,
+							}}
+							markingType={"custom"}
+							markedDates={{
+								...reservations,
+								[selectedDate]: {
+									selected: true,
+									marked: !!reservations[selectedDate],
+									disableTouchEvent: true,
+									dotColor: config.theme.extend.colors.pink,
+									customStyles: {
+										container: {
+											backgroundColor: config.theme.extend.colors.primary,
+											padding: 0,
+											borderRadius: 6,
+										},
+										text: {
+											fontSize: 14,
+											paddingBottom: 1,
+											color: "#fff",
+											fontWeight: "regular",
+										},
 									},
 								},
-							},
-						}}
-					/>
+							}}
+						/>
 
-					{!!reservationsByDate.length && (
-						<ScrollView
-							showsVerticalScrollIndicator={false}
-							contentContainerStyle={{ paddingBottom: 16 }}
-							className="mt-4"
-						>
-							<View className="gap-2 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
+						{!!reservationsByDate.length && (
+							<View className="mt-4 gap-2 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
 								<Text className="font-semibold text-xl text-primary">Créneaux réservés</Text>
 								{reservationsByDate.map((reservation) => (
 									<Link
@@ -204,38 +204,38 @@ export default function Page() {
 									</Link>
 								))}
 							</View>
-						</ScrollView>
-					)}
+						)}
+					</ScrollView>
 
 					{selectedDate && (
-						<TouchableOpacityAnimated
-							onPress={() => {
-								router.push({
-									pathname: "/(tabs)/reservation/[date]",
-									params: {
-										date: selectedDate,
-									},
-								});
-							}}
-							entering={() => {
-								"worklet";
-								return {
-									initialValues: {
-										transform: [{ translateY: 100 }],
-										opacity: 0,
-									},
-									animations: {
-										transform: [{ translateY: withSpring(0, { damping: 16, stiffness: 140 }) }],
-										opacity: withTiming(1, { duration: 300 }),
-									},
-								};
-							}}
-							className="absolute bottom-5 left-0 right-0 mx-5 flex-row items-center justify-center gap-2 rounded-xl bg-primary p-3"
-						>
-							<Calendar1Icon size={20} color={"#fff"} />
-							<Text className="text-center font-semibold text-lg text-white">Réserver un bureau</Text>
-						</TouchableOpacityAnimated>
-					)}
+							<TouchableOpacityAnimated
+								onPress={() => {
+									router.push({
+										pathname: "/(tabs)/reservation/[date]",
+										params: {
+											date: selectedDate,
+										},
+									});
+								}}
+								entering={() => {
+									"worklet";
+									return {
+										initialValues: {
+											transform: [{ translateY: 100 }],
+											opacity: 0,
+										},
+										animations: {
+											transform: [{ translateY: withSpring(0, { damping: 16, stiffness: 140 }) }],
+											opacity: withTiming(1, { duration: 300 }),
+										},
+									};
+								}}
+								className="absolute bottom-5 left-0 right-0 mx-5 flex-row items-center justify-center gap-2 rounded-xl bg-primary p-3"
+							>
+								<Calendar1Icon size={20} color={"#fff"} />
+								<Text className="text-center font-semibold text-lg text-white">Réserver un bureau</Text>
+							</TouchableOpacityAnimated>
+						)}
 				</BackgroundLayout>
 			);
 		},
