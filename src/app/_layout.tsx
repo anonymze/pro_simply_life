@@ -12,6 +12,7 @@ import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
+import { PortalHost } from '@rn-primitives/portal';
 import * as Sentry from "@sentry/react-native";
 import { queryClient } from "@/api/_queries";
 import { StatusBar } from "expo-status-bar";
@@ -137,6 +138,7 @@ const Layout = () => {
 							<Stack.Screen name="(tabs)" />
 							<Stack.Screen name="login" />
 						</Stack>
+						<PortalHost />
 						{/* </SafeAreaProvider> */}
 					</KeyboardProvider>
 				</BottomSheetModalProvider>

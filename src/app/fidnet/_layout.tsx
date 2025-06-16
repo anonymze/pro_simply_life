@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 import { Stack } from "expo-router";
 
 
-export default function EventLayout() {
+export default function FidnetLayout() {
 	return (
 		<Stack
 			screenOptions={{
@@ -16,12 +16,13 @@ export default function EventLayout() {
 		>
 			<Stack.Screen name="index" />
 			<Stack.Screen
+				name="[fidnet]"
 				options={{
 					presentation: "modal",
+					sheetGrabberVisible: true,
 					header: () => (Platform.OS === "ios" ? <HeaderGrabberIos /> : <HeaderLayout />),
 					headerShown: true,
 				}}
-				name="[event]"
 			/>
 		</Stack>
 	);

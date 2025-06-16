@@ -58,7 +58,7 @@ export default function Page() {
 				<Title title="Newsletter" />
 				<Link
 					href={{
-						pathname: "/",
+						pathname: "/fundesys",
 					}}
 					push
 					asChild

@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 import { Stack } from "expo-router";
 
 
-export default function OrganigrammeLayout() {
+export default function ReservationLayout() {
 	return (
 		<Stack
 			screenOptions={{

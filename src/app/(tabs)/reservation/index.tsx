@@ -69,8 +69,6 @@ export default function Page() {
 				return data?.docs.filter((reservation) => reservation.day_reservation.split("T")[0] === selectedDate);
 			}, [data, selectedDate]);
 
-			console.log(reservationsByDate);
-
 			return (
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Réservation de bureaux" />

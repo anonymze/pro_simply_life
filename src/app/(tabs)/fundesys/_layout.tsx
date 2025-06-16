@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 import { Stack } from "expo-router";
 
 
-export default function EventLayout() {
+export default function FundesysLayout() {
 	return (
 		<Stack
 			screenOptions={{
@@ -16,12 +16,13 @@ export default function EventLayout() {
 		>
 			<Stack.Screen name="index" />
 			<Stack.Screen
+				name="[fundesys]"
 				options={{
 					presentation: "modal",
+					sheetGrabberVisible: true,
 					header: () => (Platform.OS === "ios" ? <HeaderGrabberIos /> : <HeaderLayout />),
 					headerShown: true,
 				}}
-				name="[event]"
 			/>
 		</Stack>
 	);
