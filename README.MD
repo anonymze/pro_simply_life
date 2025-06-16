@@ -170,9 +170,11 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 
-channel + push notifs + deep link + traduction
+
 Unit tests
 reset expiration token on success
 rester appuyer pour copier coller un text (numéros de tels)
 
 webrtc ? for sharing files for chat ?
+
+deep link + traduction + réservation bureau outlook + statistiques commissions + bloc note

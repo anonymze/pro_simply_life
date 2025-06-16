@@ -16,6 +16,15 @@ export default function ReservationLayout() {
 		>
 			<Stack.Screen name="index" />
 			<Stack.Screen
+				name="details/[details]"
+				options={{
+					presentation: "modal",
+					sheetGrabberVisible: true,
+					header: () => (Platform.OS === "ios" ? <HeaderGrabberIos /> : <HeaderLayout />),
+					headerShown: true,
+				}}
+			/>
+			<Stack.Screen
 				name="[date]"
 				options={{
 					presentation: "modal",

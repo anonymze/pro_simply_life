@@ -1,7 +1,7 @@
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { BuildingIcon, Calendar1Icon, ChevronDownIcon, ClockIcon } from "lucide-react-native";
 import Animated, { FadeInDown, FadeOut, runOnJS } from "react-native-reanimated";
-import { createReservation } from "@/api/queries/reservation-queries";
+import { createReservationQuery } from "@/api/queries/reservation-queries";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import BackgroundLayout from "@/layouts/background-layout";
 import SelectDropdown from "react-native-select-dropdown";
@@ -54,7 +54,7 @@ export default function Page() {
 	const userInfos = getStorageUserInfos();
 
 	const mutation = useMutation({
-		mutationFn: createReservation,
+		mutationFn: createReservationQuery,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["reservations"], (prev: PaginatedResponse<Reservation>) => {
 				return {

@@ -11,13 +11,13 @@ export async function getReservationsQuery({ queryKey }: { queryKey: QueryKey })
 	return response.data;
 }
 
-export async function getReservation({ queryKey }: { queryKey: QueryKey }) {
+export async function getReservationQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, reservationId] = queryKey;
 	const response = await api.get<Reservation>(`/api/reservations/${reservationId}`);
 	return response.data;
 }
 
-export async function createReservation(params: Omit<Reservation, "id" | "createdAt" | "updatedAt"> ) {
+export async function createReservationQuery(params: Omit<Reservation, "id" | "createdAt" | "updatedAt"> ) {
 	const response = await api.post("/api/reservations", {
 		...params,
 		app_user: params.app_user.id,
