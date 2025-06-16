@@ -40,14 +40,12 @@ export default function Page() {
 	const leaveChatRoom = useMutation({
 		mutationFn: leaveChatRoomQuery,
 		onSuccess: () => {
-			if (isOwner) {
 				queryClient.setQueryData(["chat-rooms"], (old: PaginatedResponse<ChatRoom>) => {
 					return {
 						...old,
 						docs: old.docs.filter((chatRoom) => chatRoom.id !== chatId),
 					};
 				});
-			}
 			router.back();
 			router.back();
 		},
