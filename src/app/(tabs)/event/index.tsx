@@ -81,7 +81,7 @@ export default function Page() {
 			return (
 				<BackgroundLayout className="pt-safe px-4">
 					<View className="iems-center flex-row justify-between">
-						<Title title="Évènements Groupe Valorem" />
+						<Title title="Évènements agence" />
 						<Picker
 							style={{
 								width: 90,

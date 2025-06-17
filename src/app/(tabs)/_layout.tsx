@@ -92,6 +92,14 @@ export default function AppLayout() {
 					}}
 				/>
 				<Tabs.Screen
+					name="commissions"
+					options={{
+						title: "Commissions",
+						headerShown: false,
+						href: null,
+					}}
+				/>
+				<Tabs.Screen
 					name="event"
 					options={{
 						title: "Réservation",
