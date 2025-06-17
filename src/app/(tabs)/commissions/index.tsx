@@ -1,5 +1,6 @@
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardNewsletter from "@/components/card/card-newsletter";
+import CardCommission from "@/components/card/card-commission";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { getFidnetsQuery } from "@/api/queries/fidnet";
@@ -30,7 +31,6 @@ export default function Page() {
 					.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 					.reduce((acc, fidnet) => {
 						const date = new Date(fidnet.date).toLocaleDateString("fr-FR", {
-							month: "long",
 							year: "numeric",
 						});
 
@@ -51,22 +51,13 @@ export default function Page() {
 				}
 
 				return (
-					<CardNewsletter
-						queryKey="fidnet"
-						icon={
-							<ImagePlaceholder
-								transition={0}
-								contentFit="contain"
-								source={require("@/assets/icons/fidnet.svg")}
-								style={{ width: 36, height: 36, borderRadius: 4 }}
-							/>
-						}
+					<CardCommission
 						key={item.id}
-						newsletter={item}
+						commission={item}
 						link={{
-							pathname: `/fidnet/[fidnet]`,
+							pathname: `/commissions/[commission]`,
 							params: {
-								fidnet: item.id,
+								commission: item.id,
 							},
 						}}
 					/>
@@ -75,8 +66,7 @@ export default function Page() {
 
 			return (
 				<BackgroundLayout className="pt-safe px-4">
-					<Title title="Fidnet" />
-					<Text className="mb-5 text-sm text-defaultGray">Newsletter hebdomadaire</Text>
+					<Title title="Mes commissions" />
 
 					<FlashList
 						data={flatData}

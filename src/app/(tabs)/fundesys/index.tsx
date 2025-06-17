@@ -1,81 +1,93 @@
-import { getFundesysesQuery, getFundesysQuery } from "@/api/queries/fundesys";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardNewsletter from "@/components/card/card-newsletter";
 import { withQueryWrapper } from "@/utils/libs/react-query";
+import { getFundesysesQuery } from "@/api/queries/fundesys";
 import BackgroundLayout from "@/layouts/background-layout";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
 
 
+interface FlatListItem {
+	type: "header" | "item";
+	date?: string;
+	[key: string]: any;
+}
+
 export default function Page() {
 	return withQueryWrapper(
 		{
-			queryKey: ["fundesyses"],
+			queryKey: ["fundesys"],
 			queryFn: getFundesysesQuery,
 		},
 		({ data }) => {
-			// sort and group suppliers by first letter
-			const groupedFundesys = React.useMemo(
-				() =>
-					data.docs
-						.slice()
-						.sort((a, b) => (a.date > b.date ? -1 : 1))
-						.reduce(
-							(acc, fundesys) => {
-								const date = new Date(fundesys.date).toLocaleDateString("fr-FR", {
-									month: "long",
-									year: "numeric",
-								});
-								if (!acc[date]) acc[date] = [];
-								acc[date].push(fundesys);
-								return acc;
+			// Convert grouped data to flat array for FlatList
+			const flatData = React.useMemo(() => {
+				const addedDates = new Set<string>();
+
+				return data.docs
+					.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+					.reduce((acc, fidnet) => {
+						const date = new Date(fidnet.date).toLocaleDateString("fr-FR", {
+							month: "long",
+							year: "numeric",
+						});
+
+						if (!addedDates.has(date)) {
+							acc.push({ type: "header", date });
+							addedDates.add(date);
+						}
+
+						acc.push({ type: "item", ...fidnet });
+
+						return acc;
+					}, [] as FlatListItem[]);
+			}, [data]);
+
+			const renderItem = ({ item }: { item: any }) => {
+				if (item.type === "header") {
+					return <Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{item.date}</Text>;
+				}
+
+				return (
+					<CardNewsletter
+						queryKey="fundesys"
+						icon={
+							<ImagePlaceholder
+								transition={0}
+								contentFit="contain"
+								source={require("@/assets/images/fundesys.png")}
+								style={{ width: 36, height: 36, borderRadius: 4 }}
+							/>
+						}
+						key={item.id}
+						newsletter={item}
+						link={{
+							pathname: `/fundesys/[fundesys]`,
+							params: {
+								fundesys: item.id,
 							},
-							{} as Record<string, typeof data.docs>,
-						),
-				[data],
-			);
+						}}
+					/>
+				);
+			};
 
 			return (
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Fundesys" />
 					<Text className="mb-5 text-sm text-defaultGray">Newsletter hebdomadaire</Text>
 
-					<ScrollView
-						className="flex-1"
+					<FlashList
+						data={flatData}
+						renderItem={renderItem}
+						estimatedItemSize={100}
+						keyExtractor={(item) => (item.type === "header" ? item.date : item.id)}
 						showsVerticalScrollIndicator={false}
-						style={{ backgroundColor: config.theme.extend.colors.background }}
 						contentContainerStyle={{ paddingBottom: 10 }}
-					>
-						<View className="gap-2">
-							{Object.keys(groupedFundesys).map((date) => (
-								<View key={date} className="gap-2">
-									<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{date}</Text>
-									{groupedFundesys[date].map((fundesys) => (
-										<CardNewsletter
-											queryKey="fundesys"
-											icon={
-												<ImagePlaceholder
-													transition={0}
-													source={require("@/assets/images/fundesys.png")}
-													style={{ width: "100%", height: "100%", borderRadius: 5 }}
-												/>
-											}
-											key={fundesys.id}
-											newsletter={fundesys}
-											link={{
-												pathname: `/fundesys/[fundesys]`,
-												params: {
-													fundesys: fundesys.id,
-												},
-											}}
-										/>
-									))}
-								</View>
-							))}
-						</View>
-					</ScrollView>
+						ItemSeparatorComponent={() => <View className="h-2.5" />}
+					/>
 				</BackgroundLayout>
 			);
 		},

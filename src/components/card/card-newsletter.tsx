@@ -32,6 +32,7 @@ export default function CardNewsletter({
 			>
 				<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">{icon}</View>
 				<View className="flex-1">
+					<Text className=" text-sm text-primaryLight mb-1">Newsletter</Text>
 					<Text className="font-semibold text-lg text-primary">
 						{new Date(newsletter.date).toLocaleDateString("fr-FR", {
 							day: "numeric",

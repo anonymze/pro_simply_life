@@ -156,8 +156,8 @@ const links: {
 	{
 		icon: <ReceiptFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
 		title: "Commissions",
-		description: "Carte",
-		link: "/",
+		description: "Commissions",
+		link: "/(tabs)/commissions",
 		backgroundIcon: "bg-[#E0EAFF]",
 	},
 
