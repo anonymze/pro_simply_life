@@ -90,13 +90,13 @@ export default function Page() {
 				<BackgroundLayout className="pt-safe">
 					<View className="flex-row items-center justify-between px-4">
 						<Title title="Messages" />
-						{userHierarchy[userInfos?.user.role ?? "visitor"] < 2 && (
-							<Link href="/chat/new-room" asChild>
-								<TouchableOpacity className="rounded-full bg-darkGray p-2.5">
-									<PlusIcon size={18} color={config.theme.extend.colors.primary} />
-								</TouchableOpacity>
-							</Link>
-						)}
+						{/* {userHierarchy[userInfos?.user.role ?? "visitor"] < 2 && ( */}
+						<Link href="/chat/new-room" asChild>
+							<TouchableOpacity className="rounded-full bg-darkGray p-2.5">
+								<PlusIcon size={18} color={config.theme.extend.colors.primary} />
+							</TouchableOpacity>
+						</Link>
+						{/* )} */}
 					</View>
 					{data.docs.length === 0 && (
 						<View className="flex-1 items-center justify-center">
