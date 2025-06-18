@@ -134,7 +134,7 @@ export default function Page() {
 		refetchInterval: () => {
 			// pause refetching while a message is being sent
 			if (mutationMessages.isPending || mutationMessagesFile.isPending) return false;
-			return 7000;
+			return 700000;
 		},
 	});
 

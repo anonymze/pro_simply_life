@@ -1,6 +1,7 @@
 import { CheckCheckIcon, CheckIcon, DownloadIcon, FileIcon } from "lucide-react-native";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import * as ContextMenu from "zeego/context-menu";
+import { downloadFile } from "@/utils/download";
 import { i18n } from "@/i18n/translations";
 import { Message } from "@/types/chat";
 import { AppUser } from "@/types/user";
@@ -105,7 +106,25 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 									/>
 								) : (
 									<ContextMenu.Root>
-											<ContextMenu.Trigger>
+										<ContextMenu.Trigger>
+											<View style={styles.image} className="relative items-center justify-center gap-2">
+												<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
+												<DownloadIcon
+													size={20}
+													color={me ? "#fff" : config.theme.extend.colors.primaryLight}
+													style={{ position: "absolute", top: 10, right: 10 }}
+												/>
+												{"filename" in item.file && (
+													<Text
+														className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}
+													>
+														{item.file.filename}
+													</Text>
+												)}
+											</View>
+										</ContextMenu.Trigger>
+										<ContextMenu.Content>
+											<ContextMenu.Preview>
 												<View style={styles.image} className="relative items-center justify-center gap-2">
 													<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
 													<DownloadIcon
@@ -121,43 +140,32 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 														</Text>
 													)}
 												</View>
-											</ContextMenu.Trigger>
-											<ContextMenu.Content>
-												<ContextMenu.Preview>
-													<View style={styles.image} className="relative items-center justify-center gap-2">
-														<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
-														<DownloadIcon
-															size={20}
-															color={me ? "#fff" : config.theme.extend.colors.primaryLight}
-															style={{ position: "absolute", top: 10, right: 10 }}
-														/>
-														{"filename" in item.file && (
-															<Text
-																className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}
-															>
-																{item.file.filename}
-															</Text>
-														)}
-													</View>
-												</ContextMenu.Preview>
-												<ContextMenu.Item key="download" onSelect={async () => {}}>
-													<ContextMenu.ItemTitle>{i18n[languageCode]("DOWNLOAD")}</ContextMenu.ItemTitle>
-													<ContextMenu.ItemIcon
-														// androidIconName="arrow_down_float"
-														ios={{
-															name: "arrow.down",
-															pointSize: 15,
-															weight: "semibold",
-															paletteColors: [
-																{
-																	dark: config.theme.extend.colors.primaryLight,
-																	light: config.theme.extend.colors.primaryLight,
-																},
-															],
-														}}
-													/>
-												</ContextMenu.Item>
-											</ContextMenu.Content>
+											</ContextMenu.Preview>
+											<ContextMenu.Item
+												key="download"
+												onSelect={async () => {
+													if (item?.file && "url" in item.file && item.file.url) {
+														await downloadFile(item.file.url);
+													}
+												}}
+											>
+												<ContextMenu.ItemTitle>{i18n[languageCode]("DOWNLOAD")}</ContextMenu.ItemTitle>
+												<ContextMenu.ItemIcon
+													// androidIconName="arrow_down_float"
+													ios={{
+														name: "arrow.down",
+														pointSize: 15,
+														weight: "semibold",
+														paletteColors: [
+															{
+																dark: config.theme.extend.colors.primaryLight,
+																light: config.theme.extend.colors.primaryLight,
+															},
+														],
+													}}
+												/>
+											</ContextMenu.Item>
+										</ContextMenu.Content>
 									</ContextMenu.Root>
 								)}
 							</>
