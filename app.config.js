@@ -33,6 +33,9 @@ export default {
 			bundleIdentifier: "com.anonymze.simplylife",
 			associatedDomains: ["applinks:simply-life.expo.app"],
 			CFBundleAllowMixedLocalizations: true,
+			infoPlist: {
+				ITSAppUsesNonExemptEncryption: false,
+			},
 			// entitlements: {
 			// 	"com.apple.security.application-groups": ["group.com.anonymze.simplylife"],
 			// },

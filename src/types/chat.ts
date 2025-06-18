@@ -1,3 +1,4 @@
+import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 
 import { Media } from "./media";
@@ -31,7 +32,7 @@ export interface MessageOptimistic {
 	app_user: User;
 	chat_room: Message["chat_room"];
 	message?: Message["message"];
-	file?: ImagePicker.ImagePickerAsset[];
+	file?: (ImagePicker.ImagePickerAsset | DocumentPicker.DocumentPickerAsset)[];
 	createdAt: Message["createdAt"];
 	optimistic: true;
 }

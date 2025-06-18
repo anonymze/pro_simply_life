@@ -223,12 +223,22 @@ export default function Page() {
 	const pickFile = React.useCallback(async () => {
 		let result = await DocumentPicker.getDocumentAsync({
 			multiple: true,
-			type: ["&ast;/*"],
+			type: ["*/*"],
 		});
 
 		if (result.canceled) return;
 
-		console.log(result);
+		mutationMessagesFile.mutate({
+			// id is set later (to have differents ids for each file)
+			id: "",
+			app_user: appUser.user,
+			chat_room: chatId,
+			// following the order of the files selected
+			file: result.assets.reverse(),
+			createdAt: new Date().toISOString(),
+			// we flag it to show it as a pending message
+			optimistic: true,
+		});
 	}, []);
 
 	const animatedStyle = useAnimatedStyle(() => {
