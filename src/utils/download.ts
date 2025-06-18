@@ -4,12 +4,10 @@ import * as Sharing from "expo-sharing";
 
 const destination = new Directory(Paths.document, "simply-life");
 
-const downloadFile = async (url: string, mimeType: string | undefined) => {
+const downloadFile = async (url: string, filename: string, mimeType: string | undefined) => {
 	try {
 		console.log("downloadFile", url);
 
-		// Extract filename from URL
-		const filename = url.split("/").pop() || "downloaded-file";
 		const existingFile = new File(destination, filename);
 
 		if (existingFile.exists) {
