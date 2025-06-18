@@ -6,8 +6,6 @@ const destination = new Directory(Paths.document, "simply-life");
 
 const downloadFile = async (url: string, filename: string, mimeType: string | undefined) => {
 	try {
-		console.log("downloadFile", url);
-
 		const existingFile = new File(destination, filename);
 
 		if (existingFile.exists) {
@@ -19,7 +17,6 @@ const downloadFile = async (url: string, filename: string, mimeType: string | un
 
 		const result = await File.downloadFileAsync(url, destination);
 
-		// Share the newly downloaded file
 		await shareFile(result.uri, mimeType);
 
 		return result;
@@ -37,7 +34,7 @@ const shareFile = async (uri: File["uri"], mimeType: string | undefined) => {
 	if (await Sharing.isAvailableAsync()) {
 		await Sharing.shareAsync(uri, {
 			mimeType: mimeType,
-			dialogTitle: "Save file",
+			dialogTitle: "Sauvegarder le fichier",
 		});
 	}
 };
