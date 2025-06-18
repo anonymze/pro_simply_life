@@ -40,14 +40,11 @@ export const createMessageWithFilesQuery = async ({ file, app_user, chat_room }:
 
 	if (!file) throw new Error("No file provided");
 
-	console.log("icicicicicici");
-	console.log(file);
-
 	file.forEach((file) => {
 		formData.append("file", {
 			uri: file?.uri,
-			name: "filename" in file ? file.filename : "fichier",
-			type: file?.mimeType ?? undefined,
+			name: "fileName" in file ? file.fileName : "name" in file ? file.name : "file",
+			type: file?.mimeType,
 		} as any);
 	});
 

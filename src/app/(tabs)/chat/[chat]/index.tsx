@@ -228,8 +228,6 @@ export default function Page() {
 
 		if (result.canceled) return;
 
-		console.log("result", result);
-
 		mutationMessagesFile.mutate({
 			// id is set later (to have differents ids for each file)
 			id: "",
