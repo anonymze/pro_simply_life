@@ -275,7 +275,7 @@ export default function Page() {
 							// drawDistance={300}
 							keyExtractor={(item) => item.id}
 							showsVerticalScrollIndicator={false}
-							data={[messages[0]]}
+							data={[messages]}
 							inverted={true}
 							estimatedItemSize={50}
 							renderItem={({ item, index }) => {
