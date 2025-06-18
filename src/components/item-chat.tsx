@@ -1,5 +1,5 @@
 import { CheckCheckIcon, CheckIcon, DownloadIcon, FileIcon } from "lucide-react-native";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
 import * as ContextMenu from "zeego/context-menu";
 import { downloadFile } from "@/utils/download";
 import { i18n } from "@/i18n/translations";
@@ -145,9 +145,14 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 												key="download"
 												onSelect={async () => {
 													if (item?.file && "url" in item.file && item.file.url) {
-														downloadFile(item.file.url)
+														downloadFile(item.file.url, item.file.mimeType ?? undefined)
 															.then((res) => {})
-															.catch((error) => {});
+															.catch((error) => {
+																Alert.alert(
+																	"Erreur",
+																	"Il est possible que vous n'ayez plus d'espace de stockage sur votre appareil ou que vous n'ayez pas les permissions nécessaires pour télécharger le fichier",
+																);
+															});
 													}
 												}}
 											>

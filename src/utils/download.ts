@@ -1,11 +1,33 @@
 import { Directory, File, Paths } from "expo-file-system/next";
+import * as Sharing from "expo-sharing";
 
 
-const destination = new Directory(Paths.document);
+const destination = new Directory(Paths.document, "simply-life");
 
-const downloadFile = async (url: string) => {
-	if (!destination.exists) destination.create();
-	return File.downloadFileAsync(url, destination);
+const downloadFile = async (url: string, mimeType: string | undefined) => {
+	try {
+		console.log("downloadFile", url);
+
+		// Extract filename from URL
+		const filename = url.split("/").pop() || "downloaded-file";
+		const existingFile = new File(destination, filename);
+
+		if (existingFile.exists) {
+			await shareFile(existingFile.uri, mimeType);
+			return existingFile;
+		}
+
+		if (!destination.exists) destination.create();
+
+		const result = await File.downloadFileAsync(url, destination);
+
+		// Share the newly downloaded file
+		await shareFile(result.uri, mimeType);
+
+		return result;
+	} catch (error) {
+		throw error;
+	}
 };
 
 const getFile = (filename: string) => {
@@ -13,4 +35,13 @@ const getFile = (filename: string) => {
 	return file;
 };
 
-export { downloadFile, getFile };
+const shareFile = async (uri: File["uri"], mimeType: string | undefined) => {
+	if (await Sharing.isAvailableAsync()) {
+		await Sharing.shareAsync(uri, {
+			mimeType: mimeType,
+			dialogTitle: "Save file",
+		});
+	}
+};
+
+export { downloadFile, getFile, shareFile };
