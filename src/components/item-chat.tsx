@@ -1,18 +1,14 @@
 import { CheckCheckIcon, CheckIcon, DownloadIcon, FileIcon } from "lucide-react-native";
-import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
-import { Directory, Paths } from "expo-file-system/next";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import * as ContextMenu from "zeego/context-menu";
+import { i18n } from "@/i18n/translations";
 import { Message } from "@/types/chat";
 import { AppUser } from "@/types/user";
 import config from "tailwind.config";
 import { I18n } from "@/types/i18n";
 import { Image } from "expo-image";
 import { cn } from "@/utils/cn";
-import React from "react";
 
-
-// const destination = new Directory(Paths.cache, "simply-life");
-// const widthWindow = Dimensions.get("window").width;
-// const heightWindow = Dimensions.get("window").height;
 
 type ItemProps = {
 	firstMessage: boolean;
@@ -28,7 +24,6 @@ type ItemProps = {
 export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }: ItemProps) => {
 	const me = item.app_user.id === appUser?.user.id;
 	const optimistic = "optimistic" in item ? true : false;
-	const [open, setOpen] = React.useState(false);
 
 	return (
 		<View
@@ -49,6 +44,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 					style={{ width: 30, height: 30, borderRadius: 99 }}
 				/>
 			)}
+
 			<View
 				className={cn(
 					"flex-shrink flex-row gap-3 rounded-bl-xl rounded-tr-xl p-2.5",
@@ -108,19 +104,61 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 										style={styles.image}
 									/>
 								) : (
-									<View style={styles.image} className="relative items-center justify-center gap-2">
-										<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
-										<DownloadIcon
-											size={20}
-											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
-											style={{ position: "absolute", top: 10, right: 10 }}
-										/>
-										{"filename" in item.file && (
-											<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
-												{item.file.filename}
-											</Text>
-										)}
-									</View>
+									<ContextMenu.Root>
+											<ContextMenu.Trigger>
+												<View style={styles.image} className="relative items-center justify-center gap-2">
+													<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
+													<DownloadIcon
+														size={20}
+														color={me ? "#fff" : config.theme.extend.colors.primaryLight}
+														style={{ position: "absolute", top: 10, right: 10 }}
+													/>
+													{"filename" in item.file && (
+														<Text
+															className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}
+														>
+															{item.file.filename}
+														</Text>
+													)}
+												</View>
+											</ContextMenu.Trigger>
+											<ContextMenu.Content>
+												<ContextMenu.Preview>
+													<View style={styles.image} className="relative items-center justify-center gap-2">
+														<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
+														<DownloadIcon
+															size={20}
+															color={me ? "#fff" : config.theme.extend.colors.primaryLight}
+															style={{ position: "absolute", top: 10, right: 10 }}
+														/>
+														{"filename" in item.file && (
+															<Text
+																className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}
+															>
+																{item.file.filename}
+															</Text>
+														)}
+													</View>
+												</ContextMenu.Preview>
+												<ContextMenu.Item key="download" onSelect={async () => {}}>
+													<ContextMenu.ItemTitle>{i18n[languageCode]("DOWNLOAD")}</ContextMenu.ItemTitle>
+													<ContextMenu.ItemIcon
+														// androidIconName="arrow_down_float"
+														ios={{
+															name: "arrow.down",
+															pointSize: 15,
+															weight: "semibold",
+															paletteColors: [
+																{
+																	dark: config.theme.extend.colors.primaryLight,
+																	light: config.theme.extend.colors.primaryLight,
+																},
+															],
+														}}
+													/>
+												</ContextMenu.Item>
+											</ContextMenu.Content>
+									</ContextMenu.Root>
 								)}
 							</>
 						)
