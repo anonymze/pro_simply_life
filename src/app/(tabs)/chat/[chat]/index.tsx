@@ -282,7 +282,6 @@ export default function Page() {
 								const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
 								const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
 
-								console.log(item);
 								return (
 									<Item
 										key={item.id}
