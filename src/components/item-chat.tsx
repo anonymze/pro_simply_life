@@ -1,5 +1,5 @@
+import { CheckCheckIcon, CheckIcon, CloudDownloadIcon, CloudUploadIcon, DownloadIcon, FileIcon, } from "lucide-react-native";
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
-import { CheckCheckIcon, CheckIcon } from "lucide-react-native";
 import { Directory, File, Paths } from "expo-file-system/next";
 import * as ContextMenu from "zeego/context-menu";
 import { i18n } from "@/i18n/translations";
@@ -80,8 +80,12 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 										style={styles.image}
 									/>
 								) : (
-									<View style={styles.image} className="items-center justify-center">
-										<Text className="text-center text-white">{i18n[languageCode]("FILE_NOT_SUPPORTED")}</Text>
+									<View style={styles.image} className="relative items-center justify-center">
+										<DownloadIcon
+											size={20}
+											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
+											style={{ position: "absolute", top: 10, right: 10 }}
+										/>
 									</View>
 								)}
 								<ActivityIndicator
@@ -99,93 +103,6 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 								/>
 							</>
 						) : (
-							// <ContextMenu.Root onOpenChange={setOpen}>
-							// 	<ContextMenu.Trigger>
-							// 		<>
-							// 			{item.file.mimeType?.startsWith("image") ? (
-							// 				<Image
-							// 					// @ts-ignore
-							// 					placeholder={item.file.blurhash}
-							// 					placeholderContentFit="cover"
-							// 					// @ts-ignore
-							// 					source={item.file.url}
-							// 					transition={300}
-							// 					contentFit="cover"
-							// 					style={styles.image}
-							// 				/>
-							// 			) : // TODO: add video
-							// 			item.file.mimeType?.startsWith("image") ? (
-							// 				<Image
-							// 					// @ts-ignore
-							// 					placeholder={item.file.blurhash}
-							// 					placeholderContentFit="cover"
-							// 					// @ts-ignore
-							// 					source={item.file.url}
-							// 					transition={300}
-							// 					contentFit="cover"
-							// 					style={styles.image}
-							// 				/>
-							// 			) : (
-							// 				<View style={styles.image} className="items-center justify-center">
-							// 					<Text className="text-center text-white">{i18n[languageCode]("FILE_NOT_SUPPORTED")}</Text>
-							// 				</View>
-							// 			)}
-							// 		</>
-							// 	</ContextMenu.Trigger>
-							// 	<ContextMenu.Content>
-							// 		<ContextMenu.Preview>
-							// 			{item.file.mimeType?.startsWith("image") && (
-							// 				<Image
-							// 					// @ts-ignore
-							// 					source={item.file.url}
-							// 					contentFit="cover"
-							// 					style={{
-							// 						width: widthWindow,
-							// 						height: heightWindow / 1.8,
-							// 						borderRadius: styles.image.borderRadius,
-							// 					}}
-							// 				/>
-							// 			)}
-
-							// 			{item.file.mimeType?.startsWith("video") && (
-							// 				<VideoScreen controls={open} width={widthWindow} height={heightWindow / 1.8} />
-							// 			)}
-							// 		</ContextMenu.Preview>
-							// 		<ContextMenu.Item
-							// 			key="download"
-							// 			onSelect={async () => {
-							// 				if (!item.file || "uri" in item?.file || !item.file.url) return;
-
-							// 				try {
-							// 					if (!destination.exists) destination.create();
-							// 					const output = await File.downloadFileAsync(item.file.url, destination);
-							// 				} catch (error) {
-							// 					console.warn(error);
-							// 					// Alert.alert(
-							// 					// 	i18n[languageCode]("ERROR_GENERIC_PART1"),
-							// 					// 	i18n[languageCode]("ERROR_GENERIC_PART2"),
-							// 					// );
-							// 				}
-							// 			}}
-							// 		>
-							// 			<ContextMenu.ItemTitle>{i18n[languageCode]("DOWNLOAD")}</ContextMenu.ItemTitle>
-							// 			<ContextMenu.ItemIcon
-							// 				// androidIconName="arrow_down_float"
-							// 				ios={{
-							// 					name: "arrow.down",
-							// 					pointSize: 15,
-							// 					weight: "semibold",
-							// 					paletteColors: [
-							// 						{
-							// 							dark: config.theme.extend.colors.primaryLight,
-							// 							light: config.theme.extend.colors.primaryLight,
-							// 						},
-							// 					],
-							// 				}}
-							// 			/>
-							// 		</ContextMenu.Item>
-							// 	</ContextMenu.Content>
-							// </ContextMenu.Root>
 							<>
 								{item.file.mimeType?.startsWith("image") ? (
 									<Image
@@ -198,12 +115,14 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 										transition={300}
 										style={styles.image}
 									/>
-								) : // TODO: add video
-								item.file.mimeType?.startsWith("image") ? (
-									<></>
 								) : (
-									<View style={styles.image} className="items-center justify-center">
-										<Text className="text-center text-white">{i18n[languageCode]("FILE_NOT_SUPPORTED")}</Text>
+									<View style={styles.image} className="relative items-center justify-center">
+										<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
+										<DownloadIcon
+											size={20}
+											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
+											style={{ position: "absolute", top: 10, right: 10 }}
+										/>
 									</View>
 								)}
 							</>
