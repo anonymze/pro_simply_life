@@ -62,7 +62,7 @@ onlineManager.setEventListener((setOnline) => {
 
 // refetch on app focus
 function onAppStateChange(status: AppStateStatus) {
-	console.log("onAppStateChange", status);
+	// console.log("onAppStateChange", status);
 	if (Platform.OS !== "web") {
 		focusManager.setFocused(status === "active");
 	}

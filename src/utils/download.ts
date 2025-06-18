@@ -1,7 +1,7 @@
 import { Directory, File, Paths } from "expo-file-system/next";
 
 
-const destination = new Directory(Paths.document, "simply-life");
+const destination = new Directory(Paths.document);
 
 const downloadFile = async (url: string) => {
 	if (!destination.exists) destination.create();
