@@ -147,13 +147,8 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 													if (item?.file && "url" in item.file && item.file.url) {
 														console.log("download");
 														downloadFile(item.file.url)
-															.then((res) => {
-																console.log(res);
-																console.log("downloaded");
-															})
-															.catch((error) => {
-																console.log(error);
-															});
+															.then((res) => {})
+															.catch((error) => {});
 													}
 												}}
 											>
