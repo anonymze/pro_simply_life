@@ -145,7 +145,15 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 												key="download"
 												onSelect={async () => {
 													if (item?.file && "url" in item.file && item.file.url) {
-														await downloadFile(item.file.url);
+														console.log("download");
+														downloadFile(item.file.url)
+															.then((res) => {
+																console.log(res);
+																console.log("downloaded");
+															})
+															.catch((error) => {
+																console.log(error);
+															});
 													}
 												}}
 											>
