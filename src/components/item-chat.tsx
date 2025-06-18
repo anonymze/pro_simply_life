@@ -80,12 +80,13 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 										style={styles.image}
 									/>
 								) : (
-									<View style={styles.image} className="relative items-center justify-center">
+									<View style={styles.image} className="relative items-center justify-center gap-2">
 										<DownloadIcon
 											size={20}
 											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
 											style={{ position: "absolute", top: 10, right: 10 }}
 										/>
+											<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>{item.file.mimeType}</Text>
 									</View>
 								)}
 								<ActivityIndicator
@@ -116,13 +117,14 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 										style={styles.image}
 									/>
 								) : (
-									<View style={styles.image} className="relative items-center justify-center">
+									<View style={styles.image} className="relative items-center justify-center gap-2">
 										<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
 										<DownloadIcon
 											size={20}
 											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
 											style={{ position: "absolute", top: 10, right: 10 }}
 										/>
+										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>{item.file.mimeType}</Text>
 									</View>
 								)}
 							</>
