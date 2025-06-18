@@ -21,7 +21,7 @@ export interface Message {
 	app_user: User;
 	chat_room: ChatRoom["id"];
 	message?: string;
-	file?: Media | ImagePicker.ImagePickerAsset;
+	file?: Media | ImagePicker.ImagePickerAsset | DocumentPicker.DocumentPickerAsset;
 	createdAt: string;
 	updatedAt: string;
 	optimistic?: boolean;

@@ -1,8 +1,6 @@
-import { CheckCheckIcon, CheckIcon, CloudDownloadIcon, CloudUploadIcon, DownloadIcon, FileIcon, } from "lucide-react-native";
+import { CheckCheckIcon, CheckIcon, DownloadIcon, FileIcon } from "lucide-react-native";
 import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from "react-native";
-import { Directory, File, Paths } from "expo-file-system/next";
-import * as ContextMenu from "zeego/context-menu";
-import { i18n } from "@/i18n/translations";
+import { Directory, Paths } from "expo-file-system/next";
 import { Message } from "@/types/chat";
 import { AppUser } from "@/types/user";
 import config from "tailwind.config";
@@ -11,12 +9,10 @@ import { Image } from "expo-image";
 import { cn } from "@/utils/cn";
 import React from "react";
 
-import VideoScreen from "./video-screen";
 
-
-const destination = new Directory(Paths.cache, "simply-life");
-const widthWindow = Dimensions.get("window").width;
-const heightWindow = Dimensions.get("window").height;
+// const destination = new Directory(Paths.cache, "simply-life");
+// const widthWindow = Dimensions.get("window").width;
+// const heightWindow = Dimensions.get("window").height;
 
 type ItemProps = {
 	firstMessage: boolean;
@@ -33,8 +29,6 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 	const me = item.app_user.id === appUser?.user.id;
 	const optimistic = "optimistic" in item ? true : false;
 	const [open, setOpen] = React.useState(false);
-
-	console.log(item);
 
 	return (
 		<View
@@ -85,7 +79,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 									<View style={styles.image} className="relative items-center justify-center gap-2">
 										<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
 										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
-											{item.file.mimeType}
+											{item.file.filename}
 										</Text>
 									</View>
 								)}
@@ -125,7 +119,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 											style={{ position: "absolute", top: 10, right: 10 }}
 										/>
 										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
-											{item.file.mimeType}
+											{item.file.filename}
 										</Text>
 									</View>
 								)}

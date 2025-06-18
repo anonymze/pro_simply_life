@@ -265,7 +265,6 @@ export default function Page() {
 				<View className="flex-1">
 					{!!messages?.length ? (
 						<FlashList
-							contentContainerStyle={{}}
 							// ListEmptyComponent={() => {
 							// 	return (
 							// 		<View className="flex-1 items-center justify-center">
@@ -276,12 +275,14 @@ export default function Page() {
 							// drawDistance={300}
 							keyExtractor={(item) => item.id}
 							showsVerticalScrollIndicator={false}
-							data={messages}
+							data={[messages[0]]}
 							inverted={true}
 							estimatedItemSize={50}
 							renderItem={({ item, index }) => {
 								const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
 								const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
+
+								console.log(item);
 								return (
 									<Item
 										key={item.id}
