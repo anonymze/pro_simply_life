@@ -34,6 +34,8 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 	const optimistic = "optimistic" in item ? true : false;
 	const [open, setOpen] = React.useState(false);
 
+	console.log(item);
+
 	return (
 		<View
 			className={cn(
@@ -81,12 +83,10 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 									/>
 								) : (
 									<View style={styles.image} className="relative items-center justify-center gap-2">
-										<DownloadIcon
-											size={20}
-											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
-											style={{ position: "absolute", top: 10, right: 10 }}
-										/>
-											<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>{item.file.mimeType}</Text>
+										<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
+										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
+											{item.file.mimeType}
+										</Text>
 									</View>
 								)}
 								<ActivityIndicator
@@ -124,7 +124,9 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
 											style={{ position: "absolute", top: 10, right: 10 }}
 										/>
-										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>{item.file.mimeType}</Text>
+										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
+											{item.file.mimeType}
+										</Text>
 									</View>
 								)}
 							</>
