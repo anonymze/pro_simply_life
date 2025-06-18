@@ -78,9 +78,6 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 								) : (
 									<View style={styles.image} className="relative items-center justify-center gap-2">
 										<FileIcon size={45} color={me ? "#fff" : config.theme.extend.colors.primaryLight} />
-										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
-											{item.file.filename}
-										</Text>
 									</View>
 								)}
 								<ActivityIndicator
@@ -118,9 +115,11 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 											color={me ? "#fff" : config.theme.extend.colors.primaryLight}
 											style={{ position: "absolute", top: 10, right: 10 }}
 										/>
-										<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
-											{item.file.filename}
-										</Text>
+										{"filename" in item.file && (
+											<Text className={cn("text-center text-primaryLight", me ? "text-white" : "text-primaryLight")}>
+												{item.file.filename}
+											</Text>
+										)}
 									</View>
 								)}
 							</>
