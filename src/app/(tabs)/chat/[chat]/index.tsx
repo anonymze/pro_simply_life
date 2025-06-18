@@ -4,12 +4,12 @@ import { View, TextInput, Text, Platform, TouchableOpacity, Pressable, Alert } f
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { ImageIcon, PaperclipIcon, SendIcon } from "lucide-react-native";
 import { Redirect, Stack, useLocalSearchParams } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UIImagePickerPresentationStyle } from "expo-image-picker";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Message, MessageOptimistic } from "@/types/chat";
+import * as DocumentPicker from "expo-document-picker";
 import HeaderLayout from "@/layouts/headert-layout";
 import { getStorageUserInfos } from "@/utils/store";
 import * as ImagePicker from "expo-image-picker";
@@ -134,7 +134,7 @@ export default function Page() {
 		refetchInterval: () => {
 			// pause refetching while a message is being sent
 			if (mutationMessages.isPending || mutationMessagesFile.isPending) return false;
-			return 6000;
+			return 7000;
 		},
 	});
 
@@ -196,7 +196,8 @@ export default function Page() {
 
 	const pickImage = React.useCallback(async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ["images", "videos"],
+			// TODO: add videos
+			mediaTypes: ["images"],
 			allowsEditing: false,
 			aspect: [1, 1],
 			quality: 0.4,
@@ -217,6 +218,17 @@ export default function Page() {
 			// we flag it to show it as a pending message
 			optimistic: true,
 		});
+	}, []);
+
+	const pickFile = React.useCallback(async () => {
+		let result = await DocumentPicker.getDocumentAsync({
+			multiple: true,
+			type: ["&ast;/*"],
+		});
+
+		if (result.canceled) return;
+
+		console.log(result);
 	}, []);
 
 	const animatedStyle = useAnimatedStyle(() => {
@@ -314,7 +326,7 @@ export default function Page() {
 									/>
 								)}
 							</form.Field>
-							<Actions pickImage={pickImage} />
+							<Actions pickImage={pickImage} pickFile={pickFile} />
 						</View>
 						<SendButton
 							handleSubmit={handleSubmit}
@@ -369,7 +381,7 @@ const SendButton = React.memo(
 	},
 );
 
-const Actions = React.memo(({ pickImage }: { pickImage: () => void }) => {
+const Actions = React.memo(({ pickImage, pickFile }: { pickImage: () => void; pickFile: () => void }) => {
 	return (
 		<>
 			<TouchableOpacity
@@ -380,7 +392,12 @@ const Actions = React.memo(({ pickImage }: { pickImage: () => void }) => {
 			>
 				<ImageIcon size={18} color={config.theme.extend.colors.primaryLight} />
 			</TouchableOpacity>
-			<TouchableOpacity onPress={() => {}} className="py-2.5 pl-2 pr-2.5">
+			<TouchableOpacity
+				onPress={() => {
+					pickFile();
+				}}
+				className="py-2.5 pl-2 pr-2.5"
+			>
 				<PaperclipIcon size={17} color={config.theme.extend.colors.primaryLight} />
 			</TouchableOpacity>
 		</>
