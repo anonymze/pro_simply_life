@@ -4,6 +4,7 @@ import { QueryKey } from "@tanstack/react-query";
 
 import { api } from "../_config";
 
+
 export async function getMessagesQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, chatId, maxMessages] = queryKey;
 
@@ -42,7 +43,8 @@ export const createMessageWithFilesQuery = async ({ file, app_user, chat_room }:
 	file.forEach((file) => {
 		formData.append("file", {
 			uri: file?.uri,
-			name: file?.fileName ?? "file.jpg",
+			// @ts-ignore
+			name: file?.filename ?? "file.jpg",
 			type: file?.mimeType ?? "image/jpeg",
 		} as any);
 	});
