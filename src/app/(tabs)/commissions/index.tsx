@@ -16,14 +16,13 @@ const fullConfig = resolveConfig(config);
 export default function Page() {
 	const appUser = getStorageUserInfos();
 
-	console.log(appUser?.user);
-
 	return withQueryWrapper(
 		{
 			queryKey: ["commissions", appUser?.user.id],
 			queryFn: getCommissionsQuery,
 		},
 		({ data }) => {
+			console.log(data);
 			return (
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Mes commissions" />
@@ -57,29 +56,29 @@ export default function Page() {
 							<View className="mt-5 flex-row items-center pr-2">
 								<View className="mr-1 w-[34%]">
 									<Text className="mb-1 text-xs text-primaryLight">34%</Text>
-									<View className="bg-production h-1.5 w-full rounded-full"></View>
+									<View className="h-1.5 w-full rounded-full bg-production"></View>
 								</View>
 								<View className="mr-1 w-[33%]">
 									<Text className="mb-1 text-xs text-primaryLight">34%</Text>
-									<View className="bg-encours h-1.5 w-full rounded-full"></View>
+									<View className="h-1.5 w-full rounded-full bg-encours"></View>
 								</View>
 								<View className="mr-1 w-[33%]">
 									<Text className="mb-1 text-xs text-primaryLight">34%</Text>
-									<View className="bg-structured h-1.5 w-full rounded-full"></View>
+									<View className="h-1.5 w-full rounded-full bg-structured"></View>
 								</View>
 							</View>
 							<View className="mt-5 flex-row items-center gap-2">
-								<View className="bg-production size-2 rounded-full" />
+								<View className="size-2 rounded-full bg-production" />
 								<Text className="text-backgroundChat">Productions</Text>
 								<Text className="ml-auto font-light text-sm text-primaryLight">420,00€</Text>
 							</View>
 							<View className="flex-row items-center gap-2">
-								<View className="bg-encours size-2 rounded-full" />
+								<View className="size-2 rounded-full bg-encours" />
 								<Text className="text-backgroundChat">Encours</Text>
 								<Text className="ml-auto font-light text-sm text-primaryLight">420,00€</Text>
 							</View>
 							<View className="flex-row items-center gap-2">
-								<View className="bg-structured size-2 rounded-full" />
+								<View className="size-2 rounded-full bg-structured" />
 								<Text className="text-backgroundChat">Produits structurés</Text>
 								<Text className="ml-auto font-light text-sm text-primaryLight">420,00€</Text>
 							</View>
@@ -91,7 +90,7 @@ export default function Page() {
 								<Text className="text-green-600">+90€</Text>
 							</View>
 							<View className="flex-row items-center gap-2">
-								<View className="bg-red-100 size-6 items-center justify-center rounded-full">
+								<View className="size-6 items-center justify-center rounded-full bg-red-100">
 									<ArrowDownRightIcon size={14} color={fullConfig.theme.colors.red[500]} />
 								</View>
 								<Text className="text-red-600">-90€</Text>
