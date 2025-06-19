@@ -1,82 +1,108 @@
-import ImagePlaceholder from "@/components/ui/image-placeholder";
-import CardNewsletter from "@/components/card/card-newsletter";
-import CardCommission from "@/components/card/card-commission";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
-import { getFidnetsQuery } from "@/api/queries/fidnet";
-import { FlashList } from "@shopify/flash-list";
 import Title from "@/components/ui/title";
-import { Text, View } from "react-native";
-import React from "react";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getStorageUserInfos } from "@/utils/store";
+import resolveConfig from "tailwindcss/resolveConfig";
+import { getCommissionsQuery } from "@/api/queries/commission-queries";
+import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
+import config from "tailwind.config";
+import { Link } from "expo-router";
 
-
-interface FlatListItem {
-	type: "header" | "item";
-	date?: string;
-	[key: string]: any;
-}
+const fullConfig = resolveConfig(config);
 
 export default function Page() {
+	const appUser = getStorageUserInfos();
+
+	console.log(appUser?.user);
+
 	return withQueryWrapper(
 		{
-			queryKey: ["fidnets"],
-			queryFn: getFidnetsQuery,
+			queryKey: ["commissions", appUser?.user.id],
+			queryFn: getCommissionsQuery,
 		},
 		({ data }) => {
-			// Convert grouped data to flat array for FlatList
-			const flatData = React.useMemo(() => {
-				const addedDates = new Set<string>();
-
-				return data.docs
-					.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-					.reduce((acc, fidnet) => {
-						const date = new Date(fidnet.date).toLocaleDateString("fr-FR", {
-							year: "numeric",
-						});
-
-						if (!addedDates.has(date)) {
-							acc.push({ type: "header", date });
-							addedDates.add(date);
-						}
-
-						acc.push({ type: "item", ...fidnet });
-
-						return acc;
-					}, [] as FlatListItem[]);
-			}, [data]);
-
-			const renderItem = ({ item }: { item: any }) => {
-				if (item.type === "header") {
-					return <Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{item.date}</Text>;
-				}
-
-				return (
-					<CardCommission
-						key={item.id}
-						commission={item}
-						link={{
-							pathname: `/commissions/[commission]`,
-							params: {
-								commission: item.id,
-							},
-						}}
-					/>
-				);
-			};
-
 			return (
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Mes commissions" />
+					<Text className="mt-5 font-semibold text-lg text-primary">Résumé du mois</Text>
 
-					<FlashList
-						data={flatData}
-						renderItem={renderItem}
-						estimatedItemSize={100}
-						keyExtractor={(item) => (item.type === "header" ? item.date : item.id)}
+					<ScrollView
 						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{ paddingBottom: 10 }}
-						ItemSeparatorComponent={() => <View className="h-2.5" />}
-					/>
+						contentContainerStyle={{ paddingBottom: 16 }}
+						className="mt-3"
+					>
+						<View className="rounded-2xl  bg-white p-4">
+							<View className="items-center justify-center gap-2 rounded-lg bg-gray-50 px-4 py-5">
+								<Text className="text-primaryLight">Total des gains sur mai 2025</Text>
+								<Text className="font-bold text-2xl text-primary">840,00€</Text>
+							</View>
+							<Text className="text-md mt-5 font-semibold text-primary">Répartition</Text>
+							<View className="mt-5 flex-row items-center pr-2">
+								<View className="mr-1 w-[34%]">
+									<Text className="mb-0.5 text-xs text-primaryLight">34%</Text>
+									<View className="bg-production h-1.5 w-full rounded-full"></View>
+								</View>
+								<View className="mr-1 w-[33%]">
+									<Text className="mb-0.5 text-xs text-primaryLight">34%</Text>
+									<View className="bg-encours h-1.5 w-full rounded-full"></View>
+								</View>
+								<View className="mr-1 w-[33%]">
+									<Text className="mb-0.5 text-xs text-primaryLight">34%</Text>
+									<View className="bg-structured h-1.5 w-full rounded-full"></View>
+								</View>
+							</View>
+							<View className="mt-4 flex-row items-center gap-2">
+								<View className="bg-production size-2 rounded-full" />
+								<Text className="text-backgroundChat">Productions</Text>
+								<Text className="ml-auto text-sm text-primaryLight">420,00€</Text>
+							</View>
+							<View className="flex-row items-center gap-2">
+								<View className="bg-encours size-2 rounded-full" />
+								<Text className="text-backgroundChat">Encours</Text>
+								<Text className="ml-auto text-sm text-primaryLight">420,00€</Text>
+							</View>
+							<View className="flex-row items-center gap-2">
+								<View className="bg-structured size-2 rounded-full" />
+								<Text className="text-backgroundChat">Produits structurés</Text>
+								<Text className="ml-auto text-sm text-primaryLight">420,00€</Text>
+							</View>
+							<Text className="text-md mb-3 mt-6 font-medium text-primary">Évolution vs mois précédent</Text>
+							<View className="flex-row items-center gap-2">
+								<View className="size-6 items-center justify-center rounded-full bg-green-100">
+									<ArrowUpRightIcon size={14} color={fullConfig.theme.colors.green[500]} />
+								</View>
+								<Text className="text-green-600">+90€</Text>
+							</View>
+							<View className="flex-row items-center gap-2">
+								<View className="bg-red-100 size-6 items-center justify-center rounded-full">
+									<ArrowDownRightIcon size={14} color={fullConfig.theme.colors.red[500]} />
+								</View>
+								<Text className="text-red-600">-90€</Text>
+							</View>
+							<View
+								style={{
+									borderBottomColor: "#bbb",
+									borderBottomWidth: StyleSheet.hairlineWidth,
+									marginBlock: 22,
+								}}
+							></View>
+							<Link
+								asChild
+								href={{
+									pathname: "/(tabs)/commissions/[commission]",
+									params: {
+										commission: "hey",
+									},
+								}}
+							>
+								<TouchableOpacity className="flex-row items-center gap-2" hitSlop={10}>
+									<ListIcon size={18} color={config.theme.extend.colors.backgroundChat} />
+									<Text className="font-semibold text-backgroundChat">Voir le détail</Text>
+								</TouchableOpacity>
+							</Link>
+						</View>
+					</ScrollView>
 				</BackgroundLayout>
 			);
 		},

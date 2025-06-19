@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
 
-
 const config = {
 	corePlugins: {
 		// we remove the font weight because we use the font family instead for each font, and font weight can interfere with the font family on Android
@@ -36,7 +35,10 @@ const config = {
 				lightGray: "#AFB5D9",
 				darkGray: "#EAECF5",
 				pink: "#F670C7",
-				red: "#B42318",
+				red2: "#B42318",
+				production: "#FDA29B",
+				encours: "#6172F3",
+				structured: "#7CD4FD",
 			},
 		},
 	},

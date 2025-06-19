@@ -12,7 +12,7 @@ import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
-import { PortalHost } from '@rn-primitives/portal';
+import { PortalHost } from "@rn-primitives/portal";
 import * as Sentry from "@sentry/react-native";
 import { queryClient } from "@/api/_queries";
 import { StatusBar } from "expo-status-bar";
@@ -20,7 +20,6 @@ import * as Updates from "expo-updates";
 import * as Network from "expo-network";
 import { Stack } from "expo-router";
 import React from "react";
-
 
 Sentry.init({
 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
