@@ -21,7 +21,7 @@ export interface Commission {
 	createdAt: string;
 }
 
-export interface CommissionExtra {
+interface CommissionLight {
 	id: string;
 	supplier: Pick<Supplier, "id" | "name" | "logo_mini">;
 	structured_product?: boolean | null;
@@ -35,5 +35,25 @@ export interface CommissionExtra {
 		broqueur?: string | null;
 	};
 	updatedAt: string;
-	createdAt: string;
+}
+
+export interface CommissionMonthlyData {
+	totalAmount: number;
+	monthlyData: {
+		month: string;
+		year: number;
+		commissions: CommissionLight[];
+		totalAmount: number;
+		groupedData: {
+			encours: number;
+			production: number;
+			structured_product: number;
+			total: number;
+		};
+		comparison?: {
+			difference: number;
+			percentageChange: number;
+			previousMonthTotal: number;
+		};
+	};
 }
