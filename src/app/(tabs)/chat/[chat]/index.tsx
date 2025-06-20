@@ -14,7 +14,6 @@ import HeaderLayout from "@/layouts/headert-layout";
 import { getStorageUserInfos } from "@/utils/store";
 import * as ImagePicker from "expo-image-picker";
 import { FlashList } from "@shopify/flash-list";
-// import useWebSocket from "@/hooks/use-websocket";
 import { useForm } from "@tanstack/react-form";
 import { Item } from "@/components/item-chat";
 import { queryClient } from "@/api/_queries";

@@ -26,14 +26,6 @@ export function withQueryWrapper<T>(
 			refetchInterval: query.refetchInterval,
 		});
 
-		if (isError) {
-			return (
-				<View className="flex-1 items-center justify-center">
-					<Text className="text-sm text-defaultGray">Erreur</Text>
-				</View>
-			);
-		}
-
 		if (isLoading) {
 			return (
 				<ActivityIndicator
@@ -44,7 +36,7 @@ export function withQueryWrapper<T>(
 			);
 		}
 
-		if (!data) {
+		if (!data || isError) {
 			return (
 				<View className="flex-1 items-center justify-center">
 					<Text className="text-sm text-defaultGray">Erreur</Text>
