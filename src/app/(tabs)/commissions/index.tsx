@@ -10,9 +10,9 @@ import { getStorageUserInfos } from "@/utils/store";
 import { useQuery } from "@tanstack/react-query";
 import { FlashList } from "@shopify/flash-list";
 import Title from "@/components/ui/title";
-import React, { useState } from "react";
 import config from "tailwind.config";
 import { Link } from "expo-router";
+import React from "react";
 
 
 const fullConfig = resolveConfig(config);
@@ -61,23 +61,32 @@ export default function Page() {
 }
 
 const Content = ({ data }: { data: CommissionMonthlyData }) => {
-	const [lastMonth, setLastMonth] = useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[0]);
+	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[0]);
 
-	// calculate percentages without useEffect
-	const productionPercentage =
-		lastMonth.groupedData.total > 0
-			? Math.round((lastMonth.groupedData.production / lastMonth.groupedData.total) * 100)
-			: 0;
+	// calculate percentages without useEffect - ensuring they add up to 100%
+	const calculatePercentages = React.useMemo(() => {
+		if (lastMonth.groupedData.total <= 0) {
+			return { productionPercentage: 0, encoursPercentage: 0, structuredPercentage: 0 };
+		}
 
-	const encoursPercentage =
-		lastMonth.groupedData.total > 0
-			? Math.round((lastMonth.groupedData.encours / lastMonth.groupedData.total) * 100)
-			: 0;
+		// calculate exact percentages
+		const production = (lastMonth.groupedData.production / lastMonth.groupedData.total) * 100;
+		const encours = (lastMonth.groupedData.encours / lastMonth.groupedData.total) * 100;
+		const structured = (lastMonth.groupedData.structured_product / lastMonth.groupedData.total) * 100;
 
-	const structuredPercentage =
-		lastMonth.groupedData.total > 0
-			? Math.round((lastMonth.groupedData.structured_product / lastMonth.groupedData.total) * 100)
-			: 0;
+		// round the first two normally
+		const productionRounded = Math.round(production);
+		const encoursRounded = Math.round(encours);
+
+		// make the third one the remainder to ensure total = 100%
+		const structuredRounded = 100 - productionRounded - encoursRounded;
+
+		return {
+			productionPercentage: productionRounded,
+			encoursPercentage: encoursRounded,
+			structuredPercentage: Math.max(0, structuredRounded), // ensure it's not negative
+		};
+	}, [lastMonth]);
 
 	return (
 		<>
@@ -105,60 +114,46 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 					</View>
 					<Text className="text-md mt-5 font-semibold text-primary">Répartition</Text>
 					<View className="mt-5">
-						<View className="mb-3 h-1.5 w-full flex-row overflow-hidden rounded-full bg-gray-100">
-							{productionPercentage > 0 && <View className="bg-production" style={{ flex: productionPercentage }} />}
-							{encoursPercentage > 0 && <View className="bg-encours" style={{ flex: encoursPercentage }} />}
-							{structuredPercentage > 0 && <View className="bg-structured" style={{ flex: structuredPercentage }} />}
-						</View>
-
-						<View className="flex-row items-start justify-between">
-							{productionPercentage > 0 && (
+						<View className="flex-row">
+							{calculatePercentages.productionPercentage > 0 && (
 								<View
-									className="items-center mr-1"
+									className="mr-1 gap-1"
 									style={{
-										minWidth: getMinWidth(productionPercentage),
-										flex: productionPercentage >= 5 ? productionPercentage : 0,
+										minWidth: getMinWidth(calculatePercentages.productionPercentage),
+										flex: calculatePercentages.productionPercentage >= 5 ? calculatePercentages.productionPercentage : 0,
 									}}
 								>
-									<View className="flex-row items-center gap-1">
-										<View className="size-2 rounded-full bg-production" />
-										<Text className="text-xs text-primaryLight">{productionPercentage}%</Text>
-									</View>
+									<Text className="text-center text-xs text-primaryLight">{calculatePercentages.productionPercentage}%</Text>
+									<View className="h-1.5 w-full rounded-full bg-production" />
 								</View>
 							)}
-
-							{encoursPercentage > 0 && (
+							{calculatePercentages.encoursPercentage > 0 && (
 								<View
-									className="items-center"
+									className="gap-1"
 									style={{
-										minWidth: getMinWidth(encoursPercentage),
-										flex: encoursPercentage >= 5 ? encoursPercentage : 0,
+										minWidth: getMinWidth(calculatePercentages.encoursPercentage),
+										flex: calculatePercentages.encoursPercentage >= 5 ? calculatePercentages.encoursPercentage : 0,
 									}}
 								>
-									<View className="flex-row items-center gap-1">
-										<View className="size-2 rounded-full bg-encours" />
-										<Text className="text-xs text-primaryLight">{encoursPercentage}%</Text>
-									</View>
+									<Text className="text-center text-xs text-primaryLight">{calculatePercentages.encoursPercentage}%</Text>
+									<View className="h-1.5 w-full rounded-full bg-encours" />
 								</View>
 							)}
-
-							{structuredPercentage > 0 && (
+							{calculatePercentages.structuredPercentage > 0 && (
 								<View
-									className="items-center"
+									className="ml-1 gap-1"
 									style={{
-										minWidth: getMinWidth(structuredPercentage),
-										flex: structuredPercentage >= 5 ? structuredPercentage : 0,
+										minWidth: getMinWidth(calculatePercentages.structuredPercentage),
+										flex: calculatePercentages.structuredPercentage >= 5 ? calculatePercentages.structuredPercentage : 0,
 									}}
 								>
-									<View className="flex-row items-center gap-1">
-										<Text className="text-xs text-primaryLight">{structuredPercentage}%</Text>
-										<View className="size-2 rounded-full bg-structured" />
-									</View>
+									<Text className="text-center text-xs text-primaryLight">{calculatePercentages.structuredPercentage}%</Text>
+									<View className="h-1.5 w-full rounded-full bg-structured" />
 								</View>
 							)}
 						</View>
 					</View>
-					<View className="mt-5 flex-row items-center gap-2">
+					<View className="mt-6 flex-row items-center gap-2">
 						<View className="size-2 rounded-full bg-production" />
 						<Text className="text-backgroundChat">Productions</Text>
 						<Text className="ml-auto font-light text-sm text-primaryLight">{lastMonth.groupedData.production}€</Text>
@@ -244,6 +239,6 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 // minimum width for small percentages to ensure text is visible
 const getMinWidth = (percentage: number) => {
 	if (percentage === 0) return 0;
-	if (percentage < 5) return 40; // minimum 40px for percentages < 5%
+	if (percentage < 5) return 20; // minimum 20px for percentages < 5%
 	return 0; // use flex for larger percentages
 };
