@@ -215,7 +215,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 						</TouchableOpacity>
 					</Link>
 				</View>
-				<Pressable
+				{/* <Pressable
 					onPress={() => {}}
 					disabled={false}
 					className="mt-5 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
@@ -230,7 +230,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 							<DownloadIcon size={20} color="#fff" />
 						</Animated.View>
 					)}
-				</Pressable>
+				</Pressable> */}
 			</ScrollView>
 		</>
 	);
