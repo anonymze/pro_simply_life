@@ -62,7 +62,7 @@ export default function Page() {
 }
 
 const Content = ({ data }: { data: CommissionMonthlyData }) => {
-	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[0]);
+	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[1]);
 
 	// calculate percentages without useEffect - ensuring they add up to 100%
 	const calculatePercentages = React.useMemo(() => {
@@ -91,7 +91,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 
 	return (
 		<>
-			<FlashList
+			{/* <FlashList
 				showsHorizontalScrollIndicator={false}
 				data={data.monthlyData}
 				horizontal
@@ -103,7 +103,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 						</View>
 					);
 				}}
-			></FlashList>
+			></FlashList> */}
 
 			<Text className="mt-5 font-semibold text-lg text-primary">Résumé du mois</Text>
 

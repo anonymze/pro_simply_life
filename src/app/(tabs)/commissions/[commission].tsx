@@ -32,8 +32,6 @@ export default function Page() {
 
 	if (!commissions) return null;
 
-	console.log(commissions);
-
 	return (
 		<BackgroundLayout className={cn("bg-white px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
 			<View className="flex-row items-center gap-2 border-b border-primaryUltraLight pb-3">
