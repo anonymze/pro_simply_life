@@ -56,7 +56,7 @@ export default function Page() {
 		<BackgroundLayout className="pt-safe px-4">
 			<Title title="Mes commissions" />
 
-			<Content data={data} />
+			{/* <Content data={data} /> */}
 		</BackgroundLayout>
 	);
 }
@@ -91,7 +91,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 
 	return (
 		<>
-			{/* <FlashList
+			<FlashList
 				showsHorizontalScrollIndicator={false}
 				data={data.monthlyData}
 				horizontal
@@ -103,7 +103,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 						</View>
 					);
 				}}
-			></FlashList> */}
+			></FlashList>
 
 			<Text className="mt-5 font-semibold text-lg text-primary">Résumé du mois</Text>
 
