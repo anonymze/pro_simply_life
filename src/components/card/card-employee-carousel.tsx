@@ -25,7 +25,7 @@ export default function CardEmployeeCarousel({ user, link }: { user: User; link:
 					placeholder={user.photo?.blurhash}
 					placeholderContentFit="cover"
 					source={user.photo?.url}
-					className="rounded-full size-20"
+					className="rounded-full"
 					style={{ width: 65, height: 65, borderRadius: 99 }}
 				/>
 				<Text className="text-sm text-primary mt-2">{user.firstname + " " + user.lastname}</Text>

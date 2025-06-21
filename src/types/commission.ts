@@ -21,7 +21,7 @@ export interface Commission {
 	createdAt: string;
 }
 
-interface CommissionLight {
+export interface CommissionLight {
 	id: string;
 	supplier: Supplier;
 	structured_product?: boolean | null;
@@ -40,6 +40,7 @@ interface CommissionLight {
 export interface CommissionMonthlyData {
 	totalAmount: number;
 	monthlyData: Array<{
+		id: string;
 		month: string;
 		commissions: CommissionLight[];
 		totalAmount: number;

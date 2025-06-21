@@ -85,11 +85,11 @@ export default function Page() {
 					className="mt-4 flex-row items-center gap-2 rounded-xl bg-white p-1 shadow shadow-defaultGray/10"
 				>
 					<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
-						<TrashIcon size={22} color={config.theme.extend.colors.red} />
+						<TrashIcon size={22} color={config.theme.extend.colors.red2} />
 					</View>
 					<Text className="text-md font-semibold text-red">Supprimer le groupe</Text>
 					{deleteChatRoom.isPending && (
-						<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />
+						<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red2} />
 					)}
 				</TouchableOpacity>
 			)}
@@ -120,11 +120,11 @@ export default function Page() {
 				className="mt-4 flex-row items-center gap-2 rounded-xl bg-white p-1 shadow shadow-defaultGray/10"
 			>
 				<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
-					<LogOutIcon size={22} color={config.theme.extend.colors.red} />
+					<LogOutIcon size={22} color={config.theme.extend.colors.red2} />
 				</View>
 				<Text className="text-md font-semibold text-red">Quitter le groupe</Text>
 				{leaveChatRoom.isPending && (
-					<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />
+					<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red2} />
 				)}
 			</TouchableOpacity>
 

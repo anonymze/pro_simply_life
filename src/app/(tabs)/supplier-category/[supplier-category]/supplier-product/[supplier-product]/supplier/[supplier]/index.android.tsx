@@ -1,21 +1,20 @@
-import { ArrowRight, ChevronRight, Download, EyeIcon, FileIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon, } from "lucide-react-native";
-import { ActivityIndicator, Alert, Linking, ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
-import { HrefObject, Link, router, useLocalSearchParams } from "expo-router";
+import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
+import { Linking, ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
+import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
-import { downloadFile, getFile } from "@/utils/download";
-import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
-// import type { HrefObject } from "expo-router";
+import { Brochure } from "@/components/brochure";
 import { Supplier } from "@/types/supplier";
-import type { Media } from "@/types/media";
+import { Picker } from "@expo/ui/swift-ui";
 import config from "tailwind.config";
 import React from "react";
 
 
 export default function Page() {
-	const scrollRef = React.useRef<ScrollView>(null);
+	const horizontalScrollRef = React.useRef<ScrollView>(null);
+	const verticalScrollRef = React.useRef<ScrollView>(null);
 
 	const {
 		supplier: supplierId,
@@ -46,8 +45,8 @@ export default function Page() {
 				<ImagePlaceholder
 					transition={300}
 					contentFit="contain"
-					source={data.logo_full?.url}
 					placeholder={data.logo_full?.blurhash}
+					source={data.logo_full?.url}
 					style={{ width: "95%", height: 60 }}
 				/>
 				<View className="mt-4 flex-row items-center gap-3">
@@ -70,21 +69,24 @@ export default function Page() {
 			</View>
 			<BackgroundLayout className="px-4">
 				{(hasMoreInformation || data.brochure) && (
-						<Picker
-						style={{ width: 260, marginTop: 20, marginHorizontal: "auto", marginBottom: 10}}
+					<Picker
+						style={{ width: 260, marginTop: 20, marginHorizontal: "auto", marginBottom: 10 }}
 						variant="segmented"
 						options={["Contact", "Produit"]}
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
-								scrollRef.current?.scrollTo({ x: 0, y: 0, animated: true });
+								horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							} else {
-								scrollRef.current?.scrollToEnd({ animated: true });
+								horizontalScrollRef.current?.scrollToEnd({ animated: true });
+								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							}
 						}}
 					/>
 				)}
 				<ScrollView
+					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
@@ -114,7 +116,7 @@ export default function Page() {
 						</View>
 					) : (
 						<ScrollView
-							ref={scrollRef}
+							ref={horizontalScrollRef}
 							horizontal
 							showsHorizontalScrollIndicator={false}
 							scrollEnabled={false}
@@ -188,117 +190,6 @@ const Logs = ({ link }: { link: HrefObject }) => {
 	);
 };
 
-
-const Brochure = ({ brochure, updatedAt, link }: { brochure: Media; updatedAt: string; link: HrefObject }) => {
-	const [loadingDownload, setLoadingDownload] = React.useState(false);
-	const [loadingOpen, setLoadingOpen] = React.useState(false);
-
-	return (
-		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="text-sm text-primaryLight">Brochure</Text>
-			<View className="flex-row items-center justify-between gap-2">
-				<View className="flex-shrink flex-row items-center gap-2">
-					<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
-						<FileIcon size={18} color={config.theme.extend.colors.defaultGray} />
-					</View>
-					<View className="flex-shrink">
-						<Text className="font-semibold text-sm text-primary">{brochure.filename}</Text>
-						<Text className="font-semibold text-sm text-defaultGray">
-							{new Date(updatedAt).toLocaleDateString("fr-FR", {
-								day: "2-digit",
-								month: "2-digit",
-								year: "numeric",
-							})}
-						</Text>
-					</View>
-				</View>
-				<View className="flex-row gap-3">
-					<TouchableOpacity
-						disabled={loadingDownload}
-						onPress={() => {
-							if (!brochure.url) return;
-
-							setLoadingDownload(true);
-							downloadFile(brochure.url)
-								.then(() => {
-									Alert.alert("Brochure téléchargée !");
-								})
-								.catch((_) => {
-									Alert.alert(
-										"La brochure n'a pas pu être téléchargée",
-										"Vérifiez que le nom du fichier n'existe pas déjà sur votre appareil ou que vous avez assez d'espace de stockage.",
-									);
-								})
-								.finally(() => {
-									setLoadingDownload(false);
-								});
-						}}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						{loadingDownload ? (
-							<ActivityIndicator
-								size="small"
-								style={{ width: 16, height: 16 }}
-								color={config.theme.extend.colors.primary}
-							/>
-						) : (
-							<Download size={16} color={config.theme.extend.colors.primary} />
-						)}
-					</TouchableOpacity>
-					<TouchableOpacity
-						disabled={loadingOpen}
-						onPress={async () => {
-							if (!brochure.filename || !brochure.url) return;
-
-							const file = getFile(brochure.filename);
-
-							if (file.exists) {
-								router.push(link);
-								return;
-							}
-
-							setLoadingOpen(true);
-
-							downloadFile(brochure.url)
-								.then((_) => {
-									router.push(link);
-								})
-								.catch((_) => {
-									Alert.alert(
-										"La brochure n'a pas pu être téléchargée pour être visualisée",
-										"Vérifiez que vous avez assez d'espace de stockage.",
-									);
-								})
-								.finally(() => {
-									setLoadingOpen(false);
-								});
-						}}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						{loadingOpen ? (
-							<ActivityIndicator
-								size="small"
-								style={{ width: 16, height: 16 }}
-								color={config.theme.extend.colors.primary}
-							/>
-						) : (
-							<EyeIcon size={16} color={config.theme.extend.colors.primary} />
-						)}
-					</TouchableOpacity>
-				</View>
-			</View>
-		</View>
-	);
-};
-
-// const Tag = ({ title }: { title: string }) => {
-// 	return (
-// 		<View className="rounded-md bg-defaultGray/10 px-2 py-1.5">
-// 			<Text className="text-xs font-semibold text-defaultGray">{title}</Text>
-// 		</View>
-// 	);
-// };
-
 const ContactInfo = ({
 	phone,
 	email,
@@ -316,14 +207,16 @@ const ContactInfo = ({
 	return (
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="text-sm text-primaryLight">Prénom et Nom</Text>
-			<Text className="font-semibold text-base text-primary">
+			<Text selectable className="font-semibold text-primary">
 				{firstname} {lastname?.toUpperCase()}
 			</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2">
-					<Text className="font-semibold text-sm text-defaultGray">Téléphone</Text>
-					<Text className="font-semibold text-base text-primary">{numbersString}</Text>
+				<View className="flex-shrink gap-2">
+					<Text className="text-sm text-primaryLight">Téléphone</Text>
+					<Text selectable className="font-semibold text-base text-primary">
+						{numbersString}
+					</Text>
 				</View>
 				{phone && (
 					<TouchableOpacity
@@ -338,9 +231,11 @@ const ContactInfo = ({
 			</View>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2">
-					<Text className="font-semibold text-sm text-primaryLight">E-mail</Text>
-					<Text className="font-semibold text-base text-primary">{email}</Text>
+				<View className="flex-shrink flex-grow-0 gap-2">
+					<Text className="text-sm text-primaryLight">E-mail</Text>
+					<Text selectable className="font-semibold text-base text-primary">
+						{email}
+					</Text>
 				</View>
 				{email && (
 					<TouchableOpacity
@@ -390,4 +285,3 @@ const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["ot
 		</View>
 	);
 };
-

@@ -1,17 +1,18 @@
 import { ActivityIndicator, ActivityIndicatorBase, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from "react-native";
 import { ArrowDownRightIcon, ArrowUpRightIcon, DownloadIcon, ListIcon } from "lucide-react-native";
+import { Commission, CommissionLight, CommissionMonthlyData } from "@/types/commission";
 import { getCommissionMonthlyDataQuery } from "@/api/queries/commission-queries";
 import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
-import { CommissionMonthlyData } from "@/types/commission";
+import { HrefObject, Link, router } from "expo-router";
 import resolveConfig from "tailwindcss/resolveConfig";
 import { getStorageUserInfos } from "@/utils/store";
 import { useQuery } from "@tanstack/react-query";
 import { FlashList } from "@shopify/flash-list";
+import { queryClient } from "@/api/_queries";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
-import { Link } from "expo-router";
 import React from "react";
 
 
@@ -120,10 +121,13 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 									className="mr-1 gap-1"
 									style={{
 										minWidth: getMinWidth(calculatePercentages.productionPercentage),
-										flex: calculatePercentages.productionPercentage >= 5 ? calculatePercentages.productionPercentage : 0,
+										flex:
+											calculatePercentages.productionPercentage >= 5 ? calculatePercentages.productionPercentage : 0,
 									}}
 								>
-									<Text className="text-center text-xs text-primaryLight">{calculatePercentages.productionPercentage}%</Text>
+									<Text className="text-center text-xs text-primaryLight">
+										{calculatePercentages.productionPercentage}%
+									</Text>
 									<View className="h-1.5 w-full rounded-full bg-production" />
 								</View>
 							)}
@@ -135,7 +139,9 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 										flex: calculatePercentages.encoursPercentage >= 5 ? calculatePercentages.encoursPercentage : 0,
 									}}
 								>
-									<Text className="text-center text-xs text-primaryLight">{calculatePercentages.encoursPercentage}%</Text>
+									<Text className="text-center text-xs text-primaryLight">
+										{calculatePercentages.encoursPercentage}%
+									</Text>
 									<View className="h-1.5 w-full rounded-full bg-encours" />
 								</View>
 							)}
@@ -144,10 +150,13 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 									className="ml-1 gap-1"
 									style={{
 										minWidth: getMinWidth(calculatePercentages.structuredPercentage),
-										flex: calculatePercentages.structuredPercentage >= 5 ? calculatePercentages.structuredPercentage : 0,
+										flex:
+											calculatePercentages.structuredPercentage >= 5 ? calculatePercentages.structuredPercentage : 0,
 									}}
 								>
-									<Text className="text-center text-xs text-primaryLight">{calculatePercentages.structuredPercentage}%</Text>
+									<Text className="text-center text-xs text-primaryLight">
+										{calculatePercentages.structuredPercentage}%
+									</Text>
 									<View className="h-1.5 w-full rounded-full bg-structured" />
 								</View>
 							)}
@@ -200,20 +209,16 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 							marginBlock: 22,
 						}}
 					/>
-					<Link
-						asChild
-						href={{
+					<SeeDetails
+						id={lastMonth.id}
+						commissions={lastMonth.commissions}
+						link={{
 							pathname: "/(tabs)/commissions/[commission]",
 							params: {
-								commission: "hey",
+								commission: lastMonth.id,
 							},
 						}}
-					>
-						<TouchableOpacity className="flex-row items-center gap-2" hitSlop={10}>
-							<ListIcon size={18} color={config.theme.extend.colors.backgroundChat} />
-							<Text className="font-semibold text-backgroundChat">Voir le détail</Text>
-						</TouchableOpacity>
-					</Link>
+					/>
 				</View>
 				{/* <Pressable
 					onPress={() => {}}
@@ -242,3 +247,25 @@ const getMinWidth = (percentage: number) => {
 	if (percentage < 5) return 20; // minimum 20px for percentages < 5%
 	return 0; // use flex for larger percentages
 };
+
+function SeeDetails({
+	commissions,
+	link,
+	id,
+}: {
+	id: CommissionMonthlyData["monthlyData"][number]["id"];
+	commissions: CommissionLight[];
+	link: HrefObject;
+}) {
+	const onPress = React.useCallback(() => {
+		queryClient.setQueryData(["commissions", id], commissions);
+	}, [commissions, id]);
+	return (
+		<Link asChild href={link}>
+			<TouchableOpacity className="flex-row items-center gap-2" hitSlop={10} onPressIn={onPress}>
+				<ListIcon size={18} color={config.theme.extend.colors.backgroundChat} />
+				<Text className="font-semibold text-backgroundChat">Voir le détail</Text>
+			</TouchableOpacity>
+		</Link>
+	);
+}

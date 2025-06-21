@@ -16,11 +16,17 @@ export default function FidnetLayout() {
 		>
 			<Stack.Screen name="index" />
 			<Stack.Screen
-				name="[commission]"
 				options={{
-					header: () => <HeaderLayout />,
+					presentation: "modal",
+					header: () =>
+						Platform.OS === "ios" ? (
+							<HeaderGrabberIos className="bg-white" />
+						) : (
+							<HeaderLayout backgroundColor="bg-white" />
+						),
 					headerShown: true,
 				}}
+				name="[commission]"
 			/>
 		</Stack>
 	);
