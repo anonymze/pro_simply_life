@@ -22,7 +22,7 @@ cssInterop(VideoView, {
 
 export default function Page() {
 	const { commission: commissionId } = useLocalSearchParams();
-	const [loadingDownload, setLoadingDownload] = React.useState(false);
+	const [idLoadingDownload, setIdLoadingDownload] = React.useState<string | null>(null);
 
 	const { data: commissions } = useQuery({
 		queryKey: ["commissions", commissionId],
@@ -44,6 +44,7 @@ export default function Page() {
 			</View>
 			<FlashList
 				data={commissions as unknown as CommissionLight[]}
+				extraData={idLoadingDownload}
 				renderItem={({ item }) => {
 					return (
 						<View className="my-4 flex-row items-center gap-2">
@@ -93,7 +94,7 @@ export default function Page() {
 							<View className="ml-auto">
 								{item.informations?.pdf && (
 									<TouchableOpacity
-										disabled={loadingDownload}
+										disabled={idLoadingDownload === item.id}
 										onPress={() => {
 											if (
 												!item.informations?.pdf?.url ||
@@ -102,7 +103,7 @@ export default function Page() {
 											)
 												return;
 
-											// setLoadingDownload(true);
+											setIdLoadingDownload(item.id);
 											downloadFile(
 												item.informations?.pdf.url,
 												item.informations?.pdf.filename,
@@ -118,12 +119,12 @@ export default function Page() {
 													);
 												})
 												.finally(() => {
-													// setLoadingDownload(false);
+													setIdLoadingDownload(null);
 												});
 										}}
 										className="rounded-full bg-primaryUltraLight p-3"
 									>
-										{loadingDownload ? (
+										{idLoadingDownload === item.id ? (
 											<ActivityIndicator
 												size="small"
 												style={{ width: 16, height: 16 }}

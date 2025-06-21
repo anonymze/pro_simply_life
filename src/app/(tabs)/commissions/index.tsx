@@ -62,7 +62,7 @@ export default function Page() {
 }
 
 const Content = ({ data }: { data: CommissionMonthlyData }) => {
-	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[1]);
+	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[0]);
 
 	// calculate percentages without useEffect - ensuring they add up to 100%
 	const calculatePercentages = React.useMemo(() => {
