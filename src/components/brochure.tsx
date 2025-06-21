@@ -1,5 +1,5 @@
 import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
-import { Download, EyeIcon, FileIcon } from "lucide-react-native";
+import { DownloadIcon, EyeIcon, FileIcon } from "lucide-react-native";
 import { downloadFile, getFile } from "@/utils/download";
 import { HrefObject, router } from "expo-router";
 import type { Media } from "@/types/media";
@@ -34,12 +34,12 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 					<TouchableOpacity
 						disabled={loadingDownload}
 						onPress={() => {
-							if (!brochure.url) return;
+							if (!brochure.url || !brochure.filename || !brochure.mimeType) return;
 
 							setLoadingDownload(true);
-							downloadFile(brochure.url)
+							downloadFile(brochure.url, brochure.filename, brochure.mimeType)
 								.then(() => {
-									Alert.alert("Brochure téléchargée !");
+									// Alert.alert("Brochure téléchargée !");
 								})
 								.catch((_) => {
 									Alert.alert(
@@ -60,13 +60,13 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 								color={config.theme.extend.colors.primary}
 							/>
 						) : (
-							<Download size={16} color={config.theme.extend.colors.primary} />
+							<DownloadIcon size={16} color={config.theme.extend.colors.primary} />
 						)}
 					</TouchableOpacity>
 					<TouchableOpacity
 						disabled={loadingOpen}
 						onPress={async () => {
-							if (!brochure.filename || !brochure.url) return;
+							if (!brochure.filename || !brochure.url || !brochure.mimeType) return;
 
 							const file = getFile(brochure.filename);
 
@@ -77,7 +77,7 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 
 							setLoadingOpen(true);
 
-							downloadFile(brochure.url)
+							downloadFile(brochure.url, brochure.filename, brochure.mimeType)
 								.then((_) => {
 									router.push(link);
 								})

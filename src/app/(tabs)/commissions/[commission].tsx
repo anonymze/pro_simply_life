@@ -1,15 +1,19 @@
+import { ActivityIndicator, Alert, Platform, Text, TouchableOpacity, View } from "react-native";
 import { getCommissionMonthlyDataQuery } from "@/api/queries/commission-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight } from "@/types/commission";
-import { Platform, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import { DownloadIcon } from "lucide-react-native";
 import { useQuery } from "@tanstack/react-query";
 import { FlashList } from "@shopify/flash-list";
+import { downloadFile } from "@/utils/download";
 import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
 import { cssInterop } from "nativewind";
 import { VideoView } from "expo-video";
+import config from "tailwind.config";
+import React from "react";
 
 
 cssInterop(VideoView, {
@@ -18,6 +22,7 @@ cssInterop(VideoView, {
 
 export default function Page() {
 	const { commission: commissionId } = useLocalSearchParams();
+	const [loadingDownload, setLoadingDownload] = React.useState(false);
 
 	const { data: commissions } = useQuery({
 		queryKey: ["commissions", commissionId],
@@ -31,31 +36,105 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className={cn("bg-white px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
-			<View className="flex-row items-center justify-between border-b border-primaryUltraLight pb-3">
-				<Text className="text-sm text-primary">Fournisseur</Text>
-				<Text className="text-sm text-primary">Type</Text>
-				<Text className="text-sm text-primary">Montant</Text>
-				<Text className="text-sm text-primary">PDF</Text>
+			<View className="flex-row items-center gap-2 border-b border-primaryUltraLight pb-3">
+				<Text className="w-24 text-center text-sm  text-primary">Fournisseur</Text>
+				<Text className="w-32 text-center text-sm text-primary">Type</Text>
+				<Text className="w-20 text-center text-sm text-primary">Montant</Text>
+				<Text className="ml-auto text-center text-sm text-primary">Fichier</Text>
 			</View>
 			<FlashList
 				data={commissions as unknown as CommissionLight[]}
 				renderItem={({ item }) => {
 					return (
-						<View className="flex-row items-center justify-between">
-							<View className="size-8 items-center justify-center rounded-2xl bg-background">
-								<ImagePlaceholder
-									transition={300}
-									contentFit="cover"
-									// contentPosition="top"
-									placeholder={item.supplier.logo_mini?.blurhash}
-									placeholderContentFit="cover"
-									source={item.supplier.logo_mini?.url}
-									style={{ width: 20, height: 20, borderRadius: 99 }}
-								/>
+						<View className="my-4 flex-row items-center gap-2">
+							<View className="w-24 items-center justify-center gap-2">
+								<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
+									<ImagePlaceholder
+										transition={300}
+										contentFit="cover"
+										placeholder={item.supplier.logo_mini?.blurhash}
+										placeholderContentFit="cover"
+										source={item.supplier.logo_mini?.url}
+										style={{ width: 26, height: 26, borderRadius: 4 }}
+									/>
+								</View>
+								<Text className="text-center font-semibold text-sm text-primary" numberOfLines={1}>
+									{item.supplier.name}
+								</Text>
 							</View>
-							{/* <Text className="text-sm text-primary">{item.type}</Text>
-							<Text className="text-sm text-primary">{item.amount}</Text>
-							<Text className="text-sm text-primary">{item.pdf}</Text> */}
+							<View className="w-32 items-center justify-center gap-2">
+								{item.structured_product ? (
+									<Text className="rounded-full bg-[#F0F9FF] p-1 px-2 text-xs text-[#026AA2]">Produit structuré</Text>
+								) : (
+									<>
+										{item.informations?.production && (
+											<Text className="rounded-full bg-[#FEF3F2] p-1 px-2 text-xs text-[#B42318]">Production</Text>
+										)}
+										{item.informations?.encours && (
+											<Text className="rounded-full bg-[#EEF4FF] p-1 px-2 text-xs text-[#3538CD]">Encours</Text>
+										)}
+									</>
+								)}
+							</View>
+							<View className="w-20 items-center justify-center gap-2">
+								{item.structured_product ? (
+									<Text className="text-sm text-[#026AA2]">{item.informations?.up_front}€</Text>
+								) : (
+									<>
+										{item.informations?.production && (
+											<Text className="text-sm text-[#B42318]">{item.informations?.production}€</Text>
+										)}
+										{item.informations?.encours && (
+											<Text className="text-sm text-[#3538CD]">{item.informations?.encours}€</Text>
+										)}
+									</>
+								)}
+							</View>
+							<View className="ml-auto">
+								{item.informations?.pdf && (
+									<TouchableOpacity
+										disabled={loadingDownload}
+										onPress={() => {
+											if (
+												!item.informations?.pdf?.url ||
+												!item.informations?.pdf?.filename ||
+												!item.informations?.pdf?.mimeType
+											)
+												return;
+
+											// setLoadingDownload(true);
+											downloadFile(
+												item.informations?.pdf.url,
+												item.informations?.pdf.filename,
+												item.informations?.pdf.mimeType,
+											)
+												.then(() => {
+													// Alert.alert("PDF téléchargée !");
+												})
+												.catch((_) => {
+													Alert.alert(
+														"La PDF n'a pas pu être téléchargée",
+														"Vérifiez que le nom du fichier n'existe pas déjà sur votre appareil ou que vous avez assez d'espace de stockage.",
+													);
+												})
+												.finally(() => {
+													// setLoadingDownload(false);
+												});
+										}}
+										className="rounded-full bg-primaryUltraLight p-3"
+									>
+										{loadingDownload ? (
+											<ActivityIndicator
+												size="small"
+												style={{ width: 16, height: 16 }}
+												color={config.theme.extend.colors.primary}
+											/>
+										) : (
+											<DownloadIcon size={16} color={config.theme.extend.colors.primary} />
+										)}
+									</TouchableOpacity>
+								)}
+							</View>
 						</View>
 					);
 				}}
@@ -63,7 +142,7 @@ export default function Page() {
 				keyExtractor={(item) => item.id}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: 16 }}
-				ItemSeparatorComponent={() => <View className="h-5 border-b border-primaryUltraLight" />}
+				ItemSeparatorComponent={() => <View className="border-b border-primaryUltraLight" />}
 			/>
 		</BackgroundLayout>
 	);
