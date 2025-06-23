@@ -44,7 +44,7 @@ export default function Page() {
 		);
 	}
 
-	if (!data?.monthlyData) {
+	if (!data?.monthlyData.length) {
 		return (
 			<View className="flex-1 items-center justify-center">
 				<Text className="text-sm text-defaultGray">Pas de contenu</Text>
@@ -115,7 +115,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 					<Text className="text-md mt-5 font-semibold text-primary">Répartition</Text>
 					<View className="mt-5">
 						<View className="flex-row">
-							{/* {calculatePercentages.productionPercentage > 0 && (
+							{calculatePercentages.productionPercentage > 0 && (
 								<View
 									className="mr-1 gap-1"
 									style={{
@@ -158,7 +158,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 									</Text>
 									<View className="h-1.5 w-full rounded-full bg-structured" />
 								</View>
-							)} */}
+							)}
 						</View>
 					</View>
 					<View className="mt-6 flex-row items-center gap-2">
