@@ -56,7 +56,7 @@ export default function Page() {
 		<BackgroundLayout className="pt-safe px-4">
 			<Title title="Mes commissions" />
 
-			{/* <Content data={data} /> */}
+			<Content data={data} />
 		</BackgroundLayout>
 	);
 }
@@ -73,7 +73,6 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 		// calculate exact percentages
 		const production = (lastMonth.groupedData.production / lastMonth.groupedData.total) * 100;
 		const encours = (lastMonth.groupedData.encours / lastMonth.groupedData.total) * 100;
-		const structured = (lastMonth.groupedData.structured_product / lastMonth.groupedData.total) * 100;
 
 		// round the first two normally
 		const productionRounded = Math.round(production);
@@ -116,7 +115,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 					<Text className="text-md mt-5 font-semibold text-primary">Répartition</Text>
 					<View className="mt-5">
 						<View className="flex-row">
-							{calculatePercentages.productionPercentage > 0 && (
+							{/* {calculatePercentages.productionPercentage > 0 && (
 								<View
 									className="mr-1 gap-1"
 									style={{
@@ -159,7 +158,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 									</Text>
 									<View className="h-1.5 w-full rounded-full bg-structured" />
 								</View>
-							)}
+							)} */}
 						</View>
 					</View>
 					<View className="mt-6 flex-row items-center gap-2">
