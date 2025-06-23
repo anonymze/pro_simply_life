@@ -84,12 +84,12 @@ export default function Page() {
 						<Title title="Évènements agence" />
 						<Picker
 							style={{
-								width: 90,
+								width: 125,
 								alignSelf: "center",
 								marginTop: 8,
 							}}
 							variant="segmented"
-							options={["C", "L"]}
+							options={["Agenda", "Liste"]}
 							selectedIndex={null}
 							onOptionSelected={({ nativeEvent: { index } }) => {
 								if (index === 0) {
@@ -192,15 +192,21 @@ export default function Page() {
 							</ScrollView>
 						</View>
 						<View style={{ width: Dimensions.get("window").width - 28 }}>
-							<ScrollView
-								showsVerticalScrollIndicator={false}
-								contentContainerStyle={{ paddingBottom: 16, gap: 14 }}
-								className="mt-5"
-							>
-								{eventsStartingFromToday.map((event) => {
-									return <CardList isLoading={false} key={event.id} event={event} width={"100%"} />;
-								})}
-							</ScrollView>
+							{!!eventsStartingFromToday.length ? (
+								<ScrollView
+									showsVerticalScrollIndicator={false}
+									contentContainerStyle={{ paddingBottom: 16, gap: 14 }}
+									className="mt-5"
+								>
+									{eventsStartingFromToday.map((event) => {
+										return <CardList isLoading={false} key={event.id} event={event} width={"100%"} />;
+									})}
+								</ScrollView>	
+							) : (
+								<View className="flex-1 items-center justify-center">
+									<Text className="text-md text-center text-primaryLight">Aucun évènement à venir</Text>
+								</View>
+							)}
 						</View>
 					</ScrollView>
 				</BackgroundLayout>
