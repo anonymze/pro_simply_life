@@ -1,8 +1,8 @@
+import Animated, { FadeInDown, FadeOut, useSharedValue, useAnimatedStyle, withTiming, useDerivedValue, runOnJS, FadeIn, FadeInUp, } from "react-native-reanimated";
 import { ActivityIndicator, ActivityIndicatorBase, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from "react-native";
 import { ArrowDownRightIcon, ArrowUpRightIcon, DownloadIcon, ListIcon } from "lucide-react-native";
 import { Commission, CommissionLight, CommissionMonthlyData } from "@/types/commission";
 import { getCommissionMonthlyDataQuery } from "@/api/queries/commission-queries";
-import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
 import { HrefObject, Link, router } from "expo-router";
@@ -11,12 +11,36 @@ import { getStorageUserInfos } from "@/utils/store";
 import { useQuery } from "@tanstack/react-query";
 import { FlashList } from "@shopify/flash-list";
 import { queryClient } from "@/api/_queries";
+import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
 
 
 const fullConfig = resolveConfig(config);
+
+// Animated Number Component
+const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: number }) => {
+	const animatedValue = useSharedValue(0);
+	const [displayValue, setDisplayValue] = React.useState(0);
+
+	React.useEffect(() => {
+		animatedValue.value = withTiming(value, { duration }, (finished) => {
+			if (finished) {
+				// when an animation is finished, we set the display real value
+				runOnJS(setDisplayValue)(value);
+			}
+		});
+	}, [value, duration]);
+
+	useDerivedValue(() => {
+		if (animatedValue.value === value) return;
+		const currentValue = Math.round(animatedValue.value);
+		runOnJS(setDisplayValue)(currentValue);
+	});
+
+	return <Text className="font-bold text-2xl text-primary">{displayValue}€</Text>;
+};
 
 export default function Page() {
 	const appUser = getStorageUserInfos();
@@ -62,7 +86,7 @@ export default function Page() {
 }
 
 const Content = ({ data }: { data: CommissionMonthlyData }) => {
-	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[1]);
+	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[0]);
 
 	// calculate percentages without useEffect - ensuring they add up to 100%
 	const calculatePercentages = React.useMemo(() => {
@@ -95,11 +119,20 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 				data={data.monthlyData}
 				horizontal
 				estimatedItemSize={88}
+				extraData={lastMonth.id}
 				renderItem={({ item }) => {
 					return (
-						<View className="mr-3 rounded-lg bg-primary px-3.5 py-2">
-							<Text className="text-sm text-white">{item.month}</Text>
-						</View>
+						<Pressable
+							className={cn(
+								"mr-3 rounded-lg bg-darkGray px-3.5 py-2",
+								lastMonth.id === item.id && "bg-primary text-white",
+							)}
+							onPress={() => setLastMonth(item)}
+						>
+							<Text className={cn("font-semibold text-sm text-primary", lastMonth.id === item.id && "text-white")}>
+								{item.month}
+							</Text>
+						</Pressable>
 					);
 				}}
 			></FlashList>
@@ -110,7 +143,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 				<View className="rounded-2xl  bg-white p-4">
 					<View className="items-center justify-center gap-2 rounded-lg bg-gray-50 px-4 py-5">
 						<Text className="text-primaryLight">Total des gains sur {lastMonth.month}</Text>
-						<Text className="font-bold text-2xl text-primary">{lastMonth.totalAmount}€</Text>
+						<AnimatedNumber value={lastMonth.totalAmount} />
 					</View>
 					<Text className="text-md mt-5 font-semibold text-primary">Répartition</Text>
 					<View className="mt-5">
@@ -182,24 +215,40 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 
 					{lastMonth.comparison ? (
 						<>
-							{lastMonth.comparison.difference > 0 ? (
-								<View className="flex-row items-center gap-2">
+							{lastMonth.comparison.difference > 0 && (
+								<Animated.View
+									entering={FadeInDown.springify().duration(1200)}
+									exiting={FadeOut.duration(200)}
+									className="flex-row items-center gap-2"
+								>
 									<View className="size-6 items-center justify-center rounded-full bg-green-100">
 										<ArrowUpRightIcon size={14} color={fullConfig.theme.colors.green[500]} />
 									</View>
 									<Text className="text-green-600">+{lastMonth.comparison.difference.toFixed(2)}€</Text>
-								</View>
-							) : (
-								<View className="flex-row items-center gap-2">
+								</Animated.View>
+							)}
+
+							{lastMonth.comparison.difference < 0 && (
+								<Animated.View
+									entering={FadeInUp.springify().duration(1200)}
+									exiting={FadeOut.duration(200)}
+									className="flex-row items-center gap-2"
+								>
 									<View className="size-6 items-center justify-center rounded-full bg-red-100">
 										<ArrowDownRightIcon size={14} color={fullConfig.theme.colors.red[500]} />
 									</View>
 									<Text className="text-red-600">{lastMonth.comparison.difference.toFixed(2)}€</Text>
-								</View>
+								</Animated.View>
 							)}
 						</>
 					) : (
-						<Text className="text-sm text-primaryLight">Aucune comparaison disponible</Text>
+						<Animated.Text
+							exiting={FadeOut.duration(200)}
+							entering={FadeIn.duration(200)}
+							className="text-sm text-primaryLight py-0.5"
+						>
+							Aucune comparaison disponible
+						</Animated.Text>
 					)}
 					<View
 						style={{

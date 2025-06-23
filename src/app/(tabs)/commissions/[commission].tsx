@@ -120,7 +120,12 @@ export default function Page() {
 													setIdLoadingDownload(null);
 												});
 										}}
-										className="rounded-full bg-primaryUltraLight p-3"
+										className={cn(
+											"rounded-full p-3",
+											idLoadingDownload === item.id 
+												? "bg-gray-200" 
+												: "bg-primaryUltraLight active:bg-primary"
+										)}
 									>
 										{idLoadingDownload === item.id ? (
 											<ActivityIndicator
@@ -129,7 +134,13 @@ export default function Page() {
 												color={config.theme.extend.colors.primary}
 											/>
 										) : (
-											<DownloadIcon size={16} color={config.theme.extend.colors.primary} />
+											<DownloadIcon 
+												size={16} 
+												color={idLoadingDownload === item.id 
+													? config.theme.extend.colors.defaultGray
+													: config.theme.extend.colors.primary
+												} 
+											/>
 										)}
 									</TouchableOpacity>
 								)}
