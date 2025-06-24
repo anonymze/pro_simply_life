@@ -82,7 +82,7 @@ export function NewConversation({
 								keyboardType="default"
 								textContentType="oneTimeCode"
 								placeholder="Ex : fournisseurs"
-								className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
+								className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>
@@ -104,7 +104,7 @@ export function NewConversation({
 								autoCapitalize="none"
 								keyboardType="default"
 								placeholder="Ex : informations sur les fournisseurs"
-								className="w-full min-h-24 rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
+								className="w-full min-h-24 rounded-xl bg-darkGray p-5 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>

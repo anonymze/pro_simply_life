@@ -5,6 +5,11 @@ import * as Sharing from "expo-sharing";
 const destination = new Directory(Paths.document, "simply-life");
 
 const downloadFile = async (url: string, filename: string, mimeType: string | undefined, noSharing = false) => {
+	// console.log("downloadFile", url, filename, mimeType, noSharing);
+
+	console.log(url);
+	console.log(filename);
+
 	try {
 		const existingFile = new File(destination, filename);
 

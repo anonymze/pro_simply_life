@@ -154,6 +154,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 														downloadFile(item.file.url, item.file.filename, item.file.mimeType ?? undefined)
 															.then((res) => {})
 															.catch((error) => {
+																console.log(error);
 																Alert.alert(
 																	"Erreur",
 																	"Il est possible que vous n'ayez plus d'espace de stockage sur votre appareil ou que vous n'ayez pas les permissions nécessaires pour télécharger le fichier.",

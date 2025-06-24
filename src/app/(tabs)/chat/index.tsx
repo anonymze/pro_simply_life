@@ -113,7 +113,7 @@ export default function Page() {
 								if (userHierarchy[userInfos?.user.role ?? "visitor"] < 2 || item.app_user.id === userInfos?.user.id) {
 									return (
 										<DropdownMenu.Root>
-											{/* @ts-expect-error */}
+											{/* @ts-ignore */}
 											<DropdownMenu.Trigger action="longpress">
 												<Card
 													chatRoom={item}

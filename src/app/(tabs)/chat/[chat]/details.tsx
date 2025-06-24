@@ -82,12 +82,12 @@ export default function Page() {
 					onPress={() => {
 						deleteChatRoom.mutate(chatId as string);
 					}}
-					className="mt-4 flex-row items-center gap-2 rounded-xl bg-white p-1 shadow shadow-defaultGray/10"
+					className="mt-4 flex-row items-center gap-3 rounded-xl bg-white p-2 shadow shadow-defaultGray/10"
 				>
 					<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
 						<TrashIcon size={22} color={config.theme.extend.colors.red2} />
 					</View>
-					<Text className="text-md font-semibold text-red">Supprimer le groupe</Text>
+					<Text className="text-md font-semibold text-red2">Supprimer le groupe</Text>
 					{deleteChatRoom.isPending && (
 						<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red2} />
 					)}
@@ -100,7 +100,7 @@ export default function Page() {
 					if (isOwner) {
 						Alert.alert(
 							"Créateur du groupe",
-							"Si vous quitté le groupe, celui-ci sera supprimé car vous êtes le créateur.",
+							"Si vous quittez le groupe, celui-ci sera supprimé car vous êtes le créateur.",
 							[
 								{
 									text: "Annuler",
@@ -117,23 +117,23 @@ export default function Page() {
 					}
 					leaveChatRoom.mutate({ chatRoomId: chatId as string, userId: appUser.user.id });
 				}}
-				className="mt-4 flex-row items-center gap-2 rounded-xl bg-white p-1 shadow shadow-defaultGray/10"
+				className="mt-4 flex-row items-center gap-3 rounded-xl bg-white p-2 shadow shadow-defaultGray/10"
 			>
 				<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
 					<LogOutIcon size={22} color={config.theme.extend.colors.red2} />
 				</View>
-				<Text className="text-md font-semibold text-red">Quitter le groupe</Text>
+				<Text className="text-md font-semibold text-red2">Quitter le groupe</Text>
 				{leaveChatRoom.isPending && (
 					<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red2} />
 				)}
 			</TouchableOpacity>
 
-			<View className="mt-4 flex-row items-center justify-between">
+			<View className="mt-5 flex-row items-center justify-between">
 				<Text className="font-semibold text-xl text-primary">{chatRoom.guests.length} membres</Text>
 				{/* <Link href="/chat/new-room" asChild> */}
-				<TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
+				{/* <TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
 					<PlusIcon size={18} color={config.theme.extend.colors.primary} />
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				{/* </Link> */}
 			</View>
 

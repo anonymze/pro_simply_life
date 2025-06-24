@@ -133,7 +133,7 @@ export default function Page() {
 		refetchInterval: () => {
 			// pause refetching while a message is being sent
 			if (mutationMessages.isPending || mutationMessagesFile.isPending) return false;
-			return 700000;
+			return 7000;
 		},
 	});
 
@@ -205,6 +205,7 @@ export default function Page() {
 		});
 
 		if (result.canceled) return;
+
 
 		mutationMessagesFile.mutate({
 			// id is set later (to have differents ids for each file)
@@ -302,7 +303,7 @@ export default function Page() {
 							onEndReached={() => {
 								// add more messages when on end scroll
 								if (!!messages.length && messages.length >= maxMessages) {
-									setMaxMessages((props) => props + 20);
+									setMaxMessages((props) => props + MAX_MESSAGES);
 								}
 							}}
 							onEndReachedThreshold={0.1}
