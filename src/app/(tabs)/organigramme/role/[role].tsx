@@ -5,7 +5,7 @@ import CardEmployee from "@/components/card/card-employee";
 import BackgroundLayout from "@/layouts/background-layout";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
-import { Picker } from "@expo/ui/swift-ui";
+// import { Picker } from "@expo/ui/swift-ui";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
@@ -45,7 +45,7 @@ export default function Page() {
 		<BackgroundLayout className="px-4">
 			<View className="iems-center flex-row justify-between">
 				<Title title={role === "employee" ? "Employés" : "Indépendants"} />
-				<Picker
+				{/* <Picker
 					style={{
 						width: 150,
 						alignSelf: "center",
@@ -61,7 +61,7 @@ export default function Page() {
 							scrollRef.current?.scrollToEnd();
 						}
 					}}
-				/>
+				/> */}
 			</View>
 
 			<ScrollView
