@@ -48,7 +48,7 @@ export default function Page() {
 	const isOwner = reservation.app_user.id === appUser.user.id;
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-0")}>
 			<Title title="Détails de la réservation" />
 			<View className="mt-4 flex-row items-center gap-3 rounded-2xl bg-white p-4">
 				<BuildingIcon size={24} color={config.theme.extend.colors.primaryLight} />
@@ -100,10 +100,10 @@ export default function Page() {
 					className="mt-4 flex-row items-center gap-3 rounded-2xl bg-white p-3"
 				>
 					<View className="size-14 items-center justify-center rounded-xl bg-red-200">
-						<LogOutIcon size={24} color={config.theme.extend.colors.red} />
+						<LogOutIcon size={24} color={config.theme.extend.colors.red2} />
 					</View>
-					<Text className="text-red font-semibold text-lg">Annuler la réservation</Text>
-					{deleteReservation.isPending && <ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red} />}
+					<Text className="text-red2 font-semibold text-lg">Annuler la réservation</Text>
+					{deleteReservation.isPending && <ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red2} />}
 				</TouchableOpacity>
 			)}
 		</BackgroundLayout>

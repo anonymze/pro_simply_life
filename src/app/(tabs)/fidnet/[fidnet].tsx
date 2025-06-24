@@ -29,7 +29,7 @@ export default function Page() {
 	if (!fidnet) return null;
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
+		<BackgroundLayout className={cn("px-4 pb-4")}>
 			<Title
 				title={`Newsletter du ${new Date(fidnet.date).toLocaleDateString("fr-FR", {
 					day: "numeric",

@@ -4,10 +4,10 @@ import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
+import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
 import { Brochure } from "@/components/brochure";
 import { Supplier } from "@/types/supplier";
-import { Picker } from "@expo/ui/swift-ui";
 import config from "tailwind.config";
 import React from "react";
 

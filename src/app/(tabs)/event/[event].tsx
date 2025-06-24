@@ -22,7 +22,7 @@ export default function Page() {
 	const sameDay = data.event_start.split("T")[0] === data.event_end.split("T")[0];
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-2")}>
 			<View className="gap-5">
 				<View className="items-center gap-2 rounded-2xl bg-white p-5">
 					<View className="mx-auto mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">

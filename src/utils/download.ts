@@ -4,11 +4,11 @@ import * as Sharing from "expo-sharing";
 
 const destination = new Directory(Paths.document, "simply-life");
 
-const downloadFile = async (url: string, filename: string, mimeType: string | undefined) => {
+const downloadFile = async (url: string, filename: string, mimeType: string | undefined, noSharing = false) => {
 	try {
 		const existingFile = new File(destination, filename);
 
-		if (existingFile.exists) {
+		if (existingFile.exists && !noSharing) {
 			await shareFile(existingFile.uri, mimeType);
 			return existingFile;
 		}
