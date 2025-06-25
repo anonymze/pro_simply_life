@@ -77,7 +77,7 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 
 							setLoadingOpen(true);
 
-							downloadFile(brochure.url, brochure.filename, brochure.mimeType, true)
+							downloadFile(brochure.url, brochure.filename, brochure.mimeType, false)
 								.then((_) => {
 									router.push(link);
 								})

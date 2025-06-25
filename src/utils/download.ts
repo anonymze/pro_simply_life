@@ -4,16 +4,11 @@ import * as Sharing from "expo-sharing";
 
 const destination = new Directory(Paths.document, "simply-life");
 
-const downloadFile = async (url: string, filename: string, mimeType: string | undefined, noSharing = false) => {
-	// console.log("downloadFile", url, filename, mimeType, noSharing);
-
-	console.log(url);
-	console.log(filename);
-
+const downloadFile = async (url: string, filename: string, mimeType: string | undefined, sharing = false) => {
 	try {
 		const existingFile = new File(destination, filename);
 
-		if (existingFile.exists && !noSharing) {
+		if (existingFile.exists && sharing) {
 			await shareFile(existingFile.uri, mimeType);
 			return existingFile;
 		}
@@ -22,7 +17,7 @@ const downloadFile = async (url: string, filename: string, mimeType: string | un
 
 		const result = await File.downloadFileAsync(url, destination);
 
-		await shareFile(result.uri, mimeType);
+		if (sharing) await shareFile(result.uri, mimeType);
 
 		return result;
 	} catch (error) {
