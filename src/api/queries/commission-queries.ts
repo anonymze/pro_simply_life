@@ -1,4 +1,4 @@
-import { Commission, CommissionMonthlyData } from "@/types/commission";
+import { Commission, CommissionMonthlyAndYearlyData } from "@/types/commission";
 import { PaginatedResponse } from "@/types/response";
 import { QueryKey } from "@tanstack/react-query";
 
@@ -22,10 +22,10 @@ export async function getCommissionsQuery({ queryKey }: { queryKey: QueryKey }) 
 	return response.data;
 }
 
-export async function getCommissionMonthlyDataQuery({ queryKey }: { queryKey: QueryKey }) {
+export async function getCommissionMonthlyAndYearlyDataQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, userId] = queryKey;
 
-	const response = await api.get<CommissionMonthlyData>(`/api/commissions/extra/${userId}`);
+	const response = await api.get<CommissionMonthlyAndYearlyData>(`/api/commissions/extra/${userId}`);
 
 	return response.data;
 }

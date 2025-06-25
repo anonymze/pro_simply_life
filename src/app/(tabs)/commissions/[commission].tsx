@@ -1,5 +1,5 @@
 import { ActivityIndicator, Alert, Platform, Text, TouchableOpacity, View } from "react-native";
-import { getCommissionMonthlyDataQuery } from "@/api/queries/commission-queries";
+import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight } from "@/types/commission";
@@ -26,7 +26,7 @@ export default function Page() {
 
 	const { data: commissions } = useQuery({
 		queryKey: ["commissions", commissionId],
-		queryFn: getCommissionMonthlyDataQuery,
+		queryFn: getCommissionMonthlyAndYearlyDataQuery,
 		enabled: !!commissionId,
 	});
 
@@ -122,9 +122,7 @@ export default function Page() {
 										}}
 										className={cn(
 											"rounded-full p-3",
-											idLoadingDownload === item.id 
-												? "bg-gray-200" 
-												: "bg-primaryUltraLight active:bg-primary"
+											idLoadingDownload === item.id ? "bg-gray-200" : "bg-primaryUltraLight active:bg-primary",
 										)}
 									>
 										{idLoadingDownload === item.id ? (
@@ -134,12 +132,13 @@ export default function Page() {
 												color={config.theme.extend.colors.primary}
 											/>
 										) : (
-											<DownloadIcon 
-												size={16} 
-												color={idLoadingDownload === item.id 
-													? config.theme.extend.colors.defaultGray
-													: config.theme.extend.colors.primary
-												} 
+											<DownloadIcon
+												size={16}
+												color={
+													idLoadingDownload === item.id
+														? config.theme.extend.colors.defaultGray
+														: config.theme.extend.colors.primary
+												}
 											/>
 										)}
 									</TouchableOpacity>

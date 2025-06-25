@@ -84,7 +84,7 @@ export default function Page() {
 						<Title title="Évènements agence" />
 						<Picker
 							style={{
-								width: 125,
+								width: 128,
 								alignSelf: "center",
 								marginTop: 8,
 							}}

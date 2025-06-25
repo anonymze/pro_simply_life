@@ -37,12 +37,27 @@ export interface CommissionLight {
 	updatedAt: string;
 }
 
-export interface CommissionMonthlyData {
-	totalAmount: number;
+export interface CommissionMonthlyAndYearlyData {
 	monthlyData: Array<{
 		id: string;
-		month: string;
+		labelDate: string;
 		commissions: CommissionLight[];
+		totalAmount: number;
+		groupedData: {
+			encours: number;
+			production: number;
+			structured_product: number;
+			total: number;
+		};
+		comparison?: {
+			difference: number;
+			percentageChange: number;
+			previousMonthTotal: number;
+		};
+	}>;
+	yearlyData: Array<{
+		id: string;
+		labelDate: string;
 		totalAmount: number;
 		groupedData: {
 			encours: number;

@@ -1,16 +1,16 @@
-import Animated, { FadeInDown, FadeOut, useSharedValue, useAnimatedStyle, withTiming, useDerivedValue, runOnJS, FadeIn, FadeInUp, } from "react-native-reanimated";
-import { ActivityIndicator, ActivityIndicatorBase, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from "react-native";
-import { ArrowDownRightIcon, ArrowUpRightIcon, DownloadIcon, ListIcon } from "lucide-react-native";
-import { Commission, CommissionLight, CommissionMonthlyData } from "@/types/commission";
-import { getCommissionMonthlyDataQuery } from "@/api/queries/commission-queries";
-import { withQueryWrapper } from "@/utils/libs/react-query";
+import Animated, { FadeInDown, FadeOut, useSharedValue, withTiming, useDerivedValue, runOnJS, FadeIn, FadeInUp, } from "react-native-reanimated";
+import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from "react-native";
+import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
+import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
+import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
 import BackgroundLayout from "@/layouts/background-layout";
-import { HrefObject, Link, router } from "expo-router";
 import resolveConfig from "tailwindcss/resolveConfig";
 import { getStorageUserInfos } from "@/utils/store";
 import { useQuery } from "@tanstack/react-query";
 import { FlashList } from "@shopify/flash-list";
+import { HrefObject, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
+import { Picker } from "@expo/ui/swift-ui";
 import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
@@ -43,11 +43,12 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 };
 
 export default function Page() {
+	const scrollRef = React.useRef<ScrollView>(null);
 	const appUser = getStorageUserInfos();
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["commissions-monthly", appUser?.user.id],
-		queryFn: getCommissionMonthlyDataQuery,
+		queryFn: getCommissionMonthlyAndYearlyDataQuery,
 	});
 
 	if (isLoading) {
@@ -78,45 +79,58 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className="pt-safe px-4">
-			<Title title="Mes commissions" />
+			<View className="iems-center flex-row justify-between">
+				<Title title="Évènements agence" />
+				<Picker
+					style={{
+						width: 128,
+						alignSelf: "center",
+						marginTop: 8,
+					}}
+					variant="segmented"
+					options={["Agenda", "Liste"]}
+					selectedIndex={null}
+					onOptionSelected={({ nativeEvent: { index } }) => {
+						if (index === 0) {
+							scrollRef.current?.scrollTo({ x: 0, animated: true });
+						} else {
+							scrollRef.current?.scrollToEnd();
+						}
+					}}
+				/>
+			</View>
 
-			<Content data={data} />
+			<ScrollView
+				ref={scrollRef}
+				horizontal
+				showsHorizontalScrollIndicator={false}
+				scrollEnabled={false}
+				decelerationRate={"fast"}
+				contentContainerStyle={{ gap: 16 }}
+				style={{
+					marginTop: 16,
+				}}
+			>
+				<View style={{ width: Dimensions.get("window").width - 28 }}>
+					<WrappeContent type="monthly" data={data} />
+				</View>
+				<View style={{ width: Dimensions.get("window").width - 28 }}>
+					<WrappeContent type="yearly" data={data} />
+				</View>
+			</ScrollView>
 		</BackgroundLayout>
 	);
 }
 
-const Content = ({ data }: { data: CommissionMonthlyData }) => {
-	const [lastMonth, setLastMonth] = React.useState<CommissionMonthlyData["monthlyData"][number]>(data.monthlyData[0]);
-
-	// calculate percentages without useEffect - ensuring they add up to 100%
-	const calculatePercentages = React.useMemo(() => {
-		if (lastMonth.groupedData.total <= 0) {
-			return { productionPercentage: 0, encoursPercentage: 0, structuredPercentage: 0 };
-		}
-
-		// calculate exact percentages
-		const production = (lastMonth.groupedData.production / lastMonth.groupedData.total) * 100;
-		const encours = (lastMonth.groupedData.encours / lastMonth.groupedData.total) * 100;
-
-		// round the first two normally
-		const productionRounded = Math.round(production);
-		const encoursRounded = Math.round(encours);
-
-		// make the third one the remainder to ensure total = 100%
-		const structuredRounded = 100 - productionRounded - encoursRounded;
-
-		return {
-			productionPercentage: productionRounded,
-			encoursPercentage: encoursRounded,
-			structuredPercentage: Math.max(0, structuredRounded), // ensure it's not negative
-		};
-	}, [lastMonth]);
-
+const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; type: "monthly" | "yearly" }) => {
+	const [lastMonth, setLastMonth] = React.useState<
+		CommissionMonthlyAndYearlyData["monthlyData"][number] | CommissionMonthlyAndYearlyData["yearlyData"][number]
+	>(type === "monthly" ? data.monthlyData[0] : data.yearlyData[0]);
 	return (
 		<>
 			<FlashList
 				showsHorizontalScrollIndicator={false}
-				data={data.monthlyData}
+				data={type === "monthly" ? data.monthlyData : data.yearlyData}
 				horizontal
 				estimatedItemSize={88}
 				extraData={lastMonth.id}
@@ -130,20 +144,55 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 							onPress={() => setLastMonth(item)}
 						>
 							<Text className={cn("font-semibold text-sm text-primary", lastMonth.id === item.id && "text-white")}>
-								{item.month}
+								{item.labelDate}
 							</Text>
 						</Pressable>
 					);
 				}}
 			></FlashList>
+			<Content data={lastMonth} />
+		</>
+	);
+};
 
+const Content = ({
+	data,
+}: {
+	data: CommissionMonthlyAndYearlyData["monthlyData"][number] | CommissionMonthlyAndYearlyData["yearlyData"][number];
+}) => {
+	// calculate percentages without useEffect - ensuring they add up to 100%
+	const calculatePercentages = React.useMemo(() => {
+		if (data.groupedData.total <= 0) {
+			return { productionPercentage: 0, encoursPercentage: 0, structuredPercentage: 0 };
+		}
+
+		// calculate exact percentages
+		const production = (data.groupedData.production / data.groupedData.total) * 100;
+		const encours = (data.groupedData.encours / data.groupedData.total) * 100;
+
+		// round the first two normally
+		const productionRounded = Math.round(production);
+		const encoursRounded = Math.round(encours);
+
+		// make the third one the remainder to ensure total = 100%
+		const structuredRounded = 100 - productionRounded - encoursRounded;
+
+		return {
+			productionPercentage: productionRounded,
+			encoursPercentage: encoursRounded,
+			structuredPercentage: Math.max(0, structuredRounded), // ensure it's not negative
+		};
+	}, [data]);
+
+	return (
+		<>
 			<Text className="mt-5 font-semibold text-lg text-primary">Résumé du mois</Text>
 
 			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 16 }} className="mt-3">
 				<View className="rounded-2xl  bg-white p-4">
 					<View className="items-center justify-center gap-2 rounded-lg bg-gray-50 px-4 py-5">
-						<Text className="text-primaryLight">Total des gains sur {lastMonth.month}</Text>
-						<AnimatedNumber value={lastMonth.totalAmount} />
+						<Text className="text-primaryLight">Total des gains sur {data.labelDate}</Text>
+						<AnimatedNumber value={data.totalAmount} />
 					</View>
 					<Text className="text-md mt-5 font-semibold text-primary">Répartition</Text>
 					<View className="mt-5">
@@ -197,25 +246,29 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 					<View className="mt-6 flex-row items-center gap-2">
 						<View className="size-2 rounded-full bg-production" />
 						<Text className="text-backgroundChat">Productions</Text>
-						<Text className="ml-auto font-light text-sm text-primaryLight">{lastMonth.groupedData.production}€</Text>
+						<Text className="ml-auto font-light text-sm text-primaryLight">
+							{data.groupedData.production.toFixed(2)}€
+						</Text>
 					</View>
 					<View className="flex-row items-center gap-2">
 						<View className="size-2 rounded-full bg-encours" />
 						<Text className="text-backgroundChat">Encours</Text>
-						<Text className="ml-auto font-light text-sm text-primaryLight">{lastMonth.groupedData.encours}€</Text>
+						<Text className="ml-auto font-light text-sm text-primaryLight">{data.groupedData.encours.toFixed(2)}€</Text>
 					</View>
 					<View className="flex-row items-center gap-2">
 						<View className="size-2 rounded-full bg-structured" />
 						<Text className="text-backgroundChat">Produits structurés</Text>
 						<Text className="ml-auto font-light text-sm text-primaryLight">
-							{lastMonth.groupedData.structured_product}€
+							{data.groupedData.structured_product.toFixed(2)}€
 						</Text>
 					</View>
-					<Text className="text-md mb-3 mt-6 font-medium text-primary">Évolution vs mois précédent</Text>
+					<Text className="text-md mb-3 mt-6 font-medium text-primary">
+						Évolution vs {"commissions" in data ? "mois précédent" : "année précédente"}
+					</Text>
 
-					{lastMonth.comparison ? (
+					{data.comparison ? (
 						<>
-							{lastMonth.comparison.difference > 0 && (
+							{data.comparison.difference > 0 && (
 								<Animated.View
 									entering={FadeInDown.springify().duration(1200)}
 									exiting={FadeOut.duration(200)}
@@ -224,11 +277,11 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 									<View className="size-6 items-center justify-center rounded-full bg-green-100">
 										<ArrowUpRightIcon size={14} color={fullConfig.theme.colors.green[500]} />
 									</View>
-									<Text className="text-green-600">+{lastMonth.comparison.difference.toFixed(2)}€</Text>
+									<Text className="text-green-600">+{data.comparison.difference.toFixed(2)}€</Text>
 								</Animated.View>
 							)}
 
-							{lastMonth.comparison.difference < 0 && (
+							{data.comparison.difference < 0 && (
 								<Animated.View
 									entering={FadeInUp.springify().duration(1200)}
 									exiting={FadeOut.duration(200)}
@@ -237,7 +290,7 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 									<View className="size-6 items-center justify-center rounded-full bg-red-100">
 										<ArrowDownRightIcon size={14} color={fullConfig.theme.colors.red[500]} />
 									</View>
-									<Text className="text-red-600">{lastMonth.comparison.difference.toFixed(2)}€</Text>
+									<Text className="text-red-600">{data.comparison.difference.toFixed(2)}€</Text>
 								</Animated.View>
 							)}
 						</>
@@ -245,29 +298,35 @@ const Content = ({ data }: { data: CommissionMonthlyData }) => {
 						<Animated.Text
 							exiting={FadeOut.duration(200)}
 							entering={FadeIn.duration(200)}
-							className="text-sm text-primaryLight py-0.5"
+							className="py-0.5 text-sm text-primaryLight"
 						>
 							Aucune comparaison disponible
 						</Animated.Text>
 					)}
-					<View
-						style={{
-							borderBottomColor: "#bbb",
-							borderBottomWidth: StyleSheet.hairlineWidth,
-							marginBlock: 22,
-						}}
-					/>
-					<SeeDetails
-						id={lastMonth.id}
-						commissions={lastMonth.commissions}
-						link={{
-							pathname: "/(tabs)/commissions/[commission]",
-							params: {
-								commission: lastMonth.id,
-							},
-						}}
-					/>
+					{"commissions" in data && (
+						<>
+							<View
+								style={{
+									borderBottomColor: "#bbb",
+									borderBottomWidth: StyleSheet.hairlineWidth,
+									marginBlock: 22,
+								}}
+							/>
+
+							<SeeDetails
+								id={data.id}
+								commissions={data.commissions}
+								link={{
+									pathname: "/(tabs)/commissions/[commission]",
+									params: {
+										commission: data.id,
+									},
+								}}
+							/>
+						</>
+					)}
 				</View>
+
 				{/* <Pressable
 					onPress={() => {}}
 					disabled={false}
@@ -301,7 +360,7 @@ function SeeDetails({
 	link,
 	id,
 }: {
-	id: CommissionMonthlyData["monthlyData"][number]["id"];
+	id: CommissionMonthlyAndYearlyData["monthlyData"][number]["id"];
 	commissions: CommissionLight[];
 	link: HrefObject;
 }) {
