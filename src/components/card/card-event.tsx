@@ -70,8 +70,9 @@ export default function CardEvent({
 			) : (
 				<Link
 					href={{
-						pathname: "/event/[event]",
-						params: { event: event.id },
+						// TODO
+						pathname: "/(tabs)/event",
+						// params: { event: event.id },
 					}}
 					push
 					asChild

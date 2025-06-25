@@ -105,7 +105,7 @@ export default function Page() {
 						</TouchableOpacity>
 					</Link>
 				</View>
-				<Carousel data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}>
+				<Carousel data={[1, 2, 3, 4, 5]}>
 					{(data, cardWidth) => {
 						return data.map((item) => (
 							<CardEvent
