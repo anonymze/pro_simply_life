@@ -9,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import { FlashList } from "@shopify/flash-list";
 import { downloadFile } from "@/utils/download";
 import { cn } from "@/utils/libs/tailwind";
-import Title from "@/components/ui/title";
 import { cssInterop } from "nativewind";
 import { VideoView } from "expo-video";
 import config from "tailwind.config";
@@ -33,7 +32,7 @@ export default function Page() {
 	if (!commissions) return null;
 
 	return (
-		<BackgroundLayout className={cn("bg-white px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
+		<BackgroundLayout className={cn("bg-white px-4 pb-4")}>
 			<View className="flex-row items-center gap-2 border-b border-primaryUltraLight pb-3">
 				<Text className="w-24 text-center text-sm  text-primary">Fournisseur</Text>
 				<Text className="w-32 text-center text-sm text-primary">Type</Text>
