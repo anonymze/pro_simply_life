@@ -183,3 +183,5 @@ code -> adresse email
 
 arbitrage  et ciffres d'ffaires -> productions 
 encours -> encours
+
+VIDEO NOT WORKING + RESERVATION BUREZAU OUTLOOK + EVENEMENTS PAGE DACCUEIL
