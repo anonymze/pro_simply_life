@@ -376,7 +376,7 @@ const Content = ({
 
 							// values of the ticks
 							tickValues: {
-								y: [0, 100, 200, 300, 400, 500],
+								y: [0, 20, 40, 60, 80, 100, 120, 140],
 								x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 							},
 							// number of ticks (lines)
@@ -387,7 +387,7 @@ const Content = ({
 							},
 							formatXLabel: (value) => {
 								const date = new Date(2025, value - 1);
-								return date.toLocaleString("fr-FR", { month: "short" });
+								return "commissions" in data ? date.toLocaleString("fr-FR", { month: "short" }) : date.toLocaleString("fr-FR", { year: "numeric" });
 							},
 							labelColor: config.theme.extend.colors.primaryLight,
 							labelOffset: 5,
