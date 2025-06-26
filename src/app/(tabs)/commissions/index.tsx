@@ -1,11 +1,11 @@
 import Animated, { FadeInDown, FadeOut, useSharedValue, withTiming, useDerivedValue, runOnJS, FadeIn, FadeInUp, } from "react-native-reanimated";
+import { Circle, LinearGradient, useFont, vec, Text as SkiaText, Canvas, processTransform2d } from "@shopify/react-native-skia";
 import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from "react-native";
 import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
 import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
-import { LinearGradient, useFont, vec } from "@shopify/react-native-skia";
+import { Bar, CartesianChart, useChartPressState } from "victory-native";
 import BackgroundLayout from "@/layouts/background-layout";
-import { Bar, CartesianChart, Line } from "victory-native";
 import { generateYAxisTickValues } from "@/utils/helper";
 import resolveConfig from "tailwindcss/resolveConfig";
 import { getStorageUserInfos } from "@/utils/store";
@@ -166,7 +166,10 @@ const Content = ({
 	allCommissions: CommissionMonthlyAndYearlyData["monthlyData"] | CommissionMonthlyAndYearlyData["yearlyData"];
 	data: CommissionMonthlyAndYearlyData["monthlyData"][number] | CommissionMonthlyAndYearlyData["yearlyData"][number];
 }) => {
+	const { state, isActive } = useChartPressState({ x: 0, y: { amount: 0 } });
 	const font = useFont(require("@/assets/fonts/PlusJakartaSans-Regular.ttf"), 12);
+	const fontTooltip = useFont(require("@/assets/fonts/PlusJakartaSans-Bold.ttf"), 14);
+
 	// calculate percentages without useEffect - ensuring they add up to 100%
 	const calculatePercentages = React.useMemo(() => {
 		if (data.totalAmount <= 0) {
@@ -201,6 +204,13 @@ const Content = ({
 			.filter(Boolean)
 			.slice(0, 12);
 	}, [allCommissions, data.id]);
+
+	const tooltipText = useDerivedValue(() => {
+		return `€${state.y.amount.value.get()} €`;
+	}, [state.y.amount]);
+
+	// create derived values for x and y with your offsets
+	const tooltipY = useDerivedValue(() => state.y.amount.position.value - 5, [state.y.amount]);
 
 	return (
 		<>
@@ -367,6 +377,7 @@ const Content = ({
 								top: 5,
 								bottom: 0,
 							}}
+							chartPressState={state}
 							axisOptions={{
 								/**
 								 * 👇 Pass the font object to the axisOptions.
@@ -389,7 +400,10 @@ const Content = ({
 
 								// values of the ticks
 								tickValues: {
-									y: generateYAxisTickValues(slicedCommissions.reduce((cum, item) => Math.max(cum, item?.totalAmount || 0), 0), 6),
+									y: generateYAxisTickValues(
+										slicedCommissions.reduce((cum, item) => Math.max(cum, item?.totalAmount || 0), 0),
+										6,
+									),
 									x: slicedCommissions.map((_, idx) => idx + 1),
 								},
 								// number of ticks (lines)
@@ -401,8 +415,8 @@ const Content = ({
 								formatXLabel: (value) => {
 									if (!slicedCommissions[value]) return "";
 									const textComplete = slicedCommissions[value].labelDate;
-									// juin 2025 so it's 9 to slice
-									return textComplete.length > 9 ? textComplete.slice(0, 3) + "." : textComplete.slice(0,4);
+									// juin 2025 so it's 9 length
+									return textComplete.length > 9 ? textComplete.slice(0, 3) + "." : textComplete.slice(0, 4);
 								},
 								labelColor: config.theme.extend.colors.primaryLight,
 								labelOffset: 5,
@@ -417,24 +431,33 @@ const Content = ({
 									 * to the roundedCorners prop. This will round the top left and top right.
 									 */
 									barWidth={slicedCommissions.length <= 5 ? 30 : slicedCommissions.length === 7 ? 25 : 20}
-									// animate={{
-									// 	type: "timing",
-									// }}
+									animate={{
+										type: "timing",
+									}}
 									roundedCorners={{
-										topLeft: 5,
-										topRight: 5,
+										topLeft: 6,
+										topRight: 6,
 									}}
 								>
 									{/* 👇 We add a gradient to the bars by passing a LinearGradient as a child. */}
 									<LinearGradient
 										start={vec(0, 0)} // 👈 The start and end are vectors that represent the direction of the gradient.
-										end={vec(0, 400)}
+										end={vec(0, 300)}
 										colors={[
 											// 👈 The colors are an array of strings that represent the colors of the gradient.
-											config.theme.extend.colors.primary,
+											config.theme.extend.colors.primaryLight,
 											config.theme.extend.colors.primary,
 										]}
 									/>
+									{isActive ? (
+										<SkiaText
+											x={state.x.position}
+											y={tooltipY}
+											text={tooltipText}
+											font={fontTooltip}
+											color={config.theme.extend.colors.dark}
+										/>
+									) : null}
 								</Bar>
 							)}
 						</CartesianChart>
@@ -463,6 +486,8 @@ const Content = ({
 		</>
 	);
 };
+
+const AnimatedCirle = Animated.createAnimatedComponent(Circle);
 
 // minimum width for small percentages to ensure text is visible
 const getMinWidth = (percentage: number) => {
