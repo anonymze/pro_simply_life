@@ -171,17 +171,7 @@ http://localhost:8081/\_expo/atlas
 </dict>
 
 
-Unit tests
-reset expiration token on success
-rester appuyer pour copier coller un text (numéros de tels)
-
 webrtc ? for sharing files for chat 
 
-deep link + traduction + réservation bureau outlook + statistiques commissions + bloc note + réservation nom des bureaux 
 
-code -> adresse email
-
-arbitrage  et ciffres d'ffaires -> productions 
-encours -> encours
-
-VIDEO NOT WORKING + RESERVATION BUREZAU OUTLOOK + EVENEMENTS PAGE DACCUEIL + APPLE BUSINESS MANAGER
+RESERVATION BUREZAU OUTLOOK + EVENEMENTS PAGE DACCUEIL + APPLE BUSINESS MANAGER + FIX CONTEXT SUUPPRIMER GROUPE CHAT
