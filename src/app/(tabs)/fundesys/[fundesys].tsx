@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Brochure } from "@/components/brochure";
 import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
+import React, { useEffect } from "react";
 import { cssInterop } from "nativewind";
 
 
@@ -27,15 +28,25 @@ export default function Page() {
 
 	if (!fundesys) return null;
 
-	const player = useVideoPlayer(
-		{
-			uri: fundesys.video.url!,
-		},
-		(player) => {
-			// player.loop = true;
-			// player.play();
-		},
-	);
+	const player = useVideoPlayer(null, (player) => {
+		// player.loop = true;
+		// player.play();
+	});
+
+	React.useEffect(() => {
+		async function fetchAsync() {
+			try {
+				const res = await fetch(fundesys?.video.url ?? "");
+				player.replace(res.url);
+			} catch {
+				player.replace("");
+			}
+		}
+
+		fetchAsync();
+	}, [fundesys]);
+
+	player.videoTrack;
 
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4")}>
