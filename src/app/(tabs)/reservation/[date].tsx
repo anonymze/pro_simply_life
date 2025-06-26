@@ -56,7 +56,6 @@ export default function Page() {
 	const mutation = useMutation({
 		mutationFn: createReservationQuery,
 		onSuccess: (data) => {
-			console.log(data);
 			queryClient.setQueryData(["reservations", { limit: 99 }], (prev: PaginatedResponse<Reservation>) => {
 				return {
 					...prev,

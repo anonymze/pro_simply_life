@@ -3,7 +3,9 @@ import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, Text,
 import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
 import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
+import { LinearGradient, useFont, vec } from "@shopify/react-native-skia";
 import BackgroundLayout from "@/layouts/background-layout";
+import { Bar, CartesianChart, Line } from "victory-native";
 import resolveConfig from "tailwindcss/resolveConfig";
 import { getStorageUserInfos } from "@/utils/store";
 import { Picker } from "@expo/ui/jetpack-compose";
@@ -16,6 +18,13 @@ import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
 
+
+const DATAS = Array.from({ length: 12 }, (_, index) => ({
+	// Starting at 1 for January
+	month: index + 1,
+	// Randomizing the listen count between 100 and 50
+	listenCount: Math.floor(Math.random() * (100 - 50 + 1)) + 50,
+}));
 
 const fullConfig = resolveConfig(config);
 
@@ -80,15 +89,15 @@ export default function Page() {
 	return (
 		<BackgroundLayout className="pt-safe px-4">
 			<View className="iems-center flex-row justify-between">
-				<Title title="Évènements agence" />
+				<Title title="Commissions" />
 				<Picker
 					style={{
-						width: 146,
+						width: 150,
 						alignSelf: "center",
 						marginTop: 10,
 					}}
 					variant="segmented"
-					options={["Agenda", "Liste"]}
+					options={["Mois", "Année"]}
 					selectedIndex={null}
 					onOptionSelected={({ nativeEvent: { index } }) => {
 						if (index === 0) {
@@ -160,6 +169,7 @@ const Content = ({
 }: {
 	data: CommissionMonthlyAndYearlyData["monthlyData"][number] | CommissionMonthlyAndYearlyData["yearlyData"][number];
 }) => {
+	const font = useFont(require("@/assets/fonts/PlusJakartaSans-Regular.ttf"), 12);
 	// calculate percentages without useEffect - ensuring they add up to 100%
 	const calculatePercentages = React.useMemo(() => {
 		if (data.groupedData.total <= 0) {
@@ -189,7 +199,7 @@ const Content = ({
 			<Text className="mt-5 font-semibold text-lg text-primary">Résumé du mois</Text>
 
 			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 16 }} className="mt-3">
-				<View className="rounded-2xl  bg-white p-4">
+				<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
 					<View className="items-center justify-center gap-2 rounded-lg bg-gray-50 px-4 py-5">
 						<Text className="text-primaryLight">Total des gains sur {data.labelDate}</Text>
 						<AnimatedNumber value={data.totalAmount} />
@@ -325,6 +335,85 @@ const Content = ({
 							/>
 						</>
 					)}
+				</View>
+
+				<View className="mt-6 h-72 rounded-2xl bg-white p-4">
+					<CartesianChart
+						data={DATAS}
+						xKey="month"
+						yKeys={["listenCount"]}
+
+						// 👇 Add domain padding to the chart to prevent the first and last bar from being cut off.
+						domainPadding={{
+							left: 25,
+							right: 25,
+							top: 5,
+							bottom: 0,
+						}}
+						axisOptions={{
+							/**
+							 * 👇 Pass the font object to the axisOptions.
+							 * This will tell CartesianChart to render axis labels.
+							 */
+							font,
+							lineColor: config.theme.extend.colors.darkGray,
+							lineWidth: {
+								grid: {
+									y: 1,
+									x: 0,
+								},
+								frame: 0,
+							},
+							// where the axes are (top, bottom, left, right)
+							// axisSide: {
+							// 	x: "bottom",
+							// 	y: "left",
+							// },
+
+							// isNumericalData: true,
+
+							// values of the ticks
+							tickValues: {
+								y: [0, 100, 200],
+								x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+							},
+							// number of ticks (lines)
+							// tickCount: 12,
+
+							formatXLabel: (value) => {
+								const date = new Date(2025, value - 1);
+								return date.toLocaleString("fr-FR", { month: "short" });
+							},
+							labelColor: config.theme.extend.colors.primaryLight,
+							labelOffset: 5,
+						}}
+					>
+						{({ points, chartBounds }) => (
+							<Bar
+								chartBounds={chartBounds}
+								points={points.listenCount}
+								/**
+								 * 👇 We can round the top corners of our bars by passing a number
+								 * to the roundedCorners prop. This will round the top left and top right.
+								 */
+								roundedCorners={{
+									topLeft: 5,
+									topRight: 5,
+								}}
+							>
+								{/* 👇 We add a gradient to the bars by passing a LinearGradient as a child. */}
+								<LinearGradient
+									start={vec(0, 0)} // 👈 The start and end are vectors that represent the direction of the gradient.
+									end={vec(0, 400)}
+									colors={[
+										// 👈 The colors are an array of strings that represent the colors of the gradient.
+										config.theme.extend.colors.primary,
+										config.theme.extend.colors.primary, // 👈 The second color is the same as the first but with an alpha value of 50%.
+									]}
+								/>
+							</Bar>
+						)}
+					</CartesianChart>
 				</View>
 
 				{/* <Pressable
