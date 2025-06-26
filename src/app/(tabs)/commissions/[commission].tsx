@@ -60,34 +60,35 @@ export default function Page() {
 									{item.supplier.name}
 								</Text>
 							</View>
-							<View className="w-32 items-center justify-center gap-2">
-								{item.structured_product ? (
+							{item.structured_product ? (
+								<View className="w-32 items-center justify-center gap-2">
 									<Text className="rounded-full bg-[#F0F9FF] p-1 px-2 text-xs text-[#026AA2]">Produit structuré</Text>
-								) : (
-									<>
-										{item.informations?.production && (
-											<Text className="rounded-full bg-[#FEF3F2] p-1 px-2 text-xs text-[#B42318]">Production</Text>
-										)}
-										{item.informations?.encours && (
-											<Text className="rounded-full bg-[#EEF4FF] p-1 px-2 text-xs text-[#3538CD]">Encours</Text>
-										)}
-									</>
-								)}
-							</View>
-							<View className="w-20 items-center justify-center gap-2">
-								{item.structured_product ? (
+								</View>
+							) : (
+								<View className="w-32 items-center justify-center gap-2">
+									{item.informations?.production ? (
+										<Text className="rounded-full bg-[#FEF3F2] p-1 px-2 text-xs text-[#B42318]">Production</Text>
+									) : null}
+									{item.informations?.encours ? (
+										<Text className="rounded-full bg-[#EEF4FF] p-1 px-2 text-xs text-[#3538CD]">Encours</Text>
+									) : null}
+								</View>
+							)}
+							{item.structured_product ? (
+								<View className="w-20 items-center justify-center gap-2">
 									<Text className="text-sm text-[#026AA2]">{item.informations?.up_front}€</Text>
-								) : (
-									<>
-										{item.informations?.production && (
-											<Text className="text-sm text-[#B42318]">{item.informations?.production}€</Text>
-										)}
-										{item.informations?.encours && (
-											<Text className="text-sm text-[#3538CD]">{item.informations?.encours}€</Text>
-										)}
-									</>
-								)}
-							</View>
+								</View>
+							) : (
+								<View className="w-20 items-center justify-center gap-2">
+									{item.informations?.production ? (
+										<Text className="text-sm text-[#B42318]">{item.informations?.production}€</Text>
+									) : null}
+									{item.informations?.encours ? (
+										<Text className="text-sm text-[#3538CD]">{item.informations?.encours}€</Text>
+									) : null}
+								</View>
+							)}
+
 							<View className="ml-auto">
 								{item.informations?.pdf && (
 									<TouchableOpacity

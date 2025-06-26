@@ -28,3 +28,24 @@ export const truncateText = (text: string, maxLength: number) => {
 	}
 	return text;
 };
+
+
+/**
+ * @description generate y axis tick values
+ * @param maxAmount the max amount
+ * @param numberOfTicks the number of ticks
+ */
+export const generateYAxisTickValues = (maxAmount: number, numberOfTicks: number): number[] => {
+	const maxAmountFixed = Number(maxAmount.toFixed(0));
+	const maxChart = Number((maxAmountFixed * 1.05).toFixed(0));
+	if (numberOfTicks < 2) return [0, maxChart]; // Needs at least 2 ticks (start and end)
+
+	const finalMax = maxChart;
+	const tickValues: number[] = [];
+	const interval = Number((finalMax / (numberOfTicks - 1)).toFixed(0));
+
+	for (let i = 0; i < numberOfTicks; i++) {
+		tickValues.push((i * interval)); // Round to 2 decimal places for currency
+	}
+	return tickValues;
+};
