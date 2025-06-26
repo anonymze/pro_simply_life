@@ -43,6 +43,8 @@ export interface CommissionMonthlyAndYearlyData {
 		labelDate: string;
 		commissions: CommissionLight[];
 		totalAmount: number;
+		minAmount: number;
+		maxAmount: number;
 		groupedData: {
 			encours: number;
 			production: number;
@@ -59,6 +61,8 @@ export interface CommissionMonthlyAndYearlyData {
 		id: string;
 		labelDate: string;
 		totalAmount: number;
+		minAmount: number;
+		maxAmount: number;
 		groupedData: {
 			encours: number;
 			production: number;

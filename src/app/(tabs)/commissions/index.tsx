@@ -337,12 +337,14 @@ const Content = ({
 					)}
 				</View>
 
-				<View className="mt-6 h-72 rounded-2xl bg-white p-4">
+				<Text className="mt-6 font-semibold text-lg text-primary">
+					{"commissions" in data ? "Évolution mois par mois" : "Évolution année par année"}
+				</Text>
+				<View className="mt-3 h-72 rounded-2xl bg-white p-4">
 					<CartesianChart
 						data={DATAS}
 						xKey="month"
 						yKeys={["listenCount"]}
-
 						// 👇 Add domain padding to the chart to prevent the first and last bar from being cut off.
 						domainPadding={{
 							left: 25,
