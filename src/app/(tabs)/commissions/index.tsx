@@ -372,16 +372,19 @@ const Content = ({
 							// 	y: "left",
 							// },
 
-							// isNumericalData: true,
+							isNumericalData: false,
 
 							// values of the ticks
 							tickValues: {
-								y: [0, 100, 200],
+								y: [0, 100, 200, 300, 400, 500],
 								x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 							},
 							// number of ticks (lines)
 							// tickCount: 12,
 
+							formatYLabel: (value) => {
+								return `€${value}`;
+							},
 							formatXLabel: (value) => {
 								const date = new Date(2025, value - 1);
 								return date.toLocaleString("fr-FR", { month: "short" });
