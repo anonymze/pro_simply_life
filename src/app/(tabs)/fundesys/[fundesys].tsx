@@ -1,4 +1,4 @@
-import { View, Text, Platform, Dimensions } from "react-native";
+import { View, Text, Platform, Dimensions, ActivityIndicator } from "react-native";
 import BackgroundLayout from "@/layouts/background-layout";
 import { getFundesysQuery } from "@/api/queries/fundesys";
 import { useVideoPlayer, VideoView } from "expo-video";
@@ -9,7 +9,7 @@ import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
 import React, { useEffect } from "react";
 import { cssInterop } from "nativewind";
-
+import config from "tailwind.config";
 
 const width = Dimensions.get("window").width;
 
@@ -19,6 +19,7 @@ cssInterop(VideoView, {
 
 export default function Page() {
 	const { fundesys: fundesysId } = useLocalSearchParams();
+	const [loading, setLoading] = React.useState(false);
 
 	const { data: fundesys } = useQuery({
 		queryKey: ["fundesys", fundesysId],
@@ -36,9 +37,12 @@ export default function Page() {
 	React.useEffect(() => {
 		async function fetchAsync() {
 			try {
+				setLoading(true);
 				const res = await fetch(fundesys?.video.url ?? "");
+				setLoading(false);
 				player.replace(res.url);
 			} catch {
+				setLoading(false);
 				player.replace("");
 			}
 		}
@@ -47,6 +51,8 @@ export default function Page() {
 	}, [fundesys]);
 
 	player.videoTrack;
+
+	console.log(loading);
 
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4")}>
@@ -60,8 +66,12 @@ export default function Page() {
 
 			<View className="rounded-2xl bg-white p-4">
 				<Text className="text-sm text-primaryLight">Vidéo hebdo</Text>
-				<View className="mx-auto mt-3 aspect-video overflow-hidden rounded-xl ">
-					<VideoView player={player} className="h-full w-full" allowsFullscreen nativeControls />
+				<View className="mx-auto mt-3 aspect-video items-center justify-center overflow-hidden rounded-xl">
+					{loading ? (
+						<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
+					) : (
+						<VideoView player={player} className="h-full w-full" allowsFullscreen nativeControls />
+					)}
 				</View>
 			</View>
 

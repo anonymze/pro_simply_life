@@ -171,7 +171,12 @@ http://localhost:8081/\_expo/atlas
 </dict>
 
 
-webrtc ? for sharing files for chat 
-
+webrtc ? for sharing files for chat
 
 RESERVATION BUREZAU OUTLOOK + EVENEMENTS PAGE DACCUEIL + APPLE BUSINESS MANAGER + FIX CONTEXT SUUPPRIMER GROUPE CHAT
+
+YASMINE
+
+BIREF BACK OFFICE
+
+lundi
