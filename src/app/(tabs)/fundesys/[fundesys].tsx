@@ -11,6 +11,7 @@ import React, { useEffect } from "react";
 import { cssInterop } from "nativewind";
 import config from "tailwind.config";
 
+
 const width = Dimensions.get("window").width;
 
 cssInterop(VideoView, {
@@ -49,10 +50,6 @@ export default function Page() {
 
 		fetchAsync();
 	}, [fundesys]);
-
-	player.videoTrack;
-
-	console.log(loading);
 
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4")}>

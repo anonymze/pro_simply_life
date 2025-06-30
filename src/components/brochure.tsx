@@ -81,7 +81,7 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 								.then((_) => {
 									router.push(link);
 								})
-								.catch((_) => {
+								.catch((err) => {
 									Alert.alert(
 										"La brochure n'a pas pu être téléchargée pour être visualisée",
 										"Vérifiez que vous avez assez d'espace de stockage.",

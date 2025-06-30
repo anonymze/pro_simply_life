@@ -18,6 +18,7 @@ export default function FundesysLayout() {
 			<Stack.Screen
 				name="[fundesys]"
 				options={{
+					// headerBackButtonMenuEnabled: false,
 					header: () => <HeaderLayout />,
 					headerShown: true,
 				}}

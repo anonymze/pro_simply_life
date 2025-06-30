@@ -1,24 +1,24 @@
-import { Link, LinkProps, router, useLocalSearchParams } from "expo-router";
+import { getEventsQuery } from "@/api/queries/event-queries";
+import CardEvent from "@/components/card/card-event";
+import Carousel from "@/components/carousel";
+import ProfileDashboard from "@/components/profile-dashboard";
+import BookFillIcon from "@/components/svg/book-fill-icon";
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
 import BuildingFillIcon from "@/components/svg/building-fill-icon";
-import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
-import { ArrowRight, MapPinnedIcon } from "lucide-react-native";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
-import ProfileDashboard from "@/components/profile-dashboard";
-import { getEventsQuery } from "@/api/queries/event-queries";
-import { View, TouchableOpacity, Text } from "react-native";
-import BookFillIcon from "@/components/svg/book-fill-icon";
+import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
-import { ScrollView } from "react-native-gesture-handler";
-import CardEvent from "@/components/card/card-event";
-import CardLink from "@/components/card/card-link";
 import { useQuery } from "@tanstack/react-query";
-import Carousel from "@/components/carousel";
-import Title from "@/components/ui/title";
+import { Link, LinkProps, useLocalSearchParams } from "expo-router";
+import { ArrowRightIcon, MapPinnedIcon } from "lucide-react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import config from "tailwind.config";
-import { User } from "@/types/user";
 
+import CardLink from "@/components/card/card-link";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
+import Title from "@/components/ui/title";
+import { User } from "@/types/user";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Page() {
 	const { data: events, isLoading: isLoadingEvents } = useQuery({
@@ -34,7 +34,7 @@ export default function Page() {
 	return (
 		<BackgroundLayout className="pt-safe mt-4 px-4">
 			<ScrollView
-				className="flex-1"
+				className="flex-1 "
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 				contentContainerStyle={{ paddingBottom: 16 }}
@@ -73,7 +73,7 @@ export default function Page() {
 						<View className="flex-1">
 							<Text className="font-semibold text-lg text-primary">Fundesys</Text>
 						</View>
-						<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 					</TouchableOpacity>
 				</Link>
 				<Link
@@ -94,7 +94,7 @@ export default function Page() {
 						<View className="flex-1">
 							<Text className="font-semibold text-lg text-primary">Fidnet</Text>
 						</View>
-						<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 					</TouchableOpacity>
 				</Link>
 				<View className="mb-4 mt-7 flex-row items-center justify-between">
@@ -105,23 +105,49 @@ export default function Page() {
 						</TouchableOpacity>
 					</Link>
 				</View>
-				<Carousel data={[1, 2, 3, 4, 5]}>
+				<Carousel
+					data={
+						events?.docs || [
+							{
+								id: "1",
+								createdAt: new Date().toISOString(),
+								updatedAt: new Date().toISOString(),
+								event_start: new Date().toISOString(),
+								event_end: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+								title: "Réunion mensuelle du Groupe Valorem !",
+								type: "Masterclass",
+								annotation:
+									"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!",
+							},
+							{
+								id: "2",
+								createdAt: new Date().toISOString(),
+								updatedAt: new Date().toISOString(),
+								event_start: new Date().toISOString(),
+								event_end: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+								title: "Réunion mensuelle du Groupe Valorem !",
+								type: "Masterclass",
+								annotation:
+									"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!",
+							},
+						]
+					}
+				>
 					{(data, cardWidth) => {
 						return data.map((item) => (
 							<CardEvent
 								isLoading={isLoadingEvents}
 								event={{
-									createdAt: new Date().toISOString(),
-									updatedAt: new Date().toISOString(),
-									id: "heydzldzhdhodizhio",
-									event_start: new Date().toISOString(),
-									event_end: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-									title: "Réunion mensuelle du Groupe Valorem !",
-									type: "Masterclass",
-									annotation:
-										"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!",
+									createdAt: item.createdAt,
+									updatedAt: item.updatedAt,
+									id: item.id,
+									event_start: item.event_start,
+									event_end: item.event_end,
+									title: item.title,
+									type: item.type,
+									annotation: item.annotation,
 								}}
-								key={item}
+								key={item.id}
 								width={cardWidth}
 							/>
 						));

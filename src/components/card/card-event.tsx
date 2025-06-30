@@ -1,16 +1,14 @@
-import { Dimensions, DimensionValue, Text, TouchableOpacity, View } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import { ArrowRight, ClockIcon } from "lucide-react-native";
-import { truncateText } from "@/utils/helper";
 import { queryClient } from "@/api/_queries";
-import { Link, router } from "expo-router";
 import { Event } from "@/types/event";
-import config from "tailwind.config";
-import { cn } from "@/utils/cn";
+import { truncateText } from "@/utils/helper";
+import { Link } from "expo-router";
+import { ArrowRight, ClockIcon } from "lucide-react-native";
 import React from "react";
+import { DimensionValue, Text, TouchableOpacity, View } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import config from "tailwind.config";
 
 import { SkeletonPlaceholder } from "../skeleton-placeholder";
-
 
 export default function CardEvent({
 	event,
@@ -70,7 +68,6 @@ export default function CardEvent({
 			) : (
 				<Link
 					href={{
-						// TODO
 						pathname: "/(tabs)/event",
 						// params: { event: event.id },
 					}}

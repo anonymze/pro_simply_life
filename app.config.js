@@ -111,8 +111,8 @@ export default {
 			[
 				"expo-video",
 				{
-					supportsBackgroundPlayback: true,
-					supportsPictureInPicture: true,
+					// supportsBackgroundPlayback: true,
+					// supportsPictureInPicture: true,
 				},
 			],
 			[
