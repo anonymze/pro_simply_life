@@ -186,7 +186,6 @@ const links: {
 		link: "/(tabs)/commissions",
 		backgroundIcon: "bg-[#E0EAFF]",
 	},
-
 	{
 		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
 		title: "Bureaux",
@@ -206,6 +205,27 @@ const links: {
 		title: "Contacts",
 		description: "Carte",
 		link: "/(tabs)/contact",
+		backgroundIcon: "bg-[#FFEAD5]",
+	},
+	{
+		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
+		title: "Produits structuréss",
+		description: "Réservation",
+		link: "/(tabs)/reservation",
+		backgroundIcon: "bg-[#E4F5D7]",
+	},
+	{
+		icon: <EventsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
+		title: "Sports & Patrimoines",
+		description: "Vie d'agence",
+		link: "/(tabs)/event",
+		backgroundIcon: "bg-[#FCE7F6]",
+	},
+	{
+		icon: <MapPinnedIcon size={40} color={config.theme.extend.colors.primary} />,
+		title: "...",
+		description: "Carte",
+		link: "/",
 		backgroundIcon: "bg-[#FFEAD5]",
 	},
 ];
