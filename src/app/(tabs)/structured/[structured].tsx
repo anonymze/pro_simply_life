@@ -24,19 +24,21 @@ export default function Page() {
 			<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
 				<View className="items-center justify-center gap-2 rounded-lg bg-gray-50 px-4 py-5">
 					<Text className="text-primaryLight">Enveloppe globale</Text>
-					<Text className="font-bold text-2xl text-primary">{structuredProduct.max}€</Text>
+					<Text className="font-bold text-2xl text-primary">{structuredProduct.max.toLocaleString()}€</Text>
 				</View>
 				<Text className="text-md mt-5 font-semibold text-primary">% de l'enveloppe remplise</Text>
 				<View className="mt-5">
 					<View className="flex-row">
 						<View
-							className="mr-1 gap-1"
+							className="gap-1"
 							style={{
-								minWidth: structuredProduct.max / structuredProduct.current,
+								// minWidth: structuredProduct.max / structuredProduct.current,
 								flex: structuredProduct.max / structuredProduct.current,
 							}}
 						>
-							<Text className="text-center text-xs text-primaryLight">10%</Text>
+							<Text className="text-center text-xs text-primaryLight">
+								{Math.round((structuredProduct.current / structuredProduct.max) * 100)}%
+							</Text>
 							<View className="h-1.5 w-full rounded-full bg-production" />
 						</View>
 					</View>
