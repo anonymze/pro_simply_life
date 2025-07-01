@@ -10,7 +10,7 @@ import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
 import { useQuery } from "@tanstack/react-query";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
-import { ArrowRightIcon, DotSquareIcon, MapPinnedIcon } from "lucide-react-native";
+import { ArrowRightIcon, MapPinnedIcon } from "lucide-react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import config from "tailwind.config";
 
@@ -223,11 +223,11 @@ const links: {
 		link: "/(tabs)/sports",
 		backgroundIcon: "bg-[#FEF3C7]",
 	},
-	{
-		icon: <DotSquareIcon size={40} color={config.theme.extend.colors.primary} />,
-		title: "...",
-		description: "...",
-		link: "/",
-		backgroundIcon: "bg-[#FFE4E6]",
-	},
+	// {
+	// 	icon: <DotSquareIcon size={40} color={config.theme.extend.colors.primary} />,
+	// 	title: "...",
+	// 	description: "...",
+	// 	link: "/",
+	// 	backgroundIcon: "bg-[#FFE4E6]",
+	// },
 ];
