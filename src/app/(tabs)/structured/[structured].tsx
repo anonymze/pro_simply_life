@@ -17,6 +17,8 @@ export default function Page() {
 
 	if (!structuredProduct) return null;
 
+	const percentage = (structuredProduct.current / structuredProduct.max) * 100;
+
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4")}>
 			<Title title={structuredProduct.supplier.name} />
@@ -33,11 +35,11 @@ export default function Page() {
 							className="gap-1"
 							style={{
 								// minWidth: structuredProduct.max / structuredProduct.current,
-								flex: structuredProduct.max / structuredProduct.current,
+								width: percentage > 10 ? `${10}%` : 22,
 							}}
 						>
 							<Text className="text-center text-xs text-primaryLight">
-								{Math.round((structuredProduct.current / structuredProduct.max) * 100)}%
+								{Math.ceil((structuredProduct.current / structuredProduct.max) * 100)}%
 							</Text>
 							<View className="h-1.5 w-full rounded-full bg-production" />
 						</View>
