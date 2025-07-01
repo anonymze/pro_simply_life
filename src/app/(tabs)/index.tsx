@@ -211,14 +211,14 @@ const links: {
 		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
 		title: "Produits structuréss",
 		description: "Réservation",
-		link: "/(tabs)/reservation",
+		link: "/",
 		backgroundIcon: "bg-[#E4F5D7]",
 	},
 	{
 		icon: <EventsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Sports & Patrimoines",
 		description: "Vie d'agence",
-		link: "/(tabs)/event",
+		link: "/",
 		backgroundIcon: "bg-[#FCE7F6]",
 	},
 	{
