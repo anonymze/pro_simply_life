@@ -1,6 +1,6 @@
 import { Supplier } from "./supplier";
 
-export interface ProductStructured {
+export interface StructuredProduct {
 	id: string;
 	supplier: Supplier;
 	max: number;

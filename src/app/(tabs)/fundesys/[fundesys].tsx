@@ -1,18 +1,15 @@
-import { View, Text, Platform, Dimensions, ActivityIndicator } from "react-native";
-import BackgroundLayout from "@/layouts/background-layout";
 import { getFundesysQuery } from "@/api/queries/fundesys";
-import { useVideoPlayer, VideoView } from "expo-video";
-import { useLocalSearchParams } from "expo-router";
-import { useQuery } from "@tanstack/react-query";
 import { Brochure } from "@/components/brochure";
-import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
-import React, { useEffect } from "react";
+import BackgroundLayout from "@/layouts/background-layout";
+import { cn } from "@/utils/libs/tailwind";
+import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
+import { useVideoPlayer, VideoView } from "expo-video";
 import { cssInterop } from "nativewind";
+import React from "react";
+import { ActivityIndicator, Text, View } from "react-native";
 import config from "tailwind.config";
-
-
-const width = Dimensions.get("window").width;
 
 cssInterop(VideoView, {
 	className: "style",
