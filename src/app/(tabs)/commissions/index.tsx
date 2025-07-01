@@ -1,24 +1,41 @@
-import Animated, { FadeInDown, FadeOut, useSharedValue, withTiming, useDerivedValue, runOnJS, FadeIn, FadeInUp, } from "react-native-reanimated";
-import { Circle, LinearGradient, useFont, vec, Text as SkiaText, Canvas, processTransform2d } from "@shopify/react-native-skia";
-import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from "react-native";
-import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
-import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
-import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
-import { Bar, CartesianChart, useChartPressState } from "victory-native";
-import BackgroundLayout from "@/layouts/background-layout";
-import { generateYAxisTickValues } from "@/utils/helper";
-import resolveConfig from "tailwindcss/resolveConfig";
-import { getStorageUserInfos } from "@/utils/store";
-import { useQuery } from "@tanstack/react-query";
-import { FlashList } from "@shopify/flash-list";
-import { HrefObject, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
-import { Picker } from "@expo/ui/swift-ui";
-import { cn } from "@/utils/libs/tailwind";
+import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
 import Title from "@/components/ui/title";
-import config from "tailwind.config";
+import BackgroundLayout from "@/layouts/background-layout";
+import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
+import { generateYAxisTickValues } from "@/utils/helper";
+import { cn } from "@/utils/libs/tailwind";
+import { getStorageUserInfos } from "@/utils/store";
+import { Picker } from "@expo/ui/swift-ui";
+import { FlashList } from "@shopify/flash-list";
+import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
+import { useQuery } from "@tanstack/react-query";
+import { HrefObject, Link } from "expo-router";
+import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
 import React from "react";
-
+import {
+	ActivityIndicator,
+	Dimensions,
+	Pressable,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
+import Animated, {
+	FadeIn,
+	FadeInDown,
+	FadeInUp,
+	FadeOut,
+	runOnJS,
+	useDerivedValue,
+	useSharedValue,
+	withTiming,
+} from "react-native-reanimated";
+import config from "tailwind.config";
+import resolveConfig from "tailwindcss/resolveConfig";
+import { Bar, CartesianChart, useChartPressState } from "victory-native";
 
 const fullConfig = resolveConfig(config);
 
@@ -465,29 +482,10 @@ const Content = ({
 				) : (
 					<Text className="mt-3 text-sm text-primaryLight">Pas assez de données</Text>
 				)}
-
-				{/* <Pressable
-					onPress={() => {}}
-					disabled={false}
-					className="mt-5 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
-				>
-					{false ? (
-						<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
-							<ActivityIndicatorBase size="small" color="white" />
-						</Animated.View>
-					) : (
-						<Animated.View entering={FadeInDown.springify().duration(1200)} className="flex-row items-center gap-3">
-							<Text className="text-center font-semibold text-lg text-white">Télécharger le PDF</Text>
-							<DownloadIcon size={20} color="#fff" />
-						</Animated.View>
-					)}
-				</Pressable> */}
 			</ScrollView>
 		</>
 	);
 };
-
-const AnimatedCirle = Animated.createAnimatedComponent(Circle);
 
 // minimum width for small percentages to ensure text is visible
 const getMinWidth = (percentage: number) => {

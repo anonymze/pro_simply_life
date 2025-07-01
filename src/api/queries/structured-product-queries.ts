@@ -9,3 +9,9 @@ export async function getStructuredProductsQuery({ queryKey }: { queryKey: Query
 	const response = await api.get<PaginatedResponse<StructuredProduct>>(`/api/structured`);
 	return response.data;
 }
+
+export async function getStructuredProductQuery({ queryKey }: { queryKey: QueryKey }) {
+	const [, structuredId] = queryKey;
+	const response = await api.get<StructuredProduct>(`/api/structured/${structuredId}`);
+	return response.data;
+}

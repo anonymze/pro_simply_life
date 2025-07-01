@@ -10,11 +10,13 @@ import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
 import { useQuery } from "@tanstack/react-query";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
-import { ArrowRightIcon, MapPinnedIcon } from "lucide-react-native";
+import { ArrowRightIcon, DotSquareIcon, MapPinnedIcon } from "lucide-react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import config from "tailwind.config";
 
 import CardLink from "@/components/card/card-link";
+import CubeFillIcon from "@/components/svg/cude-fill-icon";
+import SportsFillIcon from "@/components/svg/sports-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
@@ -208,24 +210,24 @@ const links: {
 		backgroundIcon: "bg-[#FFEAD5]",
 	},
 	{
-		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
+		icon: <CubeFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
 		title: "Produits structuréss",
 		description: "Réservation",
 		link: "/(tabs)/structured",
-		backgroundIcon: "bg-[#E4F5D7]",
+		backgroundIcon: "bg-[#CEFAFE]",
 	},
 	{
-		icon: <EventsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
+		icon: <SportsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Sports & Patrimoines",
 		description: "Vie d'agence",
 		link: "/(tabs)/sports",
-		backgroundIcon: "bg-[#FCE7F6]",
+		backgroundIcon: "bg-[#FEF3C7]",
 	},
 	{
-		icon: <MapPinnedIcon size={40} color={config.theme.extend.colors.primary} />,
+		icon: <DotSquareIcon size={40} color={config.theme.extend.colors.primary} />,
 		title: "...",
 		description: "...",
 		link: "/",
-		backgroundIcon: "bg-[#FFEAD5]",
+		backgroundIcon: "bg-[#FFE4E6]",
 	},
 ];
