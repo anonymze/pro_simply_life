@@ -175,8 +175,4 @@ webrtc ? for sharing files for chat
 
 RESERVATION BUREZAU OUTLOOK + EVENEMENTS PAGE DACCUEIL + APPLE BUSINESS MANAGER + FIX CONTEXT SUUPPRIMER GROUPE CHAT
 
-YASMINE
-
-BIREF BACK OFFICE
-
-lundi
+background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
