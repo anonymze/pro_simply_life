@@ -1,0 +1,9 @@
+<resources>
+  <string name="CFBundleDisplayName">Simply Life : Groupe Valorem</string>
+  <string name="NSContactsUsageDescription">Simplifier votre vie professionnelle.</string>
+  <string name="NSCameraUsageDescription">Autoriser Simply Life d'accéder à votre caméra.</string>
+  <string name="NSMicrophoneUsageDescription">Autoriser Simply Life à utiliser votre microphone.</string>
+  <string name="NSPhotoLibraryUsageDescription">Autoriser Simply Life à accéder à votre bibliothèque de photos.</string>
+  <string name="NSSpeechRecognitionUsageDescription">Autoriser Simply Life à utiliser la reconnaissance vocale.</string>
+  <string name="NSLocationWhenInUseUsageDescription">Autoriser Simply Life à utiliser votre position.</string>
+</resources>
