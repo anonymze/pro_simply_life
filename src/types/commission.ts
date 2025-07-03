@@ -1,18 +1,17 @@
+import { Media } from "./media";
 import { Supplier } from "./supplier";
 import { AppUser } from "./user";
-import { Media } from "./media";
-
 
 export interface Commission {
 	id: string;
 	app_user: AppUser;
-	supplier: Supplier;
+	pdf?: Media | null;
+	suppliers: Supplier[];
 	structured_product?: boolean | null;
 	informations?: {
 		date: string;
 		encours?: number | null;
 		production?: number | null;
-		pdf?: Media | null;
 		title?: string | null;
 		up_front?: number | null;
 		broqueur?: string | null;
@@ -23,13 +22,13 @@ export interface Commission {
 
 export interface CommissionLight {
 	id: string;
-	supplier: Supplier;
+	suppliers: Supplier[];
 	structured_product?: boolean | null;
+	pdf?: Media | null;
 	informations?: {
 		date?: string | null;
 		encours?: number | null;
 		production?: number | null;
-		pdf?: Media | null;
 		title?: string | null;
 		up_front?: number | null;
 		broqueur?: string | null;

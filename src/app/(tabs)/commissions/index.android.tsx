@@ -1,30 +1,41 @@
-import Animated, { FadeInDown, FadeOut, useSharedValue, withTiming, useDerivedValue, runOnJS, FadeIn, FadeInUp, } from "react-native-reanimated";
-import { ActivityIndicator, Dimensions, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from "react-native";
-import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
-import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
-import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
-import { LinearGradient, useFont, vec } from "@shopify/react-native-skia";
-import BackgroundLayout from "@/layouts/background-layout";
-import { Bar, CartesianChart, Line } from "victory-native";
-import resolveConfig from "tailwindcss/resolveConfig";
-import { getStorageUserInfos } from "@/utils/store";
-import { Picker } from "@expo/ui/jetpack-compose";
-import { useQuery } from "@tanstack/react-query";
-import { FlashList } from "@shopify/flash-list";
-import { HrefObject, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
-import { cn } from "@/utils/libs/tailwind";
+import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
 import Title from "@/components/ui/title";
-import config from "tailwind.config";
+import BackgroundLayout from "@/layouts/background-layout";
+import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
+import { generateYAxisTickValues } from "@/utils/helper";
+import { cn } from "@/utils/libs/tailwind";
+import { getStorageUserInfos } from "@/utils/store";
+import { Picker } from "@expo/ui/swift-ui";
+import { FlashList } from "@shopify/flash-list";
+import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
+import { useQuery } from "@tanstack/react-query";
+import { HrefObject, Link } from "expo-router";
+import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
 import React from "react";
-
-
-const DATAS = Array.from({ length: 12 }, (_, index) => ({
-	// Starting at 1 for January
-	month: index + 1,
-	// Randomizing the listen count between 100 and 50
-	listenCount: Math.floor(Math.random() * (100 - 50 + 1)) + 50,
-}));
+import {
+	ActivityIndicator,
+	Dimensions,
+	Pressable,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
+import Animated, {
+	FadeIn,
+	FadeInDown,
+	FadeInUp,
+	FadeOut,
+	runOnJS,
+	useDerivedValue,
+	useSharedValue,
+	withTiming,
+} from "react-native-reanimated";
+import config from "tailwind.config";
+import resolveConfig from "tailwindcss/resolveConfig";
+import { Bar, CartesianChart, useChartPressState } from "victory-native";
 
 const fullConfig = resolveConfig(config);
 
@@ -135,6 +146,7 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 	const [lastMonth, setLastMonth] = React.useState<
 		CommissionMonthlyAndYearlyData["monthlyData"][number] | CommissionMonthlyAndYearlyData["yearlyData"][number]
 	>(type === "monthly" ? data.monthlyData[0] : data.yearlyData[0]);
+
 	return (
 		<>
 			<FlashList
@@ -159,26 +171,31 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 					);
 				}}
 			></FlashList>
-			<Content data={lastMonth} />
+			<Content allCommissions={type === "monthly" ? data.monthlyData : data.yearlyData} data={lastMonth} />
 		</>
 	);
 };
 
 const Content = ({
+	allCommissions,
 	data,
 }: {
+	allCommissions: CommissionMonthlyAndYearlyData["monthlyData"] | CommissionMonthlyAndYearlyData["yearlyData"];
 	data: CommissionMonthlyAndYearlyData["monthlyData"][number] | CommissionMonthlyAndYearlyData["yearlyData"][number];
 }) => {
+	const { state, isActive } = useChartPressState({ x: 0, y: { amount: 0 } });
 	const font = useFont(require("@/assets/fonts/PlusJakartaSans-Regular.ttf"), 12);
+	const fontTooltip = useFont(require("@/assets/fonts/PlusJakartaSans-Bold.ttf"), 14);
+
 	// calculate percentages without useEffect - ensuring they add up to 100%
 	const calculatePercentages = React.useMemo(() => {
-		if (data.groupedData.total <= 0) {
+		if (data.totalAmount <= 0) {
 			return { productionPercentage: 0, encoursPercentage: 0, structuredPercentage: 0 };
 		}
 
 		// calculate exact percentages
-		const production = (data.groupedData.production / data.groupedData.total) * 100;
-		const encours = (data.groupedData.encours / data.groupedData.total) * 100;
+		const production = (data.groupedData.production / data.totalAmount) * 100;
+		const encours = (data.groupedData.encours / data.totalAmount) * 100;
 
 		// round the first two normally
 		const productionRounded = Math.round(production);
@@ -193,6 +210,24 @@ const Content = ({
 			structuredPercentage: Math.max(0, structuredRounded), // ensure it's not negative
 		};
 	}, [data]);
+
+	const slicedCommissions = React.useMemo(() => {
+		let startKeeping = false;
+		return allCommissions
+			.map((comm) => {
+				if (comm.id === data.id) startKeeping = true;
+				return startKeeping ? comm : undefined;
+			})
+			.filter(Boolean)
+			.slice(0, 12);
+	}, [allCommissions, data.id]);
+
+	const tooltipText = useDerivedValue(() => {
+		return `€${state.y.amount.value.get()} €`;
+	}, [state.y.amount]);
+
+	// create derived values for x and y with your offsets
+	const tooltipY = useDerivedValue(() => state.y.amount.position.value - 5, [state.y.amount]);
 
 	return (
 		<>
@@ -337,101 +372,116 @@ const Content = ({
 					)}
 				</View>
 
-				<View className="mt-6 h-72 rounded-2xl bg-white p-4">
-					<CartesianChart
-						data={DATAS}
-						xKey="month"
-						yKeys={["listenCount"]}
+				<Text className="mt-6 font-semibold text-lg text-primary">
+					{"commissions" in data ? "Évolution 12 derniers mois" : "Évolution 12 dernières années"}
+				</Text>
 
-						// 👇 Add domain padding to the chart to prevent the first and last bar from being cut off.
-						domainPadding={{
-							left: 25,
-							right: 25,
-							top: 5,
-							bottom: 0,
-						}}
-						axisOptions={{
-							/**
-							 * 👇 Pass the font object to the axisOptions.
-							 * This will tell CartesianChart to render axis labels.
-							 */
-							font,
-							lineColor: config.theme.extend.colors.darkGray,
-							lineWidth: {
-								grid: {
-									y: 1,
-									x: 0,
-								},
-								frame: 0,
-							},
-							// where the axes are (top, bottom, left, right)
-							// axisSide: {
-							// 	x: "bottom",
-							// 	y: "left",
-							// },
-
-							// isNumericalData: true,
-
-							// values of the ticks
-							tickValues: {
-								y: [0, 100, 200],
-								x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-							},
-							// number of ticks (lines)
-							// tickCount: 12,
-
-							formatXLabel: (value) => {
-								const date = new Date(2025, value - 1);
-								return date.toLocaleString("fr-FR", { month: "short" });
-							},
-							labelColor: config.theme.extend.colors.primaryLight,
-							labelOffset: 5,
-						}}
-					>
-						{({ points, chartBounds }) => (
-							<Bar
-								chartBounds={chartBounds}
-								points={points.listenCount}
+				{slicedCommissions.length >= 4 ? (
+					<View className="mt-3 h-72 rounded-2xl bg-white p-4">
+						<CartesianChart
+							data={slicedCommissions.map((commission, idx) => {
+								return {
+									month: idx + 1,
+									amount: commission?.totalAmount,
+								};
+							})}
+							xKey="month"
+							yKeys={["amount"]}
+							// 👇 Add domain padding to the chart to prevent the first and last bar from being cut off.
+							domainPadding={{
+								left: slicedCommissions.length <= 5 ? 40 : slicedCommissions.length === 7 ? 35 : 20,
+								right: slicedCommissions.length <= 5 ? 40 : slicedCommissions.length === 7 ? 35 : 20,
+								top: 5,
+								bottom: 0,
+							}}
+							chartPressState={state}
+							axisOptions={{
 								/**
-								 * 👇 We can round the top corners of our bars by passing a number
-								 * to the roundedCorners prop. This will round the top left and top right.
+								 * 👇 Pass the font object to the axisOptions.
+								 * This will tell CartesianChart to render axis labels.
 								 */
-								roundedCorners={{
-									topLeft: 5,
-									topRight: 5,
-								}}
-							>
-								{/* 👇 We add a gradient to the bars by passing a LinearGradient as a child. */}
-								<LinearGradient
-									start={vec(0, 0)} // 👈 The start and end are vectors that represent the direction of the gradient.
-									end={vec(0, 400)}
-									colors={[
-										// 👈 The colors are an array of strings that represent the colors of the gradient.
-										config.theme.extend.colors.primary,
-										config.theme.extend.colors.primary, // 👈 The second color is the same as the first but with an alpha value of 50%.
-									]}
-								/>
-							</Bar>
-						)}
-					</CartesianChart>
-				</View>
+								font,
+								lineColor: config.theme.extend.colors.darkGray,
+								lineWidth: {
+									grid: {
+										y: 1,
+										x: 0,
+									},
+									frame: 0,
+								},
+								// where the axes are (top, bottom, left, right)
+								// axisSide: {
+								// 	x: "bottom",
+								// 	y: "left",
+								// },
 
-				{/* <Pressable
-					onPress={() => {}}
-					disabled={false}
-					className="mt-5 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
-				>
-					{false ? (
-						<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
-							<ActivityIndicatorBase size="small" color="white" />
-						</Animated.View>
-					) : (
-						<Animated.View entering={FadeInDown.springify().duration(1200)} className="flex-row items-center gap-3">
-							<Text className="text-center font-semibold text-lg text-white">Télécharger le PDF</Text>
-							<DownloadIcon size={20} color="#fff" />
-						</Animated.View>
-					)}
-				</Pressable> */}
+								// values of the ticks
+								tickValues: {
+									y: generateYAxisTickValues(
+										slicedCommissions.reduce((cum, item) => Math.max(cum, item?.totalAmount || 0), 0),
+										6,
+									),
+									x: slicedCommissions.map((_, idx) => idx + 1),
+								},
+								// number of ticks (lines)
+								// tickCount: 12,
+
+								formatYLabel: (value) => {
+									return `€${value}`;
+								},
+								formatXLabel: (value) => {
+									if (!slicedCommissions[value]) return "";
+									const textComplete = slicedCommissions[value].labelDate;
+									// juin 2025 so it's 9 length
+									return textComplete.length > 9 ? textComplete.slice(0, 3) + "." : textComplete.slice(0, 4);
+								},
+								labelColor: config.theme.extend.colors.primaryLight,
+								labelOffset: 5,
+							}}
+						>
+							{({ points, chartBounds }) => (
+								<Bar
+									chartBounds={chartBounds}
+									points={points.amount}
+									/**
+									 * 👇 We can round the top corners of our bars by passing a number
+									 * to the roundedCorners prop. This will round the top left and top right.
+									 */
+									barWidth={slicedCommissions.length <= 5 ? 30 : slicedCommissions.length === 7 ? 25 : 20}
+									animate={{
+										type: "timing",
+									}}
+									roundedCorners={{
+										topLeft: 6,
+										topRight: 6,
+									}}
+								>
+									{/* 👇 We add a gradient to the bars by passing a LinearGradient as a child. */}
+									<LinearGradient
+										start={vec(0, 0)} // 👈 The start and end are vectors that represent the direction of the gradient.
+										end={vec(0, 300)}
+										colors={[
+											// 👈 The colors are an array of strings that represent the colors of the gradient.
+											config.theme.extend.colors.primaryLight,
+											config.theme.extend.colors.primary,
+										]}
+									/>
+									{isActive ? (
+										<SkiaText
+											x={state.x.position}
+											y={tooltipY}
+											text={tooltipText}
+											font={fontTooltip}
+											color={config.theme.extend.colors.dark}
+										/>
+									) : null}
+								</Bar>
+							)}
+						</CartesianChart>
+					</View>
+				) : (
+					<Text className="mt-3 text-sm text-primaryLight">Pas assez de données</Text>
+				)}
 			</ScrollView>
 		</>
 	);
