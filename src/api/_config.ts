@@ -1,7 +1,6 @@
+import { logout } from "@/utils/auth";
 import { getStorageUserInfos } from "@/utils/store";
 import axios, { isAxiosError } from "axios";
-import { logout } from "@/utils/auth";
-
 
 const ORIGIN_MOBILE = "simply-life-app://mobile";
 
@@ -19,7 +18,7 @@ export const api = axios.create({
 	headers: {
 		Accept: "application/json",
 		"Content-Type": "application/json",
-		"X-Origin": ORIGIN_MOBILE,
+		// "X-Origin": ORIGIN_MOBILE,
 	},
 	withCredentials: true,
 });

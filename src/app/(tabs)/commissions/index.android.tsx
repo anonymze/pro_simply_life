@@ -6,7 +6,7 @@ import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commiss
 import { generateYAxisTickValues } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
 import { getStorageUserInfos } from "@/utils/store";
-import { Picker } from "@expo/ui/swift-ui";
+import { Picker } from "@expo/ui/jetpack-compose";
 import { FlashList } from "@shopify/flash-list";
 import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
 import { useQuery } from "@tanstack/react-query";
