@@ -173,6 +173,8 @@ http://localhost:8081/\_expo/atlas
 
 webrtc ? for sharing files for chat
 
-RESERVATION BUREZAU OUTLOOK + EVENEMENTS PAGE DACCUEIL + APPLE BUSINESS MANAGER + FIX CONTEXT SUUPPRIMER GROUPE CHAT
+RESERVATION BUREZAU OUTLOOK + APPLE BUSINESS MANAGER +
 
 background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
+
+FIX CONTEXT SUUPPRIMER GROUPE CHAT + CREATION BUREAU MEILLEUR SELECT
