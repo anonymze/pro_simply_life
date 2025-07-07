@@ -50,7 +50,14 @@ export default function Page() {
 	const [selectedDebut, setSelectedDebut] = useState<string | null>(null);
 	const [selectedFin, setSelectedFin] = useState<string | null>(null);
 	const [title, setTitle] = useState<string | null>(null);
+	const [dropdownKey, setDropdownKey] = useState(0);
 	const userInfos = getStorageUserInfos();
+
+	const bureauData = [
+		{ title: "Bureau 1", value: "1" },
+		{ title: "Bureau 2", value: "2" },
+		{ title: "Bureau 3", value: "3" },
+	];
 
 	const mutation = useMutation({
 		mutationFn: createReservationQuery,
@@ -152,22 +159,12 @@ export default function Page() {
 				/>
 
 				<SelectDropdown
-					data={[
-						{
-							title: "Bureau 1",
-							value: "1",
-						},
-						{
-							title: "Bureau 2",
-							value: "2",
-						},
-						{
-							title: "Bureau 3",
-							value: "3",
-						},
-					]}
+					key={`bureau-${dropdownKey}`}
+					data={bureauData}
+					defaultValue={selectedBureau ? bureauData.find((item) => item.value === selectedBureau) : undefined}
 					onSelect={(selectedItem) => {
 						setSelectedBureau(selectedItem.value);
+						setDropdownKey((prev) => prev + 1);
 					}}
 					renderButton={(selectedItem, isOpened) => {
 						return (
@@ -194,9 +191,12 @@ export default function Page() {
 				<View className="flex-row items-center gap-4">
 					<View className="flex-1">
 						<SelectDropdown
+							key={`debut-${dropdownKey}`}
 							data={timeSlots}
+							defaultValue={selectedDebut ? timeSlots.find((item) => item.value === selectedDebut) : undefined}
 							onSelect={(selectedItem) => {
 								setSelectedDebut(selectedItem.value);
+								setDropdownKey((prev) => prev + 1);
 							}}
 							renderButton={(selectedItem, isOpened) => {
 								return (
@@ -223,9 +223,12 @@ export default function Page() {
 					</View>
 					<View className="flex-1">
 						<SelectDropdown
+							key={`fin-${dropdownKey}`}
 							data={timeSlots}
+							defaultValue={selectedFin ? timeSlots.find((item) => item.value === selectedFin) : undefined}
 							onSelect={(selectedItem) => {
 								setSelectedFin(selectedItem.value);
+								setDropdownKey((prev) => prev + 1);
 							}}
 							renderButton={(selectedItem) => {
 								return (
@@ -258,7 +261,7 @@ export default function Page() {
 
 const styles = StyleSheet.create({
 	dropdownMenuStyle: {
-		marginTop: 75,
+		marginTop: Platform.OS === "android" ? -40 : 75,
 		backgroundColor: "#fff",
 		borderRadius: 8,
 		padding: 10,
