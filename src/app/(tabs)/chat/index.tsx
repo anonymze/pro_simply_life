@@ -1,24 +1,23 @@
+import { queryClient } from "@/api/_queries";
 import { deleteChatRoomQuery, getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { getMessagesQuery } from "@/api/queries/message-queries";
-import { withQueryWrapper } from "@/utils/libs/react-query";
-import { Text, TouchableOpacity, View } from "react-native";
-import BackgroundLayout from "@/layouts/background-layout";
-import MessagesIcon from "@/components/svg/messages-icon";
-import { FlatList } from "react-native-gesture-handler";
 import EmployeesIcon from "@/components/emloyees-icon";
-import { PaginatedResponse } from "@/types/response";
-import * as DropdownMenu from "zeego/dropdown-menu";
-import { useMutation } from "@tanstack/react-query";
-import { getStorageUserInfos } from "@/utils/store";
-import { PlusIcon } from "lucide-react-native";
-import { HrefObject, Link } from "expo-router";
-import { userHierarchy } from "@/types/user";
-import { queryClient } from "@/api/_queries";
+import MessagesIcon from "@/components/svg/messages-icon";
 import Title from "@/components/ui/title";
+import BackgroundLayout from "@/layouts/background-layout";
 import { ChatRoom } from "@/types/chat";
-import config from "tailwind.config";
+import { PaginatedResponse } from "@/types/response";
+import { userHierarchy } from "@/types/user";
+import { withQueryWrapper } from "@/utils/libs/react-query";
+import { getStorageUserInfos } from "@/utils/store";
+import { useMutation } from "@tanstack/react-query";
+import { HrefObject, Link } from "expo-router";
+import { PlusIcon } from "lucide-react-native";
 import React from "react";
-
+import { Platform, Text, TouchableOpacity, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import config from "tailwind.config";
+import * as DropdownMenu from "zeego/dropdown-menu";
 
 export const MAX_MESSAGES = 25;
 
@@ -112,39 +111,63 @@ export default function Page() {
 							renderItem={({ item }) => {
 								if (userHierarchy[userInfos?.user.role ?? "visitor"] < 2 || item.app_user.id === userInfos?.user.id) {
 									return (
-										<DropdownMenu.Root>
-											{/* @ts-ignore */}
-											<DropdownMenu.Trigger action="longpress">
-												<Card
-													chatRoom={item}
-													icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
-													title={item.name}
-													description={item.description}
-													link={{
-														pathname: "/chat/[chat]",
-														params: { chat: item.id, title: item.name, description: item.description },
-													}}
-												/>
-											</DropdownMenu.Trigger>
-											<DropdownMenu.Content>
-												<DropdownMenu.Item key="delete" onSelect={() => mutationChatRoom.mutate(item.id)}>
-													<DropdownMenu.ItemTitle>Supprimer</DropdownMenu.ItemTitle>
-													<DropdownMenu.ItemIcon
-														// androidIconName="arrow_down_float"
-														ios={{
-															name: "trash",
-															pointSize: 18,
-															paletteColors: [
-																{
-																	dark: "red",
-																	light: "red",
-																},
-															],
+										<>
+											{Platform.OS === "ios" ? (
+												<DropdownMenu.Root>
+													{/* @ts-ignore */}
+													<DropdownMenu.Trigger action="longpress">
+														<Card
+															chatRoom={item}
+															icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
+															title={item.name}
+															description={item.description}
+															link={{
+																pathname: "/chat/[chat]",
+																params: { chat: item.id, title: item.name, description: item.description },
+															}}
+														/>
+													</DropdownMenu.Trigger>
+													<DropdownMenu.Content>
+														<DropdownMenu.Item key="delete" onSelect={() => mutationChatRoom.mutate(item.id)}>
+															<DropdownMenu.ItemTitle>Supprimer</DropdownMenu.ItemTitle>
+															<DropdownMenu.ItemIcon
+																// androidIconName="arrow_down_float"
+																ios={{
+																	name: "trash",
+																	pointSize: 18,
+																	paletteColors: [
+																		{
+																			dark: "red",
+																			light: "red",
+																		},
+																	],
+																}}
+															/>
+														</DropdownMenu.Item>
+													</DropdownMenu.Content>
+												</DropdownMenu.Root>
+											) : (
+												<View className="flex-row gap-3">
+													<Card
+														chatRoom={item}
+														icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
+														title={item.name}
+														description={item.description}
+														link={{
+															pathname: "/chat/[chat]",
+															params: { chat: item.id, title: item.name, description: item.description },
 														}}
 													/>
-												</DropdownMenu.Item>
-											</DropdownMenu.Content>
-										</DropdownMenu.Root>
+													<TouchableOpacity
+														hitSlop={5}
+														className="items-center justify-center rounded-full bg-red2 p-2.5"
+														onPress={() => mutationChatRoom.mutate(item.id)}
+													>
+														<PlusIcon size={18} color={"#fff"} />
+													</TouchableOpacity>
+												</View>
+											)}
+										</>
 									);
 								}
 
@@ -206,7 +229,7 @@ const Card = ({
 		<Link href={link} push asChild>
 			<TouchableOpacity
 				onPress={onPress}
-				className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
+				className="flex-1 flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
 				<View className="size-14 items-center justify-center rounded-full bg-darkGray">{icon}</View>
 				<View className="flex-1">
