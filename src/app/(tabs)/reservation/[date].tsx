@@ -1,19 +1,18 @@
-import { ActivityIndicator, Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { BuildingIcon, Calendar1Icon, ChevronDownIcon, ClockIcon } from "lucide-react-native";
-import Animated, { FadeInDown, FadeOut, runOnJS } from "react-native-reanimated";
-import { createReservationQuery } from "@/api/queries/reservation-queries";
-import { Redirect, router, useLocalSearchParams } from "expo-router";
-import BackgroundLayout from "@/layouts/background-layout";
-import SelectDropdown from "react-native-select-dropdown";
-import { PaginatedResponse } from "@/types/response";
-import { useMutation } from "@tanstack/react-query";
-import { getStorageUserInfos } from "@/utils/store";
-import { Reservation } from "@/types/reservation";
 import { queryClient } from "@/api/_queries";
-import config from "tailwind.config";
-import { useState } from "react";
+import { createReservationQuery } from "@/api/queries/reservation-queries";
+import BackgroundLayout from "@/layouts/background-layout";
+import { Reservation } from "@/types/reservation";
+import { PaginatedResponse } from "@/types/response";
 import { cn } from "@/utils/cn";
-
+import { getStorageUserInfos } from "@/utils/store";
+import { useMutation } from "@tanstack/react-query";
+import { Redirect, router, useLocalSearchParams } from "expo-router";
+import { BuildingIcon, Calendar1Icon, ChevronDownIcon, ClockIcon } from "lucide-react-native";
+import { useState } from "react";
+import { ActivityIndicator, Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
+import SelectDropdown from "react-native-select-dropdown";
+import config from "tailwind.config";
 
 const timeSlots = [
 	{ title: "8:00", value: "2025-06-10 06:00:00+00" },
@@ -153,7 +152,6 @@ export default function Page() {
 				/>
 
 				<SelectDropdown
-					testID="bureau-select"
 					data={[
 						{
 							title: "Bureau 1",
@@ -196,7 +194,6 @@ export default function Page() {
 				<View className="flex-row items-center gap-4">
 					<View className="flex-1">
 						<SelectDropdown
-							testID="debut-select"
 							data={timeSlots}
 							onSelect={(selectedItem) => {
 								setSelectedDebut(selectedItem.value);
@@ -226,7 +223,6 @@ export default function Page() {
 					</View>
 					<View className="flex-1">
 						<SelectDropdown
-							testID="fin-select"
 							data={timeSlots}
 							onSelect={(selectedItem) => {
 								setSelectedFin(selectedItem.value);

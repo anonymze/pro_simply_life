@@ -173,7 +173,7 @@ http://localhost:8081/\_expo/atlas
 
 webrtc ? for sharing files for chat
 
-RESERVATION BUREZAU OUTLOOK + APPLE BUSINESS MANAGER +
+RESERVATION BUREAU OUTLOOK + APPLE BUSINESS MANAGER + ONGLET GERARDIN
 
 background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
 
