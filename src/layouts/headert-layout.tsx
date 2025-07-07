@@ -1,14 +1,10 @@
-import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { HrefObject, Link, LinkProps, router } from "expo-router";
 import EmployeesIcon from "@/components/emloyees-icon";
-import { TouchableOpacity, View } from "react-native";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import { truncateText } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
+import { HrefObject, Link, LinkProps, router } from "expo-router";
+import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
-import { Text } from "react-native";
-
 
 interface HeaderLayoutProps extends Partial<LinkProps> {
 	title?: string;

@@ -218,7 +218,7 @@ const links: {
 	},
 	{
 		icon: <SportsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
-		title: "Sports & Patrimoines",
+		title: "Sport & Patrimoine",
 		description: "Vie d'agence",
 		link: "/(tabs)/sports",
 		backgroundIcon: "bg-[#FEF3C7]",

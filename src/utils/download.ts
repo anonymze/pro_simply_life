@@ -1,7 +1,6 @@
 import { Directory, File, Paths } from "expo-file-system/next";
 import * as Sharing from "expo-sharing";
 
-
 const destination = new Directory(Paths.document, "simply-life");
 
 const downloadFile = async (url: string, filename: string, mimeType: string | undefined, sharing = false) => {
@@ -39,4 +38,4 @@ const shareFile = async (uri: File["uri"], mimeType: string | undefined) => {
 	}
 };
 
-export { downloadFile, getFile, shareFile };
+export { downloadFile, getFile };
