@@ -175,4 +175,4 @@ webrtc ? for sharing files for chat
 
 background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
 
-FIX EMAIL SERVER + ADD GUIDE DEBUTANT + ONGLET GERARDIN
+ADD GUIDE DEBUTANT + ONGLET GERARDIN + fix relation user -> commission quand on supprimer user

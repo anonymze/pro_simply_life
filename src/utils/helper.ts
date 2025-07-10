@@ -49,3 +49,18 @@ export const generateYAxisTickValues = (maxAmount: number, numberOfTicks: number
 	}
 	return tickValues;
 };
+
+/**
+ * @description check if a user is new (less than 3 months in the organization)
+ * @param entry_date the user's entry date
+ */
+export const isNewEmployee = (entry_date?: string): boolean => {
+	if (!entry_date) return false;
+	
+	const entryDate = new Date(entry_date);
+	const currentDate = new Date();
+	const threeMonthsAgo = new Date();
+	threeMonthsAgo.setMonth(currentDate.getMonth() - 3);
+	
+	return entryDate > threeMonthsAgo;
+};
