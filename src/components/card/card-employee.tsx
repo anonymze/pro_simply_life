@@ -1,12 +1,11 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import { ArrowRight } from "lucide-react-native";
-import { HrefObject, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
-import { isNewEmployee } from "@/utils/helper";
-import config from "tailwind.config";
 import { User } from "@/types/user";
+import { isNewEmployee } from "@/utils/helper";
+import { HrefObject, Link } from "expo-router";
+import { ArrowRight } from "lucide-react-native";
 import React from "react";
-
+import { Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
 
 export default function CardSupplier({ icon, user, link }: { icon: React.ReactNode; user: User; link: HrefObject }) {
 	const onPress = React.useCallback(() => {
@@ -21,10 +20,13 @@ export default function CardSupplier({ icon, user, link }: { icon: React.ReactNo
 				onPressIn={onPress}
 				className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
-				<View className="relative" style={{ overflow: 'visible' }}>
+				<View className="relative" style={{ overflow: "visible" }}>
 					{icon}
 					{isNew && (
-						<View className="absolute w-3 h-3 bg-green-500 rounded-full border border-white" style={{ top: -2, right: -2 }} />
+						<View
+							className="absolute h-4 w-4 rounded-full border border-2 border-white bg-green-500"
+							style={{ top: 0, right: 0 }}
+						/>
 					)}
 				</View>
 				<View className="flex-1">
