@@ -3,7 +3,7 @@ export default {
 		name: "Simply Life : Groupe Valorem",
 		// slug used by expo for your project
 		slug: "simply-life",
-		version: "1.0.1",
+		version: "1.1.0",
 		orientation: "portrait",
 		icon: "./src/assets/images/icon.png",
 		// simply-life://some_path

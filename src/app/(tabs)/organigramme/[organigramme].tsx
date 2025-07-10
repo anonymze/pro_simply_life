@@ -1,14 +1,12 @@
-import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { getSupplierQuery } from "@/api/queries/supplier-queries";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { getAppUserQuery } from "@/api/queries/app-user-queries";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
-import { MailIcon, PhoneIcon } from "lucide-react-native";
-import { useLocalSearchParams } from "expo-router";
-import { useQuery } from "@tanstack/react-query";
 import { userRoleLabels } from "@/types/user";
+import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
+import { MailIcon, PhoneIcon } from "lucide-react-native";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
-
 
 export default function Page() {
 	const { organigramme: userId } = useLocalSearchParams();
@@ -39,7 +37,7 @@ export default function Page() {
 				</View>
 			</View>
 			<BackgroundLayout className="mt-4 px-4">
-				<ContactInfo phone={data.phone} email={data.email} />
+				<ContactInfo phone={data.phone} email={data.email} entryDate={data.entry_date} />
 			</BackgroundLayout>
 		</>
 	);
@@ -53,7 +51,15 @@ const Tag = ({ title }: { title: string }) => {
 	);
 };
 
-const ContactInfo = ({ phone, email }: { phone?: string | null; email?: string | null }) => {
+const ContactInfo = ({
+	phone,
+	email,
+	entryDate,
+}: {
+	phone?: string | null;
+	email?: string | null;
+	entryDate?: string | null;
+}) => {
 	const numbersString = phone?.replace(",", " / ");
 	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
 
@@ -89,6 +95,21 @@ const ContactInfo = ({ phone, email }: { phone?: string | null; email?: string |
 						<MailIcon size={16} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
 				)}
+			</View>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<View className="flex-row items-center justify-between gap-2">
+				<View className="gap-2">
+					<Text className="text-sm text-primaryLight">Date d'entrée</Text>
+					<Text className="font-semibold text-base text-primary">
+						{entryDate
+							? new Date(entryDate).toLocaleDateString("fr-FR", {
+									day: "2-digit",
+									month: "2-digit",
+									year: "numeric",
+								})
+							: ""}
+					</Text>
+				</View>
 			</View>
 		</View>
 	);
