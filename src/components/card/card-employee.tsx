@@ -24,7 +24,7 @@ export default function CardSupplier({ icon, user, link }: { icon: React.ReactNo
 					{icon}
 					{isNew && (
 						<View
-							className="absolute h-4 w-4 rounded-full border border-2 border-white bg-green-500"
+							className="absolute h-4 w-4 rounded-full border-2 border-white bg-green-500"
 							style={{ top: 0, right: 0 }}
 						/>
 					)}

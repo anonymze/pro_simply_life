@@ -16,7 +16,9 @@ import config from "tailwind.config";
 
 import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
-import SportsFillIcon from "@/components/svg/sports-fill-icon";
+
+import LampIconFill from "@/components/svg/lamp-fill-icon";
+import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
@@ -52,6 +54,7 @@ export default function Page() {
 								title={link.title}
 								description={link.description}
 								link={link.link}
+								url={link.url}
 								backgroundIcon={link.backgroundIcon}
 							/>
 						</View>
@@ -164,8 +167,9 @@ const links: {
 	icon: React.ReactNode;
 	title: string;
 	description: string;
-	link: LinkProps["href"];
 	backgroundIcon: string;
+	link?: LinkProps["href"];
+	url?: string;
 }[] = [
 	{
 		icon: <BookFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
@@ -189,7 +193,7 @@ const links: {
 		backgroundIcon: "bg-[#E0EAFF]",
 	},
 	{
-		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
+		icon: <LampIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Bureaux",
 		description: "Réservation",
 		link: "/(tabs)/reservation",
@@ -217,7 +221,14 @@ const links: {
 		backgroundIcon: "bg-[#CEFAFE]",
 	},
 	{
-		icon: <SportsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
+		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
+		title: "Immobilier",
+		description: "Immobilier",
+		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
+		backgroundIcon: "bg-[#CAE8C8]",
+	},
+	{
+		icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
 		title: "Sport & Patrimoine",
 		description: "Vie d'agence",
 		link: "/(tabs)/sports",
