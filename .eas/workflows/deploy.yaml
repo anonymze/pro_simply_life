@@ -1,0 +1,12 @@
+name: Create Production Builds
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    type: build
+    depends_on: fingerprint
+    build_type: release
+    platform: all
