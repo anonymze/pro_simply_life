@@ -3,11 +3,11 @@ appId: com.anonymze.simplylife
 - launchApp:
     clearState: true
 - tapOn:
-    id: 'email-input'
-- inputText: 'test@test.fr'
+    id: "email-input"
+- inputText: "test@test.fr"
 - tapOn:
-    id: 'password-input'
-- inputText: 'azerty123456'
+    id: "password-input"
+- inputText: "azerty123456"
 - tapOn:
-    id: 'login-button'
-- assertVisible: 'Bonjour'
+    id: "login-button"
+- assertVisible: "Bonjour"

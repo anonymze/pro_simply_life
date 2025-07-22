@@ -1,5 +1,5 @@
 import { queryClient } from "@/api/_queries";
-import { Event } from "@/types/event";
+import { Event, eventLabel } from "@/types/event";
 import { truncateText } from "@/utils/helper";
 import { Link } from "expo-router";
 import { ArrowRight, ClockIcon } from "lucide-react-native";
@@ -89,7 +89,7 @@ export default function CardEvent({
 								</View>
 								<View className="flex-shrink justify-center gap-2">
 									<View className="self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
-										<Text className="font-semibold text-xs text-primaryLight">{event.type}</Text>
+										<Text className="font-semibold text-xs text-primaryLight">{eventLabel[event.type]}</Text>
 									</View>
 									<Text className="font-bold text-base text-primary">{truncateText(event.title, 40)}</Text>
 									<View className="flex-row items-center gap-2">

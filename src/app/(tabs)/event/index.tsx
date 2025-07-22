@@ -1,20 +1,19 @@
-import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
-import { Calendar, LocaleConfig } from "react-native-calendars";
-import { getEventsQuery } from "@/api/queries/event-queries";
-import { withQueryWrapper } from "@/utils/libs/react-query";
-import BackgroundLayout from "@/layouts/background-layout";
-import CardList from "@/components/card/card-event";
-import { truncateText } from "@/utils/helper";
 import { queryClient } from "@/api/_queries";
-import { Picker } from "@expo/ui/swift-ui";
+import { getEventsQuery } from "@/api/queries/event-queries";
+import CardList from "@/components/card/card-event";
 import Title from "@/components/ui/title";
-import React, { useState } from "react";
-import { cssInterop } from "nativewind";
-import { Event } from "@/types/event";
-import config from "tailwind.config";
+import BackgroundLayout from "@/layouts/background-layout";
+import { Event, eventLabel } from "@/types/event";
+import { truncateText } from "@/utils/helper";
+import { withQueryWrapper } from "@/utils/libs/react-query";
+import { Picker } from "@expo/ui/swift-ui";
 import { Link } from "expo-router";
-
+import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
+import { cssInterop } from "nativewind";
+import React, { useState } from "react";
+import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Calendar, LocaleConfig } from "react-native-calendars";
+import config from "tailwind.config";
 
 // Configure French locale
 LocaleConfig.locales["fr"] = {
@@ -201,7 +200,7 @@ export default function Page() {
 									{eventsStartingFromToday.map((event) => {
 										return <CardList isLoading={false} key={event.id} event={event} width={"100%"} />;
 									})}
-								</ScrollView>	
+								</ScrollView>
 							) : (
 								<View className="flex-1 items-center justify-center">
 									<Text className="text-md text-center text-primaryLight">Aucun évènement à venir</Text>
@@ -235,7 +234,7 @@ const CardEvent = ({ event }: { event: Event }) => {
 			>
 				<View className="flex-shrink gap-2">
 					<View className="mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">
-						<Text className="text-md font-semibold text-primaryLight">{event.type}</Text>
+						<Text className="text-md font-semibold text-primaryLight">{eventLabel[event.type]}</Text>
 					</View>
 					<Text className="my-1.5 font-bold text-lg text-primary">{truncateText(event.title, 40)}</Text>
 					<View className="flex-row items-center gap-2">

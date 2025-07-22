@@ -1,13 +1,11 @@
-import { Text, TouchableOpacity, View } from "react-native";
-import * as DropdownMenu from "zeego/dropdown-menu";
-import { MenuIcon } from "lucide-react-native";
 import { Media } from "@/types/media";
 import { logout } from "@/utils/auth";
+import { MenuIcon } from "lucide-react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
-import { Image } from "expo-image";
+import * as DropdownMenu from "zeego/dropdown-menu";
 
 import ImagePlaceholder from "./ui/image-placeholder";
-
 
 export default function ProfileDashboard({
 	firstname,

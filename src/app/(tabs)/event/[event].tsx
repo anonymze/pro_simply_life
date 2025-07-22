@@ -1,12 +1,12 @@
-import { CalendarArrowDownIcon, CalendarArrowUpIcon, CalendarIcon, ClockIcon, MapPinIcon } from "lucide-react-native";
 import { getEventQuery } from "@/api/queries/event-queries";
 import BackgroundLayout from "@/layouts/background-layout";
-import { Platform, Text, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
-import { useQuery } from "@tanstack/react-query";
+import { eventLabel } from "@/types/event";
 import { cn } from "@/utils/libs/tailwind";
+import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
+import { CalendarArrowDownIcon, CalendarArrowUpIcon, CalendarIcon, ClockIcon, MapPinIcon } from "lucide-react-native";
+import { Platform, Text, View } from "react-native";
 import config from "tailwind.config";
-
 
 export default function Page() {
 	const { event: eventId } = useLocalSearchParams();
@@ -26,7 +26,7 @@ export default function Page() {
 			<View className="gap-5">
 				<View className="items-center gap-2 rounded-2xl bg-white p-5">
 					<View className="mx-auto mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">
-						<Text className="text-md font-semibold text-primaryLight">{data.type}</Text>
+						<Text className="text-md font-semibold text-primaryLight">{eventLabel[data.type]}</Text>
 					</View>
 					<Text className="text-center font-bold text-xl text-primary">{data.title}</Text>
 					<Text className="text-center text-lg text-primaryLight">{data.annotation}</Text>
@@ -46,11 +46,9 @@ export default function Page() {
 						<View className="flex-grow items-center justify-center rounded-2xl bg-white p-5">
 							<ClockIcon size={30} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
 							<Text className="mt-2 text-center font-semibold text-lg text-primary">
-								{new Date(data.event_start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
-								{" "}-{" "}
+								{new Date(data.event_start).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} -{" "}
 								{new Date(data.event_end).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}
 							</Text>
-
 						</View>
 					</View>
 				) : (

@@ -120,18 +120,7 @@ export default function Page() {
 								event_start: new Date().toISOString(),
 								event_end: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
 								title: "Réunion mensuelle du Groupe Valorem !",
-								type: "Masterclass",
-								annotation:
-									"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!",
-							},
-							{
-								id: "2",
-								createdAt: new Date().toISOString(),
-								updatedAt: new Date().toISOString(),
-								event_start: new Date().toISOString(),
-								event_end: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-								title: "Réunion mensuelle du Groupe Valorem !",
-								type: "Masterclass",
+								type: "food",
 								annotation:
 									"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus cupiditate eius aliquid. Labore molestiae iste obcaecati sunt suscipit alias aliquam soluta, autem accusamus. Exercitationem, ipsa odit! Adipisci ipsam vero officia!",
 							},
