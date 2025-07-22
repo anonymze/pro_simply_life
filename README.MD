@@ -42,6 +42,9 @@ eas build:configure
 // link project to the account developer with an identifier
 eas credentials
 
+// test e2e locally
+maestro test .maestro/expand_test.yml
+
 // creates or update branch production then update the channel production in testflight
 eas update --channel production
 
