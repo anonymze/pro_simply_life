@@ -7,13 +7,11 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    type: build
-    depends_on: fingerprint
-    build_type: release
-    platform: all
-
-  submit:
-    type: submit
-    depends_on: build
-    store: auto  # Submits to both stores
+  build_android:
+    type: build # This job type creates a production build for Android
+    params:
+      platform: android
+  build_ios:
+    type: build # This job type creates a production build for iOS
+    params:
+      platform: ios
