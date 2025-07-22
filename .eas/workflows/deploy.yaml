@@ -10,3 +10,8 @@ jobs:
     depends_on: fingerprint
     build_type: release
     platform: all
+
+  submit:
+    type: submit
+    depends_on: build
+    store: auto  # Submits to both stores
