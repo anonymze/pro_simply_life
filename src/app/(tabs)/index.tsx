@@ -225,7 +225,7 @@ const links: {
 		title: "Immobilier",
 		description: "Immobilier",
 		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
-		backgroundIcon: "bg-[#CAE8C8]",
+		backgroundIcon: "bg-[#D2EED0]",
 	},
 	{
 		icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
