@@ -51,6 +51,9 @@ eas build --profile preview
 // better for testflight
 npx testflight
 
+// trigger workflow
+npx eas-cli@latest workflow:run create-production-builds.yml
+
 // build and submit (default to production i guess)
 eas build -s // npx testflight does the same as eas build -p ios -s
 
