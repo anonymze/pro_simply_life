@@ -16,17 +16,17 @@ web-build/
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
 
-.eas
-maestro-workspace
+.eas/
+maestro-workspace/
 
 # custom
-.history
-.vscode
-x
-.idea
+.history/
+.vscode/
+x/
+.idea/
 
-resources/android
-resources/ios
+resources/android/
+resources/ios/
 
 .env.local
 
