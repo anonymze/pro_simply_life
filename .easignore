@@ -24,6 +24,7 @@ maestro-workspace/
 .vscode/
 x/
 .idea/
+.claude/
 
 resources/android/
 resources/ios/

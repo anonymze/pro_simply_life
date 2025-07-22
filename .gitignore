@@ -20,10 +20,11 @@ web-build/
 .metro-health-check*
 
 # custom
-.history
-.vscode
-x
-.idea
+.history/
+.vscode/
+x/
+.idea/
+.claude/
 
 .env.local
 .env.local
