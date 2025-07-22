@@ -1,0 +1,7 @@
+appId: com.anonymze.simplylife
+---
+- launchApp:
+    clearState: true
+- assertVisible: 'Mystery Cat'
+- tapOn:
+    id: 'unlock-cat-button'
