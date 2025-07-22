@@ -9,7 +9,8 @@
 		"prebuild": "expo prebuild",
 		"prettier": "prettier \"**/*.{js,jsx,ts,tsx}\" --write",
 		"web": "expo start --web",
-		"knip": "knip"
+		"knip": "knip",
+		"test:e2e": "maestro test .maestro"
 	},
 	"dependencies": {
 		"@expo/ui": "0.1.1-alpha.9",

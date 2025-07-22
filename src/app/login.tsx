@@ -1,5 +1,5 @@
 import Animated, { FadeInDown, FadeOut, FadeOutUp, useAnimatedStyle } from "react-native-reanimated";
-import { ActivityIndicator, Alert, Pressable, Text, View, TextInput, Button } from "react-native";
+import { ActivityIndicator, Alert, Pressable, Text, View, TextInput } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { useNotification } from "@/context/push-notifications";
@@ -45,8 +45,8 @@ export default function Page() {
 
 	const form = useForm({
 		defaultValues: {
-			email: process.env.NODE_ENV === "development" ? "mila.simon@iwillcodeit.io" : "",
-			password: process.env.NODE_ENV === "development" ? "" : "",
+			email: "",
+			password: "",
 		},
 		validators: {
 			onSubmit: formSchema,
@@ -72,6 +72,7 @@ export default function Page() {
 						{(field) => (
 							<React.Fragment>
 								<TextInput
+									testID="email-input"
 									returnKeyType="done"
 									autoCapitalize="none"
 									keyboardType="email-address"
@@ -96,6 +97,7 @@ export default function Page() {
 						{(field) => (
 							<React.Fragment>
 								<TextInput
+									testID="password-input"
 									secureTextEntry
 									returnKeyType="done"
 									autoCapitalize="none"
@@ -114,6 +116,7 @@ export default function Page() {
 					</form.Field>
 				</View>
 				<Pressable
+					testID="login-button"
 					onPress={form.handleSubmit}
 					disabled={mutationLogin.isPending}
 					className="mt-4 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
