@@ -1,15 +1,16 @@
-import BookIconFill from "@/components/svg/book-fill-icon";
-import BookIcon from "@/components/svg/book-icon";
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
-import BriefcaseIcon from "@/components/svg/briefcase-icon";
-import HomeIcon from "@/components/svg/home-icon";
 import MessagesFillIcon from "@/components/svg/messages-fill-icon";
+import BriefcaseIcon from "@/components/svg/briefcase-icon";
+import BookIconFill from "@/components/svg/book-fill-icon";
 import MessagesIcon from "@/components/svg/messages-icon";
+import { Pressable } from "react-native-gesture-handler";
 import HeaderLayout from "@/layouts/headert-layout";
 import { getStorageUserInfos } from "@/utils/store";
+import HomeIcon from "@/components/svg/home-icon";
+import BookIcon from "@/components/svg/book-icon";
 import { Redirect, Tabs } from "expo-router";
-import { Pressable } from "react-native-gesture-handler";
 import config from "tailwind.config";
+
 
 export default function AppLayout() {
 	const userInfos = getStorageUserInfos();
@@ -20,8 +21,7 @@ export default function AppLayout() {
 
 	return (
 		<Tabs
-			// TODO
-			initialRouteName="index"
+			// initialRouteName="index"
 			screenOptions={{
 				headerShown: false,
 				animation: "shift",
