@@ -19,7 +19,7 @@ export default function Page() {
 		({ data }) => {
 			return (
 				<BackgroundLayout className="pt-safe px-4">
-					<Title title="Sports et Patrimoines" className="mb-6" />
+					<Title title="Sport et Patrimoine" className="mb-6" />
 
 					<Card
 						sports={data.docs.filter((item) => item.category === "fiscal")}
