@@ -17,7 +17,7 @@ web-build/
 .metro-health-check*
 
 .eas/
-maestro-workspace/
+.maestro/
 
 # custom
 .history/
