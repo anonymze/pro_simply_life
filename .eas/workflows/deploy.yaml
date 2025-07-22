@@ -9,9 +9,11 @@ on:
 jobs:
   build_android:
     type: build # This job type creates a production build for Android
+    depends_on: fingerprint  # Add this
     params:
       platform: android
   build_ios:
     type: build # This job type creates a production build for iOS
+    depends_on: fingerprint
     params:
       platform: ios
