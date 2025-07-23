@@ -1,20 +1,18 @@
+import { queryClient } from "@/api/_queries";
 import { deleteChatRoomQuery, getChatRoomQuery, leaveChatRoomQuery } from "@/api/queries/chat-room-queries";
-import { ActivityIndicator, Alert, Platform, ScrollView, TouchableOpacity, View } from "react-native";
-import { LogOutIcon, PlusIcon, TrashIcon } from "lucide-react-native";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import EmployeesIcon from "@/components/emloyees-icon";
 import IndependantIcon from "@/components/independant-icon";
 import BackgroundLayout from "@/layouts/background-layout";
-import { router, useLocalSearchParams } from "expo-router";
-import EmployeesIcon from "@/components/emloyees-icon";
+import { ChatRoom } from "@/types/chat";
 import { PaginatedResponse } from "@/types/response";
 import { User, userRoleLabels } from "@/types/user";
-import { getStorageUserInfos } from "@/utils/store";
-import { queryClient } from "@/api/_queries";
-import { ChatRoom } from "@/types/chat";
-import config from "tailwind.config";
-import { Text } from "react-native";
 import { cn } from "@/utils/cn";
-
+import { getStorageUserInfos } from "@/utils/store";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { router, useLocalSearchParams } from "expo-router";
+import { LogOutIcon, TrashIcon } from "lucide-react-native";
+import { ActivityIndicator, Alert, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
 
 export default function Page() {
 	const { chat: chatId } = useLocalSearchParams();
@@ -84,7 +82,7 @@ export default function Page() {
 					}}
 					className="mt-4 flex-row items-center gap-3 rounded-xl bg-white p-2 shadow shadow-defaultGray/10"
 				>
-					<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
+					<View className="size-14 items-center justify-center rounded-xl bg-red-200">
 						<TrashIcon size={22} color={config.theme.extend.colors.red2} />
 					</View>
 					<Text className="text-md font-semibold text-red2">Supprimer le groupe</Text>
@@ -119,7 +117,7 @@ export default function Page() {
 				}}
 				className="mt-4 flex-row items-center gap-3 rounded-xl bg-white p-2 shadow shadow-defaultGray/10"
 			>
-				<View className="bg-red-200 size-14 items-center justify-center rounded-xl">
+				<View className="size-14 items-center justify-center rounded-xl bg-red-200">
 					<LogOutIcon size={22} color={config.theme.extend.colors.red2} />
 				</View>
 				<Text className="text-md font-semibold text-red2">Quitter le groupe</Text>

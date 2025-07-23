@@ -58,7 +58,7 @@ export default function Page() {
 				<View className="mt-1 flex-row items-center gap-2">
 					<View className="size-2 rounded-full bg-structured" />
 					<Text className="text-backgroundChat">Barrière dégressivité</Text>
-					<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.barrier}€</Text>
+					<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.constatation}</Text>
 				</View>
 				<Text className="text-md mb-3 mt-6 font-medium text-primary">Date de constatation</Text>
 				<Text className=" text-sm text-primaryLight">

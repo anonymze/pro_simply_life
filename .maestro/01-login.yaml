@@ -11,3 +11,4 @@ appId: com.anonymze.simplylife
 - tapOn:
     id: "login-button"
 - assertVisible: "Bonjour"
+
