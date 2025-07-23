@@ -47,20 +47,31 @@ export default function Page() {
 				</View>
 				<View className="mt-6 flex-row items-center gap-2">
 					<View className="size-2 rounded-full bg-production" />
-					<Text className="text-backgroundChat">Enveloppe actuelle</Text>
+					<Text className="text-backgroundChat">Solde enveloppe</Text>
 					<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.current}€</Text>
 				</View>
-				<View className="mt-1 flex-row items-center gap-2">
-					<View className="size-2 rounded-full bg-encours" />
-					<Text className="text-backgroundChat">Coupon annuel</Text>
-					<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.coupon}€</Text>
-				</View>
-				<View className="mt-1 flex-row items-center gap-2">
-					<View className="size-2 rounded-full bg-structured" />
-					<Text className="text-backgroundChat">Barrière dégressivité</Text>
-					<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.constatation}</Text>
-				</View>
-				<Text className="text-md mb-3 mt-6 font-medium text-primary">Date de constatation</Text>
+				<Text className="text-md mb-1 mt-5 font-medium text-primary">Broker : {structuredProduct.broker}</Text>
+				<Text className="text-md mb-1 mt-1 font-medium text-primary">Sous-jacent : {structuredProduct.sousjacent}</Text>
+				<Text className="text-md mb-1 mt-1 font-medium text-primary">Maturité : {structuredProduct.mature}</Text>
+				<Text className="text-md mb-1 mt-1 font-medium text-primary">
+					Coupon de remboursement : {structuredProduct.coupon}
+				</Text>
+				<Text className="text-md mb-1 mt-1 font-medium text-primary">
+					Fréquence de remboursement : {structuredProduct.frequency}
+				</Text>
+				<Text className="text-md mb-1 mt-1 font-medium text-primary">
+					Seuil de remboursement : {structuredProduct.refund}
+				</Text>
+				<Text className="text-md mb-1 mt-1 font-medium text-primary">
+					Seuil de perte en capital : {structuredProduct.capital}
+				</Text>
+				<Text className="text-md mb-3 mt-6 font-medium text-primary">Date de début de commercialisation</Text>
+				<Text className=" text-sm text-primaryLight">
+					{new Date(structuredProduct.start_comm).toLocaleDateString()}
+				</Text>
+				<Text className="text-md mb-3 mt-6 font-medium text-primary">Date de fin de commercialisation</Text>
+				<Text className=" text-sm text-primaryLight">{new Date(structuredProduct.end_comm).toLocaleDateString()}</Text>
+				<Text className="text-md mb-3 mt-6 font-medium text-primary">Date de constations</Text>
 				<Text className=" text-sm text-primaryLight">
 					{new Date(structuredProduct.constatation).toLocaleDateString()}
 				</Text>
