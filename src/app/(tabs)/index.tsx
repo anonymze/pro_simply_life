@@ -223,11 +223,4 @@ const links: {
 		link: "/(tabs)/sports",
 		backgroundIcon: "bg-[#FEF3C7]",
 	},
-	// {
-	// 	icon: <DotSquareIcon size={40} color={config.theme.extend.colors.primary} />,
-	// 	title: "...",
-	// 	description: "...",
-	// 	link: "/",
-	// 	backgroundIcon: "bg-[#FFE4E6]",
-	// },
 ];

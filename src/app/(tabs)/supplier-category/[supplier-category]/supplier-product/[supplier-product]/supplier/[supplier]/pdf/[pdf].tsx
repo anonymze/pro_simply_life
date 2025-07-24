@@ -1,9 +1,8 @@
-import { Redirect, useLocalSearchParams } from "expo-router";
-import PdfRendererView from "react-native-pdf-renderer";
 import { getFile } from "@/utils/download";
-import config from "tailwind.config";
+import { Redirect, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
-
+import PdfRendererView from "react-native-pdf-renderer";
+import config from "tailwind.config";
 
 export default function Page() {
 	const { pdf } = useLocalSearchParams();

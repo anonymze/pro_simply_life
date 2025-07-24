@@ -1,5 +1,6 @@
 import { getFundesysQuery } from "@/api/queries/fundesys";
 import { Brochure } from "@/components/brochure";
+import { BrochureExcel } from "@/components/brochure-excel";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { cn } from "@/utils/libs/tailwind";
@@ -81,6 +82,9 @@ export default function Page() {
 						},
 					}}
 				/>
+			</View>
+			<View className="mt-5">
+				<BrochureExcel title="Newsletter Excel" brochure={fundesys.file} updatedAt={fundesys.updatedAt} />
 			</View>
 		</BackgroundLayout>
 	);

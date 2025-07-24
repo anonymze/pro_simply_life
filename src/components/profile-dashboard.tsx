@@ -5,6 +5,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 import * as DropdownMenu from "zeego/dropdown-menu";
 
+import { router } from "expo-router";
 import ImagePlaceholder from "./ui/image-placeholder";
 
 export default function ProfileDashboard({
@@ -50,7 +51,12 @@ export default function ProfileDashboard({
 						</TouchableOpacity>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
-						<DropdownMenu.Item key="help" onSelect={() => console.log("item-1 selected")}>
+						<DropdownMenu.Item
+							key="help"
+							onSelect={() => {
+								router.push("/(tabs)/help");
+							}}
+						>
 							<DropdownMenu.ItemTitle>Guide du débutant</DropdownMenu.ItemTitle>
 							<DropdownMenu.ItemIcon
 								// androidIconName="arrow_down_float"

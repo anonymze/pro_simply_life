@@ -54,7 +54,7 @@ export default function Page() {
 					{data.website && (
 						<TouchableOpacity
 							className="rounded-full bg-primaryUltraLight p-2.5"
-							onPress={async () => await WebBrowser.openBrowserAsync(data.website)}
+							onPress={async () => await WebBrowser.openBrowserAsync(data.website!)}
 						>
 							<LinkIcon size={14} color={config.theme.extend.colors.primary} />
 						</TouchableOpacity>
