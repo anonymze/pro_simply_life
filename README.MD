@@ -182,3 +182,30 @@ webrtc ? for sharing files for chat
 background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
 
 ADD GUIDE DEBUTANT + ONGLET GERARDIN + fix relation user -> commission quand on supprimer user
+
+
+Création d'une plateforme web pour services de déménagement, débarras et nettoyage
+Description
+Projet
+Objectif: Création d'un site web unique regroupant trois services : déménagement, débarras et nettoyage de fin de chantier.
+Fonctionnalité clé: Offrir à l'utilisateur un devis immédiat et chiffré grâce à un calculateur intelligent de volume et de tarif.
+Deliverables: Réalisation complète de la plateforme web (de A à Z).
+Challenge: Intégration et développement du calculateur de volume et de tarif, dont le parcours et le fonctionnement sont déjà définis.
+
+Profil Recherché
+Compétences techniques: Développeur capable de réaliser une plateforme web de A à Z.
+Lire moins
+Détails
+Fréquence
+Toute la semaine
+Début
+Dès que possible
+Télétravail
+Oui (À temps complet)
+Durée
+14 jours
+Lieu
+France
+Tarif journalier
+Selon profil
+Compétences obligatoires
