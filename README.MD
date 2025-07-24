@@ -176,7 +176,6 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 
-
 webrtc ? for sharing files for chat
 
 background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
@@ -209,3 +208,15 @@ France
 Tarif journalier
 Selon profil
 Compétences obligatoires
+
+Distance Paris lyon, il rentre tous ces meubles, il rentre tous les meubles, le distance, le volume, options supplémentaires , emballage par nous même ?
+MODERNE
+bras et carton -> logo à faire
+
+roulage à vide
+
+chat bot
+
+fethi.94@outlook.com
+https://www.mydemenageur.com/
+https://www.desbrasenplus.com/
