@@ -1,3 +1,4 @@
+import { Media } from "./media";
 import { Supplier } from "./supplier";
 
 export interface StructuredProduct {
@@ -17,4 +18,15 @@ export interface StructuredProduct {
 	capital: string;
 	updatedAt: string;
 	createdAt: string;
+	offers?:
+		| {
+				name: string;
+				/**
+				 * Le fichier doit être au format PDF.
+				 */
+				file: Media;
+				description?: string | null;
+				id?: string | null;
+		  }[]
+		| null;
 }

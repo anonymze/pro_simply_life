@@ -1,3 +1,4 @@
+import HeaderGrabberIos from "@/layouts/header-grabber-ios";
 import HeaderLayout from "@/layouts/headert-layout";
 import { Stack } from "expo-router";
 import { Platform } from "react-native";
@@ -20,6 +21,19 @@ export default function FundesysLayout() {
 					header: () => <HeaderLayout />,
 					headerShown: true,
 				}}
+			/>
+			<Stack.Screen
+				options={{
+					presentation: "modal",
+					header: () =>
+						Platform.OS === "ios" ? (
+							<HeaderGrabberIos className="bg-white" />
+						) : (
+							<HeaderLayout backgroundColor="bg-white" />
+						),
+					headerShown: true,
+				}}
+				name="pdf/[pdf]"
 			/>
 		</Stack>
 	);

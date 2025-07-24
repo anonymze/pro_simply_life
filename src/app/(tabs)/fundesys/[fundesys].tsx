@@ -39,7 +39,7 @@ export default function Page() {
 				setLoading(true);
 				const res = await fetch(fundesys?.video.url ?? "");
 				setLoading(false);
-				player.replace(res.url);
+				player.replaceAsync(res.url);
 			} catch {
 				setLoading(false);
 				player.replace("");
