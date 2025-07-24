@@ -12,6 +12,7 @@ export interface User {
 	firstname: string;
 	email: string;
 	role: UserRole;
+	cabinet?: string | undefined;
 	phone?: string;
 	photo?: Media;
 	entry_date?: string;

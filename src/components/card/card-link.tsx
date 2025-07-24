@@ -1,8 +1,9 @@
 import { cn } from "@/utils/cn";
 import { truncateText } from "@/utils/helper";
 import { Link, LinkProps } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import { Dimensions, Linking, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -39,7 +40,11 @@ export default function CardLink({
 
 	if (url) {
 		return (
-			<TouchableOpacity className="items-center gap-1 rounded-2xl" hitSlop={5} onPress={() => Linking.openURL(url)}>
+			<TouchableOpacity
+				className="items-center gap-1 rounded-2xl"
+				hitSlop={5}
+				onPress={async () => await WebBrowser.openBrowserAsync(url)}
+			>
 				<View className={cn("size-24 items-center justify-center rounded-2xl bg-primaryUltraLight", backgroundIcon)}>
 					{icon}
 				</View>

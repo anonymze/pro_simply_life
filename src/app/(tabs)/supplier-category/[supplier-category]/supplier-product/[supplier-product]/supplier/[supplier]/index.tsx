@@ -1,16 +1,16 @@
-import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
-import { Linking, ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
-import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
+import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
-import { useQuery } from "@tanstack/react-query";
-import { Brochure } from "@/components/brochure";
 import { Supplier } from "@/types/supplier";
 import { Picker } from "@expo/ui/swift-ui";
-import config from "tailwind.config";
+import { useQuery } from "@tanstack/react-query";
+import { HrefObject, Link, useLocalSearchParams } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
+import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
-
+import { Dimensions, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
 
 export default function Page() {
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
@@ -54,7 +54,7 @@ export default function Page() {
 					{data.website && (
 						<TouchableOpacity
 							className="rounded-full bg-primaryUltraLight p-2.5"
-							onPress={() => Linking.openURL(data.website!)}
+							onPress={async () => await WebBrowser.openBrowserAsync(data.website)}
 						>
 							<LinkIcon size={14} color={config.theme.extend.colors.primary} />
 						</TouchableOpacity>
@@ -190,7 +190,6 @@ const Logs = ({ link }: { link: HrefObject }) => {
 	);
 };
 
-
 const ContactInfo = ({
 	phone,
 	email,
@@ -209,13 +208,15 @@ const ContactInfo = ({
 		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<Text className="text-sm text-primaryLight">Prénom et Nom</Text>
 			<Text selectable className="font-semibold text-primary">
-				{firstname} {lastname?.toUpperCase()} 
+				{firstname} {lastname?.toUpperCase()}
 			</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2 flex-shrink">
+				<View className="flex-shrink gap-2">
 					<Text className="text-sm text-primaryLight">Téléphone</Text>
-					<Text selectable className="font-semibold text-base text-primary">{numbersString}</Text>
+					<Text selectable className="font-semibold text-base text-primary">
+						{numbersString}
+					</Text>
 				</View>
 				{phone && (
 					<TouchableOpacity
@@ -230,9 +231,11 @@ const ContactInfo = ({
 			</View>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
-				<View className="gap-2 flex-grow-0 flex-shrink">
+				<View className="flex-shrink flex-grow-0 gap-2">
 					<Text className="text-sm text-primaryLight">E-mail</Text>
-					<Text selectable className="font-semibold text-base text-primary">{email}</Text>
+					<Text selectable className="font-semibold text-base text-primary">
+						{email}
+					</Text>
 				</View>
 				{email && (
 					<TouchableOpacity

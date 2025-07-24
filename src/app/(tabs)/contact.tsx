@@ -1,20 +1,18 @@
-import { Alert, Platform, Pressable, Text, View, TextInput, Linking } from "react-native";
 import { getContactCategoriesQuery } from "@/api/queries/contact-categories-queries";
-import { GoogleMapsMapType } from "expo-maps/build/google/GoogleMaps.types";
-import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
-import { getAndroidIcon, iconIos, tintIos } from "@/utils/icon-maps";
-import { BottomSheetSelect } from "@/components/bottom-sheet-select";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getContactsQuery } from "@/api/queries/contact-queries";
-import { stylesLayout } from "@/layouts/background-layout";
+import { BottomSheetSelect } from "@/components/bottom-sheet-select";
 import InputSearch from "@/components/ui/input-search";
-import { useQueries } from "@tanstack/react-query";
+import { stylesLayout } from "@/layouts/background-layout";
 import { ContactCategory } from "@/types/contact";
-import { AppleMaps, GoogleMaps } from "expo-maps";
+import { getAndroidIcon, iconIos, tintIos } from "@/utils/icon-maps";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { useQueries } from "@tanstack/react-query";
+import { AppleMaps, GoogleMaps } from "expo-maps";
+import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
+import { GoogleMapsMapType } from "expo-maps/build/google/GoogleMaps.types";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-
+import { Alert, Linking, Platform, Pressable, Text, View } from "react-native";
 
 const CAMERA_POSITION = {
 	coordinates: {

@@ -1,16 +1,16 @@
-import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
-import { Linking, ScrollView, Text, TouchableOpacity, View, Dimensions } from "react-native";
-import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
+import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
+import { Supplier } from "@/types/supplier";
 import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
-import { Brochure } from "@/components/brochure";
-import { Supplier } from "@/types/supplier";
-import config from "tailwind.config";
+import { HrefObject, Link, useLocalSearchParams } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
+import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
-
+import { Dimensions, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
 
 export default function Page() {
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
@@ -54,7 +54,7 @@ export default function Page() {
 					{data.website && (
 						<TouchableOpacity
 							className="rounded-full bg-primaryUltraLight p-2.5"
-							onPress={() => Linking.openURL(data.website!)}
+							onPress={async () => await WebBrowser.openBrowserAsync(data.website!)}
 						>
 							<LinkIcon size={14} color={config.theme.extend.colors.primary} />
 						</TouchableOpacity>
