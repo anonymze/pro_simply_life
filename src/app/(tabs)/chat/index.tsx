@@ -12,7 +12,7 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import { getStorageUserInfos } from "@/utils/store";
 import { useMutation } from "@tanstack/react-query";
 import { HrefObject, Link } from "expo-router";
-import { PlusIcon } from "lucide-react-native";
+import { PlusIcon, TrashIcon } from "lucide-react-native";
 import React from "react";
 import { Platform, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -163,7 +163,7 @@ export default function Page() {
 														className="items-center justify-center rounded-full bg-red2 p-2.5"
 														onPress={() => mutationChatRoom.mutate(item.id)}
 													>
-														<PlusIcon size={18} color={"#fff"} />
+														<TrashIcon size={18} color={"#fff"} />
 													</TouchableOpacity>
 												</View>
 											)}
