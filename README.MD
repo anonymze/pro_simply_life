@@ -181,3 +181,8 @@ webrtc ? for sharing files for chat
 background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
 
 ONGLET GERARDIN + fix relation user -> commission quand on supprimer user
+
+sport & patrimoine
+
+système de formulaire pour un client avec tout tas d'informations à entrer + document ID à entrer pour des clients lors d'un rdv (cgp), donénes liés à l'utilisatrurt qui a créé le formulaire
+nouveau client -> entrer des informations ou retrouver les informations des formulaires
