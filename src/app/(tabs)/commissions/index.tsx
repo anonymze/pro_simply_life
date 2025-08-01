@@ -153,8 +153,9 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 				showsHorizontalScrollIndicator={false}
 				data={type === "monthly" ? data.monthlyData : data.yearlyData}
 				horizontal
-				estimatedItemSize={88}
+				estimatedItemSize={140}
 				extraData={lastMonth.id}
+				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => {
 					return (
 						<Pressable
@@ -231,7 +232,9 @@ const Content = ({
 
 	return (
 		<>
-			<Text className="mt-5 font-semibold text-lg text-primary">Résumé du mois</Text>
+			<Text className="mt-5 font-semibold text-lg text-primary">
+				{"commissions" in data ? "Résumé du mois" : "Résumé de l'année"}
+			</Text>
 
 			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 16 }} className="mt-3">
 				<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">

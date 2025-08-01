@@ -29,7 +29,6 @@ export const truncateText = (text: string, maxLength: number) => {
 	return text;
 };
 
-
 /**
  * @description generate y axis tick values
  * @param maxAmount the max amount
@@ -42,12 +41,14 @@ export const generateYAxisTickValues = (maxAmount: number, numberOfTicks: number
 
 	const finalMax = maxChart;
 	const tickValues: number[] = [];
-	const interval = Number((finalMax / (numberOfTicks - 1)).toFixed(0));
+	const interval = Math.max(1, Number((finalMax / (numberOfTicks - 1)).toFixed(0))); // Ensure minimum interval of 1
 
 	for (let i = 0; i < numberOfTicks; i++) {
-		tickValues.push((i * interval)); // Round to 2 decimal places for currency
+		tickValues.push(i * interval);
 	}
-	return tickValues;
+
+	// Remove duplicates and sort
+	return [...new Set(tickValues)].sort((a, b) => a - b);
 };
 
 /**
@@ -56,11 +57,11 @@ export const generateYAxisTickValues = (maxAmount: number, numberOfTicks: number
  */
 export const isNewEmployee = (entry_date?: string): boolean => {
 	if (!entry_date) return false;
-	
+
 	const entryDate = new Date(entry_date);
 	const currentDate = new Date();
 	const threeMonthsAgo = new Date();
 	threeMonthsAgo.setMonth(currentDate.getMonth() - 3);
-	
+
 	return entryDate > threeMonthsAgo;
 };

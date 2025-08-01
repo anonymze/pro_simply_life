@@ -153,8 +153,9 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 				showsHorizontalScrollIndicator={false}
 				data={type === "monthly" ? data.monthlyData : data.yearlyData}
 				horizontal
-				estimatedItemSize={88}
+				estimatedItemSize={140}
 				extraData={lastMonth.id}
+				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => {
 					return (
 						<Pressable
