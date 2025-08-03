@@ -75,12 +75,3 @@ function Card({ structuredProduct }: { structuredProduct: StructuredProduct }) {
 		</Link>
 	);
 }
-
-// axa thema -  cardif - generali - oddo - suravenir - swiss life - oradea
-
-// assureurs liste -> exemple :  oradea enveloppe + taux de remplissage
-
-// memo
-// -> 1 onglet produit encours
-// / 1 coupon annuel / 1 barriere de rgressivité / date de conatstation
-// assureur

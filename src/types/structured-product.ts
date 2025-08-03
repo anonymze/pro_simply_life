@@ -30,3 +30,9 @@ export interface StructuredProduct {
 		  }[]
 		| null;
 }
+
+export const brokerLabels: Record<StructuredProduct["broker"], string> = {
+	kepler: "Kepler Cheuvreux",
+	irbis: "Irbis",
+	silex: "Silex",
+} as const;

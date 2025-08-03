@@ -15,12 +15,12 @@ export default function FundesysLayout() {
 		>
 			<Stack.Screen name="index" />
 			<Stack.Screen
-				name="[structured]"
 				options={{
-					// headerBackButtonMenuEnabled: false,
-					header: () => <HeaderLayout />,
 					headerShown: true,
+					// gestureEnabled: false,
+					header: () => <HeaderLayout backgroundColor="bg-white" />,
 				}}
+				name="[structured]"
 			/>
 			<Stack.Screen
 				options={{
