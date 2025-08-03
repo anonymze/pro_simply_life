@@ -162,7 +162,7 @@ export default function Page() {
 							<View className="gap-2">
 								{structuredProduct.offers!.map((offer) => (
 									<Brochure
-										title="Plaquette"
+										title="Brochure"
 										key={offer.id}
 										brochure={offer.file}
 										updatedAt={structuredProduct.updatedAt}
