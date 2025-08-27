@@ -109,7 +109,7 @@ const ContactInfo = ({
 					</Text>
 				</View>
 			</View>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			{/*<View className="my-2 h-px w-full bg-defaultGray/15" />*/}
 			{/*<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
 					<Text className="text-sm text-primaryLight">Date de naissance</Text>
