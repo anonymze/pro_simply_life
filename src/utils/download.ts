@@ -1,6 +1,5 @@
 import { Directory, File, Paths } from "expo-file-system/next";
 import * as Sharing from "expo-sharing";
-import { Alert } from "react-native";
 
 const destination = new Directory(Paths.document, "simply-life");
 
@@ -45,15 +44,9 @@ const shareFile = async (uri: File["uri"], mimeType: string | undefined) => {
 };
 
 const deleteFile = async (filename: string) => {
-	try {
-		const file = new File(destination, filename);
-		if (file.exists) file.delete();
-	} catch (error) {
-		Alert.alert(
-			"La brochure n'a pas pu être téléchargée pour être visualisée",
-			"Vérifiez que vous avez assez d'espace de stockage.",
-		);
-	}
+	const sanitizedFilename = encodeURIComponent(filename);
+	const file = new File(destination, sanitizedFilename);
+	if (file.exists) file.delete();
 };
 
 export { deleteFile, downloadFile, getFile };
