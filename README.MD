@@ -186,3 +186,8 @@ sport & patrimoine
 
 système de formulaire pour un client avec tout tas d'informations à entrer + document ID à entrer pour des clients lors d'un rdv (cgp), donénes liés à l'utilisatrurt qui a créé le formulaire
 nouveau client -> entrer des informations ou retrouver les informations des formulaires
+
+
+// sur l'app ajouter un sous code au niveau des indetifiantds
+// déposer un fichier ne marche pas
+// fichier excel organigramme

@@ -87,6 +87,11 @@ export default function Page() {
 							{structuredProduct.supplier.name}
 						</Text>
 						<View className="my-2 h-px w-full bg-defaultGray/15" />
+						<Text className="text-sm text-primaryLight">Nom du produit</Text>
+						<Text selectable className="font-semibold text-primary">
+							{structuredProduct.name}
+						</Text>
+						<View className="my-2 h-px w-full bg-defaultGray/15" />
 						<Text className="text-sm text-primaryLight">Broker</Text>
 						<Text selectable className="font-semibold text-primary">
 							{brokerLabels[structuredProduct.broker]}
@@ -148,6 +153,11 @@ export default function Page() {
 						<Text className="text-sm text-primaryLight">Seuil de remboursement anticipé</Text>
 						<Text selectable className="font-semibold text-primary">
 							{structuredProduct.refund}
+						</Text>
+						<View className="my-2 h-px w-full bg-defaultGray/15" />
+						<Text className="text-sm text-primaryLight">Seuil de récupération de l'intégralité des coupons à maturité (airbag)</Text>
+						<Text selectable className="font-semibold text-primary">
+							{structuredProduct.airbag}
 						</Text>
 						<View className="my-2 h-px w-full bg-defaultGray/15" />
 						<Text className="text-sm text-primaryLight">Seuil de perte en capital à maturité</Text>

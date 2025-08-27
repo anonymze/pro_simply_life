@@ -44,7 +44,7 @@ export default function Page() {
 	return (
 		<BackgroundLayout className="px-4">
 			<View className="iems-center flex-row justify-between">
-				<Title title={role === "employee" ? "Employés" : "Indépendants"} />
+				<Title title={role === "employee" ? "Staff" : "Indépendants"} />
 				{/* <Picker
 					style={{
 						width: 150,

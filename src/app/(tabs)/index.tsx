@@ -23,6 +23,7 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
 import { Text, TouchableOpacity, View } from "react-native";
+import { Image } from "expo-image";
 
 export default function Page() {
 	const { data: events, isLoading: isLoadingEvents } = useQuery({
@@ -186,7 +187,7 @@ const links: {
 		title: "Bureaux",
 		description: "Réservation",
 		link: "/(tabs)/reservation",
-		backgroundIcon: "bg-[#E4F5D7]",
+		backgroundIcon: "bg-[#D2EED0]",
 	},
 	{
 		icon: <EventsFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
@@ -204,17 +205,17 @@ const links: {
 	},
 	{
 		icon: <CubeFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
-		title: "Produits structuréss",
+		title: "Structurés",
 		description: "Réservation",
 		link: "/(tabs)/structured",
 		backgroundIcon: "bg-[#CEFAFE]",
 	},
 	{
-		icon: <BuildingFillIcon color={config.theme.extend.colors.primary} width={44} height={44} />,
+		icon: <Image source={require('@/assets/images/immobilier.png')} style={{ width: 45, height: 45 }} />,
 		title: "Immobilier",
 		description: "Immobilier",
 		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
-		backgroundIcon: "bg-[#D2EED0]",
+		backgroundIcon: "bg-[#E4F5D7]",
 	},
 	{
 		icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,

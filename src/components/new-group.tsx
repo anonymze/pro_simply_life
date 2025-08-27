@@ -105,7 +105,7 @@ export function NewGroup({
 							<CardGroup
 								users={employees}
 								icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
-								title="Employés"
+								title="Staff"
 								description={employees.length + " personnes"}
 								dispatch={dispatch}
 								selectedIds={selectedIds}
@@ -133,7 +133,7 @@ export function NewGroup({
 				</ScrollView>
 			) : (
 				<View className="flex-1 items-center justify-center">
-					<Text className="text-sm text-defaultGray">Aucun employé trouvé</Text>
+					<Text className="text-sm text-defaultGray">Aucune personne trouvée</Text>
 				</View>
 			)}
 		</>

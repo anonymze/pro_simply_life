@@ -3,6 +3,7 @@ import { Supplier } from "./supplier";
 
 export interface StructuredProduct {
 	id: string;
+	name: string;
 	supplier: Supplier;
 	broker: "kepler" | "irbis" | "silex";
 	max: number;
@@ -16,6 +17,7 @@ export interface StructuredProduct {
 	frequency: string;
 	refund: string;
 	capital: string;
+	airbag: string;
 	updatedAt: string;
 	createdAt: string;
 	offers?:

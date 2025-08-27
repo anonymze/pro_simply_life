@@ -93,7 +93,7 @@ export default function Page() {
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Organigramme" />
 					<InputSearch
-						placeholder="Rechercher un employé..."
+						placeholder="Rechercher une personne..."
 						onSubmitEditing={(input) => {
 							setSearch(input.nativeEvent.text);
 						}}
@@ -123,7 +123,7 @@ export default function Page() {
 								))}
 							</View>
 							<View className="mb-4 mt-7 flex-row items-center justify-between">
-								<Title title="Employés" className="mb-0 mt-0" />
+								<Title title="Staff" className="mb-0 mt-0" />
 								<Link
 									href={{
 										pathname: "/organigramme/role/[role]",
@@ -229,7 +229,7 @@ export default function Page() {
 						<>
 							{!filteredData?.length ? (
 								<View className="flex-1 items-center justify-center ">
-									<Text className="text-sm text-defaultGray">Aucun employé trouvé</Text>
+									<Text className="text-sm text-defaultGray">Aucune personne trouvée</Text>
 								</View>
 							) : (
 								<ScrollView
