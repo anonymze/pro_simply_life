@@ -63,7 +63,7 @@ export default function Page() {
 									className="gap-1"
 									style={{
 										// minWidth: structuredProduct.max / structuredProduct.current,
-										width: percentage > 10 ? `${10}%` : 22,
+										width: percentage > 10 ? `${10}%` : 30,
 									}}
 								>
 									<Text className="text-center text-xs text-primaryLight">
