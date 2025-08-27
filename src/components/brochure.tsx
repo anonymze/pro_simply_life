@@ -41,7 +41,7 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 								.then(() => {
 									// Alert.alert("Brochure téléchargée !");
 								})
-								.catch((_) => {
+								.catch((err) => {
 									Alert.alert(
 										"La brochure n'a pas pu être téléchargée",
 										"Vérifiez que le nom du fichier n'existe pas déjà sur votre appareil ou que vous avez assez d'espace de stockage.",
@@ -77,7 +77,7 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 
 							setLoadingOpen(true);
 
-							downloadFile(brochure.url, brochure.filename, brochure.mimeType, false)
+							downloadFile(brochure.url, brochure.filename, brochure.mimeType)
 								.then((_) => {
 									router.push(link);
 								})
