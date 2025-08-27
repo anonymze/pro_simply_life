@@ -114,8 +114,8 @@ const ContactInfo = ({
 				<View className="gap-2">
 					<Text className="text-sm text-primaryLight">Date de naissance</Text>
 					<Text className="font-semibold text-base text-primary">
-						{entryDate
-							? new Date(entryDate).toLocaleDateString("fr-FR", {
+						{birthday
+							? new Date(birthday).toLocaleDateString("fr-FR", {
 									day: "2-digit",
 									month: "2-digit",
 									year: "numeric",
