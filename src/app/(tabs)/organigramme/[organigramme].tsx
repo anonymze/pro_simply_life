@@ -37,7 +37,7 @@ export default function Page() {
 				</View>
 			</View>
 			<BackgroundLayout className="mt-4 px-4">
-				<ContactInfo phone={data.phone} email={data.email} entryDate={data.entry_date} />
+				<ContactInfo phone={data.phone} email={data.email} entryDate={data.entry_date} birthday={data.birthday} cabinet={data.cabinet} />
 			</BackgroundLayout>
 		</>
 	);
@@ -55,10 +55,14 @@ const ContactInfo = ({
 	phone,
 	email,
 	entryDate,
+	birthday,
+	cabinet
 }: {
 	phone?: string | null;
 	email?: string | null;
 	entryDate?: string | null;
+	birthday?: string | null;
+	cabinet?: string | null;
 }) => {
 	const numbersString = phone?.replace(",", " / ");
 	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
@@ -95,6 +99,30 @@ const ContactInfo = ({
 						<MailIcon size={16} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
 				)}
+			</View>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<View className="flex-row items-center justify-between gap-2">
+				<View className="gap-2">
+					<Text className="text-sm text-primaryLight">Cabinet</Text>
+					<Text className="font-semibold text-base text-primary">
+					{cabinet}
+					</Text>
+				</View>
+			</View>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<View className="flex-row items-center justify-between gap-2">
+				<View className="gap-2">
+					<Text className="text-sm text-primaryLight">Date de naissance</Text>
+					<Text className="font-semibold text-base text-primary">
+						{entryDate
+							? new Date(entryDate).toLocaleDateString("fr-FR", {
+									day: "2-digit",
+									month: "2-digit",
+									year: "numeric",
+								})
+							: ""}
+					</Text>
+				</View>
 			</View>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
