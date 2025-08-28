@@ -1,6 +1,11 @@
 export interface Event {
 	id: string;
 	title: string;
+	intervenants?: Array<{
+		name: string;
+		theme?: string;
+		company: string;
+	}>;
 	annotation?: string | null;
 	address?: string | null;
 	type: "general" | "sport" | "seminaire" | "food" | "birthday" | "meeting";
@@ -8,6 +13,7 @@ export interface Event {
 	event_end: string;
 	updatedAt: string;
 	createdAt: string;
+
 }
 
 export const eventLabel: Record<Event["type"], string> = {

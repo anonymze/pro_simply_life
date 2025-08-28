@@ -177,7 +177,6 @@ export default function Page() {
 									},
 								}}
 							/>
-
 							<ScrollView
 								showsVerticalScrollIndicator={false}
 								contentContainerStyle={{ paddingBottom: 16 }}
@@ -221,7 +220,7 @@ const CardEvent = ({ event }: { event: Event }) => {
 	return (
 		<Link
 			href={{
-				pathname: "/event/[event]",
+				pathname: "/(tabs)/event/[event]",
 				params: {
 					event: event.id,
 				},
