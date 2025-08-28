@@ -13,8 +13,8 @@ export default function Page() {
 			<ContactInfo
 				connexion={{
 					site: "https://fidnet.fidroit.fr",
-					email: "test.fr",
-					password: "test",
+					email: process.env.EXPO_PUBLIC_FIDNET_ID!,
+					password: process.env.EXPO_PUBLIC_FIDNET_PASSWORD!,
 				}}
 			/>
 		</BackgroundLayout>
