@@ -215,7 +215,7 @@ const links: {
 		backgroundIcon: "bg-[#CEFAFE]",
 	},
 	{
-		icon: <Image source={require("@/assets/images/immobilier.png")} style={{ width: 45, height: 45 }} />,
+		icon: <Image source={require("@/assets/images/immobilier.png")} style={{ width: 48, height: 50 }} />,
 		title: "Immobilier",
 		description: "Immobilier",
 		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
