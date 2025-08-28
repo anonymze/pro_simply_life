@@ -55,8 +55,10 @@ export default function SupplierLayout() {
 			/>
 			<Stack.Screen
 				options={{
-					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
-					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					presentation: "modal",
+					// sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					// presentation: Platform.OS === "ios" ? "formSheet" : "modal",
+					// sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
 					headerShown: true,
 					header: () => Platform.OS === "ios" ? <HeaderGrabberIos noMarginBottom /> : <HeaderLayout  />,
 				}}

@@ -1,17 +1,18 @@
-import { Alert, Pressable, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Redirect, useLocalSearchParams } from "expo-router";
-import BackgroundLayout from "@/layouts/background-layout";
-import { CopyIcon, PhoneIcon } from "lucide-react-native";
-import * as Clipboard from "expo-clipboard";
 import Title from "@/components/ui/title";
+import BackgroundLayout from "@/layouts/background-layout";
+import { storage } from "@/utils/store";
+import * as Clipboard from "expo-clipboard";
+import { Redirect, useLocalSearchParams } from "expo-router";
+import { CopyIcon } from "lucide-react-native";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useMMKVString } from "react-native-mmkv";
 import config from "tailwind.config";
 
-
 export default function Page() {
-	const { logs } = useLocalSearchParams();
+	const { logs, supplier } = useLocalSearchParams();
+  const notes = useMMKVString(supplier as string);
 
-	if (!logs) return <Redirect href="../" />;
+	if (!logs || typeof supplier !== "string") return <Redirect href="../" />;
 
 	const connexion = JSON.parse(logs as string) as { email?: string; password?: string };
 
@@ -19,6 +20,24 @@ export default function Page() {
 		<BackgroundLayout className="p-4">
 			<Title title="Identifiants de connexion" className="mt-3" />
 			<ContactInfo connexion={connexion} />
+			<View className="mt-5 gap-3 shadow-sm shadow-defaultGray/20">
+				<Text className="font-semibold text-lg text-primary">Notes supplémentaires</Text>
+				<TextInput
+					placeholderTextColor={config.theme.extend.colors.lightGray}
+					returnKeyType="default"
+					autoCapitalize="none"
+					keyboardType="default"
+					submitBehavior="newline"
+					multiline={true}
+					numberOfLines={10}
+					placeholder="Ajouter des informations supplémentaires"
+					className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4"
+					onChangeText={(text) => {
+						storage.set(supplier, text);
+					}}
+					defaultValue={notes[0] || ""}
+				/>
+			</View>
 		</BackgroundLayout>
 	);
 }

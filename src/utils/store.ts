@@ -1,8 +1,7 @@
 import { MMKV } from "react-native-mmkv";
 import { AppUser } from "@/types/user";
 
-
-const storage = new MMKV();
+export const storage = new MMKV();
 
 const USER_INFOS_KEY = "user.data";
 
@@ -15,7 +14,7 @@ const setStorageUserInfos = (infos: AppUser) => {
 
 const getStorageUserInfos = () => {
 	if (cachedUser) return cachedUser;
-	
+
 	const data = storage.getString(USER_INFOS_KEY);
 	if (!data) return null;
 	cachedUser = JSON.parse(data) as AppUser;

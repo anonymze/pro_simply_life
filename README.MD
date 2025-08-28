@@ -188,6 +188,10 @@ système de formulaire pour un client avec tout tas d'informations à entrer + d
 nouveau client -> entrer des informations ou retrouver les informations des formulaires
 
 
-// sur l'app ajouter un sous code au niveau des indetifiantds
-// déposer un fichier ne marche pas
-// fichier excel organigramme
+
+// accepter évènement
+// visio ou précense
+// intervenants
+// theme, société qui intervient et son nom
+// 18  entre 10h et 11h
+// excel organigramme
