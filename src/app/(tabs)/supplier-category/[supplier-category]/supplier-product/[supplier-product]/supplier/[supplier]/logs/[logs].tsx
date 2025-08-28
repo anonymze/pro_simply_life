@@ -50,7 +50,7 @@ const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: st
 					<Text className="text-sm text-primaryLight">Identifiant</Text>
 					<Text className="font-semibold text-base text-primary">{connexion?.email}</Text>
 				</View>
-				{connexion.password && (
+				{connexion.email && (
 					<TouchableOpacity
 						onPress={() => {
 							if (!connexion.email) return;

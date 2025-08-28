@@ -35,6 +35,16 @@ export default function FidnetLayout() {
 				}}
 				name="pdf/[pdf]"
 			/>
+			<Stack.Screen
+				options={{
+					// presentation: "modal",
+					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
+					headerShown: true,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos noMarginBottom /> : <HeaderLayout  />,
+				}}
+				name="logs/index"
+			/>
 		</Stack>
 	);
 }
