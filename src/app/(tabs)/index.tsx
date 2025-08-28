@@ -4,7 +4,6 @@ import Carousel from "@/components/carousel";
 import ProfileDashboard from "@/components/profile-dashboard";
 import BookFillIcon from "@/components/svg/book-fill-icon";
 import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
-import BuildingFillIcon from "@/components/svg/building-fill-icon";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
 import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -22,12 +21,17 @@ import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { Text, TouchableOpacity, View } from "react-native";
 import { Image } from "expo-image";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Page() {
 	const { data: events, isLoading: isLoadingEvents } = useQuery({
-		queryKey: ["events"],
+		queryKey: [
+			"events",
+			{
+				sort: "createdAt",
+			},
+		],
 		queryFn: getEventsQuery,
 	});
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
@@ -211,7 +215,7 @@ const links: {
 		backgroundIcon: "bg-[#CEFAFE]",
 	},
 	{
-		icon: <Image source={require('@/assets/images/immobilier.png')} style={{ width: 45, height: 45 }} />,
+		icon: <Image source={require("@/assets/images/immobilier.png")} style={{ width: 45, height: 45 }} />,
 		title: "Immobilier",
 		description: "Immobilier",
 		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
