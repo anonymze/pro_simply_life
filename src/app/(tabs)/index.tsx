@@ -215,11 +215,11 @@ const links: {
 		backgroundIcon: "bg-[#CEFAFE]",
 	},
 	{
-		icon: <Image source={require("@/assets/images/immobilier.png")} style={{ width: 48, height: 50 }} />,
+		icon: <Image source={require("@/assets/images/immobilier.png")} style={{ width: 52, height: 54 }} />,
 		title: "Immobilier",
 		description: "Immobilier",
 		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
-		backgroundIcon: "bg-[#E4F5D7]",
+		backgroundIcon: "bg-[#ffffff]",
 	},
 	{
 		icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
