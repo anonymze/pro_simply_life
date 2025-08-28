@@ -13,8 +13,8 @@ export default function Page() {
 			<ContactInfo
 				connexion={{
 					site: "https://fidnet.fidroit.fr",
-					email: "test.fr",
-					password: "test",
+					email: "m.dasilva@groupe-valorem.fr",
+					password: "TeamValorem2025*",
 				}}
 			/>
 		</BackgroundLayout>
