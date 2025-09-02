@@ -24,7 +24,6 @@ import { z } from "zod";
 
 import { MAX_MESSAGES } from "../index";
 
-
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Page() {

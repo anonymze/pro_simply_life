@@ -18,12 +18,13 @@ export async function getEventQuery({ queryKey }: { queryKey: QueryKey }) {
 
 export async function getEventStatusQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, filters] = queryKey;
-	const response = await api.get<EventStatus>(`/api/agency-life-status`, { params: filters });
+	const response = await api.get<PaginatedResponse<EventStatus>>(`/api/agency-life-status`, { params: filters });
 	return response.data;
 }
 
-export async function createEventStatusQuery(params: Pick<EventStatus, "app_user" | "agency_life" | "status">) {
-	const response = await api.post("/api/messages", {
+export async function createEventStatusQuery(params: { app_user: string, agency_life: string, status: EventStatus["status"] }) {
+  console.log(params)
+	const response = await api.post("/api/agency-life-status", {
 		app_user: params.app_user,
 		agency_life: params.agency_life,
 		status: params.status,

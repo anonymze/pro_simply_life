@@ -1,15 +1,28 @@
-import { getEventQuery } from "@/api/queries/event-queries";
+import { queryClient } from "@/api/_queries";
+import { createEventStatusQuery, getEventQuery, getEventStatusQuery } from "@/api/queries/event-queries";
 import BackgroundLayout from "@/layouts/background-layout";
 import { eventLabel } from "@/types/event";
 import { cn } from "@/utils/libs/tailwind";
-import { useQuery } from "@tanstack/react-query";
+import { getStorageUserInfos } from "@/utils/store";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { CalendarArrowDownIcon, CalendarArrowUpIcon, CalendarIcon, ClockIcon, MapPinIcon } from "lucide-react-native";
-import { Platform, ScrollView, Text, View } from "react-native";
+import React from "react";
+import { ActivityIndicator, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
+
+const isEventTodayOrLater = (eventStartDate: string): boolean => {
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	const eventDate = new Date(eventStartDate);
+	eventDate.setHours(0, 0, 0, 0);
+	return eventDate >= today;
+};
 
 export default function Page() {
 	const { event: eventId } = useLocalSearchParams();
+	const [attendance, setAttendance] = React.useState<boolean | null>(null);
+	const appUser = getStorageUserInfos();
 
 	const { data } = useQuery({
 		queryKey: ["event", eventId],
@@ -17,7 +30,32 @@ export default function Page() {
 		enabled: !!eventId,
 	});
 
-	if (!data) return null;
+	const { data: status, isLoading: isLoadingStatus } = useQuery({
+		queryKey: [
+			"event-status",
+			{
+				where: {
+					app_user: {
+						equals: appUser?.user?.id,
+					},
+					agency_life: {
+						equals: eventId,
+					},
+				},
+			},
+		],
+		queryFn: getEventStatusQuery,
+		enabled: !!appUser?.user?.id && !!eventId,
+	});
+
+	const mutation = useMutation({
+		mutationFn: createEventStatusQuery,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["event-status"] });
+		},
+	});
+
+	if (!data || !appUser?.user?.id) return null;
 
 	const sameDay = data.event_start.split("T")[0] === data.event_end.split("T")[0];
 
@@ -94,6 +132,70 @@ export default function Page() {
 							<View className="gap-1">
 								<Text className="font-semibold text-lg text-primary">{data.address}</Text>
 							</View>
+						</View>
+					)}
+
+					{isEventTodayOrLater(data.event_start) && (
+						<View className="gap-3">
+							{isLoadingStatus ? (
+								<View className="items-center justify-center rounded-2xl p-4">
+									<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
+								</View>
+							) : (
+								<>
+									<Text className="font-bold text-lg text-primary">Êtes-vous présent à l'évènement ?</Text>
+									<View className="flex-row gap-3">
+										<TouchableOpacity
+											className={cn(
+												"flex-1 items-center justify-center rounded-2xl p-4",
+												attendance === true || status?.docs[0]?.status === "yes" ? "bg-green-500" : "bg-white",
+											)}
+											disabled={mutation.isPending || isLoadingStatus || !!status?.docs?.length || attendance !== null}
+											onPress={() => {
+												setAttendance(true);
+												mutation.mutate({
+													agency_life: eventId.toString(),
+													app_user: appUser.user.id,
+													status: "yes",
+												});
+											}}
+										>
+											<Text
+												className={cn(
+													"font-semibold text-lg",
+													attendance === true || status?.docs[0]?.status === "yes" ? "text-white" : "text-primary",
+												)}
+											>
+												Oui
+											</Text>
+										</TouchableOpacity>
+										<TouchableOpacity
+											className={cn(
+												"flex-1 items-center justify-center rounded-2xl p-4",
+												attendance === false || status?.docs[0]?.status === "no" ? "bg-red-500" : "bg-white",
+											)}
+											disabled={mutation.isPending || isLoadingStatus || !!status?.docs?.length ||  attendance !== null}
+											onPress={() => {
+												setAttendance(false);
+												mutation.mutate({
+													agency_life: eventId.toString(),
+													app_user: appUser.user.id,
+													status: "no",
+												});
+											}}
+										>
+											<Text
+												className={cn(
+													"font-semibold text-lg",
+													attendance === false || status?.docs[0]?.status === "no" ? "text-white" : "text-primary",
+												)}
+											>
+												Non
+											</Text>
+										</TouchableOpacity>
+									</View>
+								</>
+							)}
 						</View>
 					)}
 
