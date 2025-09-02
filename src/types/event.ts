@@ -1,3 +1,5 @@
+import { AppUser } from "./user";
+
 export interface Event {
 	id: string;
 	title: string;
@@ -24,3 +26,12 @@ export const eventLabel: Record<Event["type"], string> = {
 	birthday: "Anniversaire",
 	meeting: "Réunion",
 } as const;
+
+export interface EventStatus {
+  id: string;
+  app_user: AppUser;
+  agency_life: Event;
+  status: 'yes' | 'no';
+  updatedAt: string;
+  createdAt: string;
+}
