@@ -26,7 +26,7 @@ export default function Page() {
 				<Text className="text-primary">
 					Vous pouvez ajouter vos identifiants personnels pour ce fournisseur, ils sont uniquement visibles par vous.
 				</Text>
-				<Text className="mt-2 text-primary">Identifiant</Text>
+				<Text className="mt-2 text-primary">Identifiant :</Text>
 				<TextInput
 					placeholderTextColor={config.theme.extend.colors.lightGray}
 					returnKeyType="default"
@@ -42,7 +42,7 @@ export default function Page() {
 					}}
 					defaultValue={id[0] || ""}
 				/>
-				<Text className="mt-2 text-primary">Mot de passe</Text>
+				<Text className="mt-2 text-primary">Mot de passe : </Text>
 				<TextInput
 					placeholderTextColor={config.theme.extend.colors.lightGray}
 					returnKeyType="default"
