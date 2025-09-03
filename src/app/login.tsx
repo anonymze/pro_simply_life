@@ -79,7 +79,7 @@ export default function Page() {
 									textContentType="oneTimeCode"
 									placeholder="exemple@email.fr"
 									autoCorrect={false}
-									className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
+									className="w-full rounded-xl bg-darkGray p-5  placeholder:text-primaryLight  border border-transparent focus:border-primaryLight"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
 								/>
@@ -104,7 +104,7 @@ export default function Page() {
 									keyboardType="default"
 									textContentType="oneTimeCode"
 									placeholder="**********"
-									className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight0 border border-transparent focus:border-primaryLight"
+									className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
 								/>

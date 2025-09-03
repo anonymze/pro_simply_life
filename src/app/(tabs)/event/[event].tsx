@@ -143,7 +143,7 @@ export default function Page() {
 								</View>
 							) : (
 								<>
-									<Text className="font-bold text-lg text-primary">Êtes-vous présent à l'évènement ?</Text>
+									<Text className="font-bold text-lg text-primary">Êtes-vous présent à l'événement ?</Text>
 									<View className="flex-row gap-3">
 										<TouchableOpacity
 											className={cn(

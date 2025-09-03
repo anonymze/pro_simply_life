@@ -10,7 +10,8 @@ import config from "tailwind.config";
 
 export default function Page() {
 	const { logs, supplier } = useLocalSearchParams();
-  const notes = useMMKVString(supplier as string);
+	const id = useMMKVString((supplier as string) + "_id");
+	const password = useMMKVString((supplier as string) + "_password");
 
 	if (!logs || typeof supplier !== "string") return <Redirect href="../" />;
 
@@ -18,24 +19,44 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className="p-4">
-			<Title title="Identifiants de connexion" className="mt-3" />
+			<Title title="Identifiants généraux" className="mt-3" />
 			<ContactInfo connexion={connexion} />
 			<View className="mt-5 gap-3 shadow-sm shadow-defaultGray/20">
-				<Text className="font-semibold text-lg text-primary">Notes supplémentaires</Text>
+				<Text className="font-semibold text-xl text-primary">Identifiants personnels</Text>
+				<Text className="text-primary">
+					Vous pouvez ajouter vos identifiants personnels pour ce fournisseur, ils sont uniquement visibles par vous.
+				</Text>
+				<Text className="mt-2 text-primary">Identifiant</Text>
 				<TextInput
 					placeholderTextColor={config.theme.extend.colors.lightGray}
 					returnKeyType="default"
 					autoCapitalize="none"
 					keyboardType="default"
-					submitBehavior="newline"
-					multiline={true}
-					numberOfLines={10}
-					placeholder="Ajouter des informations supplémentaires"
-					className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4"
+					// submitBehavior="newline"
+					// multiline={true}
+					// numberOfLines={10}
+					placeholder="Identifiant"
+					className="w-full rounded-xl bg-darkGray p-5  placeholder:text-primaryLight  border border-transparent focus:border-primaryLight"
 					onChangeText={(text) => {
-						storage.set(supplier, text);
+						storage.set((supplier as string) + "_id", text);
 					}}
-					defaultValue={notes[0] || ""}
+					defaultValue={id[0] || ""}
+				/>
+				<Text className="mt-2 text-primary">Mot de passe</Text>
+				<TextInput
+					placeholderTextColor={config.theme.extend.colors.lightGray}
+					returnKeyType="default"
+					autoCapitalize="none"
+					keyboardType="default"
+					// submitBehavior="newline"
+					// multiline={true}
+					// numberOfLines={10}
+					placeholder="Mot de passe"
+					className="w-full rounded-xl bg-darkGray p-5  placeholder:text-primaryLight  border border-transparent focus:border-primaryLight"
+					onChangeText={(text) => {
+						storage.set((supplier as string) + "_password", text);
+					}}
+					defaultValue={password[0] || ""}
 				/>
 			</View>
 		</BackgroundLayout>
