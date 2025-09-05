@@ -32,6 +32,8 @@ export default function Page() {
 
 	if (!data) return null;
 
+
+
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
@@ -66,7 +68,7 @@ export default function Page() {
 				</View> */}
 			</View>
 			<BackgroundLayout className="px-4">
-				{(data.other_information || data.brochure) && (
+				{(data?.other_information?.length || data.brochure) && (
 					<Picker
 						style={{ width: 260, marginTop: 20, marginHorizontal: "auto", marginBottom: 10 }}
 						variant="segmented"
@@ -89,7 +91,7 @@ export default function Page() {
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data.other_information && !data.brochure ? (
+					{!data?.other_information?.length && !data.brochure ? (
 						<View className="mt-4 gap-4">
 							<ContactInfo
 								phone={data.contact_info?.phone}

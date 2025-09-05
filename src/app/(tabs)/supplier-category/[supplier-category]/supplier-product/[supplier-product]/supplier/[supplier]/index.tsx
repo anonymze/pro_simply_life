@@ -66,7 +66,7 @@ export default function Page() {
 				</View> */}
 			</View>
 			<BackgroundLayout className="px-4">
-				{(data.other_information || data.brochure) && (
+				{(data?.other_information?.length || data?.brochure) && (
 					<Picker
 						style={{ width: 260, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
 						variant="segmented"
@@ -89,7 +89,7 @@ export default function Page() {
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data.other_information && !data.brochure ? (
+					{!data?.other_information?.length && !data.brochure ? (
 						<View className="mt-4 gap-4">
 							<ContactInfo
 								phone={data.contact_info?.phone}
