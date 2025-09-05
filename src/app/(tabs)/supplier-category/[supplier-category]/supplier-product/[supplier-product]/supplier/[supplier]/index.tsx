@@ -32,8 +32,6 @@ export default function Page() {
 
 	if (!data) return null;
 
-	const hasMoreInformation = Object.values(data.other_information).some(Boolean);
-
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
@@ -68,11 +66,11 @@ export default function Page() {
 				</View> */}
 			</View>
 			<BackgroundLayout className="px-4">
-				{(hasMoreInformation || data.brochure) && (
+				{(data.other_information || data.brochure) && (
 					<Picker
 						style={{ width: 260, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
 						variant="segmented"
-						options={["Contact", "Produit"]}
+						options={["Contact", "Produits"]}
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
@@ -91,7 +89,7 @@ export default function Page() {
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!hasMoreInformation && !data.brochure ? (
+					{!data.other_information && !data.brochure ? (
 						<View className="mt-4 gap-4">
 							<ContactInfo
 								phone={data.contact_info?.phone}
@@ -163,7 +161,9 @@ export default function Page() {
 											}}
 										/>
 									)}
-									{hasMoreInformation && <OtherInformation otherInformation={data.other_information} />}
+									{data.other_information?.map((information, idx) => {
+										return <OtherInformation key={idx} otherInformation={information} />;
+									})}
 								</View>
 							</View>
 						</ScrollView>
@@ -250,23 +250,33 @@ const ContactInfo = ({
 	);
 };
 
-const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["other_information"] }) => {
+const OtherInformation = ({
+	otherInformation,
+}: {
+	otherInformation: NonNullable<Supplier["other_information"]>[number];
+}) => {
 	return (
 		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+			<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
+			<Text className="font-semibold text-sm text-primary">{otherInformation.scpi}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
 			<Text className="font-semibold text-base text-primary">{otherInformation.theme}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
 			<Text className="font-semibold text-base text-primary">{otherInformation.annotation}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="font-semibold text-sm text-primaryLight">Minimum de versement</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.minimum_versement}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<Text className="font-semibold text-sm text-primaryLight">Fond euro</Text>
+			<Text className="font-semibold text-base text-primary">{otherInformation.foundment_euro ? "Oui" : "Non"}</Text>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<Text className="font-semibold text-sm text-primaryLight">Frais de souscription</Text>
 			<Text className="font-semibold text-base text-primary">{otherInformation.subscription_fee}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Durée</Text>
+			<Text className="font-semibold text-sm text-primaryLight">Délai de jouissance</Text>
 			<Text className="font-semibold text-base text-primary">{otherInformation.duration}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Rentabilité</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.rentability}</Text>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<Text className="font-semibold text-sm text-primaryLight">Rentabilité N1</Text>
 			<Text className="font-semibold text-base text-primary">{otherInformation.rentability_n1}</Text>
@@ -279,9 +289,6 @@ const OtherInformation = ({ otherInformation }: { otherInformation: Supplier["ot
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<Text className="font-semibold text-sm text-primaryLight">Commission pour le groupe Valorem</Text>
 			<Text className="font-semibold text-base text-primary">{otherInformation.commission_offer_group_valorem}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
-			<Text className="font-semibold text-sm text-primary">{otherInformation.scpi}</Text>
 		</View>
 	);
 };

@@ -1,6 +1,5 @@
 import { Media } from "./media";
 
-
 export interface Supplier {
 	id: string;
 	name: string;
@@ -18,18 +17,22 @@ export interface Supplier {
 		email?: string | null;
 		password?: string | null;
 	};
-	other_information: {
-		theme?: string | null;
-		annotation?: string | null;
-		subscription_fee?: string | null;
-		duration?: string | null;
-		rentability?: string | null;
-		rentability_n1?: string | null;
-		commission?: string | null;
-		commission_public_offer?: string | null;
-		commission_offer_group_valorem?: string | null;
-		scpi?: string | null;
-	};
+	other_information?:
+    | {
+        scpi?: string | null;
+        theme?: string | null;
+        annotation?: string | null;
+        minimum_versement?: string | null;
+        foundment_euro?: boolean | null;
+        subscription_fee?: string | null;
+        duration?: string | null;
+        rentability_n1?: string | null;
+        commission?: string | null;
+        commission_public_offer?: string | null;
+        commission_offer_group_valorem?: string | null;
+        id?: string | null;
+      }[]
+    | null;
 	updatedAt: string;
 	createdAt: string;
 }

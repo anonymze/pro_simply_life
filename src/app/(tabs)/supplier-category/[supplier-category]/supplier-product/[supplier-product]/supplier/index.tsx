@@ -1,15 +1,14 @@
 import { getSupplierProductQuery } from "@/api/queries/supplier-products-queries";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardSupplier from "@/components/card/card-supplier";
-import BackgroundLayout from "@/layouts/background-layout";
-import { ScrollView } from "react-native-gesture-handler";
-import { useLocalSearchParams } from "expo-router";
-import { useQuery } from "@tanstack/react-query";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
-import { Text, View } from "react-native";
-import config from "tailwind.config";
+import BackgroundLayout from "@/layouts/background-layout";
+import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
-
+import { Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import config from "tailwind.config";
 
 export default function Page() {
 	const {
@@ -59,9 +58,10 @@ export default function Page() {
 				<View className="gap-2">
 					{Object.keys(groupedSuppliers).map((letter) => (
 						<View key={letter} className="gap-2">
-							<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
+							<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
 							{groupedSuppliers[letter].map((supplier) => (
 								<CardSupplier
+									enveloppe={supplierProductId === "36a662a2-c846-41a2-942e-b8748e34feed"}
 									icon={
 										<ImagePlaceholder
 											transition={300}
