@@ -1,25 +1,26 @@
-import "react-native-reanimated";
 import "@/styles/app.css";
+import "react-native-reanimated";
 
-import { onlineManager, QueryClientProvider, focusManager } from "@tanstack/react-query";
-import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { NotificationProvider } from "@/context/push-notifications";
-import { KeyboardProvider } from "react-native-keyboard-controller";
-import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
-import { Platform, AppState, AppStateStatus } from "react-native";
+import { queryClient } from "@/api/_queries";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
+import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
+import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
+import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
+import { NotificationProvider } from "@/context/push-notifications";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import * as Notifications from "expo-notifications";
-import * as SplashScreen from "expo-splash-screen";
 import { PortalHost } from "@rn-primitives/portal";
 import * as Sentry from "@sentry/react-native";
-import { queryClient } from "@/api/_queries";
+import { focusManager, onlineManager, QueryClientProvider } from "@tanstack/react-query";
+import * as Network from "expo-network";
+import * as Notifications from "expo-notifications";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import * as Updates from "expo-updates";
-import * as Network from "expo-network";
-import { Stack } from "expo-router";
 import React from "react";
+import { AppState, AppStateStatus, Platform } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 Sentry.init({
 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
@@ -93,6 +94,10 @@ const Layout = () => {
 				queryKey: ["supplier-categories"],
 				queryFn: getSupplierCategoriesQuery,
 			}),
+			queryClient.prefetchQuery({
+				queryKey: ["suppliers-selection"],
+				queryFn: getSuppliersSelectionQuery,
+			}),
 		]).finally(() => {
 			prefetchSomeData();
 			setReady(true);
@@ -151,12 +156,4 @@ const prefetchSomeData = async () => {
 		queryKey: ["chat-rooms"],
 		queryFn: getChatRoomsQuery,
 	});
-	// queryClient.prefetchQuery({
-	// 	queryKey: ["supplier-categories"],
-	// 	queryFn: getSupplierCategoriesQuery,
-	// });
-	// queryClient.prefetchQuery({
-	// 	queryKey: ["app-users"],
-	// 	queryFn: getAppUsersQuery,
-	// });
 };

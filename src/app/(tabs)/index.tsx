@@ -24,7 +24,7 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
 import { Image } from "expo-image";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Page() {
 	const { data: events, isLoading: isLoadingEvents } = useQuery({
@@ -37,7 +37,7 @@ export default function Page() {
 		queryFn: getEventsQuery,
 	});
 
-	const { data: suppliers, isLoading: isLoadingSuppliers } = useQuery({
+	const { data: suppliers } = useQuery({
 		queryKey: ["suppliers-selection"],
 		queryFn: getSuppliersSelectionQuery,
 	});
@@ -75,7 +75,6 @@ export default function Page() {
 				</View>
 				<Title title="Notre sélection" />
 				<View className="gap-2">
-					{isLoadingSuppliers && <ActivityIndicator size="small" color={config.theme.extend.colors.primary} />}
 					{suppliers?.docs?.map((supplier) => (
 						<CardSupplier
 							key={supplier.id}
