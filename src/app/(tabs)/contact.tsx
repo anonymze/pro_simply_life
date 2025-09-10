@@ -1,10 +1,8 @@
 import { getContactCategoriesQuery } from "@/api/queries/contact-categories-queries";
 import { getContactsQuery } from "@/api/queries/contact-queries";
-import { BottomSheetSelect } from "@/components/bottom-sheet-select";
 import InputSearch from "@/components/ui/input-search";
 import { stylesLayout } from "@/layouts/background-layout";
-import { ContactCategory } from "@/types/contact";
-import { getAndroidIcon, iconIos, tintIos } from "@/utils/icon-maps";
+import { iconIos, tintIos } from "@/utils/icon-maps";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useQueries } from "@tanstack/react-query";
 import { AppleMaps, GoogleMaps } from "expo-maps";
@@ -12,7 +10,7 @@ import { AppleMapsMapType } from "expo-maps/build/apple/AppleMaps.types";
 import { GoogleMapsMapType } from "expo-maps/build/google/GoogleMaps.types";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import { Alert, Linking, Platform, Pressable, Text, View } from "react-native";
+import { Alert, Linking, Platform, View } from "react-native";
 
 const CAMERA_POSITION = {
 	coordinates: {
@@ -23,8 +21,8 @@ const CAMERA_POSITION = {
 };
 
 export default function Page() {
-	const bottomSheetRef = React.useRef<BottomSheet>(null);
-	const [selectedCategories, setSelectedCategories] = React.useState<ContactCategory[]>([]);
+	// const bottomSheetRef = React.useRef<BottomSheet>(null);
+	// const [selectedCategories, setSelectedCategories] = React.useState<ContactCategory[]>([]);
 	const [input, setInput] = React.useState<string>("");
 	const mapRef = React.useRef<AppleMaps.MapView>(null);
 
@@ -46,24 +44,31 @@ export default function Page() {
 		if (!queries[0].data?.docs.length) return [];
 
 		// return all contacts if no filters are applied
-		if (input.length < 2 && selectedCategories.length === 0) return queries[0].data.docs;
+		// if (input.length < 2 && selectedCategories.length === 0) return queries[0].data.docs;
+		if (input.length < 2) return queries[0].data.docs;
 
 		const searchTerm = input.toLowerCase().trim();
 		const hasSearchTerm = searchTerm.length >= 2;
-		const hasCategories = selectedCategories.length > 0;
+		// const hasCategories = selectedCategories.length > 0;
+
+		if (!hasSearchTerm) return queries[0].data.docs;
 
 		return queries[0].data.docs.filter((contact) => {
 			// text search condition
-			const matchesSearch = !hasSearchTerm || contact.name.toLowerCase().includes(searchTerm);
+			const matchesSearchName = contact.name.toLowerCase().includes(searchTerm);
+			const matchesSearchCategory = contact.category.name.toLowerCase().includes(searchTerm);
+      const matchesSpecialisation = (contact.specialisation?.split(',')  ?? []).some(spec => spec.toLowerCase().trim().includes(searchTerm));
 
 			// category filter condition
-			const matchesCategory =
-				!hasCategories || selectedCategories.some((category) => category.name === contact.category.name);
+			// const matchesCategory =
+			// 	!hasCategories || selectedCategories.some((category) => category.name === contact.category.name);
 
 			// Both conditions must be true
-			return matchesSearch && matchesCategory;
+			// return matchesSearch && matchesCategory;
+			return matchesSearchName || matchesSearchCategory || matchesSpecialisation;
 		});
-	}, [queries, selectedCategories]);
+		// }, [queries, selectedCategories]);
+	}, [queries]);
 
 	if (queries[0].error || queries[1].error) {
 		Alert.alert("Erreur de connexion", "Les contacts n'ont pas pu être récupérés.");
@@ -84,7 +89,7 @@ export default function Page() {
 						}}
 					/>
 				</View>
-				<Pressable
+				{/*<Pressable
 					disabled={queries[0].isLoading || queries[1].isLoading}
 					className="rounded-xl bg-primary p-4 disabled:opacity-80"
 					onPress={() => {
@@ -92,7 +97,7 @@ export default function Page() {
 					}}
 				>
 					<Text className="text-center font-bold text-white">Catégories</Text>
-				</Pressable>
+				</Pressable>*/}
 			</View>
 
 			<View className="flex-1">
@@ -170,7 +175,7 @@ export default function Page() {
 					/>
 				)}
 			</View>
-			<BottomSheetSelect
+			{/*<BottomSheetSelect
 				ref={bottomSheetRef}
 				data={
 					queries[1].data?.docs.map((category) => ({
@@ -183,7 +188,7 @@ export default function Page() {
 				onSelect={(item) => {
 					setSelectedCategories(item as ContactCategory[]);
 				}}
-			/>
+			/>*/}
 		</>
 	);
 }

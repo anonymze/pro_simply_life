@@ -32,8 +32,6 @@ export default function Page() {
 
 	if (!data) return null;
 
-
-
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
@@ -68,7 +66,7 @@ export default function Page() {
 				</View> */}
 			</View>
 			<BackgroundLayout className="px-4">
-				{(data?.other_information?.length || data.brochure) && (
+				{data?.other_information?.length && (
 					<Picker
 						style={{ width: 260, marginTop: 20, marginHorizontal: "auto", marginBottom: 10 }}
 						variant="segmented"
@@ -91,7 +89,7 @@ export default function Page() {
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data?.other_information?.length && !data.brochure ? (
+					{!data?.other_information?.length ? (
 						<View className="mt-4 gap-4">
 							<ContactInfo
 								phone={data.contact_info?.phone}
@@ -146,25 +144,9 @@ export default function Page() {
 								)}
 							</View>
 							<View style={{ width: Dimensions.get("window").width - 28 }}>
-								<View className="gap-4">
-									{data.brochure && (
-										<Brochure
-											brochure={data.brochure}
-											updatedAt={data.updatedAt}
-											link={{
-												pathname:
-													"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
-												params: {
-													"supplier-category": supplierCategoryId,
-													"supplier-product": supplierProductId,
-													supplier: supplierId,
-													pdf: data.brochure.filename,
-												},
-											}}
-										/>
-									)}
+								<View className="gap-8">
 									{data.other_information?.map((information, idx) => {
-										return <OtherInformation key={idx} otherInformation={information} />;
+                    return <OtherInformation key={idx} otherInformation={information} supplierCategoryId={supplierCategoryId} supplierId={supplierId} supplierProductId={supplierProductId} updatedAt={data.updatedAt} />;
 									})}
 								</View>
 							</View>
@@ -254,43 +236,65 @@ const ContactInfo = ({
 
 const OtherInformation = ({
 	otherInformation,
+	supplierCategoryId,
+	supplierProductId,
+	supplierId,
+	updatedAt
 }: {
 	otherInformation: NonNullable<Supplier["other_information"]>[number];
+	supplierCategoryId: string | string[];
+	supplierProductId: string | string[];
+	supplierId: string | string[];
+	updatedAt: string;
 }) => {
 	return (
-		<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
-			<Text className="font-semibold text-sm text-primary">{otherInformation.scpi}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.theme}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.annotation}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Minimum de versement</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.minimum_versement}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Fond euro</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.foundment_euro ? "Oui" : "Non"}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Frais de souscription</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.subscription_fee}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Délai de jouissance</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.duration}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Rentabilité N1</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.rentability_n1}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Commission</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.commission}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Commission pour l'offre publique</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.commission_public_offer}</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<Text className="font-semibold text-sm text-primaryLight">Commission pour le groupe Valorem</Text>
-			<Text className="font-semibold text-base text-primary">{otherInformation.commission_offer_group_valorem}</Text>
+		<View className="gap-2">
+			{otherInformation.brochure && (
+				<Brochure
+					brochure={otherInformation.brochure}
+					updatedAt={updatedAt}
+					link={{
+						pathname:
+							"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+						params: {
+							"supplier-category": supplierCategoryId,
+							"supplier-product": supplierProductId,
+							supplier: supplierId,
+							pdf: otherInformation.brochure.filename,
+						},
+					}}
+				/>
+			)}
+			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
+				<Text className="font-semibold text-sm text-primary">{otherInformation.scpi}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
+				<Text className="font-semibold text-base text-primary">{otherInformation.theme}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
+				<Text className="font-semibold text-base text-primary">{otherInformation.annotation}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Minimum de versement</Text>
+				<Text className="font-semibold text-base text-primary">{otherInformation.minimum_versement}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Frais de souscription</Text>
+				<Text className="font-semibold text-base text-primary">{otherInformation.subscription_fee}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Délai de jouissance</Text>
+				<Text className="font-semibold text-base text-primary">{otherInformation.duration}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Rentabilité N1</Text>
+				<Text className="font-semibold text-base text-primary">{otherInformation.rentability_n1}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-green-600">Commission pour le groupe Valorem</Text>
+				<Text className="font-semibold text-base text-green-600">
+					{otherInformation.commission_offer_group_valorem}
+				</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Commission pour l'offre publique</Text>
+				<Text className="font-semibold text-base text-primary">{otherInformation.commission_public_offer}</Text>
+			</View>
 		</View>
 	);
 };

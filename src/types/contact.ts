@@ -9,6 +9,7 @@ export interface Contact {
 	latitude: string;
 	longitude: string;
 	category: ContactCategory;
+	specialisation?: string
 	phone?: string | null;
 	logo?: ImageRef;
 	website?: string | null;

@@ -14,7 +14,7 @@ export default {
 		experiments: {
 			tsconfigPaths: true,
 			typedRoutes: true,
-			buildCacheProvider: "eas",
+			// buildCacheProvider: "eas",
 		},
 		backgroundColor: "#ffffff",
 		// assetBundlePatterns: ["**/*"],
