@@ -23,7 +23,6 @@ export async function getEventStatusQuery({ queryKey }: { queryKey: QueryKey }) 
 }
 
 export async function createEventStatusQuery(params: { app_user: string, agency_life: string, status: EventStatus["status"] }) {
-  console.log(params)
 	const response = await api.post("/api/agency-life-status", {
 		app_user: params.app_user,
 		agency_life: params.agency_life,

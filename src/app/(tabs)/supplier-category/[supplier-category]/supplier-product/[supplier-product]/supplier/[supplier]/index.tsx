@@ -66,7 +66,7 @@ export default function Page() {
 				</View> */}
 			</View>
 			<BackgroundLayout className="px-4">
-				{data?.other_information?.length && (
+				{!!data?.other_information?.length && (
 					<Picker
 						style={{ width: 260, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
 						variant="segmented"

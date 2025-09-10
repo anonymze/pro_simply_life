@@ -11,14 +11,16 @@ export default function CardSupplier({
 	supplier,
 	link,
 	enveloppe = false,
+	queryName = "supplier",
 }: {
 	icon: React.ReactNode;
 	supplier: Supplier;
 	link: HrefObject;
 	enveloppe?: boolean;
+	queryName?: string;
 }) {
 	const onPress = React.useCallback(() => {
-		queryClient.setQueryData(["supplier", link.params?.["supplier"]], supplier);
+		queryClient.setQueryData([queryName, link.params?.["supplier"]], supplier);
 	}, [link]);
 
 	return (
@@ -39,7 +41,49 @@ export default function CardSupplier({
 								<View className="my-1 flex-1 border-t border-primaryLight" />
 							</View>
 
-							<Text className="text-sm text-primaryLight">Montant actualisé le ...</Text>
+							{supplier.enveloppe?.amount ? (
+								<>
+									<View className="flex-row items-center justify-between">
+										<Text className=" text-xs text-primaryLight">
+											Montant restant<Text className="font-semibold"> {supplier.enveloppe.amount}€</Text>
+										</Text>
+										<Text className="text-xs text-primaryLight">
+											Echéance{" "}
+											<Text className="font-semibold">
+												{" "}
+												{supplier.enveloppe.echeance
+													? new Date(supplier.enveloppe.echeance ?? "").toLocaleDateString("fr-FR", {
+															day: "numeric",
+															month: "numeric",
+														})
+													: "Inconnu"}
+											</Text>
+										</Text>
+									</View>
+									<View className="mt-1 flex-row items-center justify-between">
+										<Text className="text-xs text-primaryLight">
+											Réduction impôt{" "}
+											<Text className="font-semibold">
+												{supplier.enveloppe.reduction ? supplier.enveloppe.reduction : "Inconnu"}
+											</Text>
+										</Text>
+										<Text className="text-xs text-primaryLight">
+											Actualisé{" "}
+											<Text className="font-semibold">
+												{" "}
+												{supplier.enveloppe.actualisation
+													? new Date(supplier.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+															day: "numeric",
+															month: "numeric",
+														})
+													: "Inconnu"}
+											</Text>
+										</Text>
+									</View>
+								</>
+							) : (
+								<Text className="text-xs text-primaryLight">Pas d'enveloppe</Text>
+							)}
 						</>
 					)}
 				</View>

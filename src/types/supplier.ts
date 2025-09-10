@@ -16,6 +16,12 @@ export interface Supplier {
 		email?: string | null;
 		password?: string | null;
 	};
+ enveloppe?: {
+    amount?: number | null;
+    reduction?: number | null;
+    echeance?: string | null;
+    actualisation?: string | null;
+  };
 	other_information?:
 		| {
 				id?: string | null;

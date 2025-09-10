@@ -16,13 +16,15 @@ import config from "tailwind.config";
 import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
 
+import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
+import CardSupplier from "@/components/card/card-supplier";
 import LampIconFill from "@/components/svg/lamp-fill-icon";
 import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
 import { Image } from "expo-image";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 export default function Page() {
 	const { data: events, isLoading: isLoadingEvents } = useQuery({
@@ -34,6 +36,12 @@ export default function Page() {
 		],
 		queryFn: getEventsQuery,
 	});
+
+	const { data: suppliers, isLoading: isLoadingSuppliers } = useQuery({
+		queryKey: ["suppliers-selection"],
+		queryFn: getSuppliersSelectionQuery,
+	});
+
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
@@ -63,6 +71,29 @@ export default function Page() {
 								backgroundIcon={link.backgroundIcon}
 							/>
 						</View>
+					))}
+				</View>
+				<Title title="Notre sélection" />
+				<View className="gap-2">
+					{isLoadingSuppliers && <ActivityIndicator size="small" color={config.theme.extend.colors.primary} />}
+					{suppliers?.docs?.map((supplier) => (
+						<CardSupplier
+							key={supplier.id}
+							icon={
+								<ImagePlaceholder
+									source={supplier.logo_mini?.url ?? ""}
+									style={{ width: 26, height: 26, borderRadius: 4 }}
+								/>
+							}
+							queryName="supplier-selection"
+							supplier={supplier}
+							link={{
+								pathname: `/supplier-selection/[supplier]`,
+								params: {
+									supplier: supplier.id,
+								},
+							}}
+						/>
 					))}
 				</View>
 				<Title title="Newsletter" />
