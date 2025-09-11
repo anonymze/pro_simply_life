@@ -16,12 +16,17 @@ export interface Supplier {
 		email?: string | null;
 		password?: string | null;
 	};
- enveloppe?: {
-    amount?: number | null;
-    reduction?: number | null;
-    echeance?: string | null;
-    actualisation?: string | null;
-  };
+	enveloppe?: {
+		amount?: number | null;
+		reduction?: number | null;
+		echeance?: string | null;
+		actualisation?: string | null;
+	};
+	selection?: {
+		selection?: boolean | null;
+		category?: string | null;
+		brochure?: null | Media;
+	};
 	other_information?:
 		| {
 				id?: string | null;

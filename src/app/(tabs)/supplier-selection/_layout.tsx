@@ -15,11 +15,15 @@ export default function SupplierLayout() {
 			}}
 		>
 			<Stack.Screen
+				name="[supplier]/index"
+			/>
+			<Stack.Screen
 				options={{
+					presentation: "modal",
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos className="bg-white" /> : <HeaderLayout backgroundColor="bg-white" />,
 					headerShown: true,
-					header: () => <HeaderLayout />,
 				}}
-				name="[supplier]"
+				name="[supplier]/pdf/[pdf]"
 			/>
 		</Stack>
 	);
