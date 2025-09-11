@@ -144,7 +144,14 @@ export default function AppLayout() {
 			<Tabs.Screen
 				name="help"
 				options={{
-					headerShown: true,
+					headerShown: false,
+					href: null,
+				}}
+			/>
+			<Tabs.Screen
+				name="supplier-selection"
+				options={{
+					headerShown: false,
 					header: () => <HeaderLayout backgroundColor="bg-white" />,
 					href: null,
 				}}

@@ -11,6 +11,7 @@ import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucid
 import React from "react";
 import { Dimensions, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
+import { Switch } from '@expo/ui/jetpack-compose';
 
 export default function Page() {
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
@@ -68,16 +69,17 @@ export default function Page() {
 			<BackgroundLayout className="px-4">
 				{!!data?.other_information?.length && (
 					<Picker
-						style={{ width: 260, marginTop: 20, marginHorizontal: "auto", marginBottom: 10 }}
+						style={{ width: 320, marginTop: 20, marginHorizontal: "auto", marginBottom: 10 }}
 						variant="segmented"
-						options={["Contact", "Produits"]}
+						options={["Contact", ...data.other_information.map(info => info.scpi || "SCPI sans titre")]}
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
 								horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							} else {
-								horizontalScrollRef.current?.scrollToEnd({ animated: true });
+								const scrollX = index * (Dimensions.get("window").width - 28 + 16);
+								horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							}
 						}}
@@ -143,13 +145,17 @@ export default function Page() {
 									/>
 								)}
 							</View>
-							<View style={{ width: Dimensions.get("window").width - 28 }}>
-								<View className="gap-8">
-									{data.other_information?.map((information, idx) => {
-                    return <OtherInformation key={idx} otherInformation={information} supplierCategoryId={supplierCategoryId} supplierId={supplierId} supplierProductId={supplierProductId} updatedAt={data.updatedAt} />;
-									})}
+							{data.other_information?.map((information, idx) => (
+								<View key={idx} style={{ width: Dimensions.get("window").width - 28 }}>
+									<OtherInformation
+										otherInformation={information}
+										supplierCategoryId={supplierCategoryId}
+										supplierId={supplierId}
+										supplierProductId={supplierProductId}
+										updatedAt={data.updatedAt}
+									/>
 								</View>
-							</View>
+							))}
 						</ScrollView>
 					)}
 				</ScrollView>
@@ -271,6 +277,22 @@ const OtherInformation = ({
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
 				<Text className="font-semibold text-base text-primary">{otherInformation.theme}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Épargne</Text>
+					<Switch
+						value={otherInformation.epargne ?? false}
+						label=""
+						onValueChange={() => {}}
+						// onValueChange={(checked) => {
+						// 	setChecked(checked);
+						// }}
+						// label="Epargne"
+						color={config.theme.extend.colors.primaryLight}
+						variant="switch"
+						style={{ pointerEvents: 'none' }}
+					/>
+				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
 				<Text className="font-semibold text-base text-primary">{otherInformation.annotation}</Text>
