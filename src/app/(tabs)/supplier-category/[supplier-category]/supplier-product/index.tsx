@@ -1,18 +1,17 @@
 import { getSupplierCategoryQuery } from "@/api/queries/supplier-categories-queries";
-import CardSupplierProduct from "@/components/card/card-supplier-product";
-import CardSearchSupplier from "@/components/card/card-search-supplier";
-import BackgroundLayout from "@/layouts/background-layout";
-import { ScrollView } from "react-native-gesture-handler";
-import InputSearch from "@/components/ui/input-search";
-import { Dimensions, Text, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
-import { useQuery } from "@tanstack/react-query";
 import { Brochure } from "@/components/brochure";
-import { Picker } from "@expo/ui/swift-ui";
+import CardSearchSupplier from "@/components/card/card-search-supplier";
+import CardSupplierProduct from "@/components/card/card-supplier-product";
+import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
-import config from "tailwind.config";
+import BackgroundLayout from "@/layouts/background-layout";
+import { Picker } from "@expo/ui/swift-ui";
+import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
-
+import { Dimensions, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import config from "tailwind.config";
 
 export default function Page() {
 	const scrollRef = React.useRef<ScrollView>(null);
@@ -109,21 +108,28 @@ export default function Page() {
 								style={{ backgroundColor: config.theme.extend.colors.background, marginTop: 16 }}
 							>
 								<View className="gap-2">
-									{data.product_suppliers.map((supplierProduct) => (
-										<CardSupplierProduct
-											key={supplierProduct.id}
-											supplierProduct={supplierProduct}
-											link={{
-												pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
-												params: {
-													"supplier-category": supplierCategoryId,
-													"supplier-category-name": supplierCategoryName,
-													"supplier-product": supplierProduct.id,
-													"supplier-product-name": supplierProduct.name,
-												},
-											}}
-										/>
-									))}
+									{data.product_suppliers.map((supplierProduct) => {
+										if (
+											supplierProduct.id === "46c9b876-9b9b-4779-b8ff-e4af9d56914e" ||
+											supplierProduct.id === "6871100f-d1ae-4326-93f9-d4f5117243ab"
+										)
+											return;
+										return (
+											<CardSupplierProduct
+												key={supplierProduct.id}
+												supplierProduct={supplierProduct}
+												link={{
+													pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+													params: {
+														"supplier-category": supplierCategoryId,
+														"supplier-category-name": supplierCategoryName,
+														"supplier-product": supplierProduct.id,
+														"supplier-product-name": supplierProduct.name,
+													},
+												}}
+											/>
+										);
+									})}
 								</View>
 							</ScrollView>
 						) : (

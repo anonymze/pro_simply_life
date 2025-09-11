@@ -68,16 +68,17 @@ export default function Page() {
 			<BackgroundLayout className="px-4">
 				{!!data?.other_information?.length && (
 					<Picker
-						style={{ width: 260, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
+						style={{ width: 320, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
 						variant="segmented"
-						options={["Contact", "Produits"]}
+						options={["Contact", ...data.other_information.map(info => info.scpi || "SCPI sans titre")]}
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
 								horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							} else {
-								horizontalScrollRef.current?.scrollToEnd({ animated: true });
+								const scrollX = index * (Dimensions.get("window").width - 28 + 16);
+								horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							}
 						}}
@@ -143,22 +144,17 @@ export default function Page() {
 									/>
 								)}
 							</View>
-							<View style={{ width: Dimensions.get("window").width - 28 }}>
-								<View className="gap-8">
-									{data.other_information?.map((information, idx) => {
-										return (
-											<OtherInformation
-												key={idx}
-												otherInformation={information}
-												supplierCategoryId={supplierCategoryId}
-												supplierId={supplierId}
-												supplierProductId={supplierProductId}
-												updatedAt={data.updatedAt}
-											/>
-										);
-									})}
+							{data.other_information?.map((information, idx) => (
+								<View key={idx} style={{ width: Dimensions.get("window").width - 28 }}>
+									<OtherInformation
+										otherInformation={information}
+										supplierCategoryId={supplierCategoryId}
+										supplierId={supplierId}
+										supplierProductId={supplierProductId}
+										updatedAt={data.updatedAt}
+									/>
 								</View>
-							</View>
+							))}
 						</ScrollView>
 					)}
 				</ScrollView>
@@ -287,7 +283,6 @@ const OtherInformation = ({
 					<Switch
 						value={otherInformation.epargne ?? false}
 						label=""
-						// disabled={true}
 						onValueChange={() => {}}
 						// onValueChange={(checked) => {
 						// 	setChecked(checked);
@@ -295,6 +290,7 @@ const OtherInformation = ({
 						// label="Epargne"
 						color={config.theme.extend.colors.primaryLight}
 						variant="switch"
+						style={{ pointerEvents: 'none' }}
 					/>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
