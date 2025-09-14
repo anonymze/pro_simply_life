@@ -1,9 +1,10 @@
-import { MMKV } from "react-native-mmkv";
 import { AppUser } from "@/types/user";
+import { MMKV } from "react-native-mmkv";
 
 export const storage = new MMKV();
 
 const USER_INFOS_KEY = "user.data";
+const FIRST_COMMISSION_KEY = "commission.data";
 
 let cachedUser: AppUser | null = null;
 
@@ -26,4 +27,12 @@ const removeStorageUserInfos = () => {
 	storage.delete(USER_INFOS_KEY);
 };
 
-export { setStorageUserInfos, getStorageUserInfos, removeStorageUserInfos };
+const getStorageFirstCommission = () => {
+	return storage.getBoolean(FIRST_COMMISSION_KEY) ?? false;
+};
+
+const setStorageFirstCommission = (state: boolean) => {
+	storage.set(FIRST_COMMISSION_KEY, state);
+};
+
+export { getStorageUserInfos, removeStorageUserInfos, setStorageUserInfos, setStorageFirstCommission, getStorageFirstCommission };

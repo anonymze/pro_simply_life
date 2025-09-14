@@ -34,10 +34,10 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 import config from "tailwind.config";
-import resolveConfig from "tailwindcss/resolveConfig";
+// import resolveConfig from "tailwindcss/resolveConfig";
 import { Bar, CartesianChart, useChartPressState } from "victory-native";
 
-const fullConfig = resolveConfig(config);
+// const fullConfig = resolveConfig(config);
 
 // Animated Number Component
 const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: number }) => {
@@ -321,7 +321,7 @@ const Content = ({
 									className="flex-row items-center gap-2"
 								>
 									<View className="size-6 items-center justify-center rounded-full bg-green-100">
-										<ArrowUpRightIcon size={14} color={fullConfig.theme.colors.green[500]} />
+										<ArrowUpRightIcon size={14} color={"#22c55"} />
 									</View>
 									<Text className="text-green-600">+{data.comparison.difference.toFixed(2)}€</Text>
 								</Animated.View>
@@ -334,7 +334,7 @@ const Content = ({
 									className="flex-row items-center gap-2"
 								>
 									<View className="size-6 items-center justify-center rounded-full bg-red-100">
-										<ArrowDownRightIcon size={14} color={fullConfig.theme.colors.red[500]} />
+										<ArrowDownRightIcon size={14} color={"#ef444"} />
 									</View>
 									<Text className="text-red-600">{data.comparison.difference.toFixed(2)}€</Text>
 								</Animated.View>

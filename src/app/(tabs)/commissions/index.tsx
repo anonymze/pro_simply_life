@@ -1,11 +1,12 @@
 import { queryClient } from "@/api/_queries";
 import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
+import FormCommissionCodes from "@/components/form-commission-codes";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
 import { generateYAxisTickValues } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
-import { getStorageUserInfos } from "@/utils/store";
+import { getStorageFirstCommission, getStorageUserInfos } from "@/utils/store";
 import { Picker } from "@expo/ui/swift-ui";
 import { FlashList } from "@shopify/flash-list";
 import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
@@ -34,10 +35,10 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 import config from "tailwind.config";
-import resolveConfig from "tailwindcss/resolveConfig";
+// import resolveConfig from "tailwindcss/resolveConfig";
 import { Bar, CartesianChart, useChartPressState } from "victory-native";
 
-const fullConfig = resolveConfig(config);
+// const fullConfig = resolveConfig(config);
 
 // Animated Number Component
 const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: number }) => {
@@ -65,11 +66,16 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 export default function Page() {
 	const scrollRef = React.useRef<ScrollView>(null);
 	const appUser = getStorageUserInfos();
+	const firstCommission = getStorageFirstCommission();
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["commissions-monthly", appUser?.user.id],
 		queryFn: getCommissionMonthlyAndYearlyDataQuery,
 	});
+
+	if (!firstCommission) {
+		return <FormCommissionCodes />;
+	}
 
 	if (isLoading) {
 		return (
@@ -323,7 +329,7 @@ const Content = ({
 									className="flex-row items-center gap-2"
 								>
 									<View className="size-6 items-center justify-center rounded-full bg-green-100">
-										<ArrowUpRightIcon size={14} color={fullConfig.theme.colors.green[500]} />
+										<ArrowUpRightIcon size={14} color={"#22c55"} />
 									</View>
 									<Text className="text-green-600">+{data.comparison.difference.toFixed(2)}€</Text>
 								</Animated.View>
@@ -336,7 +342,7 @@ const Content = ({
 									className="flex-row items-center gap-2"
 								>
 									<View className="size-6 items-center justify-center rounded-full bg-red-100">
-										<ArrowDownRightIcon size={14} color={fullConfig.theme.colors.red[500]} />
+										<ArrowDownRightIcon size={14} color={"#ef444"} />
 									</View>
 									<Text className="text-red-600">{data.comparison.difference.toFixed(2)}€</Text>
 								</Animated.View>
