@@ -32,7 +32,6 @@ export const createAppUserCommissionCodeQuery = async (data: {
   app_user: string;
   code: { code: string; supplier: Supplier["id"] }[];
 }) => {
-  console.log(data)
   const response = await api.post("/api/app-users-commissions-code/create", data);
   return response.data;
 };

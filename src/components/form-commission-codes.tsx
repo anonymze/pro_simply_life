@@ -71,7 +71,7 @@ export default function FormCommissionCodes() {
 
 	const mutation = useMutation({
 		mutationFn: createAppUserCommissionCodeQuery,
-		onSuccess: async (data) => {
+		onSuccess: async (_) => {
 			setStorageFirstCommission(true);
 			router.replace("/(tabs)/commissions");
 		},

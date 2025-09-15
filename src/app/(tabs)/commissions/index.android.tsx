@@ -1,11 +1,12 @@
 import { queryClient } from "@/api/_queries";
 import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
+import FormCommissionCodes from "@/components/form-commission-codes";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
 import { generateYAxisTickValues } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
-import { getStorageUserInfos } from "@/utils/store";
+import { getStorageFirstCommission, getStorageUserInfos } from "@/utils/store";
 import { Picker } from "@expo/ui/jetpack-compose";
 import { FlashList } from "@shopify/flash-list";
 import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
@@ -65,6 +66,11 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 export default function Page() {
 	const scrollRef = React.useRef<ScrollView>(null);
 	const appUser = getStorageUserInfos();
+	const firstCommission = getStorageFirstCommission();
+
+	if (!firstCommission) {
+		return <FormCommissionCodes />;
+	}
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["commissions-monthly", appUser?.user.id],
