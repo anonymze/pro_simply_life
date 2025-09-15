@@ -1,6 +1,6 @@
 import { Media } from "./media";
 import { Supplier } from "./supplier";
-import { AppUser } from "./user";
+import { AppUser, User } from "./user";
 
 export interface Commission {
 	id: string;
@@ -68,4 +68,16 @@ export interface CommissionMonthlyAndYearlyData {
 			previousMonthTotal: number;
 		};
 	}>;
+}
+
+export interface AppUsersCommissionsCode {
+  id: string;
+  app_user: User;
+  code: {
+    code: string;
+    id?: string | null;
+    supplier?: Supplier;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }

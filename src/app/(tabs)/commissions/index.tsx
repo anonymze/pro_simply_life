@@ -64,6 +64,7 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 };
 
 export default function Page() {
+	// setStorageFirstCommission(false);
 	const scrollRef = React.useRef<ScrollView>(null);
 	const appUser = getStorageUserInfos();
 	const firstCommission = getStorageFirstCommission();

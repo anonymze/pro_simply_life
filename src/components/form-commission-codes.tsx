@@ -1,35 +1,108 @@
-import { loginQuery } from "@/api/queries/login-queries";
+import { createAppUserCommissionCodeQuery, getAppUserCommissionCodesQuery } from "@/api/queries/commission-queries";
 import BackgroundLayout from "@/layouts/background-layout";
-import { cn } from "@/utils/cn";
-import { setStorageFirstCommission } from "@/utils/store";
+import { getStorageUserInfos, setStorageFirstCommission } from "@/utils/store";
 import { FlashList } from "@shopify/flash-list";
 import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React from "react";
-import { ActivityIndicator, Pressable, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Alert, Pressable, Text, TextInput, View } from "react-native";
+import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-reanimated";
+import config from "tailwind.config";
 import { z } from "zod";
 import Title from "./ui/title";
-import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
+
+interface CommissionCodeInputProps {
+	provider: { id: string; name: string };
+	index: number;
+	form: any;
+}
+
+function CommissionCodeInput({ provider, index, form }: CommissionCodeInputProps) {
+	const lastProviderId = React.useRef(provider.id);
+
+	// Reset component state when provider changes (FlashList reuse)
+	if (provider.id !== lastProviderId.current) {
+		lastProviderId.current = provider.id;
+	}
+
+	return (
+		<View className={"mt-4 w-full gap-3"}>
+			<Text className="text-md self-start text-primary">{provider.name}</Text>
+			<form.Field name={provider.id} key={provider.id}>
+				{(field: any) => (
+					<React.Fragment>
+						<TextInput
+							key={`${provider.id}-input`}
+							returnKeyType="done"
+							autoCapitalize="none"
+							keyboardType="numbers-and-punctuation"
+							placeholder="Code de commission unique"
+							autoCorrect={false}
+							className="w-full rounded-xl border border-transparent bg-darkGray p-5 placeholder:text-primaryLight focus:border-primaryLight"
+							defaultValue={field.state.value}
+							onChangeText={field.handleChange}
+						/>
+						{field.state.meta.errors.length > 0 && (
+							<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
+						)}
+					</React.Fragment>
+				)}
+			</form.Field>
+		</View>
+	);
+}
 
 export default function FormCommissionCodes() {
 	const { height } = useReanimatedKeyboardAnimation();
-	const mutationLogin = useMutation({
-		mutationFn: loginQuery,
+	const appUser = getStorageUserInfos();
+
+	if (!appUser) return;
+
+	const {
+		data: userCommissionCodes,
+		isLoading: userCommissionCodesLoading,
+		error,
+	} = useQuery({
+		queryKey: ["userCommissionCodes"],
+		queryFn: getAppUserCommissionCodesQuery,
+	});
+
+	const mutation = useMutation({
+		mutationFn: createAppUserCommissionCodeQuery,
 		onSuccess: async (data) => {
 			setStorageFirstCommission(true);
-			router.reload();
+			router.replace("/(tabs)/commissions");
+		},
+		onError: (error) => {
+			Alert.alert("Erreur lors de la création des codes. Un des codes a peut être déjà été utilisé.");
 		},
 	});
 
 	const form = useForm({
-		defaultValues: Object.fromEntries(commissionProviders.map((provider) => [provider.id, ""])),
+		defaultValues: Object.fromEntries(
+			commissionProviders.map((provider) => {
+				const existingCode = userCommissionCodes?.docs?.[0]?.code?.find(
+					(codeItem) => codeItem.supplier?.id === provider.id,
+				);
+				return [provider.id, existingCode?.code || ""];
+			}),
+		),
 		validators: {
 			onSubmit: formSchema,
 		},
 		onSubmit: ({ value }) => {
-			console.log(value);
+			const transformedData = {
+				app_user: appUser.user.id,
+				code: Object.entries(value)
+					.filter(([_, code]) => code.trim() !== "")
+					.map(([supplierId, code]) => ({
+						code,
+						supplier: supplierId,
+					})),
+			};
+			mutation.mutate(transformedData);
 		},
 	});
 
@@ -49,64 +122,48 @@ export default function FormCommissionCodes() {
 					fournisseur et entrez ceux manquants.
 				</Text>
 
-				<FlashList
-					data={commissionProviders}
-					showsVerticalScrollIndicator={false}
-					contentContainerStyle={{ paddingBottom: 16 }}
-					className="mt-8"
-					renderItem={({ item: provider, index }) => (
-						<View className={cn("w-full gap-3", index === 0 ? "" : "mt-4")}>
-							<Text className="text-md self-start text-primary">{provider.name}</Text>
-							<form.Field name={provider.id}>
-								{(field) => (
-									<React.Fragment>
-										<TextInput
-											returnKeyType="done"
-											autoCapitalize="none"
-											keyboardType="numbers-and-punctuation"
-											placeholder="Code de commission unique"
-											autoCorrect={false}
-											className="w-full rounded-xl border border-transparent  bg-darkGray  p-5 placeholder:text-primaryLight focus:border-primaryLight"
-											defaultValue={field.state.value}
-											onChangeText={field.handleChange}
-										/>
-										{field.state.meta.errors.length > 0 && (
-											<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
-										)}
-									</React.Fragment>
-								)}
-							</form.Field>
-						</View>
-					)}
-					ListFooterComponent={() => (
-						<Pressable
-							onPress={form.handleSubmit}
-							disabled={mutationLogin.isPending}
-							className="mt-8 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
-						>
-							{mutationLogin.isPending ? (
-								<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
-									<ActivityIndicator size="small" color="white" />
-								</Animated.View>
-							) : (
-								<Animated.Text
-									entering={FadeInDown.springify().duration(1200)}
-									className="text-center font-semibold text-lg text-white"
-								>
-									Enregistrer
-								</Animated.Text>
-							)}
-						</Pressable>
-					)}
-				/>
+				{userCommissionCodesLoading ? (
+					<View className="flex-1 items-center justify-center">
+						<ActivityIndicator size={"large"} color={config.theme.extend.colors.primary} />
+					</View>
+				) : (
+					<FlashList
+						estimatedItemSize={95}
+						data={commissionProviders}
+						showsVerticalScrollIndicator={false}
+						contentContainerStyle={{ paddingBottom: 16 }}
+						className="mt-8"
+						renderItem={({ item: provider, index }) => (
+							<CommissionCodeInput provider={provider} index={index} form={form} />
+						)}
+					/>
+				)}
 			</Animated.View>
+			<Pressable
+				onPress={form.handleSubmit}
+				disabled={mutation.isPending}
+				className="mb-6 mt-8 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
+			>
+				{mutation.isPending ? (
+					<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
+						<ActivityIndicator size="small" color="white" />
+					</Animated.View>
+				) : (
+					<Animated.Text
+						entering={FadeInDown.springify().duration(1200)}
+						className="text-center font-semibold text-lg text-white"
+					>
+						Enregistrer
+					</Animated.Text>
+				)}
+			</Pressable>
 		</BackgroundLayout>
 	);
 }
 
 const commissionProviders = [
 	{ id: "51878c0f-6536-47f3-93f2-6d99d93740b3", name: "AXA" }, // lequel ??
-	{ id: "51878c0f-6536-47f3-93f2-6d99d93740b4", name: "Vie +" }, // TODO
+	// { id: "51878c0f-6536-47f3-93f2-6d99d93740b4", name: "Vie +" }, // TODO
 	// { id: "5034a31a-bb35-4811-bcd9-42b645f036a8", name: "Swiss Life Luxembourg" }, // TODO
 	// { id: "5034a31a-bb35-4811-bcd9-42b645f036a8", name: "Generali Patrimoine" }, // plusieurs fois ?
 	{ id: "838f328c-dc00-4bb8-a064-d6ecb3c002fa", name: "Patrimoine UAF LIFE" }, // même que UAF LIFE ?
@@ -144,4 +201,13 @@ const commissionProviders = [
 	{ id: "7635799d-fa88-46e4-aac8-5202eb4d839a", name: "Epsicad" },
 ];
 
-const formSchema = z.object(Object.fromEntries(commissionProviders.map((provider) => [provider.id, z.string()])));
+const formSchema = z.object(
+	Object.fromEntries(
+		commissionProviders.map((provider) => [
+			provider.id,
+			z.string().nonempty({
+				message: "Ce champ est obligatoire",
+			}),
+		]),
+	),
+);
