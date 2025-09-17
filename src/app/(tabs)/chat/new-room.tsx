@@ -11,6 +11,7 @@ import { router } from "expo-router";
 import { User } from "@/types/user";
 import { cn } from "@/utils/cn";
 import React from "react";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 
 
 export default function Page() {
@@ -88,10 +89,10 @@ export default function Page() {
 					decelerationRate={"fast"}
 					contentContainerStyle={{ gap: 16 }}
 				>
-					<View style={{ width: Dimensions.get("window").width - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						<NewGroup data={data ?? []} dispatch={dispatch} selectedIds={selectedIds} />
 					</View>
-					<View style={{ width: Dimensions.get("window").width - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						<NewConversation currentUser={appUser.user} selectedIds={Array.from(selectedIds)} />
 					</View>
 				</ScrollView>

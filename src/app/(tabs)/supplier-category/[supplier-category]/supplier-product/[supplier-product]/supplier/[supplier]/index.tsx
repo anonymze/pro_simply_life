@@ -3,6 +3,7 @@ import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Supplier } from "@/types/supplier";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker, Switch } from "@expo/ui/swift-ui";
 import { useQuery } from "@tanstack/react-query";
 import { HrefObject, Link, useLocalSearchParams } from "expo-router";
@@ -77,7 +78,7 @@ export default function Page() {
 								horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							} else {
-								const scrollX = index * (Dimensions.get("window").width - 28 + 16);
+								const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
 								horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							}
@@ -122,7 +123,7 @@ export default function Page() {
 							decelerationRate={"fast"}
 							contentContainerStyle={{ gap: 16 }}
 						>
-							<View className="gap-2" style={{ width: Dimensions.get("window").width - 28 }}>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 								<ContactInfo
 									phone={data.contact_info?.phone}
 									email={data.contact_info?.email}
@@ -145,7 +146,7 @@ export default function Page() {
 								)}
 							</View>
 							{data.other_information?.map((information, idx) => (
-								<View key={idx} style={{ width: Dimensions.get("window").width - 28 }}>
+								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 									<OtherInformation
 										otherInformation={information}
 										supplierCategoryId={supplierCategoryId}

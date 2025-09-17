@@ -11,8 +11,6 @@ import Title from "@/components/ui/title";
 import { cssInterop } from "nativewind";
 
 
-const width = Dimensions.get("window").width;
-
 cssInterop(VideoView, {
 	className: "style",
 });

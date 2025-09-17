@@ -1,11 +1,11 @@
 import { cn } from "@/utils/cn";
-import { truncateText } from "@/utils/helper";
+import { SCREEN_DIMENSIONS, truncateText } from "@/utils/helper";
 import { Link, LinkProps } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 
-const windowWidth = Dimensions.get("window").width;
+const windowWidth = SCREEN_DIMENSIONS.width;
 
 export default function CardLink({
 	icon,

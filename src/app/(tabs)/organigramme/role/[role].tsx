@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
 import React from "react";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 
 
 export default function Page() {
@@ -72,7 +73,7 @@ export default function Page() {
 				decelerationRate={"fast"}
 				contentContainerStyle={{ gap: 16 }}
 			>
-				<View style={{ width: Dimensions.get("window").width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 					<ScrollView
 						className="flex-1"
 						showsVerticalScrollIndicator={false}
@@ -110,7 +111,7 @@ export default function Page() {
 						</View>
 					</ScrollView>
 				</View>
-				<View style={{ width: Dimensions.get("window").width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 					<Text>En cours de développement</Text>
 				</View>
 			</ScrollView>

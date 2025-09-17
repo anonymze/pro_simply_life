@@ -1,3 +1,5 @@
+import { Dimensions } from "react-native";
+
 /**
  * @description correctly type Object.keys
  */
@@ -65,3 +67,15 @@ export const isNewEmployee = (entry_date?: string): boolean => {
 
 	return entryDate > threeMonthsAgo;
 };
+
+export const excludedProductSupplierIds = [
+	"46c9b876-9b9b-4779-b8ff-e4af9d56914e",
+	"6871100f-d1ae-4326-93f9-d4f5117243ab",
+	"2b78beef-9304-4ea2-aa2a-22ab551a22ae",
+	"8fbcc7b1-6c44-45f5-af85-bb500ab4166c",
+];
+
+export const PRIVATE_EQUITY_ID = "42369074-6134-4d77-8a91-46f9a2efb1c4";
+export const GIRARDIN_INDUSTRIEL_ID = "36a662a2-c846-41a2-942e-b8748e34feed";
+
+export const SCREEN_DIMENSIONS = Dimensions.get("window");

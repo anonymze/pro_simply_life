@@ -4,7 +4,7 @@ import FormCommissionCodes from "@/components/form-commission-codes";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
-import { generateYAxisTickValues } from "@/utils/helper";
+import { generateYAxisTickValues, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
 import { getStorageFirstCommission, getStorageUserInfos } from "@/utils/store";
 import { Picker } from "@expo/ui/jetpack-compose";
@@ -14,16 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { HrefObject, Link } from "expo-router";
 import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
 import React from "react";
-import {
-	ActivityIndicator,
-	Dimensions,
-	Pressable,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
 	FadeIn,
 	FadeInDown,
@@ -137,10 +128,10 @@ export default function Page() {
 					marginTop: 16,
 				}}
 			>
-				<View style={{ width: Dimensions.get("window").width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 					<WrappeContent type="monthly" data={data} />
 				</View>
-				<View style={{ width: Dimensions.get("window").width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 					<WrappeContent type="yearly" data={data} />
 				</View>
 			</ScrollView>

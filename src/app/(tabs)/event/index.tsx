@@ -4,7 +4,7 @@ import CardList from "@/components/card/card-event";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Event, eventLabel } from "@/types/event";
-import { truncateText } from "@/utils/helper";
+import { SCREEN_DIMENSIONS, truncateText } from "@/utils/helper";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import { Picker } from "@expo/ui/swift-ui";
 import { Link } from "expo-router";
@@ -108,7 +108,7 @@ export default function Page() {
 						decelerationRate={"fast"}
 						contentContainerStyle={{ gap: 16 }}
 					>
-						<View style={{ width: Dimensions.get("window").width - 28 }}>
+						<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 							<Calendar
 								firstDay={1}
 								className="m-0 mt-5 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
@@ -189,7 +189,7 @@ export default function Page() {
 								) : null}
 							</ScrollView>
 						</View>
-						<View style={{ width: Dimensions.get("window").width - 28 }}>
+						<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 							{!!eventsStartingFromToday.length ? (
 								<ScrollView
 									showsVerticalScrollIndicator={false}

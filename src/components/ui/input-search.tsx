@@ -1,11 +1,12 @@
 import { cn } from "@/utils/cn";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import { CircleXIcon, SearchIcon } from "lucide-react-native";
 import React from "react";
 import { Dimensions, Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 import Animated, { FadeIn, FadeOut, useAnimatedStyle, withSpring } from "react-native-reanimated";
 import config from "tailwind.config";
 
-const widthTextInput = Dimensions.get("window").width - 28;
+const widthTextInput = SCREEN_DIMENSIONS.width - 28;
 const widthTextInputAnimated = widthTextInput - 56;
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);

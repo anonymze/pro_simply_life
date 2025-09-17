@@ -1,9 +1,10 @@
 import { cn } from "@/utils/cn";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import React from "react";
 import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, View } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 
-const screenWidth = Dimensions.get("window").width;
+const screenWidth = SCREEN_DIMENSIONS.width;
 const horizontalPadding = 38;
 const cardWidth = screenWidth - horizontalPadding;
 const gap = 16;

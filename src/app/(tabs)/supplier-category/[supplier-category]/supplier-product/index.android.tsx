@@ -5,6 +5,7 @@ import CardSupplierProduct from "@/components/card/card-supplier-product";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
+import { excludedProductSupplierIds, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
@@ -89,7 +90,7 @@ export default function Page() {
 					decelerationRate={"fast"}
 					contentContainerStyle={{ gap: 16 }}
 				>
-					<View style={{ width: Dimensions.get("window").width - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS - 28 }}>
 						<InputSearch
 							placeholder="Rechercher un fournisseur..."
 							onSubmitEditing={(input) => {
@@ -109,11 +110,8 @@ export default function Page() {
 							>
 								<View className="gap-2">
 									{data.product_suppliers.map((supplierProduct) => {
-										if (
-											supplierProduct.id === "46c9b876-9b9b-4779-b8ff-e4af9d56914e" ||
-											supplierProduct.id === "6871100f-d1ae-4326-93f9-d4f5117243ab"
-										)
-											return;
+										if (excludedProductSupplierIds.includes(supplierProduct.id)) return;
+
 										return (
 											<CardSupplierProduct
 												key={supplierProduct.id}
@@ -154,7 +152,7 @@ export default function Page() {
 							</>
 						)}
 					</View>
-					<View className="gap-2" style={{ width: Dimensions.get("window").width - 28 }}>
+					<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						{!!data?.offers?.length &&
 							data.offers.map((offer) => (
 								<Brochure

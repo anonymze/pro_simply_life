@@ -12,6 +12,7 @@ import React from "react";
 import { Dimensions, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 import { Switch } from '@expo/ui/jetpack-compose';
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 
 export default function Page() {
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
@@ -78,7 +79,7 @@ export default function Page() {
 								horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							} else {
-								const scrollX = index * (Dimensions.get("window").width - 28 + 16);
+								const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
 								horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
 								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 							}
@@ -123,7 +124,7 @@ export default function Page() {
 							decelerationRate={"fast"}
 							contentContainerStyle={{ gap: 16 }}
 						>
-							<View className="gap-2" style={{ width: Dimensions.get("window").width - 28 }}>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 								<ContactInfo
 									phone={data.contact_info?.phone}
 									email={data.contact_info?.email}
@@ -146,7 +147,7 @@ export default function Page() {
 								)}
 							</View>
 							{data.other_information?.map((information, idx) => (
-								<View key={idx} style={{ width: Dimensions.get("window").width - 28 }}>
+								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 									<OtherInformation
 										otherInformation={information}
 										supplierCategoryId={supplierCategoryId}

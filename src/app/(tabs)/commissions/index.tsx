@@ -4,7 +4,7 @@ import FormCommissionCodes from "@/components/form-commission-codes";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
-import { generateYAxisTickValues } from "@/utils/helper";
+import { generateYAxisTickValues, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
 import { getStorageFirstCommission, getStorageUserInfos } from "@/utils/store";
 import { Picker } from "@expo/ui/swift-ui";
@@ -139,10 +139,10 @@ export default function Page() {
 					marginTop: 16,
 				}}
 			>
-				<View style={{ width: Dimensions.get("window").width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 					<WrappeContent type="monthly" data={data} />
 				</View>
-				<View style={{ width: Dimensions.get("window").width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 					<WrappeContent type="yearly" data={data} />
 				</View>
 			</ScrollView>
