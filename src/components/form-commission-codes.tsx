@@ -160,20 +160,19 @@ export default function FormCommissionCodes() {
 		</BackgroundLayout>
 	);
 }
-
+// soirée
 const commissionProviders = [
-	{ id: "51878c0f-6536-47f3-93f2-6d99d93740b3", name: "AXA" }, // lequel ??
-	// { id: "51878c0f-6536-47f3-93f2-6d99d93740b4", name: "Vie +" }, // TODO
-	// { id: "5034a31a-bb35-4811-bcd9-42b645f036a8", name: "Swiss Life Luxembourg" }, // TODO
-	// { id: "5034a31a-bb35-4811-bcd9-42b645f036a8", name: "Generali Patrimoine" }, // plusieurs fois ?
-	{ id: "838f328c-dc00-4bb8-a064-d6ecb3c002fa", name: "Patrimoine UAF LIFE" }, // même que UAF LIFE ?
-	// { id: "838f328c-dc00-4bb8-a064-d6ecb3c002fa", name: "UAF LIFE" }, // meme que patrimoje uaf life ?
-	// { id: "5034a31a-bb35-4811-bcd9-42b645f036a8", name: "Apporteur Oddo" }, // ODDO BHF cif  ou oddo bhf normal ? ou aucun
-	// { id: "5034a31a-bb35-4811-bcd9-42b645f036a8", name: "AXA Lifinity" }, // TODO
-	{ id: "1df031fb-7ede-483a-aba8-ea986816da48", name: "AXA Wealth Luxembourg" }, // c'est bien AXA wealth ?
-	{ id: "3481cfd8-7557-4492-8d49-51ceee4c87b6", name: "Corum" }, // corum normal ou corum SCPI ?
-	{ id: "1d7461b1-38da-4c11-8987-3fbee7de506b", name: "Primonial" }, // normal ou scpi
-	{ id: "e07a3d19-eb73-4e6f-8f68-9c042523ce8f", name: "Inter Gestion Reim" }, // créé plusieurs fois dans le back office.... enlever les doublons ? genre comme les doublons scpi ?
+	{ id: "51878c0f-6536-47f3-93f2-6d99d93740b3", name: "AXA Wealth Digital" },
+	{ id: "63a0524b-f229-4afa-88ef-49e568efd730", name: "AXA Banque" },
+	{ id: "1df031fb-7ede-483a-aba8-ea986816da48", name: "AXA Wealth Europe" },
+	{ id: "1f2fc416-f162-400e-9c81-fdb6f038cc2e", name: "Vie +" },
+	{ id: "19bb9991-9e71-4995-8533-04066de17e0e", name: "Swiss Life Luxembourg" },
+	{ id: "95a6fec3-4c1a-4bdb-97c6-0ed9042fe02e", name: "Generali Patrimoine" },
+	{ id: "838f328c-dc00-4bb8-a064-d6ecb3c002fa", name: "Patrimoine UAF LIFE" },
+	{ id: "81ee6dd0-8189-4970-9a89-30be47ac8fd5", name: "UAF LIFE" },
+	{ id: "833e617a-e637-45bb-a838-80d7ecc5cb03", name: "ODDO BHF" },
+	{ id: "1d7461b1-38da-4c11-8987-3fbee7de506b", name: "Primonial" },
+	{ id: "e07a3d19-eb73-4e6f-8f68-9c042523ce8f", name: "Inter Gestion Reim" },
 	{ id: "5034a31a-bb35-4811-bcd9-42b645f036a8", name: "Oradea Vie" },
 	{ id: "e0f8cb69-08b1-49b7-9115-cf53a0242bf4", name: "Cardif" },
 	{ id: "7c1711bf-518e-4643-b314-153cd7163f17", name: "Swiss Life" },
