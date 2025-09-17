@@ -91,7 +91,7 @@ export default function Page() {
 					decelerationRate={"fast"}
 					contentContainerStyle={{ gap: 16 }}
 				>
-					<View style={{ width: SCREEN_DIMENSIONS - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						<InputSearch
 							placeholder="Rechercher un fournisseur..."
 							onSubmitEditing={(input) => {
@@ -153,7 +153,7 @@ export default function Page() {
 							</>
 						)}
 					</View>
-					<View className="gap-2" style={{ width: SCREEN_DIMENSIONS - 28 }}>
+					<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						{!!data?.offers?.length &&
 							data.offers.map((offer) => (
 								<Brochure
