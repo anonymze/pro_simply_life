@@ -10,7 +10,7 @@ import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import config from "tailwind.config";
 
@@ -90,7 +90,7 @@ export default function Page() {
 					decelerationRate={"fast"}
 					contentContainerStyle={{ gap: 16 }}
 				>
-					<View style={{ width: SCREEN_DIMENSIONS - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						<InputSearch
 							placeholder="Rechercher un fournisseur..."
 							onSubmitEditing={(input) => {

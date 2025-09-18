@@ -73,7 +73,7 @@ export default function Page() {
 						</View>
 					))}
 				</View>
-				<Title title="Notre sélection" />
+				<Title title="Notre sélection du moment" />
 				<View className="gap-2">
 					{suppliers?.docs?.map((supplier) => (
 						<CardSupplier
