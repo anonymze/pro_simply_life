@@ -69,7 +69,7 @@ export const isNewEmployee = (entry_date?: string): boolean => {
 };
 
 export const excludedProductSupplierIds = [
-  // dettes privées obligatoires
+	// dettes privées obligatoires
 	"46c9b876-9b9b-4779-b8ff-e4af9d56914e",
 	// 150 OB TER
 	"6871100f-d1ae-4326-93f9-d4f5117243ab",
@@ -77,6 +77,8 @@ export const excludedProductSupplierIds = [
 	"2b78beef-9304-4ea2-aa2a-22ab551a22ae",
 	// éligible assurance vie
 	"8fbcc7b1-6c44-45f5-af85-bb500ab4166c",
+	// FCPR
+	"949d4203-a2f3-40cc-b5cc-fcfe4464ccd8",
 ];
 
 export const PRIVATE_EQUITY_ID = "42369074-6134-4d77-8a91-46f9a2efb1c4";

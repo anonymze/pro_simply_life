@@ -5,10 +5,10 @@ import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { GIRARDIN_INDUSTRIEL_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker } from "@expo/ui/swift-ui";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import config from "tailwind.config";
 
@@ -19,8 +19,23 @@ export default function Page() {
 		"supplier-category": supplierCategoryId,
 		"supplier-category-name": supplierCategoryName,
 		"supplier-product-name": supplierProductName,
+		"multiple-supplier-products": multipleSupplierProducts,
 	} = useLocalSearchParams();
 
+	const multipleSupplierProductIds = React.useMemo(() => {
+		if (!multipleSupplierProducts || typeof multipleSupplierProducts !== "string") return [];
+		return multipleSupplierProducts.split(",").filter(Boolean);
+	}, [multipleSupplierProducts]);
+
+	const queries = useQueries({
+		queries: multipleSupplierProductIds.map((id) => ({
+			queryKey: ["supplier-product", id],
+			queryFn: getSupplierProductQuery,
+			enabled: !!id,
+		})),
+	});
+
+	// Get the main supplier product data
 	const { data } = useQuery({
 		queryKey: ["supplier-product", supplierProductId],
 		queryFn: getSupplierProductQuery,
@@ -56,14 +71,11 @@ export default function Page() {
 				<Picker
 					style={{ width: SCREEN_DIMENSIONS.width - 28, marginBottom: 16, marginHorizontal: "auto" }}
 					variant="segmented"
-					options={["Capital investissement", "Dettes privées obligtoires", "Éligible assurance vie"]}
+					options={["Capital investissement", "Dettes privées obligtoires", "Éligible assurance vie", "FCPR"]}
 					selectedIndex={null}
 					onOptionSelected={({ nativeEvent: { index } }) => {
-						if (index === 0) {
-							scrollRef.current?.scrollTo({ x: 0, animated: true });
-						} else {
-							scrollRef.current?.scrollToEnd({ animated: true });
-						}
+						const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16); // width + gap
+						scrollRef.current?.scrollTo({ x: scrollX, animated: true });
 					}}
 				/>
 			)}
@@ -77,48 +89,51 @@ export default function Page() {
 					decelerationRate={"fast"}
 					contentContainerStyle={{ gap: 16 }}
 				>
-					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
-						<ScrollView
-							className="flex-1"
-							showsVerticalScrollIndicator={false}
-							style={{ backgroundColor: config.theme.extend.colors.background }}
-							contentContainerStyle={{ paddingBottom: 10 }}
-						>
-							<View className="gap-2">
-								{Object.keys(groupedSuppliers).map((letter) => (
-									<View key={letter} className="gap-2">
-										<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
-										{groupedSuppliers[letter].map((supplier) => (
-											<CardSupplier
-												enveloppe={false}
-												icon={
-													<ImagePlaceholder
-														transition={300}
-														contentFit="contain"
-														placeholder={supplier.logo_mini?.blurhash}
-														source={supplier.logo_mini?.url}
-														style={{ width: 26, height: 26, borderRadius: 4 }}
+					<>
+						{queries.map((query) => (
+							<>
+								{query.isSuccess && (
+									<View key={query.data.id} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+										<ScrollView
+											className="flex-1"
+											showsVerticalScrollIndicator={false}
+											style={{ backgroundColor: config.theme.extend.colors.background }}
+											contentContainerStyle={{ paddingBottom: 10 }}
+										>
+											<View className="gap-2">
+												{query.data.suppliers?.map((supplier) => (
+													<CardSupplier
+														enveloppe={false}
+														icon={
+															<ImagePlaceholder
+																transition={300}
+																contentFit="contain"
+																placeholder={supplier.logo_mini?.blurhash}
+																source={supplier.logo_mini?.url}
+																style={{ width: 26, height: 26, borderRadius: 4 }}
+															/>
+														}
+														key={supplier.id}
+														supplier={supplier}
+														link={{
+															pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-category-name": supplierCategoryName,
+																"supplier-product": supplierProductId,
+																"supplier-product-name": supplierProductName,
+																supplier: supplier.id,
+															},
+														}}
 													/>
-												}
-												key={supplier.id}
-												supplier={supplier}
-												link={{
-													pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
-													params: {
-														"supplier-category": supplierCategoryId,
-														"supplier-category-name": supplierCategoryName,
-														"supplier-product": supplierProductId,
-														"supplier-product-name": supplierProductName,
-														supplier: supplier.id,
-													},
-												}}
-											/>
-										))}
+												))}
+											</View>
+										</ScrollView>
 									</View>
-								))}
-							</View>
-						</ScrollView>
-					</View>
+								)}
+							</>
+						))}
+					</>
 				</ScrollView>
 			) : (
 				<ScrollView

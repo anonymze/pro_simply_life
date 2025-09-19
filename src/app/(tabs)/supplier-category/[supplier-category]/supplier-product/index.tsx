@@ -5,15 +5,15 @@ import CardSupplierProduct from "@/components/card/card-supplier-product";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
-import { excludedProductSupplierIds, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { SupplierProduct } from "@/types/supplier";
+import { excludedProductSupplierIds, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker } from "@expo/ui/swift-ui";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import config from "tailwind.config";
-
 
 export default function Page() {
 	const scrollRef = React.useRef<ScrollView>(null);
@@ -60,6 +60,7 @@ export default function Page() {
 		// filter suppliers based on search term
 		return allSuppliers.filter((supplier) => supplier.searchName.includes(searchTerm));
 	}, [allSuppliers, search]);
+
 
 	return (
 		<BackgroundLayout className="px-4 pt-4">
@@ -113,10 +114,20 @@ export default function Page() {
 									{data.product_suppliers.map((supplierProduct) => {
 										if (excludedProductSupplierIds.includes(supplierProduct.id)) return;
 
+										let multipleSupplierProducts: SupplierProduct[] = [];
+
+										if (supplierProduct.id === PRIVATE_EQUITY_ID) {
+											multipleSupplierProducts = data.product_suppliers.filter(product =>
+												excludedProductSupplierIds.includes(product.id)
+											);
+										}
+
+
 										return (
 											<CardSupplierProduct
 												key={supplierProduct.id}
 												supplierProduct={supplierProduct}
+												multipleSupplierProducts={multipleSupplierProducts}
 												link={{
 													pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
 													params: {
@@ -124,6 +135,7 @@ export default function Page() {
 														"supplier-category-name": supplierCategoryName,
 														"supplier-product": supplierProduct.id,
 														"supplier-product-name": supplierProduct.name,
+														"multiple-supplier-products": multipleSupplierProducts.map(product => product.id).join(",")
 													},
 												}}
 											/>
@@ -191,23 +203,7 @@ export default function Page() {
 							contentContainerStyle={{ paddingBottom: 10 }}
 							style={{ backgroundColor: config.theme.extend.colors.background }}
 						>
-							<View className="mt-5 gap-2">
-								{data.product_suppliers.map((supplierProduct) => (
-									<CardSupplierProduct
-										key={supplierProduct.id}
-										supplierProduct={supplierProduct}
-										link={{
-											pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
-											params: {
-												"supplier-category": supplierCategoryId,
-												"supplier-category-name": supplierCategoryName,
-												"supplier-product": supplierProduct.id,
-												"supplier-product-name": supplierProduct.name,
-											},
-										}}
-									/>
-								))}
-							</View>
+							<View className="mt-5 gap-2"></View>
 						</ScrollView>
 					) : (
 						<>
