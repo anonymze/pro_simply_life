@@ -83,5 +83,6 @@ export const excludedProductSupplierIds = [
 
 export const PRIVATE_EQUITY_ID = "42369074-6134-4d77-8a91-46f9a2efb1c4";
 export const GIRARDIN_INDUSTRIEL_ID = "36a662a2-c846-41a2-942e-b8748e34feed";
+export const OB_TER_ID = "6871100f-d1ae-4326-93f9-d4f5117243ab";
 
 export const SCREEN_DIMENSIONS = Dimensions.get("window");

@@ -90,8 +90,8 @@ export default function Page() {
 					contentContainerStyle={{ gap: 16 }}
 				>
 					<>
-						{queries.map((query) => (
-							<>
+						{queries.map((query, idx) => (
+							<React.Fragment key={idx}>
 								{query.isSuccess && (
 									<View key={query.data.id} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 										<ScrollView
@@ -103,6 +103,7 @@ export default function Page() {
 											<View className="gap-2">
 												{query.data.suppliers?.map((supplier) => (
 													<CardSupplier
+														key={supplier.id}
 														enveloppe={false}
 														icon={
 															<ImagePlaceholder
@@ -113,7 +114,6 @@ export default function Page() {
 																style={{ width: 26, height: 26, borderRadius: 4 }}
 															/>
 														}
-														key={supplier.id}
 														supplier={supplier}
 														link={{
 															pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
@@ -131,7 +131,7 @@ export default function Page() {
 										</ScrollView>
 									</View>
 								)}
-							</>
+							</React.Fragment>
 						))}
 					</>
 				</ScrollView>

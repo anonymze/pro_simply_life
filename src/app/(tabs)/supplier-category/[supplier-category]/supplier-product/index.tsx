@@ -6,7 +6,7 @@ import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { SupplierProduct } from "@/types/supplier";
-import { excludedProductSupplierIds, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { excludedProductSupplierIds, OB_TER_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker } from "@expo/ui/swift-ui";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
@@ -118,10 +118,10 @@ export default function Page() {
 
 										if (supplierProduct.id === PRIVATE_EQUITY_ID) {
 											multipleSupplierProducts = data.product_suppliers.filter(product =>
-												excludedProductSupplierIds.includes(product.id)
+												excludedProductSupplierIds.includes(product.id) &&
+												product.id !== OB_TER_ID
 											);
 										}
-
 
 										return (
 											<CardSupplierProduct
