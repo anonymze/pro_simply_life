@@ -100,9 +100,11 @@ export default function Page() {
 												// @ts-ignore
 												style={{
 													width:
-														(data.enveloppe.amount / DEFAULT_MAX_VALUE) < 0.1
-															? `${10}%`
-															: `${data.enveloppe.amount >= DEFAULT_MAX_VALUE ? "100%" : (data.enveloppe.amount / DEFAULT_MAX_VALUE) * 100}%`,
+														data.enveloppe.amount >= DEFAULT_MAX_VALUE
+															? "100%"
+															: data.enveloppe.amount / DEFAULT_MAX_VALUE < 0.1
+																? "10%"
+																: (data.enveloppe.amount / DEFAULT_MAX_VALUE) * 100 + "%",
 												}}
 											>
 												<View className="h-1.5 w-full rounded-full bg-production" />

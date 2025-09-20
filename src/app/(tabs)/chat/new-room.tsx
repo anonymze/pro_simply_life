@@ -1,18 +1,16 @@
-import { Text, View, TouchableOpacity, ScrollView, Dimensions, ActivityIndicator, Platform } from "react-native";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { NewConversation } from "@/components/new-conversation";
-import { withQueryWrapper } from "@/utils/libs/react-query";
-import BackgroundLayout from "@/layouts/background-layout";
-import { getStorageUserInfos } from "@/utils/store";
 import { NewGroup } from "@/components/new-group";
-import { useQuery } from "@tanstack/react-query";
-import config from "tailwind.config";
-import { router } from "expo-router";
+import BackgroundLayout from "@/layouts/background-layout";
 import { User } from "@/types/user";
 import { cn } from "@/utils/cn";
-import React from "react";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
-
+import { getStorageUserInfos } from "@/utils/store";
+import { useQuery } from "@tanstack/react-query";
+import { router } from "expo-router";
+import React from "react";
+import { ActivityIndicator, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
 
 export default function Page() {
 	const appUser = getStorageUserInfos();
@@ -47,6 +45,7 @@ export default function Page() {
 			<View className={cn("flex-row items-center justify-between bg-background pb-4")}>
 				<View className="w-24 p-2">
 					<TouchableOpacity
+						hitSlop={10}
 						onPress={() => {
 							if (!nextStep) return router.back();
 							setNextStep(false);
@@ -68,7 +67,9 @@ export default function Page() {
 							scrollRef.current?.scrollToEnd({ animated: true });
 						}}
 					>
-						<Text className={cn("font-semibold text-sm text-backgroundChat", selectedIds.size === 0 && "text-primary/40")}>
+						<Text
+							className={cn("font-semibold text-sm text-backgroundChat", selectedIds.size === 0 && "text-primary/40")}
+						>
 							{nextStep ? "Créer" : "Suivant"}
 						</Text>
 					</TouchableOpacity>
@@ -101,7 +102,10 @@ export default function Page() {
 	);
 }
 
-export type ActionReducer = { type: "ADD"; ids: User["id"][] } | { type: "REMOVE"; ids: User["id"][] } | { type: "CLEAR" };
+export type ActionReducer =
+	| { type: "ADD"; ids: User["id"][] }
+	| { type: "REMOVE"; ids: User["id"][] }
+	| { type: "CLEAR" };
 
 function selectionReducer(state: Set<User["id"]>, action: ActionReducer): Set<User["id"]> {
 	const newSet = new Set(state);
