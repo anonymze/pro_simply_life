@@ -5,7 +5,8 @@ import CardSupplierProduct from "@/components/card/card-supplier-product";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
-import { excludedProductSupplierIds, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { SupplierProduct } from "@/types/supplier";
+import { excludedProductSupplierIds, OB_TER_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
@@ -112,9 +113,18 @@ export default function Page() {
 									{data.product_suppliers.map((supplierProduct) => {
 										if (excludedProductSupplierIds.includes(supplierProduct.id)) return;
 
+										let multipleSupplierProducts: SupplierProduct[] = [];
+
+										if (supplierProduct.id === PRIVATE_EQUITY_ID) {
+											multipleSupplierProducts = data.product_suppliers.filter(
+												(product) => excludedProductSupplierIds.includes(product.id) && product.id !== OB_TER_ID,
+											);
+										}
+
 										return (
 											<CardSupplierProduct
 												key={supplierProduct.id}
+												multipleSupplierProducts={multipleSupplierProducts}
 												supplierProduct={supplierProduct}
 												link={{
 													pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,

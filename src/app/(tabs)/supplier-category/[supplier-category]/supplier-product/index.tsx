@@ -53,6 +53,8 @@ export default function Page() {
 		);
 	}, [data]);
 
+	console.log(allSuppliers);
+
 	const filteredData = React.useMemo(() => {
 		if (!search) return null;
 
@@ -61,6 +63,7 @@ export default function Page() {
 		return allSuppliers.filter((supplier) => supplier.searchName.includes(searchTerm));
 	}, [allSuppliers, search]);
 
+	// console.log(filteredData);
 
 	return (
 		<BackgroundLayout className="px-4 pt-4">
@@ -117,9 +120,8 @@ export default function Page() {
 										let multipleSupplierProducts: SupplierProduct[] = [];
 
 										if (supplierProduct.id === PRIVATE_EQUITY_ID) {
-											multipleSupplierProducts = data.product_suppliers.filter(product =>
-												excludedProductSupplierIds.includes(product.id) &&
-												product.id !== OB_TER_ID
+											multipleSupplierProducts = data.product_suppliers.filter(
+												(product) => excludedProductSupplierIds.includes(product.id) && product.id !== OB_TER_ID,
 											);
 										}
 
@@ -135,7 +137,9 @@ export default function Page() {
 														"supplier-category-name": supplierCategoryName,
 														"supplier-product": supplierProduct.id,
 														"supplier-product-name": supplierProduct.name,
-														"multiple-supplier-products": multipleSupplierProducts.map(product => product.id).join(",")
+														"multiple-supplier-products": multipleSupplierProducts
+															.map((product) => product.id)
+															.join(","),
 													},
 												}}
 											/>
@@ -146,7 +150,7 @@ export default function Page() {
 						) : (
 							<>
 								{!filteredData?.length ? (
-									<View className="flex-1 items-center justify-center ">
+									<View className="flex-1 items-center justify-center">
 										<Text className="text-sm text-defaultGray">Aucun fournisseur trouvé</Text>
 									</View>
 								) : (
@@ -203,7 +207,23 @@ export default function Page() {
 							contentContainerStyle={{ paddingBottom: 10 }}
 							style={{ backgroundColor: config.theme.extend.colors.background }}
 						>
-							<View className="mt-5 gap-2"></View>
+							<View className="mt-5 gap-2">
+								{data.product_suppliers.map((supplierProduct) => (
+									<CardSupplierProduct
+										key={supplierProduct.id}
+										supplierProduct={supplierProduct}
+										link={{
+											pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+											params: {
+												"supplier-category": supplierCategoryId,
+												"supplier-category-name": supplierCategoryName,
+												"supplier-product": supplierProduct.id,
+												"supplier-product-name": supplierProduct.name,
+											},
+										}}
+									/>
+								))}
+							</View>
 						</ScrollView>
 					) : (
 						<>
