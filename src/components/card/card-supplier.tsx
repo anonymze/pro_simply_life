@@ -6,6 +6,8 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
+const DEFAULT_MAX_VALUE = 1_000_000;
+
 export default function CardSupplier({
 	icon,
 	supplier,
@@ -33,51 +35,44 @@ export default function CardSupplier({
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{supplier.name}</Text>
 
-					{enveloppe && (
+					{enveloppe ? (
 						<>
-							<View className="flex flex-row items-center">
-								<View className="my-1 flex-1 border-t border-primaryLight" />
-								<Text className="px-2 text-sm text-primaryLight">Enveloppe</Text>
-								<View className="my-1 flex-1 border-t border-primaryLight" />
-							</View>
-
 							{supplier.enveloppe?.amount ? (
 								<>
-									<View className="flex-row items-center justify-between">
-										<Text className=" text-xs text-primaryLight">
-											Montant restant<Text className="font-semibold"> {supplier.enveloppe.amount}€</Text>
-										</Text>
-										<Text className="text-xs text-primaryLight">
-											Echéance{" "}
-											<Text className="font-semibold">
-												{" "}
-												{supplier.enveloppe.echeance
-													? new Date(supplier.enveloppe.echeance ?? "").toLocaleDateString("fr-FR", {
-															day: "numeric",
-															month: "numeric",
-														})
-													: "Inconnu"}
-											</Text>
-										</Text>
+									<View className="mt-3">
+										<View className="flex-row">
+											<View
+												className="gap-1"
+												// @ts-ignore
+												style={{
+													// minWidth: structuredProduct.max / structuredProduct.current,
+													width:
+														supplier.enveloppe.amount >= DEFAULT_MAX_VALUE
+															? "100%"
+															: supplier.enveloppe.amount < 50_000
+																? "5%"
+																: (supplier.enveloppe.amount / DEFAULT_MAX_VALUE) * 100 + "%",
+												}}
+											>
+												<View className="h-1.5 w-full rounded-full bg-production" />
+											</View>
+										</View>
 									</View>
-									<View className="mt-1 flex-row items-center justify-between">
-										<Text className="text-xs text-primaryLight">
-											Réduction impôt{" "}
-											<Text className="font-semibold">
-												{supplier.enveloppe.reduction ? supplier.enveloppe.reduction : "Inconnu"}
-											</Text>
-										</Text>
-										<Text className="text-xs text-primaryLight">
-											Actualisé{" "}
-											<Text className="font-semibold">
-												{" "}
-												{supplier.enveloppe.actualisation
-													? new Date(supplier.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
-															day: "numeric",
-															month: "numeric",
-														})
-													: "Inconnu"}
-											</Text>
+									<View className="mt-3 flex-row items-center gap-2">
+										<View className="size-2 rounded-full bg-production" />
+										<Text className="text-xs text-backgroundChat">Enveloppe montant restant</Text>
+										<Text className="ml-auto font-light text-sm text-primaryLight">{supplier.enveloppe.amount.toLocaleString('fr-FR')}€</Text>
+									</View>
+									<View className="mt-0 flex-row items-center gap-2">
+										<Text className="text-xs text-backgroundChat">Echéance le </Text>
+										<Text className="ml-auto font-light text-sm text-primaryLight">
+											{" "}
+											{supplier.enveloppe.actualisation
+												? new Date(supplier.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+														day: "numeric",
+														month: "numeric",
+													})
+												: "Inconnu"}
 										</Text>
 									</View>
 								</>
@@ -85,7 +80,7 @@ export default function CardSupplier({
 								<Text className="text-xs text-primaryLight">Pas d'enveloppe</Text>
 							)}
 						</>
-					)}
+					) : null}
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>

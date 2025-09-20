@@ -60,15 +60,15 @@ export default function Page() {
 							)}
 							{item.structured_product ? (
 								<View className="w-40 items-center justify-center gap-2">
-									<Text className="text-sm text-[#026AA2]">{item.informations?.up_front}€</Text>
+									<Text className="text-sm text-[#026AA2]">{item.informations?.up_front?.toLocaleString('fr-FR')}€</Text>
 								</View>
 							) : (
 								<View className="w-40 items-center justify-center gap-2">
 									{item.informations?.production ? (
-										<Text className="text-sm text-[#B42318]">{item.informations?.production}€</Text>
+										<Text className="text-sm text-[#B42318]">{item.informations?.production?.toLocaleString('fr-FR')}€</Text>
 									) : null}
 									{item.informations?.encours ? (
-										<Text className="text-sm text-[#3538CD]">{item.informations?.encours}€</Text>
+										<Text className="text-sm text-[#3538CD]">{item.informations?.encours?.toLocaleString('fr-FR')}€</Text>
 									) : null}
 								</View>
 							)}

@@ -51,7 +51,7 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 		runOnJS(setDisplayValue)(currentValue);
 	});
 
-	return <Text className="font-bold text-2xl text-primary">{displayValue}€</Text>;
+	return <Text className="font-bold text-2xl text-primary">{displayValue.toLocaleString('fr-FR')}€</Text>;
 };
 
 export default function Page() {

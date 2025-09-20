@@ -10,8 +10,10 @@ import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
-import { Dimensions, Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
+
+const DEFAULT_MAX_VALUE = 1_000_000;
 
 export default function Page() {
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
@@ -71,7 +73,7 @@ export default function Page() {
 					<Picker
 						style={{ width: 320, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
 						variant="segmented"
-						options={["Contact", ...data.other_information.map(info => info.scpi || "SCPI sans titre")]}
+						options={["Contact", ...data.other_information.map((info) => info.scpi || "SCPI sans titre")]}
 						selectedIndex={null}
 						onOptionSelected={({ nativeEvent: { index } }) => {
 							if (index === 0) {
@@ -85,6 +87,7 @@ export default function Page() {
 						}}
 					/>
 				)}
+
 				<ScrollView
 					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
@@ -93,6 +96,63 @@ export default function Page() {
 				>
 					{!data?.other_information?.length ? (
 						<View className="mt-4 gap-4">
+							{data?.enveloppe && data.enveloppe.amount && (
+								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
+									<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
+									<View className="mt-5">
+										<View className="flex-row">
+											<View
+												className="gap-1"
+												// @ts-ignore
+												style={{
+													width:
+														data.enveloppe.amount < 50_000
+															? `${10}%`
+															: `${data.enveloppe.amount > DEFAULT_MAX_VALUE ? "100%" : (data.enveloppe.amount / DEFAULT_MAX_VALUE) * 100}%`,
+												}}
+											>
+												<View className="h-1.5 w-full rounded-full bg-production" />
+											</View>
+										</View>
+									</View>
+									<View className="mt-6 flex-row items-center gap-2">
+										<View className="size-2 rounded-full bg-production" />
+										<Text className="text-backgroundChat">Solde enveloppe</Text>
+										<Text className="ml-auto font-light text-sm text-primaryLight">
+											{data.enveloppe.amount.toLocaleString("fr-FR")}€
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Date d'échéance</Text>
+										<Text className="ml-auto font-light text-sm text-primaryLight">
+											{data.enveloppe.echeance
+												? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
+														day: "numeric",
+														month: "numeric",
+													})
+												: "Inconnu"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
+										<Text className="ml-auto font-light text-sm text-primaryLight">
+											{data.enveloppe.reduction ? data.enveloppe.reduction.toLocaleString("fr-FR") + "€" : "Inconnu"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
+										<Text className="ml-auto font-light text-sm text-primaryLight">
+											{data.enveloppe.actualisation
+												? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+														day: "numeric",
+														month: "numeric",
+													})
+												: "Inconnu"}
+										</Text>
+									</View>
+								</View>
+							)}
+
 							<ContactInfo
 								phone={data.contact_info?.phone}
 								email={data.contact_info?.email}
@@ -291,7 +351,7 @@ const OtherInformation = ({
 						// label="Epargne"
 						color={config.theme.extend.colors.primaryLight}
 						variant="switch"
-						style={{ pointerEvents: 'none' }}
+						style={{ pointerEvents: "none" }}
 					/>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />

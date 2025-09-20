@@ -208,21 +208,35 @@ export default function Page() {
 							style={{ backgroundColor: config.theme.extend.colors.background }}
 						>
 							<View className="mt-5 gap-2">
-								{data.product_suppliers.map((supplierProduct) => (
-									<CardSupplierProduct
-										key={supplierProduct.id}
-										supplierProduct={supplierProduct}
-										link={{
-											pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
-											params: {
-												"supplier-category": supplierCategoryId,
-												"supplier-category-name": supplierCategoryName,
-												"supplier-product": supplierProduct.id,
-												"supplier-product-name": supplierProduct.name,
-											},
-										}}
-									/>
-								))}
+								{data.product_suppliers.map((supplierProduct) => {
+									if (excludedProductSupplierIds.includes(supplierProduct.id)) return;
+
+									let multipleSupplierProducts: SupplierProduct[] = [];
+
+									if (supplierProduct.id === PRIVATE_EQUITY_ID) {
+										multipleSupplierProducts = data.product_suppliers.filter(
+											(product) => excludedProductSupplierIds.includes(product.id) && product.id !== OB_TER_ID,
+										);
+									}
+
+									return (
+										<CardSupplierProduct
+											key={supplierProduct.id}
+											supplierProduct={supplierProduct}
+											multipleSupplierProducts={multipleSupplierProducts}
+											link={{
+												pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+												params: {
+													"supplier-category": supplierCategoryId,
+													"supplier-category-name": supplierCategoryName,
+													"supplier-product": supplierProduct.id,
+													"supplier-product-name": supplierProduct.name,
+													"multiple-supplier-products": multipleSupplierProducts.map((product) => product.id).join(","),
+												},
+											}}
+										/>
+									);
+								})}
 							</View>
 						</ScrollView>
 					) : (
