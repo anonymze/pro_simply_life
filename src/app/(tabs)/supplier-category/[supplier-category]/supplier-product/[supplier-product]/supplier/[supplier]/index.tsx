@@ -4,7 +4,6 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Supplier } from "@/types/supplier";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
-import { Picker, Switch } from "@expo/ui/swift-ui";
 import { useQuery } from "@tanstack/react-query";
 import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
@@ -61,31 +60,26 @@ export default function Page() {
 						</TouchableOpacity>
 					)}
 				</View>
-				{/* <View className="mt-2 flex-row flex-wrap items-center justify-center gap-2">
-					{data.other_information?.theme?.split(",").map((tag) => {
-						if (!tag) return null;
-						return <Tag key={tag} title={tag.replace(/^\s+|\s+$/g, "")} />;
-					})}
-				</View> */}
 			</View>
 			<BackgroundLayout className="px-4">
 				{!!data?.other_information?.length && (
-					<Picker
-						style={{ width: 320, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
-						variant="segmented"
-						options={["Contact", ...data.other_information.map((info) => info.scpi || "SCPI sans titre")]}
-						selectedIndex={null}
-						onOptionSelected={({ nativeEvent: { index } }) => {
-							if (index === 0) {
-								horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
-								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-							} else {
-								const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
-								horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
-								verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-							}
-						}}
-					/>
+					// <Picker
+					// 	style={{ width: 320, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
+					// 	variant="segmented"
+					// 	options={["Contact", ...data.other_information.map((info) => info.scpi || "SCPI sans titre")]}
+					// 	selectedIndex={null}
+					// 	onOptionSelected={({ nativeEvent: { index } }) => {
+					// 		if (index === 0) {
+					// 			horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+					// 			verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+					// 		} else {
+					// 			const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
+					// 			horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
+					// 			verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+					// 		}
+					// 	}}
+					// />
+					<></>
 				)}
 
 				<ScrollView
@@ -106,9 +100,9 @@ export default function Page() {
 												// @ts-ignore
 												style={{
 													width:
-														data.enveloppe.amount < 50_000
+														(data.enveloppe.amount / DEFAULT_MAX_VALUE) < 0.1
 															? `${10}%`
-															: `${data.enveloppe.amount > DEFAULT_MAX_VALUE ? "100%" : (data.enveloppe.amount / DEFAULT_MAX_VALUE) * 100}%`,
+															: `${data.enveloppe.amount >= DEFAULT_MAX_VALUE ? "100%" : (data.enveloppe.amount / DEFAULT_MAX_VALUE) * 100}%`,
 												}}
 											>
 												<View className="h-1.5 w-full rounded-full bg-production" />
@@ -341,18 +335,9 @@ const OtherInformation = ({
 
 				<View className="flex flex-row items-center justify-between">
 					<Text className="font-semibold text-sm text-primaryLight">Épargne</Text>
-					<Switch
-						value={otherInformation.epargne ?? false}
-						label=""
-						onValueChange={() => {}}
-						// onValueChange={(checked) => {
-						// 	setChecked(checked);
-						// }}
-						// label="Epargne"
-						color={config.theme.extend.colors.primaryLight}
-						variant="switch"
-						style={{ pointerEvents: "none" }}
-					/>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{otherInformation.epargne ? "Oui" : "Non"}
+					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>

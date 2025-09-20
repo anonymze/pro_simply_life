@@ -49,8 +49,8 @@ export default function CardSupplier({
 													width:
 														supplier.enveloppe.amount >= DEFAULT_MAX_VALUE
 															? "100%"
-															: supplier.enveloppe.amount < 50_000
-																? "5%"
+															: (supplier.enveloppe.amount / DEFAULT_MAX_VALUE) < 0.1
+																? "10%"
 																: (supplier.enveloppe.amount / DEFAULT_MAX_VALUE) * 100 + "%",
 												}}
 											>
