@@ -26,7 +26,7 @@ export default function Page() {
 					brochure={data.selection.brochure}
 					updatedAt={data.updatedAt}
 					link={{
-						pathname: "/supplier-selection/[supplier]/pdf/[pdf]",
+						pathname: "/(tabs)/supplier-selection/[supplier]/pdf/[pdf]",
 						params: {
 							supplier: supplierId,
 							pdf: data.selection.brochure.filename,

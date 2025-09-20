@@ -19,6 +19,7 @@ const DEFAULT_MAX_VALUE = 1_000_000;
 export default function Page() {
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
 	const verticalScrollRef = React.useRef<ScrollView>(null);
+	const [currentIndex, setCurrentIndex] = React.useState(0);
 
 	const {
 		supplier: supplierId,
@@ -83,18 +84,34 @@ export default function Page() {
 					// />
 					<FlashList
 						showsHorizontalScrollIndicator={false}
-						data={["Contact", ...data.other_information.map((info) => info.scpi || "SCPI sans titre")]}
+						data={[
+							{
+								title: "Contact",
+								subtitle: "",
+							},
+							...data.other_information.map((info) => {
+								return {
+									title: info.scpi || "SCPI sans titre",
+									subtitle: info.theme,
+								};
+							}),
+						]}
 						horizontal
 						className="my-4"
-						// estimatedItemSize={140}
+						estimatedItemSize={100}
 						renderItem={({ item, index }) => {
+							const isActive = currentIndex === index;
+
 							return (
 								<Pressable
+									hitSlop={5}
 									className={cn(
-										"mr-3 rounded-lg bg-darkGray px-3.5 py-2",
-										// lastMonth.id === item.id && "bg-primary text-white",
+										"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+										isActive ? "bg-primary" : "bg-darkGray",
 									)}
 									onPress={() => {
+										setCurrentIndex(index);
+
 										if (index === 0) {
 											horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
 											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
@@ -105,7 +122,12 @@ export default function Page() {
 										}
 									}}
 								>
-									<Text className={cn("font-semibold text-sm text-primary", true && "text-white")}>{item}</Text>
+									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+										{item.title}
+									</Text>
+									{item.subtitle && (
+										<Text className={cn("text-xs", isActive ? "text-white" : "text-primary")}>{item.subtitle}</Text>
+									)}
 								</Pressable>
 							);
 						}}

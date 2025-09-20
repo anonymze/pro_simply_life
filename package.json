@@ -54,7 +54,7 @@
 		"expo-video": "~2.2.2",
 		"expo-web-browser": "~14.2.0",
 		"lucide-react-native": "^0.507.0",
-		"nativewind": "latest",
+		"nativewind": "^4.1.23",
 		"react": "19.0.0",
 		"react-native": "0.79.4",
 		"react-native-bouncy-checkbox": "^4.1.2",

@@ -53,8 +53,6 @@ export default function Page() {
 		);
 	}, [data]);
 
-	console.log(allSuppliers);
-
 	const filteredData = React.useMemo(() => {
 		if (!search) return null;
 

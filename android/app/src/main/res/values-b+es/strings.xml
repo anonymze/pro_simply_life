@@ -1,9 +1,0 @@
-<resources>
-  <string name="CFBundleDisplayName">"Simply Life : Groupe Valorem"</string>
-  <string name="NSContactsUsageDescription">"Simplifica tu vida profesional."</string>
-  <string name="NSCameraUsageDescription">"Permite Simply Life acceder a tu cámara."</string>
-  <string name="NSMicrophoneUsageDescription">"Permite Simply Life usar tu micrófono."</string>
-  <string name="NSPhotoLibraryUsageDescription">"Permite Simply Life acceder a tu biblioteca de fotos."</string>
-  <string name="NSSpeechRecognitionUsageDescription">"Permite Simply Life usar la reconocimiento de voz."</string>
-  <string name="NSLocationWhenInUseUsageDescription">"Permite Simply Life usar tu ubicación."</string>
-</resources>
