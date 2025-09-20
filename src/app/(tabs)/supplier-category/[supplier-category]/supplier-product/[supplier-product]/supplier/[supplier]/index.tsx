@@ -3,13 +3,15 @@ import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Supplier } from "@/types/supplier";
+import { cn } from "@/utils/cn";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
+import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
-import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
 const DEFAULT_MAX_VALUE = 1_000_000;
@@ -79,7 +81,35 @@ export default function Page() {
 					// 		}
 					// 	}}
 					// />
-					<></>
+					<FlashList
+						showsHorizontalScrollIndicator={false}
+						data={["Contact", ...data.other_information.map((info) => info.scpi || "SCPI sans titre")]}
+						horizontal
+						className="my-4"
+						// estimatedItemSize={140}
+						renderItem={({ item, index }) => {
+							return (
+								<Pressable
+									className={cn(
+										"mr-3 rounded-lg bg-darkGray px-3.5 py-2",
+										// lastMonth.id === item.id && "bg-primary text-white",
+									)}
+									onPress={() => {
+										if (index === 0) {
+											horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										} else {
+											const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
+											horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										}
+									}}
+								>
+									<Text className={cn("font-semibold text-sm text-primary", true && "text-white")}>{item}</Text>
+								</Pressable>
+							);
+						}}
+					></FlashList>
 				)}
 
 				<ScrollView
@@ -311,22 +341,6 @@ const OtherInformation = ({
 }) => {
 	return (
 		<View className="gap-2">
-			{otherInformation.brochure && (
-				<Brochure
-					brochure={otherInformation.brochure}
-					updatedAt={updatedAt}
-					link={{
-						pathname:
-							"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
-						params: {
-							"supplier-category": supplierCategoryId,
-							"supplier-product": supplierProductId,
-							supplier: supplierId,
-							pdf: otherInformation.brochure.filename,
-						},
-					}}
-				/>
-			)}
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 				<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
 				<Text className="font-semibold text-sm text-primary">{otherInformation.scpi}</Text>
@@ -365,6 +379,22 @@ const OtherInformation = ({
 				<Text className="font-semibold text-sm text-primaryLight">Commission pour l'offre publique</Text>
 				<Text className="font-semibold text-base text-primary">{otherInformation.commission_public_offer}</Text>
 			</View>
+			{otherInformation.brochure && (
+				<Brochure
+					brochure={otherInformation.brochure}
+					updatedAt={updatedAt}
+					link={{
+						pathname:
+							"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+						params: {
+							"supplier-category": supplierCategoryId,
+							"supplier-product": supplierProductId,
+							supplier: supplierId,
+							pdf: otherInformation.brochure.filename,
+						},
+					}}
+				/>
+			)}
 		</View>
 	);
 };
