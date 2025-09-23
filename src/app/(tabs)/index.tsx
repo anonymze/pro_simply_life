@@ -25,6 +25,8 @@ import Title from "@/components/ui/title";
 import { User } from "@/types/user";
 import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
+// import type { Math } from "react-native-math";
+// import  { NitroModules } from "react-native-nitro-modules";
 
 export default function Page() {
 	const { data: events, isLoading: isLoadingEvents } = useQuery({
@@ -47,6 +49,8 @@ export default function Page() {
 		User,
 		"firstname" | "lastname" | "photo" | "createdAt"
 	>;
+
+	// const math = NitroModules.createHybridObject<Math>("Math");
 
 	return (
 		<BackgroundLayout className="pt-safe mt-4 px-4">

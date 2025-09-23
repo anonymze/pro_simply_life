@@ -33,3 +33,5 @@ resources/ios/
 
 expo-env.d.ts
 # @end expo-cli
+
+react-native-nitro-modules/
