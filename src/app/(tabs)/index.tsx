@@ -33,7 +33,7 @@ export default function Page() {
 		queryKey: [
 			"events",
 			{
-				sort: "createdAt",
+				sort: "event_start",
 			},
 		],
 		queryFn: getEventsQuery,
