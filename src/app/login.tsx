@@ -8,6 +8,7 @@ import { loginQuery } from "@/api/queries/login-queries";
 import { useMutation } from "@tanstack/react-query";
 import { setStorageUserInfos } from "@/utils/store";
 import { useForm } from "@tanstack/react-form";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Image } from "expo-image";
 import React from "react";
@@ -18,6 +19,7 @@ export default function Page() {
 	const { expoPushToken } = useNotification();
 	const { height } = useReanimatedKeyboardAnimation();
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
+	const [showPassword, setShowPassword] = React.useState(false);
 	const mutationLogin = useMutation({
 		mutationFn: loginQuery,
 		onError: (error) => {
@@ -96,18 +98,31 @@ export default function Page() {
 					<form.Field name="password">
 						{(field) => (
 							<React.Fragment>
-								<TextInput
-									testID="password-input"
-									secureTextEntry
-									returnKeyType="done"
-									autoCapitalize="none"
-									keyboardType="default"
-									textContentType="oneTimeCode"
-									placeholder="**********"
-									className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
-									defaultValue={field.state.value}
-									onChangeText={field.handleChange}
-								/>
+								<View className="relative">
+									<TextInput
+										testID="password-input"
+										secureTextEntry={!showPassword}
+										returnKeyType="done"
+										autoCapitalize="none"
+										keyboardType="default"
+										textContentType="oneTimeCode"
+										placeholder="**********"
+										className="w-full rounded-xl bg-darkGray p-5 pr-12 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
+										defaultValue={field.state.value}
+										onChangeText={field.handleChange}
+									/>
+									<Pressable
+										onPress={() => setShowPassword(!showPassword)}
+										className="absolute right-4 top-1/2 -translate-y-1/2"
+										hitSlop={10}
+									>
+										<Ionicons
+											name={showPassword ? "eye-off" : "eye"}
+											size={20}
+											color="#9CA3AF"
+										/>
+									</Pressable>
+								</View>
 								{field.state.meta.errors.length > 0 && (
 									<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
 								)}
