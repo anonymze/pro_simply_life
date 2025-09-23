@@ -1,5 +1,4 @@
-import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
-import { ShimmerPlaceholderProps } from "react-native-shimmer-placeholder";
+import { createShimmerPlaceholder, ShimmerPlaceholderProps } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 
 

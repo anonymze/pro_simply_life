@@ -18,13 +18,16 @@ import CubeFillIcon from "@/components/svg/cude-fill-icon";
 
 import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
 import CardSupplier from "@/components/card/card-supplier";
+import { SkeletonPlaceholder } from "@/components/skeleton-placeholder";
 import LampIconFill from "@/components/svg/lamp-fill-icon";
 import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
+import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
@@ -39,7 +42,7 @@ export default function Page() {
 		queryFn: getEventsQuery,
 	});
 
-	const { data: suppliers } = useQuery({
+	const { data: suppliers, isLoading: isLoadingSuppliers } = useQuery({
 		queryKey: ["suppliers-selection"],
 		queryFn: getSuppliersSelectionQuery,
 	});
@@ -79,25 +82,41 @@ export default function Page() {
 				</View>
 				<Title title="Notre sélection du moment" />
 				<View className="gap-2">
-					{suppliers?.docs?.map((supplier) => (
-						<CardSupplier
-							key={supplier.id}
-							icon={
-								<ImagePlaceholder
-									source={supplier.logo_mini?.url ?? ""}
-									style={{ width: 26, height: 26, borderRadius: 4 }}
+					{isLoadingSuppliers || !suppliers ? (
+						<Animated.View key="skeleton" exiting={FadeOut.duration(2000)}>
+							<SkeletonPlaceholder
+								shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
+								height={63}
+								width={SCREEN_WIDTH - 28}
+								style={{ borderRadius: 12 }}
+							/>
+						</Animated.View>
+					) : (
+						suppliers.docs?.map((supplier) => (
+							<Animated.View
+								key={supplier.id}
+								entering={FadeIn.duration(300)}
+								className="gap-4 rounded-2xl bg-white p-4"
+							>
+								<CardSupplier
+									icon={
+										<ImagePlaceholder
+											source={supplier.logo_mini?.url ?? ""}
+											style={{ width: 26, height: 26, borderRadius: 4 }}
+										/>
+									}
+									queryName="supplier-selection"
+									supplier={supplier}
+									link={{
+										pathname: `/supplier-selection/[supplier]`,
+										params: {
+											supplier: supplier.id,
+										},
+									}}
 								/>
-							}
-							queryName="supplier-selection"
-							supplier={supplier}
-							link={{
-								pathname: `/supplier-selection/[supplier]`,
-								params: {
-									supplier: supplier.id,
-								},
-							}}
-						/>
-					))}
+							</Animated.View>
+						))
+					)}
 				</View>
 				<Title title="Newsletter" />
 				<Link
