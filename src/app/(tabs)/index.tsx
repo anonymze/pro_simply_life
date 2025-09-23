@@ -24,10 +24,10 @@ import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
@@ -87,7 +87,7 @@ export default function Page() {
 							<SkeletonPlaceholder
 								shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
 								height={63}
-								width={SCREEN_WIDTH - 28}
+								width={SCREEN_DIMENSIONS.width - 28}
 								style={{ borderRadius: 12 }}
 							/>
 						</Animated.View>
