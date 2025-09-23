@@ -64,7 +64,7 @@ export default function CardSupplier({
 										<Text className="ml-auto font-light text-sm text-primaryLight">{supplier.enveloppe.amount.toLocaleString('fr-FR')}€</Text>
 									</View>
 									<View className="mt-0 flex-row items-center gap-2">
-										<Text className="text-xs text-backgroundChat">Echéance le </Text>
+										<Text className="text-xs text-backgroundChat">Date d'echéance </Text>
 										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{" "}
 											{supplier.enveloppe.actualisation
