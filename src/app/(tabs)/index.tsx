@@ -96,6 +96,7 @@ export default function Page() {
 							<Animated.View
 								key={supplier.id}
 								entering={FadeIn.duration(300)}
+								className="gap-4"
 							>
 								<CardSupplier
 									icon={
