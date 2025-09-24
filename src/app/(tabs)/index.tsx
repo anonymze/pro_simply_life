@@ -28,6 +28,7 @@ import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
+import { PerformanceTimer } from "@/utils/performance";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
@@ -48,17 +49,17 @@ export default function Page() {
 	});
 
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
+
 	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
 		"firstname" | "lastname" | "photo" | "createdAt"
 	>;
-
 	// const math = NitroModules.createHybridObject<Math>("Math");
 
 	return (
 		<BackgroundLayout className="pt-safe mt-4 px-4">
 			<ScrollView
-				className="flex-1 "
+				className="flex-1"
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 				contentContainerStyle={{ paddingBottom: 16 }}
@@ -209,6 +210,8 @@ export default function Page() {
 		</BackgroundLayout>
 	);
 }
+
+
 
 const links: {
 	icon: React.ReactNode;
