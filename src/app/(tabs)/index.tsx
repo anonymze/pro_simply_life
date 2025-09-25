@@ -209,25 +209,33 @@ export default function Page() {
 						const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
 						const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts/?feedView=all";
 
-						const canOpen = await Linking.canOpenURL(linkedinUrl);
+						try {
+							const canOpen = await Linking.canOpenURL(linkedinUrl);
 
-						if (canOpen) {
-							await Linking.openURL(linkedinUrl);
-						} else {
+							if (canOpen) {
+								await Linking.openURL(linkedinUrl);
+							} else {
+								await WebBrowser.openBrowserAsync(webUrl);
+							}
+						} catch (error) {
 							await WebBrowser.openBrowserAsync(webUrl);
 						}
 					}}>
 						<AntDesign name="linkedin-square" size={35} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
 					<TouchableOpacity hitSlop={10} onPress={async () => {
-						const instagramUrl = "instagram://user?username=groupe_valorem";
+						const instagramUrl = "instagram://user/groupe_valorem";
 						const webUrl = "https://www.instagram.com/groupe_valorem/";
 
-						const canOpen = await Linking.canOpenURL(instagramUrl);
+						try {
+							const canOpen = await Linking.canOpenURL(instagramUrl);
 
-						if (canOpen) {
-							await Linking.openURL(instagramUrl);
-						} else {
+							if (canOpen) {
+								await Linking.openURL(instagramUrl);
+							} else {
+								await WebBrowser.openBrowserAsync(webUrl);
+							}
+						} catch (error) {
 							await WebBrowser.openBrowserAsync(webUrl);
 						}
 					}}>
