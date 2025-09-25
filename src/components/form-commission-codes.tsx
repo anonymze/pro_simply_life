@@ -12,6 +12,7 @@ import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-re
 import config from "tailwind.config";
 import { z } from "zod";
 import Title from "./ui/title";
+import { cn } from "@/utils/cn";
 
 interface CommissionCodeInputProps {
 	provider: { id: string; name: string };
@@ -28,7 +29,7 @@ function CommissionCodeInput({ provider, index, form }: CommissionCodeInputProps
 	}
 
 	return (
-		<View className={"mt-4 w-full gap-3"}>
+		<View className={cn("mt-4 w-full gap-3", index === 0 && "mt-0")}>
 			<Text className="text-md self-start text-primary">{provider.name}</Text>
 			<form.Field name={provider.id} key={provider.id}>
 				{(field: any) => (
@@ -131,8 +132,8 @@ export default function FormCommissionCodes() {
 						estimatedItemSize={95}
 						data={commissionProviders}
 						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{ paddingBottom: 16 }}
-						className="mt-8"
+						// contentContainerStyle={{ paddingBottom: 16 }}
+						className="mt-6"
 						renderItem={({ item: provider, index }) => (
 							<CommissionCodeInput provider={provider} index={index} form={form} />
 						)}
@@ -142,7 +143,7 @@ export default function FormCommissionCodes() {
 			<Pressable
 				onPress={form.handleSubmit}
 				disabled={mutation.isPending}
-				className="mb-6 mt-8 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
+				className="mb-6 mt-6 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
 			>
 				{mutation.isPending ? (
 					<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>

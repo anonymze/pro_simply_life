@@ -28,7 +28,6 @@ import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
-import { PerformanceTimer } from "@/utils/performance";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
