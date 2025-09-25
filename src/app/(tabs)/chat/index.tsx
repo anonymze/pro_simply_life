@@ -14,8 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { HrefObject, Link } from "expo-router";
 import { PlusIcon, TrashIcon } from "lucide-react-native";
 import React from "react";
-import { Platform, Text, TouchableOpacity, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, Platform, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 import * as DropdownMenu from "zeego/dropdown-menu";
 

@@ -1,19 +1,18 @@
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
-import BuildingDoubleFillIcon from "@/components/svg/building-double-fill-icon";
-import CardSupplierCategory from "@/components/card/card-supplier-category";
 import CardSearchSupplier from "@/components/card/card-search-supplier";
-import ImmobilierFillIcon from "@/components/svg/immobilier-fill-icon";
+import CardSupplierCategory from "@/components/card/card-supplier-category";
+import BuildingDoubleFillIcon from "@/components/svg/building-double-fill-icon";
 import HeartFillIcon from "@/components/svg/heart-fill-icon";
-import { withQueryWrapper } from "@/utils/libs/react-query";
+import ImmobilierFillIcon from "@/components/svg/immobilier-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
-import { ScrollView } from "react-native-gesture-handler";
-import InputSearch from "@/components/ui/input-search";
-import CifFillIcon from "@/components/svg/cif-icon";
-import Title from "@/components/ui/title";
-import { Text, View } from "react-native";
-import config from "tailwind.config";
-import React from "react";
+import { withQueryWrapper } from "@/utils/libs/react-query";
 
+import CifFillIcon from "@/components/svg/cif-icon";
+import InputSearch from "@/components/ui/input-search";
+import Title from "@/components/ui/title";
+import React from "react";
+import { ScrollView, Text, View } from "react-native";
+import config from "tailwind.config";
 
 export default function Page() {
 	return withQueryWrapper(

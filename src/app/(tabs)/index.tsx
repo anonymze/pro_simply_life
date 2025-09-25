@@ -7,11 +7,12 @@ import BriefcaseFillIcon from "@/components/svg/briefcase-fill-icon";
 import EventsFillIcon from "@/components/svg/events-fill-icon";
 import ReceiptFillIcon from "@/components/svg/receipt-fill-icon";
 import BackgroundLayout from "@/layouts/background-layout";
+import { AntDesign } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import { ArrowRightIcon, MapPinnedIcon } from "lucide-react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import config from "tailwind.config";
+import * as WebBrowser from "expo-web-browser";
 
 import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
@@ -24,10 +25,10 @@ import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { Image } from "expo-image";
-import { Text, TouchableOpacity, View } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
+import { Image } from "expo-image";
+import { Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
@@ -93,11 +94,7 @@ export default function Page() {
 						</Animated.View>
 					) : (
 						suppliers.docs?.map((supplier) => (
-							<Animated.View
-								key={supplier.id}
-								entering={FadeIn.duration(300)}
-								className="gap-4"
-							>
+							<Animated.View key={supplier.id} entering={FadeIn.duration(300)} className="gap-4">
 								<CardSupplier
 									icon={
 										<ImagePlaceholder
@@ -205,12 +202,42 @@ export default function Page() {
 						));
 					}}
 				</Carousel>
+
+				<Title title="Réseaux sociaux" className="mx-auto text-lg" />
+				<View className="flex-row items-center justify-center gap-16">
+					<TouchableOpacity hitSlop={10} onPress={async () => {
+						const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
+						const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts/?feedView=all";
+
+						const canOpen = await Linking.canOpenURL(linkedinUrl);
+
+						if (canOpen) {
+							await Linking.openURL(linkedinUrl);
+						} else {
+							await WebBrowser.openBrowserAsync(webUrl);
+						}
+					}}>
+						<AntDesign name="linkedin-square" size={35} color={config.theme.extend.colors.primary} />
+					</TouchableOpacity>
+					<TouchableOpacity hitSlop={10} onPress={async () => {
+						const instagramUrl = "instagram://user?username=groupe_valorem";
+						const webUrl = "https://www.instagram.com/groupe_valorem/";
+
+						const canOpen = await Linking.canOpenURL(instagramUrl);
+
+						if (canOpen) {
+							await Linking.openURL(instagramUrl);
+						} else {
+							await WebBrowser.openBrowserAsync(webUrl);
+						}
+					}}>
+            <AntDesign name="instagram" size={35} color={config.theme.extend.colors.primary} />
+					</TouchableOpacity >
+				</View>
 			</ScrollView>
 		</BackgroundLayout>
 	);
 }
-
-
 
 const links: {
 	icon: React.ReactNode;

@@ -1,235 +1,223 @@
-import Animated, { useSharedValue, useAnimatedProps, runOnJS, interpolate, withTiming, SharedValue, useAnimatedReaction, Easing, runOnUI, Extrapolation, } from "react-native-reanimated";
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState, } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { Platform, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated, {
+	Easing,
+	Extrapolation,
+	interpolate,
+	runOnJS,
+	runOnUI,
+	SharedValue,
+	useAnimatedProps,
+	useAnimatedReaction,
+	useSharedValue,
+	withTiming,
+} from "react-native-reanimated";
 import Svg, { G, Path, PathProps } from "react-native-svg";
 import { svgPathProperties } from "svg-path-properties";
-import { Platform, View } from "react-native";
-
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const PATH_PROPS: PathProps = {
-  fill: "none",
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
+	fill: "none",
+	strokeLinecap: "round",
+	strokeLinejoin: "round",
 };
 
 export interface DrawPadProps {
-  strokeWidth?: number;
-  stroke: string;
-  pathLength: SharedValue<number>;
-  playing: SharedValue<boolean>;
+	strokeWidth?: number;
+	stroke: string;
+	pathLength: SharedValue<number>;
+	playing: SharedValue<boolean>;
 }
 
 export type DrawPadHandle = {
-  erase: () => void;
-  undo: () => void;
-  play: () => void;
-  stop: () => void;
+	erase: () => void;
+	undo: () => void;
+	play: () => void;
+	stop: () => void;
 };
 
 const isWeb = Platform.OS === "web";
 
-const DrawPad = forwardRef<DrawPadHandle, DrawPadProps>(
-  ({ strokeWidth = 3.5, stroke, pathLength, playing }, ref) => {
-    const [paths, setPaths] = useState<string[]>([]);
-    const currentPath = useSharedValue<string>("");
-    const progress = useSharedValue(1);
+const DrawPad = forwardRef<DrawPadHandle, DrawPadProps>(({ strokeWidth = 3.5, stroke, pathLength, playing }, ref) => {
+	const [paths, setPaths] = useState<string[]>([]);
+	const currentPath = useSharedValue<string>("");
+	const progress = useSharedValue(1);
 
-    useEffect(() => {
-      if (pathLength) {
-        pathLength.value = paths.reduce((total, path) => {
-          return total + new svgPathProperties(path).getTotalLength();
-        }, 0);
-      }
-    }, [paths]);
+	useEffect(() => {
+		if (pathLength) {
+			pathLength.value = paths.reduce((total, path) => {
+				return total + new svgPathProperties(path).getTotalLength();
+			}, 0);
+		}
+	}, [paths]);
 
-    const animatedProps = useAnimatedProps(() => ({
-      d: currentPath.value,
-    }));
+	const animatedProps = useAnimatedProps(() => ({
+		d: currentPath.value,
+	}));
 
-    const finishPath = () => {
-      const pathValue = currentPath.value;
-      if (pathValue) {
-        setPaths((prev) => {
-          const updatedPaths = [...prev, pathValue];
-          setTimeout(() => {
-            currentPath.value = "";
-          }, 0);
-          return updatedPaths;
-        });
-      }
-    };
+	const finishPath = () => {
+		const pathValue = currentPath.value;
+		if (pathValue) {
+			setPaths((prev) => {
+				const updatedPaths = [...prev, pathValue];
+				setTimeout(() => {
+					currentPath.value = "";
+				}, 0);
+				return updatedPaths;
+			});
+		}
+	};
 
-    const handleErase = () => {
-      setPaths([]);
-      currentPath.value = "";
-    };
+	const handleErase = () => {
+		setPaths([]);
+		currentPath.value = "";
+	};
 
-    const handleUndo = useCallback(() => {
-      setPaths((prev) => {
-        const newPaths = [...prev];
-        newPaths.pop();
-        return newPaths;
-      });
-    }, []);
-    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const handleUndo = useCallback(() => {
+		setPaths((prev) => {
+			const newPaths = [...prev];
+			newPaths.pop();
+			return newPaths;
+		});
+	}, []);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const handlePlay = useCallback(() => {
-      if (!playing.value) {
-        playing.value = true;
-        timeoutRef.current = setTimeout(() => {
-          playing.value = false;
-        }, pathLength.value);
-      }
-    }, [playing, pathLength]);
+	const handlePlay = useCallback(() => {
+		if (!playing.value) {
+			playing.value = true;
+			timeoutRef.current = setTimeout(() => {
+				playing.value = false;
+			}, pathLength.value);
+		}
+	}, [playing, pathLength]);
 
-    const handleStop = useCallback(() => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-      runOnUI(() => {
-        playing.value = false;
-      })();
-    }, [playing]);
+	const handleStop = useCallback(() => {
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+			timeoutRef.current = null;
+		}
+		runOnUI(() => {
+			playing.value = false;
+		})();
+	}, [playing]);
 
-    useImperativeHandle(ref, () => ({
-      erase: handleErase,
-      undo: handleUndo,
-      play: handlePlay,
-      stop: handleStop,
-    }));
+	useImperativeHandle(ref, () => ({
+		erase: handleErase,
+		undo: handleUndo,
+		play: handlePlay,
+		stop: handleStop,
+	}));
 
-    const panGesture = Gesture.Pan()
-      .minDistance(0)
-      .onStart((e) => {
-        currentPath.value = `M ${e.x} ${e.y}`;
-      })
-      .onUpdate((e) => {
-        currentPath.value += ` L ${e.x} ${e.y}`;
-      })
-      .onEnd(() => {
-        runOnJS(finishPath)();
-      });
+	const panGesture = Gesture.Pan()
+		.minDistance(0)
+		.onStart((e) => {
+			currentPath.value = `M ${e.x} ${e.y}`;
+		})
+		.onUpdate((e) => {
+			currentPath.value += ` L ${e.x} ${e.y}`;
+		})
+		.onEnd(() => {
+			runOnJS(finishPath)();
+		});
 
-    useAnimatedReaction(
-      () => playing.value,
-      (isPlaying) => {
-        const duration = pathLength.value;
-        const easing = Easing.bezier(0.4, 0, 0.5, 1);
+	useAnimatedReaction(
+		() => playing.value,
+		(isPlaying) => {
+			const duration = pathLength.value;
+			const easing = Easing.bezier(0.4, 0, 0.5, 1);
 
-        if (isPlaying) {
-          progress.value = 0;
-          progress.value = withTiming(1, { duration, easing });
-          return;
-        }
+			if (isPlaying) {
+				progress.value = 0;
+				progress.value = withTiming(1, { duration, easing });
+				return;
+			}
 
-        progress.value = withTiming(
-          0,
-          {
-            duration:
-              progress.value < (isWeb ? 0.95 : 1) /*Decimal Error for Web*/
-                ? progress.value * duration
-                : 0,
-            easing,
-          },
-          () => {
-            progress.value = 1;
-          }
-        );
-      }
-    );
+			progress.value = withTiming(
+				0,
+				{
+					duration: progress.value < (isWeb ? 0.95 : 1) /*Decimal Error for Web*/ ? progress.value * duration : 0,
+					easing,
+				},
+				() => {
+					progress.value = 1;
+				},
+			);
+		},
+	);
 
-    return (
-      <GestureDetector gesture={panGesture}>
-        <View style={{ flex: 1 }}>
-          <Svg height={"100%"} width={"100%"}>
-            {paths.map((p, i) => {
-              const prevLength = paths.slice(0, i).reduce((total, prevPath) => {
-                return total + new svgPathProperties(prevPath).getTotalLength();
-              }, 0);
+	return (
+		<GestureDetector gesture={panGesture}>
+			<View style={{ flex: 1 }}>
+				<Svg height={"100%"} width={"100%"}>
+					{paths.map((p, i) => {
+						const prevLength = paths.slice(0, i).reduce((total, prevPath) => {
+							return total + new svgPathProperties(prevPath).getTotalLength();
+						}, 0);
 
-              return (
-                <DrawPath
-                  key={i}
-                  path={p}
-                  strokeWidth={strokeWidth}
-                  stroke={stroke}
-                  progress={progress}
-                  prevLength={prevLength}
-                  totalPathLength={pathLength}
-                />
-              );
-            })}
-            <AnimatedPath
-              animatedProps={animatedProps}
-              stroke={stroke}
-              strokeWidth={strokeWidth}
-              {...PATH_PROPS}
-            />
-          </Svg>
-        </View>
-      </GestureDetector>
-    );
-  }
-);
+						return (
+							<DrawPath
+								key={i}
+								path={p}
+								strokeWidth={strokeWidth}
+								stroke={stroke}
+								progress={progress}
+								prevLength={prevLength}
+								totalPathLength={pathLength}
+							/>
+						);
+					})}
+					<AnimatedPath animatedProps={animatedProps} stroke={stroke} strokeWidth={strokeWidth} {...PATH_PROPS} />
+				</Svg>
+			</View>
+		</GestureDetector>
+	);
+});
 
 const DrawPath = ({
-  path,
-  strokeWidth,
-  stroke,
-  progress,
-  prevLength,
-  totalPathLength,
+	path,
+	strokeWidth,
+	stroke,
+	progress,
+	prevLength,
+	totalPathLength,
 }: {
-  path: string;
-  strokeWidth: number;
-  stroke: string;
-  prevLength?: number;
-  progress?: SharedValue<number>;
-  totalPathLength?: SharedValue<number>;
+	path: string;
+	strokeWidth: number;
+	stroke: string;
+	prevLength?: number;
+	progress?: SharedValue<number>;
+	totalPathLength?: SharedValue<number>;
 }) => {
-  const pathRef = useRef<Path>(null);
-  const length = new svgPathProperties(path).getTotalLength();
+	const pathRef = useRef<Path>(null);
+	const length = new svgPathProperties(path).getTotalLength();
 
-  const animatedProps = useAnimatedProps(() => {
-    const prev = prevLength ?? 0;
-    const total = totalPathLength?.value ?? 0;
-    const start = prev / total;
-    const end = (prev + length) / total;
-    const turn = interpolate(
-      progress?.value ?? 1,
-      [start, end],
-      [0, 1],
-      Extrapolation.CLAMP
-    );
+	const animatedProps = useAnimatedProps(() => {
+		const prev = prevLength ?? 0;
+		const total = totalPathLength?.value ?? 0;
+		const start = prev / total;
+		const end = (prev + length) / total;
+		const turn = interpolate(progress?.value ?? 1, [start, end], [0, 1], Extrapolation.CLAMP);
 
-    return {
-      strokeDashoffset: interpolate(turn, [0, 1], [length, 0]),
-    };
-  });
+		return {
+			strokeDashoffset: interpolate(turn, [0, 1], [length, 0]),
+		};
+	});
 
-  return (
-    <G>
-      <Path
-        d={path}
-        strokeWidth={strokeWidth}
-        stroke={stroke}
-        ref={pathRef}
-        strokeOpacity={0.2}
-        {...PATH_PROPS}
-      />
-      <AnimatedPath
-        d={path}
-        strokeWidth={strokeWidth}
-        stroke={stroke}
-        strokeDasharray={length}
-        animatedProps={animatedProps}
-        {...PATH_PROPS}
-      />
-    </G>
-  );
+	return (
+		<G>
+			<Path d={path} strokeWidth={strokeWidth} stroke={stroke} ref={pathRef} strokeOpacity={0.2} {...PATH_PROPS} />
+			<AnimatedPath
+				d={path}
+				strokeWidth={strokeWidth}
+				stroke={stroke}
+				strokeDasharray={length}
+				animatedProps={animatedProps}
+				{...PATH_PROPS}
+			/>
+		</G>
+	);
 };
 
 export default DrawPad;

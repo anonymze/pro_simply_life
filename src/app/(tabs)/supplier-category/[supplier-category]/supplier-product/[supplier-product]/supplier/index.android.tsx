@@ -8,8 +8,7 @@ import { Picker } from "@expo/ui/jetpack-compose";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Text, View, ScrollView } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
