@@ -224,7 +224,7 @@ export default function Page() {
 						<AntDesign name="linkedin-square" size={35} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
 					<TouchableOpacity hitSlop={10} onPress={async () => {
-						const instagramUrl = "instagram://user/groupe_valorem";
+						const instagramUrl = "instagram://user?username=groupe_valorem";
 						const webUrl = "https://www.instagram.com/groupe_valorem/";
 
 						try {
