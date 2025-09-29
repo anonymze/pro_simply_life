@@ -21,6 +21,7 @@ export default function Page() {
 	);
 }
 
+
 const ContactInfo = ({ connexion }: { connexion: { site: string; email: string; password: string } }) => {
 	return (
 		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
