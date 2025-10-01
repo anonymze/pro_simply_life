@@ -33,8 +33,8 @@ api.interceptors.response.use(
 		if (error.response?.status === 403) {
 		  // TODO
 			logout({ alert : true});
-			const userInfos = getStorageUserInfos();
-			if (userInfos && userInfos.exp < Date.now() / 1000) logout({ alert: true });
+			// const userInfos = getStorageUserInfos();
+			// if (userInfos && userInfos.exp < Date.now() / 1000) logout({ alert: true });
 		}
 
 		// always reject the promise to let react query or other handlers process the error
