@@ -39,7 +39,7 @@ function CommissionCodeInput({ provider, index, form }: CommissionCodeInputProps
 							returnKeyType="done"
 							autoCapitalize="none"
 							keyboardType="numbers-and-punctuation"
-							placeholder="Code de commission unique"
+							placeholder="Sous code"
 							autoCorrect={false}
 							className="w-full rounded-xl border border-transparent bg-darkGray p-5 placeholder:text-primaryLight focus:border-primaryLight"
 							defaultValue={field.state.value}
