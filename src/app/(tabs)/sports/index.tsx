@@ -10,7 +10,7 @@ import { Link } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { ArrowRightIcon, FileSpreadsheetIcon } from "lucide-react-native";
 import React from "react";
-import { Linking, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -32,23 +32,9 @@ export default function Page() {
 								className="p-3"
 								hitSlop={5}
 								onPress={async () => {
-									const instagramUrl = "notion://www.notion.so";
-									const webUrl = "https://www.notion.so";
-
-									// notion://www.notion.so/PAGE_ID
-									// notion://www.notion.so/WORKSPACE_ID
-
-									try {
-										const canOpen = await Linking.canOpenURL(instagramUrl);
-
-										if (canOpen) {
-											await Linking.openURL(instagramUrl);
-										} else {
-											await WebBrowser.openBrowserAsync(webUrl);
-										}
-									} catch (error) {
-										await WebBrowser.openBrowserAsync(webUrl);
-									}
+									const webUrl =
+										"https://www.notion.so/2712a4ea516080558c9efd6591efc4f5?v=2712a4ea516080f98116000c3a3eedb1&source=copy_link";
+									await WebBrowser.openBrowserAsync(webUrl);
 								}}
 							>
 								<View className="size-10 items-center justify-center rounded-full bg-white shadow-sm shadow-defaultGray/20">
