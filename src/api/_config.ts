@@ -1,5 +1,4 @@
 import { logout } from "@/utils/auth";
-import { getStorageUserInfos } from "@/utils/store";
 import axios, { isAxiosError } from "axios";
 
 const ORIGIN_MOBILE = "simply-life-app://mobile";
@@ -23,6 +22,8 @@ export const api = axios.create({
 	withCredentials: true,
 });
 
+const isExpired = false;
+
 // add response interceptor for errors
 api.interceptors.response.use(
 	(response) => response, // return successful responses as-is
@@ -31,8 +32,11 @@ api.interceptors.response.use(
 
 		// if the user is not authenticated, or the token is expired, logout
 		if (error.response?.status === 403) {
-		  // TODO
-			logout({ alert : true});
+			// TODO
+			if (!isExpired) {
+				isExpired = true;
+				logout({ alert: true });
+			}
 			// const userInfos = getStorageUserInfos();
 			// if (userInfos && userInfos.exp < Date.now() / 1000) logout({ alert: true });
 		}
