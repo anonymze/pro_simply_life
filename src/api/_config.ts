@@ -22,7 +22,7 @@ export const api = axios.create({
 	withCredentials: true,
 });
 
-const isExpired = false;
+let isExpired = false;
 
 // add response interceptor for errors
 api.interceptors.response.use(
