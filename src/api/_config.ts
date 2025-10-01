@@ -31,6 +31,7 @@ api.interceptors.response.use(
 
 		// if the user is not authenticated, or the token is expired, logout
 		if (error.response?.status === 403) {
+		  // TODO
 			logout({ alert : true});
 			const userInfos = getStorageUserInfos();
 			if (userInfos && userInfos.exp < Date.now() / 1000) logout({ alert: true });
