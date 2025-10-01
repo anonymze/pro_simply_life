@@ -44,9 +44,9 @@ export default function ProfileDashboard({
 			<View className="ml-auto">
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
-						<TouchableOpacity className="p-3">
-							<View className="size-9 items-center justify-center rounded-full bg-white shadow-sm shadow-defaultGray/20">
-								<MenuIcon size={18} color={config.theme.extend.colors.primary} />
+						<TouchableOpacity className="p-3" hitSlop={5}>
+							<View className="size-10 items-center justify-center rounded-full bg-white shadow-sm shadow-defaultGray/20">
+								<MenuIcon size={20} color={config.theme.extend.colors.primary} />
 							</View>
 						</TouchableOpacity>
 					</DropdownMenu.Trigger>

@@ -3,14 +3,18 @@ import { getSportsQuery } from "@/api/queries/sport-queries";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Sport } from "@/types/sport";
+import { USER_DEV_ID, USER_LOENIE_ID, USER_MATHIEU_ID } from "@/utils/helper";
 import { withQueryWrapper } from "@/utils/libs/react-query";
+import { getStorageUserInfos } from "@/utils/store";
 import { Link } from "expo-router";
-import { ArrowRightIcon } from "lucide-react-native";
+import * as WebBrowser from "expo-web-browser";
+import { ArrowRightIcon, FileSpreadsheetIcon } from "lucide-react-native";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
+	const appUser = getStorageUserInfos();
 	return withQueryWrapper(
 		{
 			queryKey: ["sports"],
@@ -19,7 +23,42 @@ export default function Page() {
 		({ data }) => {
 			return (
 				<BackgroundLayout className="pt-safe px-4">
-					<Title title="Sport et Patrimoine" className="mb-6" />
+					{appUser?.user.id === USER_LOENIE_ID ||
+					appUser?.user.id === USER_MATHIEU_ID ||
+					appUser?.user.id === USER_DEV_ID ? (
+						<View className="flex-row items-center justify-between">
+							<Title title="Sport et Patrimoine" />
+							<TouchableOpacity
+								className="p-3"
+								hitSlop={5}
+								onPress={async () => {
+									const instagramUrl = "notion://www.notion.so";
+									const webUrl = "https://www.notion.so";
+
+									// notion://www.notion.so/PAGE_ID
+									// notion://www.notion.so/WORKSPACE_ID
+
+									try {
+										const canOpen = await Linking.canOpenURL(instagramUrl);
+
+										if (canOpen) {
+											await Linking.openURL(instagramUrl);
+										} else {
+											await WebBrowser.openBrowserAsync(webUrl);
+										}
+									} catch (error) {
+										await WebBrowser.openBrowserAsync(webUrl);
+									}
+								}}
+							>
+								<View className="size-10 items-center justify-center rounded-full bg-white shadow-sm shadow-defaultGray/20">
+									<FileSpreadsheetIcon size={22} color={config.theme.extend.colors.primary} />
+								</View>
+							</TouchableOpacity>
+						</View>
+					) : (
+						<Title title="Sport et Patrimoine" className="mb-6" />
+					)}
 
 					<Card
 						sports={data.docs.filter((item) => item.category === "fiscal")}
