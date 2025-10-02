@@ -195,3 +195,36 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 // theme, société qui intervient et son nom
 // 18  entre 10h et 11h
 // excel organigramme
+
+windgroo
+
+
+ADRESSE DU SITE INTERNET VISIBLE ET COPIABLE
+
+PRIVATE EQUITY A DES PRODUITS (comme scpi)
+entrepreneur croissance, ENTREPRENEUR SECONDAIRE,
+
+BACK OFFICE AJOUTER LES FONDS PAR PRIVATE EQUITY
+
+donnée des fond :
+
+- Durée (années), perpetuel tu rentres et sors comme tu veux
+- Thèse d'investissement (texte)
+- Ticket mini (valeurs numériques en euros)
+- Durée appel de fond (années)
+- Distribution (oui ou non)
+- TRI cible (texte)
+- Multiple cible (valeur numériques)
+- Éligible 150 0 b ter (oui ou non)
+- Rétro upfront (texte)
+- Rétro encours (texte)
+- Ajout d'une brochure
+
+
+Fond de private : Pams et dedans nom du fond
+m-capital sortir de capital ivestissement (private equity)
+
+
+eligibles assurances vies
+
+un compte admin pour david et voir uniquement les private equity

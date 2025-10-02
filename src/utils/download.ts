@@ -5,11 +5,11 @@ const destination = new Directory(Paths.document, "simply-life");
 
 const downloadFile = async (url: string, filename: string, mimeType: string | undefined, sharing = false) => {
 	try {
-		const sanitizedFilename = encodeURIComponent(filename);
-		const existingFile = new File(destination, sanitizedFilename);
+		console.log("FILENAME FROM DOWNLOAD FILE", filename);
+		// File constructor handles uri encoding for you on the filename
+		const existingFile = new File(destination, filename);
 
-		// deleteFile(sanitizedFilename);
-		// return;
+		console.log("FILE INSTANCE FROM DOWNLOAD FILE", existingFile);
 
 		if (existingFile.exists) {
 			if (sharing) await shareFile(existingFile.uri, mimeType);
@@ -18,19 +18,22 @@ const downloadFile = async (url: string, filename: string, mimeType: string | un
 
 		if (!destination.exists) destination.create();
 
-		const result = await File.downloadFileAsync(url, destination);
+		const result = await File.downloadFileAsync(url, existingFile);
 
 		if (sharing) await shareFile(result.uri, mimeType);
 
 		return result;
 	} catch (error) {
+		console.log(error);
 		throw error;
 	}
 };
 
 const getFile = (filename: string) => {
-	const sanitizedFilename = encodeURIComponent(filename);
-	const file = new File(destination, sanitizedFilename);
+	console.log("FILENAME FROM GET FILE", filename);
+	// File constructor handles uri encoding for you on the filename
+	const file = new File(destination, filename);
+	console.log("FILE INSTANCE FROM GET FILE", file);
 	return file;
 };
 
@@ -44,8 +47,8 @@ const shareFile = async (uri: File["uri"], mimeType: string | undefined) => {
 };
 
 const deleteFile = async (filename: string) => {
-	const sanitizedFilename = encodeURIComponent(filename);
-	const file = new File(destination, sanitizedFilename);
+	// File constructor handles uri encoding for you on the filename
+	const file = new File(destination, filename);
 	if (file.exists) file.delete();
 };
 

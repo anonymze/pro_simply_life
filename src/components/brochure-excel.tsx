@@ -42,7 +42,7 @@ export const BrochureExcel = ({
 							if (!brochure.url || !brochure.filename || !brochure.mimeType) return;
 
 							setLoadingDownload(true);
-							downloadFile(brochure.url, brochure.filename, brochure.mimeType)
+							downloadFile(brochure.url, brochure.filename, brochure.mimeType, true)
 								.then(() => {
 									// Alert.alert("Brochure téléchargée !");
 								})

@@ -3,15 +3,18 @@ import CardSupplier from "@/components/card/card-supplier";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
+import { cn } from "@/utils/cn";
 import { GIRARDIN_INDUSTRIEL_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
-import { Picker } from "@expo/ui/swift-ui";
+import { FlashList } from "@shopify/flash-list";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Text, View,ScrollView } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
+	const [currentIndex, setCurrentIndex] = React.useState(0);
+	const horizontalScrollRef = React.useRef<ScrollView>(null);
 	const scrollRef = React.useRef<ScrollView>(null);
 	const {
 		"supplier-product": supplierProductId,
@@ -67,16 +70,34 @@ export default function Page() {
 			<Text className="mb-5 text-sm text-defaultGray">Liste des fournisseurs</Text>
 
 			{supplierProductId === PRIVATE_EQUITY_ID && (
-				<Picker
-					style={{ width: SCREEN_DIMENSIONS.width - 28, marginBottom: 16, marginHorizontal: "auto" }}
-					variant="segmented"
-					options={["Capital investissement", "Dettes privées obligtoires", "Éligible assurance vie", "FCPR"]}
-					selectedIndex={null}
-					onOptionSelected={({ nativeEvent: { index } }) => {
-						const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16); // width + gap
-						scrollRef.current?.scrollTo({ x: scrollX, animated: true });
+				<FlashList
+					showsHorizontalScrollIndicator={false}
+					data={queries}
+					horizontal
+					className="mb-4"
+					estimatedItemSize={45}
+					renderItem={({ item, index }) => {
+						const isActive = currentIndex === index;
+
+						return (
+							<Pressable
+								hitSlop={5}
+								className={cn(
+									"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+									isActive ? "bg-primary" : "bg-darkGray",
+								)}
+								onPress={() => {
+									setCurrentIndex(index);
+									const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16); // width + gap
+									scrollRef.current?.scrollTo({ x: scrollX, animated: true });
+								}}
+							>
+								{/*"Capital investissement", "Dettes privées obligtoires", "Éligible assurance vie", "FCPR"*/}
+								<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>{item.data?.name}</Text>
+							</Pressable>
+						);
 					}}
-				/>
+				></FlashList>
 			)}
 
 			{supplierProductId === PRIVATE_EQUITY_ID ? (

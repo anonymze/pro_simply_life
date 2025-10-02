@@ -1,13 +1,22 @@
-import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
-import { DownloadIcon, EyeIcon, FileIcon } from "lucide-react-native";
+import type { Media } from "@/types/media";
 import { downloadFile, getFile } from "@/utils/download";
 import { HrefObject, router } from "expo-router";
-import type { Media } from "@/types/media";
-import config from "tailwind.config";
+import { DownloadIcon, EyeIcon, FileIcon } from "lucide-react-native";
 import React from "react";
+import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
 
-
-export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { brochure: Media; updatedAt: string; link: HrefObject; title?: string }) => {
+export const Brochure = ({
+	brochure,
+	updatedAt,
+	link,
+	title = "Brochure",
+}: {
+	brochure: Media;
+	updatedAt: string;
+	link: HrefObject;
+	title?: string;
+}) => {
 	const [loadingDownload, setLoadingDownload] = React.useState(false);
 	const [loadingOpen, setLoadingOpen] = React.useState(false);
 
@@ -37,7 +46,8 @@ export const Brochure = ({ brochure, updatedAt, link, title = "Brochure" }: { br
 							if (!brochure.url || !brochure.filename || !brochure.mimeType) return;
 
 							setLoadingDownload(true);
-							downloadFile(brochure.url, brochure.filename, brochure.mimeType)
+
+							downloadFile(brochure.url, brochure.filename, brochure.mimeType, true)
 								.then(() => {
 									// Alert.alert("Brochure téléchargée !");
 								})

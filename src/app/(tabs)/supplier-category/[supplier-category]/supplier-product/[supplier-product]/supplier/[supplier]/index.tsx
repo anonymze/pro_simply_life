@@ -7,11 +7,12 @@ import { cn } from "@/utils/cn";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
+import * as Clipboard from "expo-clipboard";
 import { HrefObject, Link, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import { ChevronRight, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
+import { ChevronRight, CopyIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
-import { Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
 const DEFAULT_MAX_VALUE = 1_000_000;
@@ -206,6 +207,7 @@ export default function Page() {
 								email={data.contact_info?.email}
 								firstname={data.contact_info?.firstname}
 								lastname={data.contact_info?.lastname}
+								website={data.website}
 							/>
 							{(data.connexion?.email || data.connexion?.password) && (
 								<Logs
@@ -293,11 +295,13 @@ const ContactInfo = ({
 	email,
 	firstname,
 	lastname,
+	website,
 }: {
 	phone?: string | null;
 	email?: string | null;
 	firstname?: string | null;
 	lastname?: string | null;
+	website?: string | null;
 }) => {
 	const numbersString = phone?.replace(",", " / ");
 	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
@@ -341,6 +345,27 @@ const ContactInfo = ({
 						className="rounded-full bg-primaryUltraLight p-3"
 					>
 						<MailIcon size={16} color={config.theme.extend.colors.primary} />
+					</TouchableOpacity>
+				)}
+			</View>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<View className="flex-row items-center justify-between gap-2">
+				<View className="flex-shrink flex-grow-0 gap-2">
+					<Text className="text-sm text-primaryLight">Adresse du site internet</Text>
+					<Text selectable className="font-semibold text-base text-primary">
+						{website}
+					</Text>
+				</View>
+				{website && (
+					<TouchableOpacity
+						onPress={() => {
+							if (!website) return;
+							Clipboard.setStringAsync(website);
+							Alert.alert("Identifiant copié");
+						}}
+						className="rounded-full bg-primaryUltraLight p-3"
+					>
+						<CopyIcon size={16} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
 				)}
 			</View>

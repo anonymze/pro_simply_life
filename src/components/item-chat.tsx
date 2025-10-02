@@ -166,7 +166,7 @@ export const Item = ({ firstMessage, item, appUser, stateMessage, languageCode }
 												item.file.url &&
 												item.file.filename
 											) {
-												downloadFile(item.file.url, item.file.filename, item.file.mimeType ?? undefined)
+												downloadFile(item.file.url, item.file.filename, item.file.mimeType ?? undefined, true)
 													.then((res) => {})
 													.catch((error) => {
 														console.log(error);
