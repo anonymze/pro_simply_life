@@ -12,6 +12,8 @@ export default function Page() {
 
 	const file = getFile(pdf);
 
+	// console.log(file)
+
 	if (!file.exists) return <Redirect href="../" />;
 
 	return (
