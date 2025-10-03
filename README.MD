@@ -199,8 +199,6 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 windgroo
 
 
-ADRESSE DU SITE INTERNET VISIBLE ET COPIABLE
-
 PRIVATE EQUITY A DES PRODUITS (comme scpi)
 entrepreneur croissance, ENTREPRENEUR SECONDAIRE,
 
