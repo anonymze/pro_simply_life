@@ -165,8 +165,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(react-native@0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       react-native-pdf-renderer:
-        specifier: ^1.6.0
-        version: 1.6.0(react-native@0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))
+        specifier: ^2.3.0
+        version: 2.3.0(react-native@0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))
       react-native-reanimated:
         specifier: ~3.17.4
         version: 3.17.5(@babel/core@7.27.1)(react-native@0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -4130,10 +4130,11 @@ packages:
       react: '*'
       react-native: '*'
 
-  react-native-pdf-renderer@1.6.0:
-    resolution: {integrity: sha512-UWYcP3XE60MSyN9FlTKWRZfht8w2EyXEMVv9aD8wCEXPc67nxzxiSmbUog2jIgh8GApiKNCK1eCgZZiFme2AiQ==}
+  react-native-pdf-renderer@2.3.0:
+    resolution: {integrity: sha512-k/eacZVUKAcTTVvZk5Ey+wiJYRc9K2OdZ/10CJWH7xlxyzfAg6LHjjm8NIOQTJgnL9tXSDjNihjdVldWb+TxJA==}
+    engines: {node: '>=18'}
     peerDependencies:
-      react-native: '>=0.60'
+      react-native: '>=0.71'
 
   react-native-reanimated@3.17.5:
     resolution: {integrity: sha512-SxBK7wQfJ4UoWoJqQnmIC7ZjuNgVb9rcY5Xc67upXAFKftWg0rnkknTw6vgwnjRcvYThrjzUVti66XoZdDJGtw==}
@@ -9450,7 +9451,7 @@ snapshots:
       react: 19.0.0
       react-native: 0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0)
 
-  react-native-pdf-renderer@1.6.0(react-native@0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0)):
+  react-native-pdf-renderer@2.3.0(react-native@0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0)):
     dependencies:
       react-native: 0.79.5(@babel/core@7.27.1)(@types/react@19.0.14)(react@19.0.0)
 
