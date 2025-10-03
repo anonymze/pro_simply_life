@@ -350,7 +350,7 @@ PODS:
     - ExpoModulesCore
   - ExpoSystemUI (5.0.11):
     - ExpoModulesCore
-  - ExpoUI (0.1.1-canary-20250811-5c940c0):
+  - ExpoUI (0.1.1-alpha.10):
     - ExpoModulesCore
   - ExpoVideo (2.2.2):
     - ExpoModulesCore
@@ -3116,7 +3116,7 @@ SPEC CHECKSUMS:
   ExpoSplashScreen: 0ad5acac1b5d2953c6e00d4319f16d616f70d4dd
   ExpoSymbols: c5612a90fb9179cdaebcd19bea9d8c69e5d3b859
   ExpoSystemUI: 433a971503b99020318518ed30a58204288bab2d
-  ExpoUI: 412982c6fa1a59f35e799f8fe8f1220265d7bd6f
+  ExpoUI: d67b6d76bb31c025df33e9ee68b20b031436d70e
   ExpoVideo: ada534976cfd4a6bf082cc61aa1b17920a251e32
   ExpoWebBrowser: dc39a88485f007e61a3dff05d6a75f22ab4a2e92
   EXStructuredHeaders: 32bec6771c2db18c4cd47cecae530d1d06cdf972

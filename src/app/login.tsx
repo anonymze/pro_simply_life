@@ -13,7 +13,9 @@ import { router } from "expo-router";
 import { Image } from "expo-image";
 import React from "react";
 import { z } from "zod";
+import Constants from 'expo-constants';
 
+const version = Constants.expoConfig?.version;
 
 export default function Page() {
 	const { expoPushToken } = useNotification();
@@ -146,6 +148,8 @@ export default function Page() {
 						</Animated.Text>
 					)}
 				</Pressable>
+
+        <Text className="mt-6 text-center text-xs text-primaryLight">Version {version}</Text>
 			</Animated.View>
 		</BackgroundLayout>
 	);
