@@ -43,6 +43,22 @@ export interface Supplier {
 				commission_public_offer?: string | null;
 		  }[]
 		| null;
+	fond?:
+		| {
+				id?: string | null;
+				duration?: string | null;
+				investment?: string | null;
+				ticket?: string | null;
+				duration_found?: string | null;
+				distribution?: boolean | null;
+				tri?: string | null;
+				multiple?: string | null;
+				eligibility?: string | null;
+				upfront?: string | null;
+				encours?: string | null;
+				brochure?: Media | null;
+		  }[]
+		| null;
 	updatedAt: string;
 	createdAt: string;
 }

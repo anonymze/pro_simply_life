@@ -73,7 +73,7 @@ export const excludedProductSupplierIds = [
 	"46c9b876-9b9b-4779-b8ff-e4af9d56914e",
 	// capital investissement
 	"2b78beef-9304-4ea2-aa2a-22ab551a22ae",
-	// éligible assurance vie
+	// éligibles assurances vies
 	"8fbcc7b1-6c44-45f5-af85-bb500ab4166c",
 	// 150 OB TER
 	"6871100f-d1ae-4326-93f9-d4f5117243ab",

@@ -66,23 +66,8 @@ export default function Page() {
 				</View>
 			</View>
 			<BackgroundLayout className="px-4">
+				{/* SCPI */}
 				{!!data?.other_information?.length && (
-					// <Picker
-					// 	style={{ width: 320, marginBottom: 16, marginTop: 20, marginHorizontal: "auto" }}
-					// 	variant="segmented"
-					// 	options={["Contact", ...data.other_information.map((info) => info.scpi || "SCPI sans titre")]}
-					// 	selectedIndex={null}
-					// 	onOptionSelected={({ nativeEvent: { index } }) => {
-					// 		if (index === 0) {
-					// 			horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
-					// 			verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-					// 		} else {
-					// 			const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
-					// 			horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
-					// 			verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-					// 		}
-					// 	}}
-					// />
 					<FlashList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -135,13 +120,64 @@ export default function Page() {
 					></FlashList>
 				)}
 
+				{/* PRIVATE EQUITY */}
+				{!!data?.fond?.length && (
+					<FlashList
+						showsHorizontalScrollIndicator={false}
+						data={[
+							{
+								title: "Contact",
+								subtitle: "",
+							},
+							...data.fond.map((info, idx) => {
+								return {
+									title:
+										idx === 0 ? "Entrepreneur croissance" : idx === 1 ? "Entrepreneur secondaire" : "Fond sans titre",
+								};
+							}),
+						]}
+						horizontal
+						className="my-4"
+						estimatedItemSize={100}
+						renderItem={({ item, index }) => {
+							const isActive = currentIndex === index;
+
+							return (
+								<Pressable
+									hitSlop={5}
+									className={cn(
+										"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+										isActive ? "bg-primary" : "bg-darkGray",
+									)}
+									onPress={() => {
+										setCurrentIndex(index);
+
+										if (index === 0) {
+											horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										} else {
+											const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
+											horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										}
+									}}
+								>
+									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+										{item.title}
+									</Text>
+								</Pressable>
+							);
+						}}
+					></FlashList>
+				)}
+
 				<ScrollView
 					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data?.other_information?.length ? (
+					{!data?.other_information?.length && !data?.fond?.length ? (
 						<View className="mt-4 gap-4">
 							{data?.enveloppe && data.enveloppe.amount && (
 								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
@@ -224,6 +260,49 @@ export default function Page() {
 								/>
 							)}
 						</View>
+					) : !!data?.fond?.length ? (
+						<ScrollView
+							ref={horizontalScrollRef}
+							horizontal
+							showsHorizontalScrollIndicator={false}
+							scrollEnabled={false}
+							decelerationRate={"fast"}
+							contentContainerStyle={{ gap: 16 }}
+						>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+								<ContactInfo
+									phone={data.contact_info?.phone}
+									email={data.contact_info?.email}
+									firstname={data.contact_info?.firstname}
+									lastname={data.contact_info?.lastname}
+								/>
+								{(data.connexion?.email || data.connexion?.password) && (
+									<Logs
+										link={{
+											pathname:
+												"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+											params: {
+												"supplier-category": supplierCategoryId,
+												"supplier-product": supplierProductId,
+												supplier: supplierId,
+												logs: JSON.stringify(data.connexion),
+											},
+										}}
+									/>
+								)}
+							</View>
+							{data.fond?.map((fond, idx) => (
+								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+									<FondComponent
+										information={fond}
+										supplierCategoryId={supplierCategoryId}
+										supplierId={supplierId}
+										supplierProductId={supplierProductId}
+										updatedAt={data.updatedAt}
+									/>
+								</View>
+							))}
+						</ScrollView>
 					) : (
 						<ScrollView
 							ref={horizontalScrollRef}
@@ -257,8 +336,8 @@ export default function Page() {
 							</View>
 							{data.other_information?.map((information, idx) => (
 								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
-									<OtherInformation
-										otherInformation={information}
+									<ScpiComponent
+										information={information}
 										supplierCategoryId={supplierCategoryId}
 										supplierId={supplierId}
 										supplierProductId={supplierProductId}
@@ -361,7 +440,7 @@ const ContactInfo = ({
 						onPress={() => {
 							if (!website) return;
 							Clipboard.setStringAsync(website);
-							Alert.alert("Identifiant copié");
+							Alert.alert("URL copiée");
 						}}
 						className="rounded-full bg-primaryUltraLight p-3"
 					>
@@ -373,14 +452,14 @@ const ContactInfo = ({
 	);
 };
 
-const OtherInformation = ({
-	otherInformation,
+const ScpiComponent = ({
+	information,
 	supplierCategoryId,
 	supplierProductId,
 	supplierId,
 	updatedAt,
 }: {
-	otherInformation: NonNullable<Supplier["other_information"]>[number];
+	information: NonNullable<Supplier["other_information"]>[number];
 	supplierCategoryId: string | string[];
 	supplierProductId: string | string[];
 	supplierId: string | string[];
@@ -390,45 +469,42 @@ const OtherInformation = ({
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 				<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
-				<Text className="font-semibold text-sm text-primary">{otherInformation.scpi}</Text>
+				<Text className="font-semibold text-sm text-primary">{information.scpi}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
-				<Text className="font-semibold text-base text-primary">{otherInformation.theme}</Text>
+				<Text className="font-semibold text-base text-primary">{information.theme}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-
 				<View className="flex flex-row items-center justify-between">
 					<Text className="font-semibold text-sm text-primaryLight">Épargne</Text>
 					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-						{otherInformation.epargne ? "Oui" : "Non"}
+						{information.epargne ? "Oui" : "Non"}
 					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
-				<Text className="font-semibold text-base text-primary">{otherInformation.annotation}</Text>
+				<Text className="font-semibold text-base text-primary">{information.annotation}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Minimum de versement</Text>
-				<Text className="font-semibold text-base text-primary">{otherInformation.minimum_versement}</Text>
+				<Text className="font-semibold text-base text-primary">{information.minimum_versement}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Frais de souscription</Text>
-				<Text className="font-semibold text-base text-primary">{otherInformation.subscription_fee}</Text>
+				<Text className="font-semibold text-base text-primary">{information.subscription_fee}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Délai de jouissance</Text>
-				<Text className="font-semibold text-base text-primary">{otherInformation.duration}</Text>
+				<Text className="font-semibold text-base text-primary">{information.duration}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Rentabilité N1</Text>
-				<Text className="font-semibold text-base text-primary">{otherInformation.rentability_n1}</Text>
+				<Text className="font-semibold text-base text-primary">{information.rentability_n1}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-green-600">Commission pour le groupe Valorem</Text>
-				<Text className="font-semibold text-base text-green-600">
-					{otherInformation.commission_offer_group_valorem}
-				</Text>
+				<Text className="font-semibold text-base text-green-600">{information.commission_offer_group_valorem}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="font-semibold text-sm text-primaryLight">Commission pour l'offre publique</Text>
-				<Text className="font-semibold text-base text-primary">{otherInformation.commission_public_offer}</Text>
+				<Text className="font-semibold text-base text-primary">{information.commission_public_offer}</Text>
 			</View>
-			{otherInformation.brochure && (
+			{information.brochure && (
 				<Brochure
-					brochure={otherInformation.brochure}
+					brochure={information.brochure}
 					updatedAt={updatedAt}
 					link={{
 						pathname:
@@ -437,7 +513,77 @@ const OtherInformation = ({
 							"supplier-category": supplierCategoryId,
 							"supplier-product": supplierProductId,
 							supplier: supplierId,
-							pdf: otherInformation.brochure.filename,
+							pdf: information.brochure.filename,
+						},
+					}}
+				/>
+			)}
+		</View>
+	);
+};
+
+const FondComponent = ({
+	information,
+	supplierCategoryId,
+	supplierProductId,
+	supplierId,
+	updatedAt,
+}: {
+	information: NonNullable<Supplier["fond"]>[number];
+	supplierCategoryId: string | string[];
+	supplierProductId: string | string[];
+	supplierId: string | string[];
+	updatedAt: string;
+}) => {
+	return (
+		<View className="gap-2">
+			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				<Text className="font-semibold text-sm text-primaryLight">Durée</Text>
+				<Text className="font-semibold text-sm text-primary">{information.duration}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Thèse d'investissement</Text>
+				<Text className="font-semibold text-base text-primary">{information.investment}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Ticket mini</Text>
+				<Text className="font-semibold text-base text-primary">{information.ticket}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Durée appel de fond</Text>
+				<Text className="font-semibold text-base text-primary">{information.duration_found}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Distribution</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information.distribution ? "Oui" : "Non"}
+					</Text>
+				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">TRI cible</Text>
+				<Text className="font-semibold text-base text-primary">{information.tri}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Multiple cible</Text>
+				<Text className="font-semibold text-base text-primary">{information.multiple}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Éligible 150 0b ter</Text>
+				<Text className="font-semibold text-base text-primary">{information.eligibility}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Rétro upfront</Text>
+				<Text className="font-semibold text-base text-primary">{information.upfront}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Rétro encours</Text>
+				<Text className="font-semibold text-base text-primary">{information.encours}</Text>
+			</View>
+			{information.brochure && (
+				<Brochure
+					brochure={information.brochure}
+					updatedAt={updatedAt}
+					link={{
+						pathname:
+							"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+						params: {
+							"supplier-category": supplierCategoryId,
+							"supplier-product": supplierProductId,
+							supplier: supplierId,
+							pdf: information.brochure.filename,
 						},
 					}}
 				/>

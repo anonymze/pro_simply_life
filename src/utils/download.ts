@@ -5,11 +5,8 @@ const destination = new Directory(Paths.document, "simply-life");
 
 const downloadFile = async (url: string, filename: string, mimeType: string | undefined, sharing = false) => {
 	try {
-		console.log("FILENAME FROM DOWNLOAD FILE", filename);
 		// File constructor handles uri encoding for you on the filename
 		const existingFile = new File(destination, filename);
-
-		console.log("FILE INSTANCE FROM DOWNLOAD FILE", existingFile);
 
 		if (existingFile.exists) {
 			if (sharing) await shareFile(existingFile.uri, mimeType);
@@ -30,10 +27,8 @@ const downloadFile = async (url: string, filename: string, mimeType: string | un
 };
 
 const getFile = (filename: string) => {
-	console.log("FILENAME FROM GET FILE", filename);
 	// File constructor handles uri encoding for you on the filename
 	const file = new File(destination, filename);
-	console.log("FILE INSTANCE FROM GET FILE", file);
 	return file;
 };
 
