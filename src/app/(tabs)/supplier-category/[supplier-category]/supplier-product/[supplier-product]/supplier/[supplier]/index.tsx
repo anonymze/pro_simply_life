@@ -15,7 +15,7 @@ import React from "react";
 import { Alert, Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
-const DEFAULT_MAX_VALUE = 1_000_000;
+const DEFAULT_MAX_VALUE = 5_000_000;
 
 export default function Page() {
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
