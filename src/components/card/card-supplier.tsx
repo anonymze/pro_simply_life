@@ -71,6 +71,7 @@ export default function CardSupplier({
 												? new Date(supplier.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
+														year: "numeric"
 													})
 												: "Inconnu"}
 										</Text>
