@@ -208,12 +208,13 @@ export default function Page() {
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
-										<Text className="text-sm text-backgroundChat">Date d'échéance</Text>
+										<Text className="text-sm text-backgroundChat">Date d'echéance</Text>
 										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.echeance
 												? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
+														year: "numeric"
 													})
 												: "Inconnu"}
 										</Text>
