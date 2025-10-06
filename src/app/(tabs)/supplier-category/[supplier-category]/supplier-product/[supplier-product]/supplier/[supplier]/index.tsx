@@ -232,6 +232,7 @@ export default function Page() {
 												? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
+														year: "numeric"
 													})
 												: "Inconnu"}
 										</Text>
