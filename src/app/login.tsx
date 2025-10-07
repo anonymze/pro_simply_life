@@ -1,19 +1,20 @@
-import Animated, { FadeInDown, FadeOut, FadeOutUp, useAnimatedStyle } from "react-native-reanimated";
-import { ActivityIndicator, Alert, Pressable, Text, View, TextInput } from "react-native";
-import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
-import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
-import { useNotification } from "@/context/push-notifications";
-import BackgroundLayout from "@/layouts/background-layout";
 import { loginQuery } from "@/api/queries/login-queries";
-import { useMutation } from "@tanstack/react-query";
+import { useNotification } from "@/context/push-notifications";
+import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
+import BackgroundLayout from "@/layouts/background-layout";
 import { setStorageUserInfos } from "@/utils/store";
-import { useForm } from "@tanstack/react-form";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { useForm } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
+import Constants from "expo-constants";
 import { Image } from "expo-image";
+import { router } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
+import { ActivityIndicator, Alert, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
+import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-reanimated";
 import { z } from "zod";
-import Constants from 'expo-constants';
 
 const version = Constants.expoConfig?.version;
 
@@ -68,7 +69,9 @@ export default function Page() {
 		<BackgroundLayout className="p-6">
 			<Animated.View className="flex-1 justify-center gap-3" style={animatedStyle}>
 				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 80 }} contentFit="contain" />
-				<Text className="font-medium text-lg text-primary max-w-[90%] text-start mt-4">{i18n[languageCode]("SUBTITLE_LOGIN")}</Text>
+				<Text className="mt-4 max-w-[90%] text-start font-medium text-lg text-primary">
+					{i18n[languageCode]("SUBTITLE_LOGIN")}
+				</Text>
 
 				<View className="mt-8 w-full gap-3">
 					<Text className="text-md self-start text-primary">{i18n[languageCode]("INPUT_EMAIL_LOGIN")}</Text>
@@ -83,7 +86,7 @@ export default function Page() {
 									textContentType="oneTimeCode"
 									placeholder="exemple@email.fr"
 									autoCorrect={false}
-									className="w-full rounded-xl bg-darkGray p-5  placeholder:text-primaryLight  border border-transparent focus:border-primaryLight"
+									className="w-full rounded-xl border border-transparent  bg-darkGray  p-5 placeholder:text-primaryLight focus:border-primaryLight"
 									defaultValue={field.state.value}
 									onChangeText={field.handleChange}
 								/>
@@ -109,7 +112,7 @@ export default function Page() {
 										keyboardType="default"
 										textContentType="oneTimeCode"
 										placeholder="**********"
-										className="w-full rounded-xl bg-darkGray p-5 pr-12 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
+										className="w-full rounded-xl border border-transparent bg-darkGray p-5 pr-12 placeholder:text-primaryLight focus:border-primaryLight"
 										defaultValue={field.state.value}
 										onChangeText={field.handleChange}
 									/>
@@ -118,11 +121,7 @@ export default function Page() {
 										className="absolute right-4 top-1/2 -translate-y-1/2"
 										hitSlop={10}
 									>
-										<Ionicons
-											name={showPassword ? "eye-off" : "eye"}
-											size={20}
-											color="#9CA3AF"
-										/>
+										<Ionicons name={showPassword ? "eye-off" : "eye"} size={20} color="#9CA3AF" />
 									</Pressable>
 								</View>
 								{field.state.meta.errors.length > 0 && (
@@ -143,13 +142,44 @@ export default function Page() {
 							<ActivityIndicator size="small" color="white" />
 						</Animated.View>
 					) : (
-						<Animated.Text entering={FadeInDown.springify().duration(1200)} className="text-center text-white font-semibold text-lg">
+						<Animated.Text
+							entering={FadeInDown.springify().duration(1200)}
+							className="text-center font-semibold text-lg text-white"
+						>
 							{i18n[languageCode]("BUTTON_LOGIN")}
 						</Animated.Text>
 					)}
 				</Pressable>
 
-        <Text className="mt-6 text-center text-xs text-primaryLight">Version {version}</Text>
+				<TouchableOpacity
+					onPress={() => {
+						WebBrowser.openBrowserAsync("https://rgpd-and-confidentiality.vercel.app/simply_life/rgpd.html");
+					}}
+					className="mt-4"
+					hitSlop={5}
+				>
+					<Animated.Text
+						entering={FadeInDown.springify().duration(800)}
+						className="text-center font-semibold text-sm text-primaryLight underline"
+					>
+						Mot de passe oublié ?
+					</Animated.Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					onPress={() => {
+						WebBrowser.openBrowserAsync("https://rgpd-and-confidentiality.vercel.app/simply_life/rgpd.html");
+					}}
+					className="mt-8"
+				>
+					<Text
+						className="text-center font-semibold text-xs text-primaryLight underline"
+					>
+						Politique de confidentialité
+					</Text>
+				</TouchableOpacity>
+
+				<Text className="text-center text-xs text-primaryLight mt-1">Version {version}</Text>
 			</Animated.View>
 		</BackgroundLayout>
 	);
