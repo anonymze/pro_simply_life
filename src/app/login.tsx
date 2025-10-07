@@ -153,7 +153,7 @@ export default function Page() {
 
 				<TouchableOpacity
 					onPress={() => {
-						WebBrowser.openBrowserAsync("https://rgpd-and-confidentiality.vercel.app/simply_life/rgpd.html");
+						// WebBrowser.openBrowserAsync("https://rgpd-and-confidentiality.vercel.app/simply_life/rgpd.html");
 					}}
 					className="mt-4"
 					hitSlop={5}
