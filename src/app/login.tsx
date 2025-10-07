@@ -14,6 +14,7 @@ import React from "react";
 import { ActivityIndicator, Alert, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-reanimated";
+import config from "tailwind.config";
 import { z } from "zod";
 
 const version = Constants.expoConfig?.version;
@@ -121,7 +122,7 @@ export default function Page() {
 										className="absolute right-4 top-1/2 -translate-y-1/2"
 										hitSlop={10}
 									>
-										<Ionicons name={showPassword ? "eye-off" : "eye"} size={20} color="#9CA3AF" />
+										<Ionicons name={showPassword ? "eye-off" : "eye"} size={20} color={config.theme.extend.colors.primaryLight} />
 									</Pressable>
 								</View>
 								{field.state.meta.errors.length > 0 && (
