@@ -210,28 +210,20 @@ eligibles assurances vies
 
 un compte admin pour david et voir uniquement les private equity
 
-
 formulaire de contact de chaque independant, demander l'adresse du cabinet pour l'afficher sur la carte
-
-notifiation messenger
 
 mot de passe oublié
 
-
-linkedin (réseaux) + notion (sport) lien marche pas
-
-
 cookie session qui s'expire ?
 
-pré rempli commissions
+
+//
+pré rempli commissions / notification / liens réseaux sociaux notion + linkedin / brochure Martial / bulk upload
+//
 
 caché les bureaux indépendants ?
 
 produits structurés, entrer un mail pour envoyer la brochure ?
-
-solde enveloppe en suspend ?? enlevver du compteur
-
-enveloppe sur produits structurés bugués ?
 
 include denis dans le gros point v2
 
@@ -239,14 +231,4 @@ cachés les ongletsx
 
 messenger aller direct dans le groupe
 
-bug fundesys
-
-bug
-
 limité les media ?? afficher uniquement les logos ?
-
-
-uaf liofe
-
-
-brochure martial

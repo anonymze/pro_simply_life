@@ -211,14 +211,14 @@ export default function Page() {
 				<Title title="Réseaux sociaux" className="mx-auto text-lg" />
 				<View className="flex-row items-center justify-center gap-16">
 					<TouchableOpacity hitSlop={10} onPress={async () => {
-						// const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
-						const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts/?feedView=all";
+						const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
+						const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts";
 
 						try {
-							// const canOpen = await Linking.canOpenURL(linkedinUrl);
+							const canOpen = await Linking.canOpenURL(linkedinUrl);
 
-							if (false) {
-								// await Linking.openURL(linkedinUrl);
+							if (canOpen) {
+								await Linking.openURL(linkedinUrl);
 							} else {
 								await WebBrowser.openBrowserAsync(webUrl);
 							}
