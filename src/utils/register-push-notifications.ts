@@ -39,10 +39,8 @@ export async function registerForPushNotificationsAsync() {
 				projectId,
 			})
 		).data;
-		console.log("✅ Expo Push Token:", pushTokenString);
 		return pushTokenString;
 	} catch (e: unknown) {
-		console.error("❌ Failed to get Expo push token:", e);
 		throw new Error(`Failed to get Expo push token: ${e}`);
 	}
 }
