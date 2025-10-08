@@ -219,17 +219,13 @@ cookie session qui s'expire ?
 inclure les indé sur la carte
 
 //
-pré rempli commissions / notification /  brochure Martial // problem pdf android
+pré rempli commissions / notification /  brochure Martial / selection du moment // problem pdf android
 //
 
-liens réseaux sociaux notion + linkedin + insta. à refaire
+sport patrimoine
 
-caché les bureaux indépendants ?
+liens réseaux sociaux notion + linkedin + insta. à refaire
 
 produits structurés, entrer un mail pour envoyer la brochure ?
 
 include denis dans le gros point v2
-
-cachés les ongletsx
-
-messenger aller direct dans le groupe
