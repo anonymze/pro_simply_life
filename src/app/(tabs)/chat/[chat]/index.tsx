@@ -1,9 +1,9 @@
 import Animated, { useAnimatedStyle, useSharedValue, withTiming, withSequence, Easing, SharedValue, } from "react-native-reanimated";
 import { createMessageQuery, createMessageWithFilesQuery, getMessagesQuery } from "@/api/queries/message-queries";
-import { View, TextInput, Text, Platform, TouchableOpacity, Pressable, Alert } from "react-native";
+import { View, TextInput, Text, Platform, TouchableOpacity, Pressable, Alert, Keyboard } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { ImageIcon, PaperclipIcon, SendIcon } from "lucide-react-native";
-import { Redirect, Stack, useLocalSearchParams } from "expo-router";
+import { Redirect, Stack, useLocalSearchParams, useFocusEffect } from "expo-router";
 import { UIImagePickerPresentationStyle } from "expo-image-picker";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -255,6 +255,14 @@ export default function Page() {
 			form.handleSubmit();
 		});
 	}, [form]);
+
+	useFocusEffect(
+		React.useCallback(() => {
+			return () => {
+				Keyboard.dismiss();
+			};
+		}, [])
+	);
 
 	return (
 		<BackgroundLayout className="px-6">
