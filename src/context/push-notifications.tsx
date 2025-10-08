@@ -32,13 +32,23 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 
 	const notificationListener = useRef<EventSubscription>(null);
 	const responseListener = useRef<EventSubscription>(null);
+	const tokenListener = useRef<EventSubscription>(null);
 
 	useEffect(() => {
 		registerForPushNotificationsAsync()
-			.then((token) => setExpoPushToken(token))
+			.then((token) => {
+				setExpoPushToken(token);
+			})
 			.catch((error) => setError(error));
 
-			// when notification is received, works when app is background and active
+		// Listen for token changes/updates
+		tokenListener.current = Notifications.addPushTokenListener((token) => {
+			setExpoPushToken(token.data);
+			// TODO: Send updated token to your backend here
+			// updateTokenOnBackend(token.data);
+		});
+
+		// when notification is received, works when app is background and active
 		notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
 			setNotification(notification);
 		});
@@ -48,7 +58,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			if (!response.notification) return;
 
 			if ("chatRoomId" in response.notification.request.content.data) {
-				router.push(`/chat/${response.notification.request.content.data.chatRoomId}`)
+				router.replace(`/chat/${response.notification.request.content.data.chatRoomId}`)
 			}
 		});
 
@@ -58,6 +68,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			}
 			if (responseListener.current) {
 				responseListener.current.remove();
+			}
+			if (tokenListener.current) {
+				tokenListener.current.remove();
 			}
 		};
 	}, []);
