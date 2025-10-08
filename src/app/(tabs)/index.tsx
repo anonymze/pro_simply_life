@@ -33,7 +33,7 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 // import  { NitroModules } from "react-native-nitro-modules";
 
 export default function Page() {
-	const { data: events, isLoading: isLoadingEvents } = useQuery({
+	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
 			"events",
 			{
@@ -41,6 +41,11 @@ export default function Page() {
 			},
 		],
 		queryFn: getEventsQuery,
+		select: (data) => {
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
+			return data.docs?.filter((event) => new Date(event.event_start) >= today);
+		},
 	});
 
 	const { data: suppliers, isLoading: isLoadingSuppliers } = useQuery({
@@ -167,7 +172,7 @@ export default function Page() {
 				</View>
 				<Carousel
 					data={
-						events?.docs || [
+						upcomingEvents || [
 							{
 								id: "1",
 								createdAt: new Date().toISOString(),

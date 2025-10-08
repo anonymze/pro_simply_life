@@ -222,10 +222,6 @@ cookie session qui s'expire ?
 
 produits strucutés sur l'app rajouté ce qui est mis dans le dashboard
 
-cacher les events passés de 1 journée
-
-identifiant de connexion perso
-
 pré rempli commissions
 
 caché les bureaux indépendants ?
