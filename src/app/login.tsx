@@ -122,9 +122,14 @@ export default function Page() {
 										className="absolute right-4 top-1/2 -translate-y-1/2"
 										hitSlop={10}
 									>
-										<Ionicons name={showPassword ? "eye-off" : "eye"} size={20} color={config.theme.extend.colors.primaryLight} />
+										<Ionicons
+											name={showPassword ? "eye-off" : "eye"}
+											size={20}
+											color={config.theme.extend.colors.primaryLight}
+										/>
 									</Pressable>
 								</View>
+
 								{field.state.meta.errors.length > 0 && (
 									<Text className="text-red-500">{field.state.meta.errors[0]?.message}</Text>
 								)}
@@ -132,6 +137,7 @@ export default function Page() {
 						)}
 					</form.Field>
 				</View>
+
 				<Pressable
 					testID="login-button"
 					onPress={form.handleSubmit}
@@ -153,8 +159,14 @@ export default function Page() {
 				</Pressable>
 
 				<TouchableOpacity
-					onPress={() => {
-						// WebBrowser.openBrowserAsync("https://rgpd-and-confidentiality.vercel.app/simply_life/rgpd.html");
+					onPress={async () => {
+						await form.validateField("email", "submit");
+						form.resetField("password");
+
+						if (form.getFieldMeta("email")?.isValid) {
+							Alert.alert("Un email pour réinitialiser votre mot de passe vient de vous être envoyé.");
+							form.reset();
+						}
 					}}
 					className="mt-4"
 					hitSlop={5}
@@ -173,14 +185,12 @@ export default function Page() {
 					}}
 					className="mt-8"
 				>
-					<Text
-						className="text-center font-semibold text-xs text-primaryLight underline"
-					>
+					<Text className="text-center font-semibold text-xs text-primaryLight underline">
 						Politique de confidentialité
 					</Text>
 				</TouchableOpacity>
 
-				<Text className="text-center text-xs text-primaryLight mt-1">Version {version}</Text>
+				<Text className="mt-1 text-center text-xs text-primaryLight">Version {version}</Text>
 			</Animated.View>
 		</BackgroundLayout>
 	);
