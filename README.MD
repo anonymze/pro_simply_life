@@ -218,9 +218,10 @@ notifiation messenger
 mot de passe oublié
 
 
-cookie session qui s'expire ?
+linkedin (réseaux) + notion (sport) lien marche pas
 
-produits strucutés sur l'app rajouté ce qui est mis dans le dashboard
+
+cookie session qui s'expire ?
 
 pré rempli commissions
 
