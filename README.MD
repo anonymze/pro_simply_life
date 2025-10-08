@@ -216,9 +216,10 @@ mot de passe oublié
 
 cookie session qui s'expire ?
 
+inclure les indé sur la carte
 
 //
-pré rempli commissions / notification /  / brochure Martial / bulk upload
+pré rempli commissions / notification /  brochure Martial / bulk upload
 //
 
 liens réseaux sociaux notion + linkedin + insta. à refaire
