@@ -218,8 +218,10 @@ cookie session qui s'expire ?
 
 
 //
-pré rempli commissions / notification / liens réseaux sociaux notion + linkedin / brochure Martial / bulk upload
+pré rempli commissions / notification /  / brochure Martial / bulk upload
 //
+
+liens réseaux sociaux notion + linkedin + insta. à refaire
 
 caché les bureaux indépendants ?
 

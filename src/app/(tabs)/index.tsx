@@ -86,7 +86,8 @@ export default function Page() {
 						</View>
 					))}
 				</View>
-				<Title title="Notre sélection du moment" />
+
+				{/*<Title title="Notre sélection du moment" />
 				<View className="gap-2">
 					{isLoadingSuppliers || !suppliers ? (
 						<Animated.View key="skeleton" exiting={FadeOut.duration(2000)}>
@@ -119,7 +120,8 @@ export default function Page() {
 							</Animated.View>
 						))
 					)}
-				</View>
+				</View>*/}
+
 				<Title title="Newsletter" />
 				<Link
 					href={{
@@ -212,7 +214,7 @@ export default function Page() {
 				<View className="flex-row items-center justify-center gap-16">
 					<TouchableOpacity hitSlop={10} onPress={async () => {
 						const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
-						const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts";
+						const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts/?feedView=all";
 
 						try {
 							const canOpen = await Linking.canOpenURL(linkedinUrl);
@@ -316,11 +318,11 @@ const links: {
 		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
 		backgroundIcon: "bg-[#ffffff]",
 	},
-	{
-		icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
-		title: "Sport & Patrimoine",
-		description: "Vie d'agence",
-		link: "/(tabs)/sports",
-		backgroundIcon: "bg-[#FEF3C7]",
-	},
+	// {
+	// 	icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
+	// 	title: "Sport & Patrimoine",
+	// 	description: "Vie d'agence",
+	// 	link: "/(tabs)/sports",
+	// 	backgroundIcon: "bg-[#FEF3C7]",
+	// },
 ];

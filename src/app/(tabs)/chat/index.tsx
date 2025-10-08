@@ -108,7 +108,8 @@ export default function Page() {
 							data={data.docs}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item }) => {
-								if (userHierarchy[userInfos?.user.role ?? "visitor"] < 2 || item.app_user.id === userInfos?.user.id) {
+								// if (userHierarchy[userInfos?.user.role ?? "visitor"] < 2 || item.app_user.id === userInfos?.user.id) {
+								if (true) {
 									return (
 										<>
 											{Platform.OS === "ios" ? (
