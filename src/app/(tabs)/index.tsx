@@ -53,19 +53,18 @@ export default function Page() {
 
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 
-	const { firstname, lastname, photo, createdAt, id } = JSON.parse(userJSON) as Pick<
+	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
 		User,
-		"firstname" | "lastname" | "photo" | "createdAt" | "id"
+		"firstname" | "lastname" | "photo" | "createdAt"
 	>;
 
 	// const math = NitroModules.createHybridObject<Math>("Math");
 
 	return (
 		<BackgroundLayout className="pt-safe mt-4 px-4">
-			{id === USER_DEV_2_ID || id === USER_DEV_ID ? (
-				<View className="flex-row items-center justify-between">
+			{lastname === "Metier" || lastname === "Dev" ? (
+				<View className="">
 					<Text className="font-bold">DEV MODE</Text>
-					<Text>ID : {id}</Text>
 					<Text>Token notif : {notification.expoPushToken}</Text>
 				</View>
 			) : null}
