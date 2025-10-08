@@ -62,12 +62,12 @@ export default function Page() {
 
 	return (
 		<BackgroundLayout className="pt-safe mt-4 px-4">
-			{lastname === "Metier" || lastname === "Dev" ? (
+			{/*{lastname === "Metier" || lastname === "Dev" ? (
 				<View className="">
 					<Text className="font-bold">DEV MODE</Text>
 					<Text>Token notif : {notification.expoPushToken}</Text>
 				</View>
-			) : null}
+			) : null}*/}
 			<ScrollView
 				className="flex-1"
 				showsVerticalScrollIndicator={false}
