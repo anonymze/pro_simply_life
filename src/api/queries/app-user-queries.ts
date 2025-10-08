@@ -27,7 +27,6 @@ export async function getAppUserQuery({ queryKey }: { queryKey: QueryKey }) {
 	return response.data;
 }
 
-
 export async function updateAppUserToken(userId: User["id"] | undefined, token: User["notifications_token"]) {
 	const response = await api.post(`/api/update-token`, { userId, token });
 	return response.data;
