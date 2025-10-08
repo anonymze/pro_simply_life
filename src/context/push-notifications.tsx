@@ -41,6 +41,15 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			})
 			.catch((error) => setError(error));
 
+		// Check if app was opened from a notification (when app was completely closed)
+		Notifications.getLastNotificationResponseAsync().then((response) => {
+			if (!response) return;
+
+			if ("chatRoomId" in response.notification.request.content.data) {
+				router.replace(`/chat/${response.notification.request.content.data.chatRoomId}`);
+			}
+		});
+
 		// Listen for token changes/updates
 		tokenListener.current = Notifications.addPushTokenListener((token) => {
 			setExpoPushToken(token.data);
@@ -58,8 +67,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			if (!response.notification) return;
 
 			if ("chatRoomId" in response.notification.request.content.data) {
-        // router.dismissAll();
-				router.push(`/chat/${response.notification.request.content.data.chatRoomId}`)
+				router.replace(`/chat/${response.notification.request.content.data.chatRoomId}`)
 			}
 		});
 
