@@ -202,13 +202,13 @@ export default function Page() {
 									</View>
 									<View className="mt-6 flex-row items-center gap-2">
 										<View className="size-2 rounded-full bg-production" />
-										<Text className="text-backgroundChat">Solde enveloppe</Text>
+										<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
 										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.amount.toLocaleString("fr-FR")}€
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
-										<Text className="text-sm text-backgroundChat">Date d'echéance</Text>
+										<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
 										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.echeance
 												? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
@@ -222,7 +222,7 @@ export default function Page() {
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
 										<Text className="ml-auto font-light text-sm text-primaryLight">
-											{data.enveloppe.reduction ? data.enveloppe.reduction.toLocaleString("fr-FR") + "€" : "Inconnu"}
+											{data.enveloppe.reduction ? data.enveloppe.reduction.toLocaleString("fr-FR") + "%" : "Inconnu"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
