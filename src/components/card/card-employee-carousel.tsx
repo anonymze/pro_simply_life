@@ -7,7 +7,15 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 import ImagePlaceholder from "../ui/image-placeholder";
 
-export default function CardEmployeeCarousel({ user, link }: { user: User; link: HrefObject }) {
+export default function CardEmployeeCarousel({
+	user,
+	link,
+	associate = false,
+}: {
+	user: User;
+	link: HrefObject;
+	associate?: boolean;
+}) {
 	const onPress = React.useCallback(() => {
 		queryClient.setQueryData(["app-user", user.id], user);
 	}, [user]);
@@ -26,7 +34,7 @@ export default function CardEmployeeCarousel({ user, link }: { user: User; link:
 						placeholderContentFit="cover"
 						source={user.photo?.url}
 						className="rounded-full"
-						style={{ width: 65, height: 65, borderRadius: 99 }}
+						style={{ width: associate ? 70 : 65, height: associate ? 70 : 65, borderRadius: 99 }}
 					/>
 					{isNew && (
 						<View
@@ -35,7 +43,7 @@ export default function CardEmployeeCarousel({ user, link }: { user: User; link:
 						/>
 					)}
 				</View>
-				<Text className="mt-2 text-sm text-primary">{user.firstname + " " + user.lastname}</Text>
+				<Text className="mt-2 text-sm text-primary text-center">{user.firstname + " " + user.lastname}</Text>
 			</TouchableOpacity>
 		</Link>
 	);

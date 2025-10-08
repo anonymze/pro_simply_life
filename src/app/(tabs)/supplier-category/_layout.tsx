@@ -55,14 +55,25 @@ export default function SupplierLayout() {
 			/>
 			<Stack.Screen
 				options={{
-					presentation: "modal",
-					// sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
-					// presentation: Platform.OS === "ios" ? "formSheet" : "modal",
+					// presentation: "modal",
+					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
 					// sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
 					headerShown: true,
 					header: () => Platform.OS === "ios" ? <HeaderGrabberIos noMarginBottom /> : <HeaderLayout  />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]"
+			/>
+			<Stack.Screen
+				options={{
+					// presentation: "modal",
+					sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					presentation: Platform.OS === "ios" ? "formSheet" : "modal",
+					// sheetAllowedDetents: Platform.OS === "ios" ? "fitToContents" : undefined,
+					headerShown: true,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos noMarginBottom /> : <HeaderLayout  />,
+				}}
+				name="[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]"
 			/>
 		</Stack>
 	);

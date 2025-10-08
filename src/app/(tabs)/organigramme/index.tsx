@@ -1,19 +1,18 @@
-import CardEmployeeCarousel from "@/components/card/card-employee-carousel";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { getAppUsersQuery } from "@/api/queries/app-user-queries";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
-import { withQueryWrapper } from "@/utils/libs/react-query";
-import CardEmployee from "@/components/card/card-employee";
-import BackgroundLayout from "@/layouts/background-layout";
-import InputSearch from "@/components/ui/input-search";
 import { queryClient } from "@/api/_queries";
+import { getAppUsersQuery } from "@/api/queries/app-user-queries";
+import CardEmployee from "@/components/card/card-employee";
+import CardEmployeeCarousel from "@/components/card/card-employee-carousel";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
+import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
-import { HrefObject } from "expo-router";
-import config from "tailwind.config";
+import BackgroundLayout from "@/layouts/background-layout";
 import { User } from "@/types/user";
-import { Link } from "expo-router";
+import { cn } from "@/utils/cn";
+import { withQueryWrapper } from "@/utils/libs/react-query";
+import { HrefObject, Link } from "expo-router";
 import React from "react";
-
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
 
 // utility function to split array into chunks
 const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
@@ -65,7 +64,7 @@ export default function Page() {
 			);
 
 			const classifiedUsers = React.useMemo(() => {
-				return data.docs.reduce(
+				const classified = data.docs.reduce(
 					(acc, item) => {
 						if (!acc[item.role]) acc[item.role] = [];
 						acc[item.role].push(item);
@@ -78,12 +77,21 @@ export default function Page() {
 						visitor: [],
 					} as Record<User["role"], typeof data.docs>,
 				);
-			}, [data]);
 
-			// split employees into chunks of 9
-			const employeeChunks = React.useMemo(() => {
-				return chunkArray(classifiedUsers.employee, 9);
-			}, [classifiedUsers.employee]);
+				// Add 2 more employees for testing (duplicates of first two)
+				// if (classified.employee.length > 0) {
+				// 	classified.employee.push({ ...classified.employee[0], id: `${classified.employee[0].id}-duplicate1` });
+				// 	if (classified.employee.length > 1) {
+				// 		classified.employee.push({ ...classified.employee[1], id: `${classified.employee[1].id}-duplicate2` });
+				// 	}
+				// }
+
+				// Sort associates and employees by firstname
+				classified.associate.sort((a, b) => a.firstname.localeCompare(b.firstname, "fr"));
+				classified.employee.sort((a, b) => a.firstname.localeCompare(b.firstname, "fr"));
+
+				return classified;
+			}, [data]);
 
 			const independentChunks = React.useMemo(() => {
 				return chunkArray(classifiedUsers.independent, 9);
@@ -105,74 +113,41 @@ export default function Page() {
 						<ScrollView
 							showsVerticalScrollIndicator={false}
 							contentContainerStyle={{ paddingBottom: 16 }}
-							className="mt-4"
+							className="mt-0"
 						>
 							<Title title="Associés" />
-							<View className="flex-row flex-wrap gap-x-8 gap-y-4">
+							<View className="flex-row flex-wrap items-center justify-center gap-x-8 gap-y-4">
 								{classifiedUsers.associate.map((item) => (
-									<CardEmployeeCarousel
-										key={item.id}
-										user={item}
-										link={{
-											pathname: "/organigramme/[organigramme]",
-											params: {
-												organigramme: item.id,
-											},
-										}}
-									/>
+									<View key={item.id} className="w-[40%]">
+										<CardEmployeeCarousel
+											associate
+											user={item}
+											link={{
+												pathname: "/organigramme/[organigramme]",
+												params: {
+													organigramme: item.id,
+												},
+											}}
+										/>
+									</View>
 								))}
 							</View>
-							<View className="mb-4 mt-7 flex-row items-center justify-between">
-								<Title title="Staff" className="mb-0 mt-0" />
-								<Link
-									href={{
-										pathname: "/organigramme/role/[role]",
-										params: {
-											role: "employee",
-										},
-									}}
-									asChild
-								>
-									<TouchableOpacity
-										hitSlop={10}
-										onPress={() => {
-											queryClient.setQueryData(["app-users", "employee"], {
-												docs: classifiedUsers.employee,
-											});
-										}}
-									>
-										<Text className="font-semibold text-primaryLight">Voir tout</Text>
-									</TouchableOpacity>
-								</Link>
+							<Title title="Staff" className="mb-4 mt-7" />
+							<View className="flex-row flex-wrap items-center justify-center gap-x-8 gap-y-4">
+								{classifiedUsers.employee.map((item) => (
+									<View key={item.id} className={cn(classifiedUsers.employee.length > 4 ? "w-[25%]" : "w-[40%]")}>
+										<CardEmployeeCarousel
+											user={item}
+											link={{
+												pathname: "/organigramme/[organigramme]",
+												params: {
+													organigramme: item.id,
+												},
+											}}
+										/>
+									</View>
+								))}
 							</View>
-							<ScrollView
-								horizontal
-								showsHorizontalScrollIndicator={false}
-								className="-mr-4"
-								decelerationRate={0.1}
-								contentContainerStyle={{ paddingRight: 16, gap: 16 }} // keep right padding for last card
-								scrollEventThrottle={undefined}
-								style={{ flexGrow: 0 }}
-							>
-								{employeeChunks.map((employeePage) => {
-									return (
-										<View key={employeePage[0].id} className="flex-row flex-wrap gap-x-8 gap-y-4">
-											{employeePage.map((employee) => (
-												<CardEmployeeCarousel
-													key={employee.id}
-													user={employee}
-													link={{
-														pathname: "/organigramme/[organigramme]",
-														params: {
-															organigramme: employee.id,
-														},
-													}}
-												/>
-											))}
-										</View>
-									);
-								})}
-							</ScrollView>
 							<View className="mb-4 mt-7 flex-row items-center justify-between">
 								<Title title="Indépendants" className="mb-0 mt-0" />
 								<Link

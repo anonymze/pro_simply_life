@@ -76,7 +76,7 @@ export default function Page() {
 						<View className="mt-6 flex-row items-center gap-2">
 							<View className="size-2 rounded-full bg-production" />
 							<Text className="text-backgroundChat">Solde enveloppe</Text>
-							<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.current}€</Text>
+							<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.current.toLocaleString()}€</Text>
 						</View>
 					</View>
 

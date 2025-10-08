@@ -214,7 +214,7 @@ export default function Page() {
 												? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
-														year: "numeric"
+														year: "numeric",
 													})
 												: "Inconnu"}
 										</Text>
@@ -232,7 +232,7 @@ export default function Page() {
 												? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
-														year: "numeric"
+														year: "numeric",
 													})
 												: "Inconnu"}
 										</Text>
@@ -247,8 +247,9 @@ export default function Page() {
 								lastname={data.contact_info?.lastname}
 								website={data.website}
 							/>
-							{(data.connexion?.email || data.connexion?.password) && (
+							{/*{(data.connexion?.email || data.connexion?.password) && (
 								<Logs
+									title="Identifiants généraux"
 									link={{
 										pathname:
 											"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
@@ -260,7 +261,21 @@ export default function Page() {
 										},
 									}}
 								/>
-							)}
+							)}*/}
+
+							<Logs
+								title="Identifiants personnels"
+								link={{
+									pathname:
+										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
+									params: {
+										"supplier-category": supplierCategoryId,
+										"supplier-product": supplierProductId,
+										supplier: supplierId,
+										perso: "hey",
+									},
+								}}
+							/>
 						</View>
 					) : !!data?.fond?.length ? (
 						<ScrollView
@@ -278,8 +293,9 @@ export default function Page() {
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
 								/>
-								{(data.connexion?.email || data.connexion?.password) && (
+								{/*{(data.connexion?.email || data.connexion?.password) && (
 									<Logs
+										title="Identifiants généraux"
 										link={{
 											pathname:
 												"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
@@ -291,7 +307,21 @@ export default function Page() {
 											},
 										}}
 									/>
-								)}
+								)}*/}
+
+								<Logs
+									title="Identifiants personnels"
+									link={{
+										pathname:
+											"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
+										params: {
+											"supplier-category": supplierCategoryId,
+											"supplier-product": supplierProductId,
+											supplier: supplierId,
+											perso: "hey",
+										},
+									}}
+								/>
 							</View>
 							{data.fond?.map((fond, idx) => (
 								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
@@ -321,8 +351,9 @@ export default function Page() {
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
 								/>
-								{(data.connexion?.email || data.connexion?.password) && (
+								{/*{(data.connexion?.email || data.connexion?.password) && (
 									<Logs
+										title="Identifiants personnels"
 										link={{
 											pathname:
 												"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
@@ -334,7 +365,21 @@ export default function Page() {
 											},
 										}}
 									/>
-								)}
+								)}*/}
+
+								<Logs
+									title="Identifiants personnels"
+									link={{
+										pathname:
+											"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
+										params: {
+											"supplier-category": supplierCategoryId,
+											"supplier-product": supplierProductId,
+											supplier: supplierId,
+											perso: "hey",
+										},
+									}}
+								/>
 							</View>
 							{data.other_information?.map((information, idx) => (
 								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
@@ -355,7 +400,7 @@ export default function Page() {
 	);
 }
 
-const Logs = ({ link }: { link: HrefObject }) => {
+const Logs = ({ link, title }: { link: HrefObject; title: string }) => {
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
@@ -363,7 +408,7 @@ const Logs = ({ link }: { link: HrefObject }) => {
 					<KeyRoundIcon size={20} color={config.theme.extend.colors.primary} />
 				</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-primary">Identifiants de connexion</Text>
+					<Text className="font-semibold text-lg text-primary">{title}</Text>
 				</View>
 				{/* <ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} /> */}
 			</TouchableOpacity>

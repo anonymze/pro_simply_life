@@ -209,3 +209,47 @@ m-capital sortir de capital ivestissement (private equity)
 eligibles assurances vies
 
 un compte admin pour david et voir uniquement les private equity
+
+
+formulaire de contact de chaque independant, demander l'adresse du cabinet pour l'afficher sur la carte
+
+notifiation messenger
+
+mot de passe oublié
+
+
+cookie session qui s'expire ?
+
+produits strucutés sur l'app rajouté ce qui est mis dans le dashboard
+
+cacher les events passés de 1 journée
+
+identifiant de connexion perso
+
+pré rempli commissions
+
+caché les bureaux indépendants ?
+
+produits structurés, entrer un mail pour envoyer la brochure ?
+
+solde enveloppe en suspend ?? enlevver du compteur
+
+enveloppe sur produits structurés bugués ?
+
+include denis dans le gros point v2
+
+cachés les ongletsx
+
+messenger aller direct dans le groupe
+
+bug fundesys
+
+bug
+
+limité les media ?? afficher uniquement les logos ?
+
+
+uaf liofe
+
+
+brochure martial

@@ -1,33 +1,37 @@
-import { Asset } from "expo-asset";
-import { useEffect, useState } from "react";
+import BackgroundLayout from "@/layouts/background-layout";
+import { cn } from "@/utils/cn";
+import { useFocusEffect } from "expo-router";
+import { useVideoPlayer, VideoSource, VideoView } from "expo-video";
+import React from "react";
 import { View } from "react-native";
-import PdfRendererView from "react-native-pdf-renderer";
-import config from "tailwind.config";
 
 export default function Page() {
-	const [pdfPath, setPdfPath] = useState<string | null>(null);
+	const assetId = require("@/assets/videos/guide.mov");
 
-	useEffect(() => {
-		const loadPdf = async () => {
-			const asset = Asset.fromModule(require("@/assets/pdfs/adobe.pdf"));
-			await asset.downloadAsync();
-			setPdfPath(asset.localUri);
-		};
-		loadPdf();
-	}, []);
+	const videoSource: VideoSource = {
+		assetId,
+		metadata: {
+			title: "Simply Life présentation",
+			artist: "Groupe Valorem",
+		},
+	};
 
-	if (!pdfPath) {
-		return <View className="flex-1" />;
-	}
+	const player1 = useVideoPlayer(videoSource);
+
+	useFocusEffect(
+		React.useCallback(() => {
+			return () => {
+				player1.pause();
+			};
+		}, [player1]),
+	);
 
 	return (
-		<View className="flex-1">
-			<PdfRendererView
-				style={{ backgroundColor: config.theme.extend.colors.background }}
-				source={pdfPath}
-				distanceBetweenPages={16}
-				maxZoom={5}
-			/>
-		</View>
+		<BackgroundLayout className={cn("pt-safe flex-1 justify-center px-4 pb-4")}>
+			{/*<Title title="Présentation de Simply Life"></Title>*/}
+			<View className="aspect-video items-center justify-center overflow-hidden rounded-xl">
+				<VideoView player={player1} className="h-full w-full" allowsFullscreen nativeControls />
+			</View>
+		</BackgroundLayout>
 	);
 }

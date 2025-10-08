@@ -34,10 +34,11 @@ export default function Page() {
 	});
 
 	React.useEffect(() => {
+		if (!fundesys?.video?.url) return;
 		async function fetchAsync() {
 			try {
 				setLoading(true);
-				const res = await fetch(fundesys?.video.url ?? "");
+				const res = await fetch(fundesys?.video?.url ?? "");
 				setLoading(false);
 				player.replaceAsync(res.url);
 			} catch {
@@ -50,7 +51,7 @@ export default function Page() {
 	}, [fundesys]);
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4")}>
+		<BackgroundLayout className={cn("px-4 pb-4 mb-4")}>
 			<Title
 				title={`Newsletter du ${new Date(fundesys.date).toLocaleDateString("fr-FR", {
 					day: "numeric",
@@ -59,18 +60,20 @@ export default function Page() {
 				})}`}
 			/>
 
-			<View className="rounded-2xl bg-white p-4">
-				<Text className="text-sm text-primaryLight">Vidéo hebdo</Text>
-				<View className="mx-auto mt-3 aspect-video items-center justify-center overflow-hidden rounded-xl">
-					{loading ? (
-						<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
-					) : (
-						<VideoView player={player} className="h-full w-full" allowsFullscreen nativeControls />
-					)}
+			{fundesys?.video?.url && (
+				<View className="rounded-2xl bg-white p-4">
+					<Text className="text-sm text-primaryLight">Vidéo hebdo</Text>
+					<View className="mx-auto mt-3 aspect-video items-center justify-center overflow-hidden rounded-xl">
+						{loading ? (
+							<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
+						) : (
+							<VideoView player={player} className="h-full w-full" allowsFullscreen nativeControls />
+						)}
+					</View>
 				</View>
-			</View>
+			)}
 
-			<View className="mt-5">
+			<View className={cn(fundesys?.video?.url ? "mt-5" : "mt-0")}>
 				<Brochure
 					title="Newsletter PDF"
 					brochure={fundesys.file}
@@ -81,7 +84,7 @@ export default function Page() {
 							pdf: fundesys.file.filename,
 						},
 					}}
-				/>∏
+				/>
 			</View>
 			<View className="mt-5">
 				<BrochureExcel title="Newsletter Excel" brochure={fundesys.excel} updatedAt={fundesys.updatedAt} />
