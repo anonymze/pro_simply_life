@@ -58,7 +58,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			if (!response.notification) return;
 
 			if ("chatRoomId" in response.notification.request.content.data) {
-				router.dismissAll()
+        // router.dismissAll();
 				router.push(`/chat/${response.notification.request.content.data.chatRoomId}`)
 			}
 		});
