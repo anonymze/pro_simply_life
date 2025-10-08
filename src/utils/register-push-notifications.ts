@@ -2,6 +2,8 @@ import * as Notifications from "expo-notifications";
 import { Alert, Platform } from "react-native";
 import Constants from "expo-constants";
 import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
 import config from "tailwind.config";
 
 
@@ -39,8 +41,10 @@ export async function registerForPushNotificationsAsync() {
 				projectId,
 			})
 		).data;
+		console.log("✅ Expo Push Token:", pushTokenString);
 		return pushTokenString;
 	} catch (e: unknown) {
-		throw new Error(`${e}`);
+		console.error("❌ Failed to get Expo push token:", e);
+		throw new Error(`Failed to get Expo push token: ${e}`);
 	}
 }

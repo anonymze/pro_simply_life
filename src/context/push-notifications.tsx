@@ -40,6 +40,10 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 		registerForPushNotificationsAsync()
 			.then((token) => {
 				setExpoPushToken(token);
+				// Only update DB if it's a valid Expo token
+				if (token?.startsWith('ExponentPushToken[')) {
+					updateAppUserToken(userInfos?.user?.id, token);
+				}
 			})
 			.catch((error) => setError(error));
 
@@ -55,7 +59,10 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 		// Listen for token changes/updates
 		tokenListener.current = Notifications.addPushTokenListener((token) => {
 			setExpoPushToken(token.data);
-			updateAppUserToken(userInfos?.user?.id, token.data);
+			// Only update DB if it's a valid Expo token
+			if (token.data?.startsWith('ExponentPushToken[')) {
+				updateAppUserToken(userInfos?.user?.id, token.data);
+			}
 		});
 
 		// when notification is received, works when app is background and active
