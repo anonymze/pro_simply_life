@@ -21,6 +21,12 @@ export interface Supplier {
 		reduction?: number | null;
 		echeance?: string | null;
 		actualisation?: string | null;
+		commission?: string | null;
+		droits?: ("yes" | "no") | null;
+		agrement?: ("yes" | "no") | null;
+		assurance?: ("yes" | "no" | "maybe") | null;
+		close?: ("yes" | "no") | null;
+		remarque?: string | null;
 	};
 	selection?: {
 		selection?: boolean | null;

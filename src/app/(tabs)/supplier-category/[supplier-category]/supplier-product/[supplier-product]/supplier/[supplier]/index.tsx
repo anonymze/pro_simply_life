@@ -216,13 +216,13 @@ export default function Page() {
 														month: "numeric",
 														year: "numeric",
 													})
-												: "Inconnu"}
+												: "Non renseigné"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
 										<Text className="ml-auto font-light text-sm text-primaryLight">
-											{data.enveloppe.reduction ? data.enveloppe.reduction.toLocaleString("fr-FR") + "%" : "Inconnu"}
+											{data.enveloppe.reduction ? data.enveloppe.reduction.toLocaleString("fr-FR") + "%" : "Non renseigné"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
@@ -234,8 +234,46 @@ export default function Page() {
 														month: "numeric",
 														year: "numeric",
 													})
-												: "Inconnu"}
+												: "Non renseigné"}
 										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Commissions</Text>
+										<Text className="ml-auto font-light text-sm text-primaryLight">
+											{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Plein droit</Text>
+										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+											{data.enveloppe.droits ? "Oui" : "Non"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Agrément</Text>
+										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+											{data.enveloppe.agrement ? "Oui" : "Non"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Assurance bonne fin fiscal</Text>
+										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+											{data.enveloppe.assurance === "yes"
+												? "Oui"
+												: data.enveloppe.assurance === "no"
+													? "Non"
+													: "Parfois"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Close de non retour</Text>
+										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+											{data.enveloppe.close ? "Oui" : "Non"}
+										</Text>
+									</View>
+									<View className="mt-3 gap-2">
+										<Text className="text-sm text-backgroundChat">Remarques :</Text>
+										<Text className=" font-light text-sm text-primaryLight">{data.enveloppe.remarque}</Text>
 									</View>
 								</View>
 							)}

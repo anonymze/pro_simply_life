@@ -11,7 +11,7 @@ import { Link } from "expo-router";
 import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
 import { cssInterop } from "nativewind";
 import React, { useState } from "react";
-import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import config from "tailwind.config";
 
@@ -43,7 +43,12 @@ cssInterop(Calendar, { className: "style" });
 export default function Page() {
 	return withQueryWrapper(
 		{
-			queryKey: ["events"],
+			queryKey: [
+				"events",
+				{
+					sort: "event_start",
+				},
+			],
 			queryFn: getEventsQuery,
 		},
 		({ data }) => {
