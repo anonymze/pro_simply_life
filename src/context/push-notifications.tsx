@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from "react";
+import { updateAppUserToken } from "@/api/queries/app-user-queries";
 import { registerForPushNotificationsAsync } from "@/utils/register-push-notifications";
+import { getStorageUserInfos } from "@/utils/store";
 import { EventSubscription } from "expo-modules-core";
 import * as Notifications from "expo-notifications";
 import { router } from "expo-router";
-
+import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
 
 interface NotificationContextType {
 	expoPushToken: string | null;
@@ -26,6 +27,7 @@ interface NotificationProviderProps {
 }
 
 export const NotificationProvider: React.FC<NotificationProviderProps> = ({ children }) => {
+	const userInfos = getStorageUserInfos();
 	const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
 	const [notification, setNotification] = useState<Notifications.Notification | null>(null);
 	const [error, setError] = useState<Error | null>(null);
@@ -53,8 +55,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 		// Listen for token changes/updates
 		tokenListener.current = Notifications.addPushTokenListener((token) => {
 			setExpoPushToken(token.data);
-			// TODO: Send updated token to your backend here
-			// updateTokenOnBackend(token.data);
+			updateAppUserToken(userInfos?.user?.id, token.data);
 		});
 
 		// when notification is received, works when app is background and active
@@ -67,7 +68,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			if (!response.notification) return;
 
 			if ("chatRoomId" in response.notification.request.content.data) {
-				router.replace(`/chat/${response.notification.request.content.data.chatRoomId}`)
+				router.replace(`/chat/${response.notification.request.content.data.chatRoomId}`);
 			}
 		});
 

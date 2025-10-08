@@ -17,6 +17,7 @@ export interface User {
 	phone?: string;
 	photo?: Media;
 	entry_date?: string;
+	notifications_token?: string | null;
 	createdAt: string;
 	updatedAt: string;
 }
