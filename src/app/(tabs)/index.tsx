@@ -10,29 +10,27 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { AntDesign } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import { ArrowRightIcon, MapPinnedIcon } from "lucide-react-native";
 import config from "tailwind.config";
-import * as WebBrowser from "expo-web-browser";
 
 import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
 
 import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
-import CardSupplier from "@/components/card/card-supplier";
-import { SkeletonPlaceholder } from "@/components/skeleton-placeholder";
 import LampIconFill from "@/components/svg/lamp-fill-icon";
-import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { SCREEN_DIMENSIONS } from "@/utils/helper";
+import { USER_DEV_2_ID, USER_DEV_ID } from "@/utils/helper";
 import { Image } from "expo-image";
-import { Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useNotification } from "@/context/push-notifications";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
 export default function Page() {
+  const notification = useNotification();
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
 			"events",
@@ -55,14 +53,22 @@ export default function Page() {
 
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 
-	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
+	const { firstname, lastname, photo, createdAt, id } = JSON.parse(userJSON) as Pick<
 		User,
-		"firstname" | "lastname" | "photo" | "createdAt"
+		"firstname" | "lastname" | "photo" | "createdAt" | "id"
 	>;
+
 	// const math = NitroModules.createHybridObject<Math>("Math");
 
 	return (
 		<BackgroundLayout className="pt-safe mt-4 px-4">
+			{id === USER_DEV_2_ID || id === USER_DEV_ID ? (
+				<View className="flex-row items-center justify-between">
+					<Text className="font-bold">DEV MODE</Text>
+					<Text>ID : {id}</Text>
+					<Text>Token notif : {notification.expoPushToken}</Text>
+				</View>
+			) : null}
 			<ScrollView
 				className="flex-1"
 				showsVerticalScrollIndicator={false}
@@ -212,42 +218,48 @@ export default function Page() {
 
 				<Title title="Réseaux sociaux" className="mx-auto text-lg" />
 				<View className="flex-row items-center justify-center gap-16">
-					<TouchableOpacity hitSlop={10} onPress={async () => {
-						const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
-						const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts/?feedView=all";
+					<TouchableOpacity
+						hitSlop={10}
+						onPress={async () => {
+							const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
+							const webUrl = "https://www.linkedin.com/company/groupe-valorem-conseil/posts/?feedView=all";
 
-						try {
-							const canOpen = await Linking.canOpenURL(linkedinUrl);
+							try {
+								const canOpen = await Linking.canOpenURL(linkedinUrl);
 
-							if (canOpen) {
-								await Linking.openURL(linkedinUrl);
-							} else {
+								if (canOpen) {
+									await Linking.openURL(linkedinUrl);
+								} else {
+									await WebBrowser.openBrowserAsync(webUrl);
+								}
+							} catch (error) {
 								await WebBrowser.openBrowserAsync(webUrl);
 							}
-						} catch (error) {
-							await WebBrowser.openBrowserAsync(webUrl);
-						}
-					}}>
+						}}
+					>
 						<AntDesign name="linkedin-square" size={35} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
-					<TouchableOpacity hitSlop={10} onPress={async () => {
-						const instagramUrl = "instagram://user?username=groupe_valorem";
-						const webUrl = "https://www.instagram.com/groupe_valorem/";
+					<TouchableOpacity
+						hitSlop={10}
+						onPress={async () => {
+							const instagramUrl = "instagram://user?username=groupe_valorem";
+							const webUrl = "https://www.instagram.com/groupe_valorem/";
 
-						try {
-							const canOpen = await Linking.canOpenURL(instagramUrl);
+							try {
+								const canOpen = await Linking.canOpenURL(instagramUrl);
 
-							if (canOpen) {
-								await Linking.openURL(instagramUrl);
-							} else {
+								if (canOpen) {
+									await Linking.openURL(instagramUrl);
+								} else {
+									await WebBrowser.openBrowserAsync(webUrl);
+								}
+							} catch (error) {
 								await WebBrowser.openBrowserAsync(webUrl);
 							}
-						} catch (error) {
-							await WebBrowser.openBrowserAsync(webUrl);
-						}
-					}}>
-            <AntDesign name="instagram" size={35} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity >
+						}}
+					>
+						<AntDesign name="instagram" size={35} color={config.theme.extend.colors.primary} />
+					</TouchableOpacity>
 				</View>
 			</ScrollView>
 		</BackgroundLayout>
