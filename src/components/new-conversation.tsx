@@ -1,25 +1,18 @@
-import { ActivityIndicator, Pressable, Text, View, TextInput, Alert } from "react-native";
-import Animated, { FadeInDown, FadeOut, runOnJS } from "react-native-reanimated";
+import { queryClient } from "@/api/_queries";
 import { createChatRoomQuery } from "@/api/queries/chat-room-queries";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
-import { PaginatedResponse } from "@/types/response";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "@tanstack/react-form";
-import { queryClient } from "@/api/_queries";
 import { ChatRoom } from "@/types/chat";
-import { router } from "expo-router";
+import { PaginatedResponse } from "@/types/response";
 import { User } from "@/types/user";
+import { useForm } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
+import { router } from "expo-router";
 import React from "react";
+import { ActivityIndicator, Alert, Pressable, Text, TextInput, View } from "react-native";
+import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
 import { z } from "zod";
 
-
-export function NewConversation({ 
-	currentUser,
-	selectedIds,
-}: { 
-	currentUser: User;
-	selectedIds: User["id"][];
-}) {
+export function NewConversation({ currentUser, selectedIds }: { currentUser: User; selectedIds: User["id"][] }) {
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
 
 	const mutationChatRoom = useMutation({
@@ -33,6 +26,12 @@ export function NewConversation({
 					...prev,
 					docs: [data.doc, ...prev.docs],
 				};
+			});
+
+			router.back();
+			router.push({
+				pathname: `/chat/[chat]`,
+				params: { chat: data.doc.id, title: data.doc.name, description: data.doc.description },
 			});
 		},
 	});
@@ -82,7 +81,7 @@ export function NewConversation({
 								keyboardType="default"
 								textContentType="oneTimeCode"
 								placeholder="Ex : fournisseurs"
-								className="w-full rounded-xl bg-darkGray p-5 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
+								className="w-full rounded-xl border border-transparent bg-darkGray p-5 placeholder:text-primaryLight focus:border-primaryLight"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>
@@ -104,7 +103,7 @@ export function NewConversation({
 								autoCapitalize="none"
 								keyboardType="default"
 								placeholder="Ex : informations sur les fournisseurs"
-								className="w-full min-h-24 rounded-xl bg-darkGray p-5 placeholder:text-primaryLight border border-transparent focus:border-primaryLight"
+								className="min-h-24 w-full rounded-xl border border-transparent bg-darkGray p-5 placeholder:text-primaryLight focus:border-primaryLight"
 								defaultValue={field.state.value}
 								onChangeText={field.handleChange}
 							/>
@@ -120,11 +119,7 @@ export function NewConversation({
 				{mutationChatRoom.isPending ? (
 					<Animated.View
 						entering={FadeInDown.springify().duration(1200)}
-						exiting={FadeOut.duration(300).withCallback((finished) => {
-							if (finished) {
-								runOnJS(router.back)();
-							}
-						})}
+						exiting={FadeOut.duration(300).withCallback((finished) => {})}
 					>
 						<ActivityIndicator size="small" color="#fff" />
 					</Animated.View>

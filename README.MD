@@ -219,7 +219,7 @@ cookie session qui s'expire ?
 inclure les indé sur la carte
 
 //
-pré rempli commissions / notification /  brochure Martial / bulk upload
+pré rempli commissions / notification /  brochure Martial // problem pdf android
 //
 
 liens réseaux sociaux notion + linkedin + insta. à refaire
@@ -233,5 +233,3 @@ include denis dans le gros point v2
 cachés les ongletsx
 
 messenger aller direct dans le groupe
-
-limité les media ?? afficher uniquement les logos ?
