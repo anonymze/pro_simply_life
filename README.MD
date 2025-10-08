@@ -212,14 +212,14 @@ un compte admin pour david et voir uniquement les private equity
 
 formulaire de contact de chaque independant, demander l'adresse du cabinet pour l'afficher sur la carte
 
-mot de passe oublié
+mot de passe oublié bug
 
 cookie session qui s'expire ?
 
 inclure les indé sur la carte
 
 //
-pré rempli commissions / notification /  brochure Martial / selection du moment // problem pdf android
+pré rempli commissions / notification /  brochure Martial / selection du moment / problem pdf android
 //
 
 sport patrimoine

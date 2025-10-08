@@ -109,67 +109,67 @@ export default function Page() {
 							keyExtractor={(item) => item.id}
 							renderItem={({ item }) => {
 								// if (userHierarchy[userInfos?.user.role ?? "visitor"] < 2 || item.app_user.id === userInfos?.user.id) {
-								if (true) {
-									return (
-										<>
-											{Platform.OS === "ios" ? (
-												<DropdownMenu.Root>
-													{/* @ts-ignore */}
-													<DropdownMenu.Trigger action="longpress">
-														<Card
-															chatRoom={item}
-															icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
-															title={item.name}
-															description={item.description}
-															link={{
-																pathname: "/chat/[chat]",
-																params: { chat: item.id, title: item.name, description: item.description },
-															}}
-														/>
-													</DropdownMenu.Trigger>
-													<DropdownMenu.Content>
-														<DropdownMenu.Item key="delete" onSelect={() => mutationChatRoom.mutate(item.id)}>
-															<DropdownMenu.ItemTitle>Supprimer</DropdownMenu.ItemTitle>
-															<DropdownMenu.ItemIcon
-																// androidIconName="arrow_down_float"
-																ios={{
-																	name: "trash",
-																	pointSize: 18,
-																	paletteColors: [
-																		{
-																			dark: "red",
-																			light: "red",
-																		},
-																	],
-																}}
-															/>
-														</DropdownMenu.Item>
-													</DropdownMenu.Content>
-												</DropdownMenu.Root>
-											) : (
-												<View className="flex-row gap-3">
-													<Card
-														chatRoom={item}
-														icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
-														title={item.name}
-														description={item.description}
-														link={{
-															pathname: "/chat/[chat]",
-															params: { chat: item.id, title: item.name, description: item.description },
-														}}
-													/>
-													<TouchableOpacity
-														hitSlop={5}
-														className="items-center justify-center rounded-full bg-red2 p-2.5"
-														onPress={() => mutationChatRoom.mutate(item.id)}
-													>
-														<TrashIcon size={18} color={"#fff"} />
-													</TouchableOpacity>
-												</View>
-											)}
-										</>
-									);
-								}
+								// if (true) {
+								// 	return (
+								// 		<>
+								// 			{Platform.OS === "ios" ? (
+								// 				<DropdownMenu.Root>
+								// 					{/* @ts-ignore */}
+								// 					<DropdownMenu.Trigger action="longpress">
+								// 						<Card
+								// 							chatRoom={item}
+								// 							icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
+								// 							title={item.name}
+								// 							description={item.description}
+								// 							link={{
+								// 								pathname: "/chat/[chat]",
+								// 								params: { chat: item.id, title: item.name, description: item.description },
+								// 							}}
+								// 						/>
+								// 					</DropdownMenu.Trigger>
+								// 					<DropdownMenu.Content>
+								// 						<DropdownMenu.Item key="delete" onSelect={() => mutationChatRoom.mutate(item.id)}>
+								// 							<DropdownMenu.ItemTitle>Supprimer</DropdownMenu.ItemTitle>
+								// 							<DropdownMenu.ItemIcon
+								// 								// androidIconName="arrow_down_float"
+								// 								ios={{
+								// 									name: "trash",
+								// 									pointSize: 18,
+								// 									paletteColors: [
+								// 										{
+								// 											dark: "red",
+								// 											light: "red",
+								// 										},
+								// 									],
+								// 								}}
+								// 							/>
+								// 						</DropdownMenu.Item>
+								// 					</DropdownMenu.Content>
+								// 				</DropdownMenu.Root>
+								// 			) : (
+								// 				<View className="flex-row gap-3">
+								// 					<Card
+								// 						chatRoom={item}
+								// 						icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
+								// 						title={item.name}
+								// 						description={item.description}
+								// 						link={{
+								// 							pathname: "/chat/[chat]",
+								// 							params: { chat: item.id, title: item.name, description: item.description },
+								// 						}}
+								// 					/>
+								// 					<TouchableOpacity
+								// 						hitSlop={5}
+								// 						className="items-center justify-center rounded-full bg-red2 p-2.5"
+								// 						onPress={() => mutationChatRoom.mutate(item.id)}
+								// 					>
+								// 						<TrashIcon size={18} color={"#fff"} />
+								// 					</TouchableOpacity>
+								// 				</View>
+								// 			)}
+								// 		</>
+								// 	);
+								// }
 
 								return (
 									<Card
