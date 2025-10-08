@@ -1,4 +1,4 @@
-import { loginQuery } from "@/api/queries/login-queries";
+import { forgotPasswordQuery, loginQuery } from "@/api/queries/login-queries";
 import { useNotification } from "@/context/push-notifications";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -24,17 +24,6 @@ export default function Page() {
 	const { height } = useReanimatedKeyboardAnimation();
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
 	const [showPassword, setShowPassword] = React.useState(false);
-	const mutationLogin = useMutation({
-		mutationFn: loginQuery,
-		onError: (error) => {
-			console.log(error);
-			Alert.alert(i18n[languageCode]("ERROR_LOGIN"), i18n[languageCode]("ERROR_LOGIN_MESSAGE"));
-		},
-		onSuccess: async (data) => {
-			setStorageUserInfos(data);
-			router.replace("/(tabs)");
-		},
-	});
 
 	const formSchema = React.useMemo(
 		() =>
@@ -48,6 +37,31 @@ export default function Page() {
 			}),
 		[],
 	);
+
+	const mutationLogin = useMutation({
+		mutationFn: loginQuery,
+		onError: (error) => {
+			console.log(error);
+			Alert.alert(i18n[languageCode]("ERROR_LOGIN"), i18n[languageCode]("ERROR_LOGIN_MESSAGE"));
+		},
+		onSuccess: async (data) => {
+			setStorageUserInfos(data);
+			router.replace("/(tabs)");
+		},
+	});
+
+	const mutationForgotPassword = useMutation({
+		mutationFn: forgotPasswordQuery,
+		onError: (error) => {
+			console.log(error);
+			// Alert.alert("Une erreur est survenue, contactez l'administrateur.");
+		},
+		onSuccess: async (data) => {
+			console.log(data);
+			// Alert.alert("Un email pour réinitialiser votre mot de passe vient d'être envoyé.");
+			// form.reset();
+		},
+	});
 
 	const form = useForm({
 		defaultValues: {
@@ -164,8 +178,9 @@ export default function Page() {
 						form.resetField("password");
 
 						if (form.getFieldMeta("email")?.isValid) {
-							Alert.alert("Un email pour réinitialiser votre mot de passe vient de vous être envoyé.");
 							form.reset();
+							mutationForgotPassword.mutate(form.getFieldValue("email"));
+							Alert.alert("Un email pour réinitialiser votre mot de passe vient d'être envoyé.");
 						}
 					}}
 					className="mt-4"

@@ -81,10 +81,10 @@ export default function Page() {
 							pdf: fundesys.file.filename,
 						},
 					}}
-				/>
+				/>∏
 			</View>
 			<View className="mt-5">
-				<BrochureExcel title="Newsletter Excel" brochure={fundesys.file} updatedAt={fundesys.updatedAt} />
+				<BrochureExcel title="Newsletter Excel" brochure={fundesys.excel} updatedAt={fundesys.updatedAt} />
 			</View>
 		</BackgroundLayout>
 	);
