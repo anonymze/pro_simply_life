@@ -1,19 +1,10 @@
-import { View, Text, Platform, Dimensions } from "react-native";
-import BackgroundLayout from "@/layouts/background-layout";
-import { getFundesysQuery } from "@/api/queries/fundesys";
-import { useVideoPlayer, VideoView } from "expo-video";
 import { getFidnetQuery } from "@/api/queries/fidnet";
-import { useLocalSearchParams } from "expo-router";
-import { useQuery } from "@tanstack/react-query";
 import { Brochure } from "@/components/brochure";
-import { cn } from "@/utils/libs/tailwind";
 import Title from "@/components/ui/title";
-import { cssInterop } from "nativewind";
-
-
-cssInterop(VideoView, {
-	className: "style",
-});
+import BackgroundLayout from "@/layouts/background-layout";
+import { cn } from "@/utils/libs/tailwind";
+import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
 
 export default function Page() {
 	const { fidnet: fidnetId } = useLocalSearchParams();

@@ -5,14 +5,9 @@ import { cn } from "@/utils/libs/tailwind";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
-import { VideoView } from "expo-video";
-import { cssInterop } from "nativewind";
 import React from "react";
 import { Text, View } from "react-native";
 
-cssInterop(VideoView, {
-	className: "style",
-});
 
 export default function Page() {
 	const { commission: commissionId } = useLocalSearchParams();
