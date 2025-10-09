@@ -29,11 +29,11 @@ export default function CardSupplier({
 		queryClient.setQueryData([queryName, link.params?.["supplier"]], supplier);
 
 		if (root) {
-			router.push("/(tabs)/supplier-category");
+			router.prefetch("/(tabs)/supplier-category");
 			// Small delay to ensure the first navigation completes
 			setTimeout(() => {
 				router.push(link);
-			}, 200);
+			}, 1);
 		}
 	}, [link, root, supplier, queryName]);
 
