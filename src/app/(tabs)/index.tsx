@@ -125,9 +125,10 @@ export default function Page() {
 									link={{
 										pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
 										params: {
+											noback: "true",
 											supplier: supplier.id,
-											"supplier-category-name": "",
-											"supplier-product-name": "",
+											"supplier-category-name": "Accueil",
+											"supplier-product-name": "Sélection du moment",
 											// TODO
 											supplierCategory: "",
 											// TODO

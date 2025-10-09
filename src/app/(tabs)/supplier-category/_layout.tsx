@@ -1,7 +1,7 @@
 import HeaderGrabberIos from "@/layouts/header-grabber-ios";
 import HeaderLayout from "@/layouts/headert-layout";
 import { Platform } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 
 export default function SupplierLayout() {
@@ -25,7 +25,7 @@ export default function SupplierLayout() {
 			<Stack.Screen
 				options={{
 					headerShown: true,
-					header: () => <HeaderLayout />,
+					header: () => <HeaderLayout  />,
 				}}
 				name="[supplier-category]/supplier-product/[supplier-product]/supplier/index"
 			/>
