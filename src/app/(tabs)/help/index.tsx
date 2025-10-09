@@ -10,7 +10,7 @@ export default function Page() {
 	const [isLoading, setIsLoading] = React.useState(true);
 
 	const videoSource: VideoSource = {
-		uri : "https://simply-life-admin.fr/api/media/file/guide.mov",
+		uri : "https://simply-life-admin.fr/api/media/file/guide.mp4",
 		metadata: {
 			title: "Simply Life présentation",
 			artist: "Groupe Valorem",
