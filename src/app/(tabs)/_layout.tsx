@@ -148,14 +148,14 @@ export default function AppLayout() {
 					href: null,
 				}}
 			/>
-			<Tabs.Screen
+			{/*<Tabs.Screen
 				name="supplier-selection"
 				options={{
 					headerShown: false,
 					header: () => <HeaderLayout backgroundColor="bg-white" />,
 					href: null,
 				}}
-			/>
+			/>*/}
 			<Tabs.Screen
 				name="chat"
 				options={{

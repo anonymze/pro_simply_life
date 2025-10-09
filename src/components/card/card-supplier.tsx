@@ -12,12 +12,14 @@ export default function CardSupplier({
 	icon,
 	supplier,
 	link,
+	description,
 	enveloppe = false,
 	queryName = "supplier",
 }: {
 	icon: React.ReactNode;
 	supplier: Supplier;
 	link: HrefObject;
+	description?: string | null;
 	enveloppe?: boolean;
 	queryName?: string;
 }) {
@@ -34,6 +36,7 @@ export default function CardSupplier({
 				<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">{icon}</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{supplier.name}</Text>
+					{description && <Text className="text-md text-primary">{description}</Text>}
 
 					{enveloppe ? (
 						<>

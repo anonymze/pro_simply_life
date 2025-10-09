@@ -18,22 +18,21 @@ import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
 
 import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
+import CardSupplier from "@/components/card/card-supplier";
+import { SkeletonPlaceholder } from "@/components/skeleton-placeholder";
 import LampIconFill from "@/components/svg/lamp-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { SCREEN_DIMENSIONS, USER_DEV_2_ID, USER_DEV_ID } from "@/utils/helper";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Image } from "expo-image";
 import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useNotification } from "@/context/push-notifications";
-import { SkeletonPlaceholder } from "@/components/skeleton-placeholder";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import CardSupplier from "@/components/card/card-supplier";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
 export default function Page() {
-  const notification = useNotification();
+	// const notification = useNotification();
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
 			"events",
@@ -110,18 +109,29 @@ export default function Page() {
 						suppliers.docs?.map((supplier) => (
 							<Animated.View key={supplier.id} entering={FadeIn.duration(300)} className="gap-4">
 								<CardSupplier
+									description={supplier.selection?.category}
+									key={supplier.id}
+									enveloppe={false}
 									icon={
 										<ImagePlaceholder
-											source={supplier.logo_mini?.url ?? ""}
+											transition={300}
+											contentFit="contain"
+											placeholder={supplier.logo_mini?.blurhash}
+											source={supplier.logo_mini?.url}
 											style={{ width: 26, height: 26, borderRadius: 4 }}
 										/>
 									}
-									queryName="supplier-selection"
 									supplier={supplier}
 									link={{
-										pathname: `/supplier-selection/[supplier]`,
+										pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
 										params: {
 											supplier: supplier.id,
+											"supplier-category-name": "CIF",
+											"supplier-product-name": "Girardin Industriel",
+											// TODO
+											supplierCategory: "59cdc1f8-2282-4a2c-83f4-53a124107876",
+											// TODO
+											supplierProduct: "36a662a2-c846-41a2-942e-b8748e34feed",
 										},
 									}}
 								/>
