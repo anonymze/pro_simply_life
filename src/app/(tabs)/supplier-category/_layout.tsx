@@ -5,6 +5,9 @@ import { Stack, useLocalSearchParams } from "expo-router";
 
 
 export default function SupplierLayout() {
+	const { noback } = useLocalSearchParams<{ noback?: string }>();
+	const shouldHideHeader = noback === "true";
+
 	return (
 		<Stack
 			screenOptions={{
