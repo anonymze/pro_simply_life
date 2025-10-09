@@ -69,9 +69,9 @@ export default function Page() {
 	const appUser = getStorageUserInfos();
 	const firstCommission = getStorageFirstCommission();
 
-	if (!firstCommission) {
-		return <FormCommissionCodes />;
-	}
+	// if (!firstCommission) {
+	// 	return <FormCommissionCodes />;
+	// }
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["commissions-monthly", appUser?.user.id],
