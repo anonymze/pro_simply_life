@@ -109,6 +109,7 @@ export default function Page() {
 						suppliers.docs?.map((supplier) => (
 							<Animated.View key={supplier.id} entering={FadeIn.duration(300)} className="gap-4">
 								<CardSupplier
+									root={true}
 									description={supplier.selection?.category}
 									key={supplier.id}
 									enveloppe={false}
