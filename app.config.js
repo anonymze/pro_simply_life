@@ -3,7 +3,7 @@ export default {
 		name: "Simply Life : Groupe Valorem",
 		// slug used by expo for your project
 		slug: "simply-life",
-		version: "1.2.4",
+		version: "1.2.5",
 		orientation: "portrait",
 		icon: "./src/assets/images/icon.png",
 		// simply-life://some_path
@@ -36,6 +36,9 @@ export default {
 			CFBundleAllowMixedLocalizations: true,
 			infoPlist: {
 				ITSAppUsesNonExemptEncryption: false,
+				// NSAppTransportSecurity: {
+				// 	NSAllowsLocalNetworking: true,
+				// },
 			},
 			// entitlements: {
 			// 	"com.apple.security.application-groups": ["group.com.anonymze.simplylife"],

@@ -205,6 +205,7 @@ entrepreneur croissance, ENTREPRENEUR SECONDAIRE,
 Fond de private : Pams et dedans nom du fond
 m-capital sortir de capital ivestissement (private equity)
 
+réunion viseio ou presential ?
 
 eligibles assurances vies
 
