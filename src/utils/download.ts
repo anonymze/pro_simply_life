@@ -5,8 +5,9 @@ const destination = new Directory(Paths.document, "simply-life");
 
 const downloadFile = async (url: string, filename: string, mimeType: string | undefined, sharing = false) => {
 	try {
-		// File constructor handles uri encoding for you on the filename
-		const existingFile = new File(destination, filename);
+		// On Android, File constructor doesn't accept filenames with spaces
+		const encodedFilename = encodeURIComponent(filename);
+		const existingFile = new File(destination, encodedFilename);
 
 		if (existingFile.exists) {
 			if (sharing) await shareFile(existingFile.uri, mimeType);
@@ -19,7 +20,7 @@ const downloadFile = async (url: string, filename: string, mimeType: string | un
 
 		if (sharing) await shareFile(result.uri, mimeType);
 
-		return result;
+		return result as unknown as File;
 	} catch (error) {
 		console.log(error);
 		throw error;
@@ -27,8 +28,10 @@ const downloadFile = async (url: string, filename: string, mimeType: string | un
 };
 
 const getFile = (filename: string) => {
-	// File constructor handles uri encoding for you on the filename
-	const file = new File(destination, filename);
+	// On Android, File constructor doesn't accept filenames with spaces
+	// We need to encode the filename first
+	const encodedFilename = encodeURIComponent(filename);
+	const file = new File(destination, encodedFilename);
 	return file;
 };
 
@@ -42,8 +45,9 @@ const shareFile = async (uri: File["uri"], mimeType: string | undefined) => {
 };
 
 const deleteFile = async (filename: string) => {
-	// File constructor handles uri encoding for you on the filename
-	const file = new File(destination, filename);
+	// On Android, File constructor doesn't accept filenames with spaces
+	const encodedFilename = encodeURIComponent(filename);
+	const file = new File(destination, encodedFilename);
 	if (file.exists) file.delete();
 };
 

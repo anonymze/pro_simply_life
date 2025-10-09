@@ -92,6 +92,7 @@ export const Brochure = ({
 									router.push(link);
 								})
 								.catch((err) => {
+								console.log(err)
 									Alert.alert(
 										"La brochure n'a pas pu être téléchargée pour être visualisée",
 										"Vérifiez que vous avez assez d'espace de stockage.",

@@ -2,7 +2,7 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { cn } from "@/utils/cn";
 import { useFocusEffect } from "@react-navigation/native";
 import { useEvent } from "expo";
-import * as ScreenOrientation from "expo-screen-orientation";
+// import * as ScreenOrientation from "expo-screen-orientation";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useCallback, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -36,13 +36,13 @@ export default function Page() {
 		}, [player]),
 	);
 
-	const handleFullscreenEnter = async () => {
-		await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-	};
+	// const handleFullscreenEnter = async () => {
+	// 	await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+	// };
 
-	const handleFullscreenExit = async () => {
-		await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-	};
+	// const handleFullscreenExit = async () => {
+	// 	await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+	// };
 
 	return (
 		<BackgroundLayout className={cn("pt-safe flex-1 justify-center px-4 pb-4")}>
@@ -60,8 +60,8 @@ export default function Page() {
 					}}
 					allowsFullscreen
 					nativeControls
-					onFullscreenEnter={handleFullscreenEnter}
-					onFullscreenExit={handleFullscreenExit}
+					// onFullscreenEnter={handleFullscreenEnter}
+					// onFullscreenExit={handleFullscreenExit}
 				/>
 			</View>
 		</BackgroundLayout>

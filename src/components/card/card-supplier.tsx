@@ -33,7 +33,7 @@ export default function CardSupplier({
 			// Small delay to ensure the first navigation completes
 			setTimeout(() => {
 				router.push(link);
-			}, 300);
+			}, 200);
 		}
 	}, [link, root, supplier, queryName]);
 
