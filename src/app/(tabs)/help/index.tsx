@@ -10,7 +10,7 @@ export default function Page() {
 	const [isLoading, setIsLoading] = React.useState(true);
 
 	const videoSource: VideoSource = {
-		uri : "https://simply-life-admin.fr/api/media/file/guide.mp4",
+		uri : "https://hygg6eprd9.ufs.sh/f/Qer9vZjDP19L6PdHXE1ko40UhbTnpIzZsguy7M8OdCFvY3VN",
 		metadata: {
 			title: "Simply Life présentation",
 			artist: "Groupe Valorem",
@@ -19,8 +19,16 @@ export default function Page() {
 
 	const player1 = useVideoPlayer(videoSource, (player) => {
 		player.addListener('statusChange', (status) => {
+			// console.log('Video status:', status.status);
 			setIsLoading(status.status === 'loading');
+
+			if (status.status === 'readyToPlay') {
+				player.play();
+			}
 		});
+		// player.addListener('videoTrackChange', (error) => {
+		// 	console.log('Video playback error:', error);
+		// });
 	});
 
 	useFocusEffect(
