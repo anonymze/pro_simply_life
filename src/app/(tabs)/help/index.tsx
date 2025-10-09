@@ -9,7 +9,7 @@ const videoSource = require("@/assets/videos/guide.mp4");
 
 export default function Page() {
 	const player = useVideoPlayer(videoSource, (player) => {
-		player.loop = true;
+		player.loop = false;
 		player.play();
 	});
 
