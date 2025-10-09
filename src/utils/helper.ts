@@ -89,6 +89,5 @@ export const USER_MATHIEU_ID = "da45b442-babf-4c37-af20-2f79c57fb51f";
 export const USER_DEV_ID = "9e817b3c-50bf-4564-a653-28516ef84f59";
 export const USER_DEV_2_ID = "34346fc6-2fe6-4009-92b3-5936073c7c19";
 export const FCPR_ID = "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8";
-export const FCPIR_ID = "YOUR_FCPIR_ID_HERE"; // Replace with actual FCPIR ID
 
 export const SCREEN_DIMENSIONS = Dimensions.get("window");

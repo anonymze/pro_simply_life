@@ -4,7 +4,7 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { cn } from "@/utils/cn";
-import { GIRARDIN_INDUSTRIEL_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { FCPR_ID, GIRARDIN_INDUSTRIEL_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { FlashList } from "@shopify/flash-list";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
@@ -30,12 +30,21 @@ export default function Page() {
 	}, [multipleSupplierProducts]);
 
 	const queries = useQueries({
-		queries: multipleSupplierProductIds.map((id) => ({
+		queries: multipleSupplierProductIds.filter((id) => id !== FCPR_ID).map((id) => ({
 			queryKey: ["supplier-product", id],
 			queryFn: getSupplierProductQuery,
 			enabled: !!id,
 		})),
 	});
+
+	// Sort queries by supplier product name (ascending)
+	const sortedQueries = React.useMemo(() => {
+		return [...queries].sort((a, b) => {
+			const nameA = a.data?.name || '';
+			const nameB = b.data?.name || '';
+			return nameA.localeCompare(nameB, 'fr');
+		});
+	}, [queries]);
 
 	// Get the main supplier product data
 	const { data } = useQuery({
@@ -72,7 +81,7 @@ export default function Page() {
 			{supplierProductId === PRIVATE_EQUITY_ID && (
 				<FlashList
 					showsHorizontalScrollIndicator={false}
-					data={queries}
+					data={sortedQueries}
 					horizontal
 					className="mb-4"
 					estimatedItemSize={45}

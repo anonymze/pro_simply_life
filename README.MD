@@ -196,8 +196,6 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 // 18  entre 10h et 11h
 // excel organigramme
 
-windgroo
-
 
 PRIVATE EQUITY A DES PRODUITS (comme scpi)
 entrepreneur croissance, ENTREPRENEUR SECONDAIRE,
@@ -220,7 +218,7 @@ cookie session qui s'expire ?
 inclure les indé sur la carte
 
 //
-pré rempli commissions / notification /  brochure Martial / selection du moment / problem pdf android
+pré rempli commissions /  brochure Martial / private equity -> problème de cacher FCPR, 150 0b ter etc... sur quoi je mets lesproduits ? dettes privées ? capital investissement
 //
 
 sport patrimoine
@@ -230,3 +228,7 @@ liens réseaux sociaux notion + linkedin + insta. à refaire
 produits structurés, entrer un mail pour envoyer la brochure ?
 
 include denis dans le gros point v2
+
+
+
+spot kite surf /  meteo (windgroo) / vent windgroo / chat communautaire / multi langue / marketplace
