@@ -22,10 +22,13 @@ import LampIconFill from "@/components/svg/lamp-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { USER_DEV_2_ID, USER_DEV_ID } from "@/utils/helper";
+import { SCREEN_DIMENSIONS, USER_DEV_2_ID, USER_DEV_ID } from "@/utils/helper";
 import { Image } from "expo-image";
 import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useNotification } from "@/context/push-notifications";
+import { SkeletonPlaceholder } from "@/components/skeleton-placeholder";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import CardSupplier from "@/components/card/card-supplier";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
@@ -92,7 +95,7 @@ export default function Page() {
 					))}
 				</View>
 
-				{/*<Title title="Notre sélection du moment" />
+				<Title title="Notre sélection du moment" />
 				<View className="gap-2">
 					{isLoadingSuppliers || !suppliers ? (
 						<Animated.View key="skeleton" exiting={FadeOut.duration(2000)}>
@@ -125,7 +128,7 @@ export default function Page() {
 							</Animated.View>
 						))
 					)}
-				</View>*/}
+				</View>
 
 				<Title title="Newsletter" />
 				<Link

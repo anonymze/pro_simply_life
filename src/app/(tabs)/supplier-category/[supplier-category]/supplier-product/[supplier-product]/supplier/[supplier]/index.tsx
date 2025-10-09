@@ -260,9 +260,15 @@ export default function Page() {
 										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 											{data.enveloppe.assurance === "yes"
 												? "Oui"
-												: data.enveloppe.assurance === "no"
-													? "Non"
-													: "Parfois"}
+												: data.enveloppe.assurance === "maybe"
+													? "Parfois"
+													: "Non"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
+										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+											{data.enveloppe.investisseur ? "Oui" : "Non"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">

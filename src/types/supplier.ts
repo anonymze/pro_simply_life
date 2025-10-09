@@ -25,6 +25,7 @@ export interface Supplier {
 		droits?: ("yes" | "no") | null;
 		agrement?: ("yes" | "no") | null;
 		assurance?: ("yes" | "no" | "maybe") | null;
+		investisseur?: ("yes" | "no") | null;
 		close?: ("yes" | "no") | null;
 		remarque?: string | null;
 	};
