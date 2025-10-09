@@ -123,7 +123,7 @@ export default function Page() {
 
 					<Text className="mb-2 mt-5 font-semibold text-primary">Structure produit</Text>
 					<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-						<Text className="text-sm text-primaryLight">Date de constations</Text>
+						<Text className="text-sm text-primaryLight">Date de constatation</Text>
 						<Text selectable className="font-semibold text-primary">
 							{new Date(structuredProduct.constatation).toLocaleString("fr-FR", {
 								day: "numeric",
