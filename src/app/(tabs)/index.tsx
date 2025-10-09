@@ -126,12 +126,12 @@ export default function Page() {
 										pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
 										params: {
 											supplier: supplier.id,
-											"supplier-category-name": "CIF",
-											"supplier-product-name": "Girardin Industriel",
+											"supplier-category-name": "",
+											"supplier-product-name": "",
 											// TODO
-											supplierCategory: "59cdc1f8-2282-4a2c-83f4-53a124107876",
+											supplierCategory: "",
 											// TODO
-											supplierProduct: "36a662a2-c846-41a2-942e-b8748e34feed",
+											supplierProduct: "",
 										},
 									}}
 								/>
