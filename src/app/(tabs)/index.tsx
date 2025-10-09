@@ -94,7 +94,7 @@ export default function Page() {
 					))}
 				</View>
 
-				{/*<Title title="Notre sélection du moment" />
+				<Title title="Notre sélection du moment" />
 				<View className="gap-2">
 					{isLoadingSuppliers || !suppliers ? (
 						<Animated.View key="skeleton" exiting={FadeOut.duration(2000)}>
@@ -139,7 +139,7 @@ export default function Page() {
 							</Animated.View>
 						))
 					)}
-				</View>*/}
+				</View>
 
 				<Title title="Newsletter" />
 				<Link
