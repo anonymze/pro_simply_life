@@ -197,7 +197,7 @@ const commissionProviders = [
 	{ id: "7c1711bf-518e-4643-b314-153cd7163f17", name: "Swiss Life" },
 	{ id: "19bb9991-9e71-4995-8533-04066de17e0e", name: "Swiss Life Luxembourg" },
 	{ id: "cb5011bd-e427-4dcd-949a-d966ffac29c3", name: "Urban Premium" },
-	{ id: "1f2fc416-f162-400e-9c81-fdb6f038cc2e", name: "Vie +" },
+	// { id: "1f2fc416-f162-400e-9c81-fdb6f038cc2e", name: "Vie +" },
 	{ id: "115f3c48-802b-4b07-b496-b7381a471779", name: "Wealins" },
 ];
 
