@@ -78,7 +78,7 @@ export const excludedProductSupplierIds = [
 	// 150 OB TER
 	"6871100f-d1ae-4326-93f9-d4f5117243ab",
 	// FCPR
-	// "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8",
+	"949d4203-a2f3-40cc-b5cc-fcfe4464ccd8",
 ];
 
 export const PRIVATE_EQUITY_ID = "42369074-6134-4d77-8a91-46f9a2efb1c4";
@@ -88,5 +88,7 @@ export const USER_LOENIE_ID = "3aec92de-0d1f-4909-ae0b-71156f40b854";
 export const USER_MATHIEU_ID = "da45b442-babf-4c37-af20-2f79c57fb51f";
 export const USER_DEV_ID = "9e817b3c-50bf-4564-a653-28516ef84f59";
 export const USER_DEV_2_ID = "34346fc6-2fe6-4009-92b3-5936073c7c19";
+export const FCPR_ID = "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8";
+export const FCPIR_ID = "YOUR_FCPIR_ID_HERE"; // Replace with actual FCPIR ID
 
 export const SCREEN_DIMENSIONS = Dimensions.get("window");
