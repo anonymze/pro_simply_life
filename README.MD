@@ -197,36 +197,16 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 // excel organigramme
 
 
-PRIVATE EQUITY A DES PRODUITS (comme scpi)
-entrepreneur croissance, ENTREPRENEUR SECONDAIRE,
-
-Fond de private : Pams et dedans nom du fond
-m-capital sortir de capital ivestissement (private equity)
-
-réunion viseio ou presential ?
-
-eligibles assurances vies
-
-un compte admin pour david et voir uniquement les private equity
-
-formulaire de contact de chaque independant, demander l'adresse du cabinet pour l'afficher sur la carte
-
-mot de passe oublié bug
-
 cookie session qui s'expire ?
 
-inclure les indé sur la carte
-
 //
-pré rempli commissions /  brochure Martial / private equity -> problème de cacher FCPR, 150 0b ter etc... sur quoi je mets lesproduits ? dettes privées ? capital investissement
+pré rempli commissions  / private equity à refaire + public pour david // inclure les indé sur la carte // mot de passe oublié bug
 //
-
-sport patrimoine
 
 liens réseaux sociaux notion + linkedin + insta. à refaire
+
+sport patrimoine
 
 produits structurés, entrer un mail pour envoyer la brochure ?
 
 include denis dans le gros point v2
-
-bug accepté refusé évènements
