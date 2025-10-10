@@ -6,6 +6,13 @@ export interface Supplier {
 	website?: string | null;
 	logo_mini?: Media | null;
 	logo_full?: Media | null;
+	brochures?:
+		| {
+				name: string;
+				brochure: Media;
+				id?: string | null;
+		  }[]
+		| null;
 	contact_info: {
 		lastname?: string | null;
 		firstname?: string | null;

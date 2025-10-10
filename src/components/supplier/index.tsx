@@ -289,11 +289,16 @@ export default function Page({ previousCategories = true }: { previousCategories
 							)}
 
 							<ContactInfo
+								supplierId={supplierId}
+								supplierCategoryId={supplierCategoryId}
+								supplierProductId={supplierProductId}
 								phone={data.contact_info?.phone}
 								email={data.contact_info?.email}
 								firstname={data.contact_info?.firstname}
 								lastname={data.contact_info?.lastname}
 								website={data.website}
+								brochures={data.brochures}
+								previousCategories={previousCategories}
 							/>
 
 							{/* BECAREFUL CREATE ROUTE FOR SELECTION TOO */}
@@ -348,10 +353,15 @@ export default function Page({ previousCategories = true }: { previousCategories
 						>
 							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 								<ContactInfo
+									supplierId={supplierId}
+									supplierCategoryId={supplierCategoryId}
+									supplierProductId={supplierProductId}
 									phone={data.contact_info?.phone}
 									email={data.contact_info?.email}
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
+									brochures={data.brochures}
+									previousCategories
 								/>
 								{/*{(data.connexion?.email || data.connexion?.password) && (
 									<Logs
@@ -417,10 +427,15 @@ export default function Page({ previousCategories = true }: { previousCategories
 						>
 							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 								<ContactInfo
+									supplierId={supplierId}
+									supplierCategoryId={supplierCategoryId}
+									supplierProductId={supplierProductId}
 									phone={data.contact_info?.phone}
 									email={data.contact_info?.email}
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
+									brochures={data.brochures}
+									previousCategories
 								/>
 								{/* BECAREFUL CREATE ROUTE FOR SELECTION TOO */}
 								{/*{(data.connexion?.email || data.connexion?.password) && (
@@ -505,79 +520,119 @@ const ContactInfo = ({
 	firstname,
 	lastname,
 	website,
+	brochures,
+	previousCategories,
+	supplierCategoryId,
+	supplierProductId,
+	supplierId,
 }: {
+	previousCategories: boolean;
+	supplierCategoryId: string | string[];
+	supplierProductId: string | string[];
+	supplierId: string | string[];
 	phone?: string | null;
 	email?: string | null;
 	firstname?: string | null;
 	lastname?: string | null;
 	website?: string | null;
+	brochures?: Supplier["brochures"];
 }) => {
 	const numbersString = phone?.replace(",", " / ");
 	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
 
 	return (
-		<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			<Text className="text-sm text-primaryLight">Prénom et Nom</Text>
-			<Text selectable className="font-semibold text-primary">
-				{firstname} {lastname?.toUpperCase()}
-			</Text>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<View className="flex-row items-center justify-between gap-2">
-				<View className="flex-shrink gap-2">
-					<Text className="text-sm text-primaryLight">Téléphone</Text>
-					<Text selectable className="font-semibold text-base text-primary">
-						{numbersString}
-					</Text>
+		<View className="gap-3">
+			<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				<Text className="text-sm text-primaryLight">Prénom et Nom</Text>
+				<Text selectable className="font-semibold text-primary">
+					{firstname} {lastname?.toUpperCase()}
+				</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex-row items-center justify-between gap-2">
+					<View className="flex-shrink gap-2">
+						<Text className="text-sm text-primaryLight">Téléphone</Text>
+						<Text selectable className="font-semibold text-base text-primary">
+							{numbersString}
+						</Text>
+					</View>
+					{phone && (
+						<TouchableOpacity
+							onPress={() => {
+								Linking.openURL(`tel:${numbers?.[0]}`);
+							}}
+							className="rounded-full bg-primaryUltraLight p-3"
+						>
+							<PhoneIcon size={16} color={config.theme.extend.colors.primary} />
+						</TouchableOpacity>
+					)}
 				</View>
-				{phone && (
-					<TouchableOpacity
-						onPress={() => {
-							Linking.openURL(`tel:${numbers?.[0]}`);
-						}}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						<PhoneIcon size={16} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
-				)}
-			</View>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<View className="flex-row items-center justify-between gap-2">
-				<View className="flex-shrink flex-grow-0 gap-2">
-					<Text className="text-sm text-primaryLight">E-mail</Text>
-					<Text selectable className="font-semibold text-base text-primary">
-						{email}
-					</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex-row items-center justify-between gap-2">
+					<View className="flex-shrink flex-grow-0 gap-2">
+						<Text className="text-sm text-primaryLight">E-mail</Text>
+						<Text selectable className="font-semibold text-base text-primary">
+							{email}
+						</Text>
+					</View>
+					{email && (
+						<TouchableOpacity
+							onPress={() => Linking.openURL(`mailto:${email}`)}
+							className="rounded-full bg-primaryUltraLight p-3"
+						>
+							<MailIcon size={16} color={config.theme.extend.colors.primary} />
+						</TouchableOpacity>
+					)}
 				</View>
-				{email && (
-					<TouchableOpacity
-						onPress={() => Linking.openURL(`mailto:${email}`)}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						<MailIcon size={16} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
-				)}
-			</View>
-			<View className="my-2 h-px w-full bg-defaultGray/15" />
-			<View className="flex-row items-center justify-between gap-2">
-				<View className="flex-shrink flex-grow-0 gap-2">
-					<Text className="text-sm text-primaryLight">Adresse du site internet</Text>
-					<Text selectable className="font-semibold text-base text-primary">
-						{website}
-					</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex-row items-center justify-between gap-2">
+					<View className="flex-shrink flex-grow-0 gap-2">
+						<Text className="text-sm text-primaryLight">Adresse du site internet</Text>
+						<Text selectable className="font-semibold text-base text-primary">
+							{website}
+						</Text>
+					</View>
+					{website && (
+						<TouchableOpacity
+							onPress={() => {
+								if (!website) return;
+								Clipboard.setStringAsync(website);
+								Alert.alert("URL copiée");
+							}}
+							className="rounded-full bg-primaryUltraLight p-3"
+						>
+							<CopyIcon size={16} color={config.theme.extend.colors.primary} />
+						</TouchableOpacity>
+					)}
 				</View>
-				{website && (
-					<TouchableOpacity
-						onPress={() => {
-							if (!website) return;
-							Clipboard.setStringAsync(website);
-							Alert.alert("URL copiée");
-						}}
-						className="rounded-full bg-primaryUltraLight p-3"
-					>
-						<CopyIcon size={16} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
-				)}
 			</View>
+			{brochures?.map((brochure) => (
+				<Brochure
+					key={brochure.brochure.id}
+					brochure={brochure.brochure}
+					updatedAt={brochure.brochure.updatedAt}
+					title={brochure.name}
+					link={
+						previousCategories
+							? {
+									pathname:
+										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+									params: {
+										"supplier-category": supplierCategoryId,
+										"supplier-product": supplierProductId,
+										supplier: supplierId,
+										pdf: brochure.brochure.filename,
+									},
+								}
+							: {
+									pathname: "selection/[supplier]/pdf/[pdf]",
+									params: {
+										supplier: supplierId,
+										pdf: brochure.brochure.filename,
+									},
+								}
+					}
+				/>
+			))}
 		</View>
 	);
 };
