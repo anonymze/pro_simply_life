@@ -99,16 +99,16 @@ export default function Page() {
 				>
 					<TouchableOpacity
 						activeOpacity={0.8}
-						className="relative rounded-xl border border-primary bg-white mt-6  px-5 py-4"
+						className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-4"
 					>
 						{/* Main content */}
 						<View className="flex-row items-center justify-between">
 							<View className="flex-1 flex-row items-center gap-3">
 								<Sparkles size={15} color="#FDB022" fill="#FDB022" />
-								<Text className="flex-1 font-bold text-lg text-primary">Notre sélection du moment</Text>
+								<Text className="flex-1 font-bold text-md text-primary">Notre sélection du moment</Text>
 							</View>
 
-							<View className="flex-row items-center gap-2 rounded-full border bg-primary px-4 py-2">
+							<View className="flex-row items-center gap-2 rounded-full border bg-primary px-3 py-1.5">
 								<ArrowRightIcon size={20} color="white" strokeWidth={3} />
 							</View>
 						</View>
