@@ -99,7 +99,7 @@ export default function Page() {
 				>
 					<TouchableOpacity
 						activeOpacity={0.8}
-						className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-4"
+						className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5"
 					>
 						{/* Main content */}
 						<View className="flex-row items-center justify-between">
@@ -108,9 +108,7 @@ export default function Page() {
 								<Text className="flex-1 font-bold text-md text-primary">Notre sélection du moment</Text>
 							</View>
 
-							<View className="flex-row items-center gap-2 rounded-full border bg-primary px-3 py-1.5">
-								<ArrowRightIcon size={20} color="white" strokeWidth={3} />
-							</View>
+								<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
 						</View>
 					</TouchableOpacity>
 				</Link>
