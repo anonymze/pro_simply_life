@@ -3,7 +3,7 @@ import { Redirect, useLocalSearchParams } from "expo-router";
 import PdfViewer from "@/components/pdf-viewer";
 
 export default function Page() {
-	const { pdf } = useLocalSearchParams();
+	const { pdf, link } = useLocalSearchParams();
 
 	if (!pdf || typeof pdf !== "string") return <Redirect href="../" />;
 
@@ -11,5 +11,5 @@ export default function Page() {
 
 	if (!file.exists) return <Redirect href="../" />;
 
-	return <PdfViewer uri={file.uri} />;
+	return <PdfViewer uri={file.uri} link={link} />;
 }

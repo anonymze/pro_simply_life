@@ -70,6 +70,7 @@ export default function Page() {
 									<View className="flex-row flex-wrap gap-5">
 										{selections.map((selection) => (
 											<ImmobilierCard
+												website={selection.website}
 												brochure={selection.brochure!}
 												key={selection.id}
 												supplier={selection.supplier}
@@ -129,10 +130,12 @@ const ImmobilierCard = ({
 	image,
 	supplier,
 	brochure,
+	website,
 }: {
 	image: Media | undefined;
 	supplier: Supplier;
 	brochure: Media;
+	website?: string;
 }) => {
 	return (
 		<Link
@@ -140,12 +143,13 @@ const ImmobilierCard = ({
 				pathname: "selection/pdf/[pdf]",
 				params: {
 					pdf: brochure.filename,
+					link: website,
 				},
 			}}
 			push
 			asChild
 		>
-			<TouchableOpacity className="w-[46%] rounded-2xl border-amber-300 border-2">
+			<TouchableOpacity className="w-[46%] rounded-2xl border-2 border-amber-300">
 				<ImagePlaceholder
 					transition={300}
 					contentFit="cover"
@@ -153,7 +157,7 @@ const ImmobilierCard = ({
 					source={image?.url}
 					style={{ width: "100%", aspectRatio: 1, borderRadius: 16 }}
 				/>
-				<Text className="mt-2 mb-3 text-center text-primary font-semibold">{supplier.name}</Text>
+				<Text className="mb-3 mt-2 text-center font-semibold text-primary">{supplier.name}</Text>
 			</TouchableOpacity>
 		</Link>
 	);
