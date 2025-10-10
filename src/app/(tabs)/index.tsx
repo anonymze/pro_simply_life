@@ -11,23 +11,19 @@ import { AntDesign } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import { ArrowRightIcon, MapPinnedIcon } from "lucide-react-native";
+import { ArrowRightIcon, MapPinnedIcon, Sparkles } from "lucide-react-native";
 import config from "tailwind.config";
 
 import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
 
-import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
-import CardSupplier from "@/components/card/card-supplier";
-import { SkeletonPlaceholder } from "@/components/skeleton-placeholder";
+import { getSelectionsQuery } from "@/api/queries/selection-queries";
 import LampIconFill from "@/components/svg/lamp-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Image } from "expo-image";
 import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 
@@ -48,9 +44,9 @@ export default function Page() {
 		},
 	});
 
-	const { data: suppliers, isLoading: isLoadingSuppliers } = useQuery({
-		queryKey: ["suppliers-selection"],
-		queryFn: getSuppliersSelectionQuery,
+	const { data: selection, isLoading: isLoadingSelection } = useQuery({
+		queryKey: ["selection"],
+		queryFn: getSelectionsQuery,
 	});
 
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
@@ -94,53 +90,30 @@ export default function Page() {
 					))}
 				</View>
 
-				<Title title="Notre sélection du moment" />
-				<View className="gap-2">
-					{isLoadingSuppliers || !suppliers ? (
-						<Animated.View key="skeleton" exiting={FadeOut.duration(2000)}>
-							<SkeletonPlaceholder
-								shimmerColors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
-								height={63}
-								width={SCREEN_DIMENSIONS.width - 28}
-								style={{ borderRadius: 12 }}
-							/>
-						</Animated.View>
-					) : (
-						suppliers.docs?.map((supplier) => (
-							<Animated.View key={supplier.id} entering={FadeIn.duration(300)} className="gap-4">
-								<CardSupplier
-									root={true}
-									description={supplier.selection?.category}
-									key={supplier.id}
-									enveloppe={false}
-									icon={
-										<ImagePlaceholder
-											transition={300}
-											contentFit="contain"
-											placeholder={supplier.logo_mini?.blurhash}
-											source={supplier.logo_mini?.url}
-											style={{ width: 26, height: 26, borderRadius: 4 }}
-										/>
-									}
-									supplier={supplier}
-									link={{
-										pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
-										params: {
-											noback: "true",
-											supplier: supplier.id,
-											"supplier-category-name": "Accueil",
-											"supplier-product-name": "Sélection du moment",
-											// TODO
-											supplierCategory: "",
-											// TODO
-											supplierProduct: "",
-										},
-									}}
-								/>
-							</Animated.View>
-						))
-					)}
-				</View>
+				<Link
+					href={{
+						pathname: "/selection",
+					}}
+					push
+					asChild
+				>
+					<TouchableOpacity
+						activeOpacity={0.8}
+						className="relative rounded-xl border border-primary bg-white mt-6  px-5 py-4"
+					>
+						{/* Main content */}
+						<View className="flex-row items-center justify-between">
+							<View className="flex-1 flex-row items-center gap-3">
+								<Sparkles size={15} color="#FDB022" fill="#FDB022" />
+								<Text className="flex-1 font-bold text-lg text-primary">Notre sélection du moment</Text>
+							</View>
+
+							<View className="flex-row items-center gap-2 rounded-full border bg-primary px-4 py-2">
+								<ArrowRightIcon size={20} color="white" strokeWidth={3} />
+							</View>
+						</View>
+					</TouchableOpacity>
+				</Link>
 
 				<Title title="Newsletter" />
 				<Link

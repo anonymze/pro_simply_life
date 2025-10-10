@@ -148,6 +148,13 @@ export default function AppLayout() {
 					href: null,
 				}}
 			/>
+			<Tabs.Screen
+				name="selection"
+				options={{
+					headerShown: false,
+					href: null,
+				}}
+			/>
 			{/*<Tabs.Screen
 				name="supplier-selection"
 				options={{

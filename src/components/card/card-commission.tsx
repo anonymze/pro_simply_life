@@ -19,7 +19,7 @@ export default function CardCommission({ commission, link }: { commission: Commi
 				onPressIn={onPress}
 				className="w-full flex-row items-center justify-between gap-3 rounded-xl bg-white p-4 shadow-sm shadow-defaultGray/10"
 			>
-				<Text className="flex-shrink font-semibold text-lg text-primary">{new Date(commission.date).toLocaleDateString("fr-FR", {
+				<Text className="flex-shrink font-semibold text-lg text-primary">{new Date(commission.createdAt).toLocaleDateString("fr-FR", {
 					month: "long",
 					// year: "numeric",
 				})}</Text>

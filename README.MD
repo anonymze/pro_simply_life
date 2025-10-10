@@ -229,6 +229,4 @@ produits structurés, entrer un mail pour envoyer la brochure ?
 
 include denis dans le gros point v2
 
-
-
-spot kite surf /  meteo (windgroo) / vent windgroo / chat communautaire / multi langue / marketplace
+bug accepté refusé évènements

@@ -1,0 +1,160 @@
+import { getSelectionsQuery } from "@/api/queries/selection-queries";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
+import Title from "@/components/ui/title";
+import BackgroundLayout from "@/layouts/background-layout";
+import { Media } from "@/types/media";
+import { Selection } from "@/types/selection";
+import { Supplier } from "@/types/supplier";
+import { withQueryWrapper } from "@/utils/libs/react-query";
+import { HrefObject, Link } from "expo-router";
+import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
+import { useMemo } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import config from "tailwind.config";
+
+export default function Page() {
+	return withQueryWrapper<Selection>(
+		{
+			queryKey: ["selection"],
+			queryFn: getSelectionsQuery,
+		},
+		({ data }) => {
+			// Group selections by category
+			const groupedSelections = useMemo(() => {
+				const grouped: { [key: string]: Selection[] } = {};
+
+				data.docs?.forEach((selection) => {
+					const category = selection.category;
+
+					// For immobilier, skip if no brochure
+					if (category === "immobilier" && !selection.brochure) return;
+
+					if (!grouped[category]) {
+						grouped[category] = [];
+					}
+					grouped[category].push(selection);
+				});
+
+				return grouped;
+			}, [data.docs]);
+
+			// Category display names
+			const categoryNames: { [key: string]: string } = {
+				girardin: "Girardin Industriel",
+				immobilier: "Immobilier",
+			};
+
+			// Define the order of categories
+			const categoryOrder = ["girardin", "immobilier"];
+			const orderedCategories = categoryOrder
+				.filter((cat) => groupedSelections[cat])
+				.map((cat) => [cat, groupedSelections[cat]] as [string, Selection[]]);
+
+			return (
+				<BackgroundLayout className="pt-safe px-4">
+					<View className="flex-row items-center gap-3">
+						<Title title="Notre sélection du moment" />
+						<SparklesIcon size={15} color="#FDB022" fill="#FDB022" />
+					</View>
+					<ScrollView
+						showsVerticalScrollIndicator={false}
+						contentContainerStyle={{ paddingBottom: 16 }}
+						className="mt-3"
+					>
+						{orderedCategories.map(([category, selections]) => (
+							<View key={category} className="mb-6">
+								<Text className="mb-2 font-semibold text-base text-defaultGray">
+									{categoryNames[category] || category}
+								</Text>
+								{category === "immobilier" ? (
+									<View className="flex-row flex-wrap gap-5">
+										{selections.map((selection) => (
+											<ImmobilierCard
+												brochure={selection.brochure!}
+												key={selection.id}
+												supplier={selection.supplier}
+												image={selection.image}
+											/>
+										))}
+									</View>
+								) : (
+									<View className="gap-3">
+										{selections.map((selection) => (
+											<Card
+												key={selection.id}
+												link={{
+													pathname: `selection/[supplier]`,
+													params: {
+														supplier: selection.supplier.id,
+													},
+												}}
+												icon={
+													<ImagePlaceholder
+														transition={300}
+														contentFit="contain"
+														placeholder={selection.supplier.logo_mini?.blurhash}
+														source={selection.supplier.logo_mini?.url}
+														style={{ width: 40, height: 40, borderRadius: 4 }}
+													/>
+												}
+												title={selection.supplier.name}
+											/>
+										))}
+									</View>
+								)}
+							</View>
+						))}
+					</ScrollView>
+				</BackgroundLayout>
+			);
+		},
+	)();
+}
+
+const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: string }) => {
+	return (
+		<Link href={link} push asChild>
+			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-lg bg-white p-2">
+				<View className="size-14 items-center justify-center rounded-lg bg-amber-200">{icon}</View>
+				<View className="flex-1">
+					<Text className="font-semibold text-lg text-primary">{title}</Text>
+				</View>
+				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
+			</TouchableOpacity>
+		</Link>
+	);
+};
+
+const ImmobilierCard = ({
+	image,
+	supplier,
+	brochure,
+}: {
+	image: Media | undefined;
+	supplier: Supplier;
+	brochure: Media;
+}) => {
+	return (
+		<Link
+			href={{
+				pathname: "selection/pdf/[pdf]",
+				params: {
+					pdf: brochure.filename,
+				},
+			}}
+			push
+			asChild
+		>
+			<TouchableOpacity className="w-[46%] rounded-2xl border-amber-300 border-2">
+				<ImagePlaceholder
+					transition={300}
+					contentFit="cover"
+					placeholder={image?.blurhash}
+					source={image?.url}
+					style={{ width: "100%", aspectRatio: 1, borderRadius: 16 }}
+				/>
+				<Text className="mt-2 mb-3 text-center text-primary font-semibold">{supplier.name}</Text>
+			</TouchableOpacity>
+		</Link>
+	);
+};

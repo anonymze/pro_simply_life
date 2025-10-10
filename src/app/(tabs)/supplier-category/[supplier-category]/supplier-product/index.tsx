@@ -60,7 +60,6 @@ export default function Page() {
 		return allSuppliers.filter((supplier) => supplier.searchName.includes(searchTerm));
 	}, [allSuppliers, search]);
 
-	// console.log(filteredData);
 
 	return (
 		<BackgroundLayout className="px-4 pt-4">

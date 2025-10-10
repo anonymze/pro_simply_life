@@ -57,7 +57,7 @@ export default function Page() {
 			// Alert.alert("Une erreur est survenue, contactez l'administrateur.");
 		},
 		onSuccess: async (data) => {
-			console.log(data);
+			// console.log(data);
 			// Alert.alert("Un email pour réinitialiser votre mot de passe vient d'être envoyé.");
 			// form.reset();
 		},
