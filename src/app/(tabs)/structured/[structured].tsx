@@ -3,6 +3,7 @@ import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { brokerLabels } from "@/types/structured-product";
+import { cn } from "@/utils/cn";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
@@ -69,14 +70,21 @@ export default function Page() {
 									<Text className="text-center text-xs text-primaryLight">
 										{Math.ceil((structuredProduct.current / structuredProduct.max) * 100)}%
 									</Text>
-									<View className="h-1.5 w-full rounded-full bg-production" />
+									<View
+										className={cn(
+											"h-1.5 w-full rounded-full bg-green-600",
+											structuredProduct.current <= 0 && "bg-production",
+										)}
+									/>
 								</View>
 							</View>
 						</View>
 						<View className="mt-6 flex-row items-center gap-2">
-							<View className="size-2 rounded-full bg-production" />
+							<View className={cn("size-2 rounded-full bg-green-600", structuredProduct.current <= 0 && "bg-production")} />
 							<Text className="text-backgroundChat">Solde enveloppe</Text>
-							<Text className="ml-auto font-light text-sm text-primaryLight">{structuredProduct.current.toLocaleString()}€</Text>
+							<Text className="ml-auto font-light text-sm text-primaryLight">
+								{structuredProduct.current.toLocaleString()}€
+							</Text>
 						</View>
 					</View>
 
@@ -155,7 +163,9 @@ export default function Page() {
 							{structuredProduct.refund}
 						</Text>
 						<View className="my-2 h-px w-full bg-defaultGray/15" />
-						<Text className="text-sm text-primaryLight">Seuil de récupération de l'intégralité des coupons à maturité (airbag)</Text>
+						<Text className="text-sm text-primaryLight">
+							Seuil de récupération de l'intégralité des coupons à maturité (airbag)
+						</Text>
 						<Text selectable className="font-semibold text-primary">
 							{structuredProduct.airbag}
 						</Text>
