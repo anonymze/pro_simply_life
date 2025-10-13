@@ -187,26 +187,18 @@ sport & patrimoine
 système de formulaire pour un client avec tout tas d'informations à entrer + document ID à entrer pour des clients lors d'un rdv (cgp), donénes liés à l'utilisatrurt qui a créé le formulaire
 nouveau client -> entrer des informations ou retrouver les informations des formulaires
 
-
-
 // accepter évènement
 // visio ou précense
 // intervenants
 // theme, société qui intervient et son nom
-// 18  entre 10h et 11h
+// 18 entre 10h et 11h
 // excel organigramme
-
-nouveau message nom de la personne
 
 cookie session qui s'expire ?
 
 //
-pré rempli commissions  / public pour david // inclure les indé sur la carte // mot de passe oublié bug // organigramme laggy
+pré rempli commissions // inclure les indé sur la carte // mot de passe oublié bug // nouveau message nom de la personne // meilleur enveloppe (val max) + couleur
 //
-
-liens réseaux sociaux notion + linkedin + insta. à refaire
-
-sport patrimoine
 
 produits structurés, entrer un mail pour envoyer la brochure ?
 

@@ -43,7 +43,7 @@ export default function CardEmployeeCarousel({
 						/>
 					)}
 				</View>
-				<Text m className="mt-2 text-sm text-primary text-center">{user.firstname + " " + user.lastname}</Text>
+				<Text className="mt-2 text-sm text-primary text-center">{user.firstname + " " + user.lastname}</Text>
 			</TouchableOpacity>
 		</Link>
 	);
