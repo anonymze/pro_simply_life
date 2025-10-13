@@ -56,7 +56,7 @@ export default function Page() {
 	const bureauData = [
 		{ title: "Bureau 1", value: "1" },
 		{ title: "Bureau 2", value: "2" },
-		{ title: "Bureau 3", value: "3" },
+		{ title: "Salle de réunion", value: "3" },
 	];
 
 	const mutation = useMutation({
