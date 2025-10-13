@@ -23,6 +23,5 @@ export interface Reservation {
 export const labels = {
   "1": "Bureau 1",
   "2": "Bureau 2",
-  "3": "Bureau 3",
+  "3": "Salle de réunion",
 } as const;
-
