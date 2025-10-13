@@ -3,7 +3,7 @@ import { getSportsQuery } from "@/api/queries/sport-queries";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Sport } from "@/types/sport";
-import { USER_DEV_ID, USER_LOENIE_ID, USER_MATHIEU_ID } from "@/utils/helper";
+import { USER_DEV_ID, USER_LEONIE_ID, USER_MATHIEU_ID } from "@/utils/helper";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import { getStorageUserInfos } from "@/utils/store";
 import { Link } from "expo-router";
@@ -23,7 +23,7 @@ export default function Page() {
 		({ data }) => {
 			return (
 				<BackgroundLayout className="pt-safe px-4">
-					{appUser?.user.id === USER_LOENIE_ID ||
+					{appUser?.user.id === USER_LEONIE_ID ||
 					appUser?.user.id === USER_MATHIEU_ID ||
 					appUser?.user.id === USER_DEV_ID ? (
 						<View className="flex-row items-center justify-between">

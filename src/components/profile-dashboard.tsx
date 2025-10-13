@@ -12,11 +12,9 @@ export default function ProfileDashboard({
 	firstname,
 	lastname,
 	photo,
-	createdAt,
 }: {
 	firstname: string;
 	lastname: string;
-	createdAt: string;
 	photo?: Media;
 }) {
 	return (

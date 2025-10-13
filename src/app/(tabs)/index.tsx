@@ -17,11 +17,12 @@ import config from "tailwind.config";
 import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
 
-import { getSelectionsQuery } from "@/api/queries/selection-queries";
 import LampIconFill from "@/components/svg/lamp-fill-icon";
+import SportIconFill from "@/components/svg/sport-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
+import { USER_LEONIE_ID, USER_MATHIEU_ID } from "@/utils/helper";
 import { Image } from "expo-image";
 import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 // import type { Math } from "react-native-math";
@@ -44,16 +45,11 @@ export default function Page() {
 		},
 	});
 
-	const { data: selection, isLoading: isLoadingSelection } = useQuery({
-		queryKey: ["selection"],
-		queryFn: getSelectionsQuery,
-	});
-
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
 
-	const { firstname, lastname, photo, createdAt } = JSON.parse(userJSON) as Pick<
+	const { firstname, lastname, photo, id } = JSON.parse(userJSON) as Pick<
 		User,
-		"firstname" | "lastname" | "photo" | "createdAt"
+		"firstname" | "lastname" | "photo" | "id"
 	>;
 
 	// const math = NitroModules.createHybridObject<Math>("Math");
@@ -72,22 +68,25 @@ export default function Page() {
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 				contentContainerStyle={{ paddingBottom: 16 }}
 			>
-				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} createdAt={createdAt} />
+				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} />
 
 				<Title title="Fonctionnalités" />
 				<View className="flex-row flex-wrap justify-between gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
-					{links.map((link) => (
-						<View key={link.title} className="w-[32%] items-center ">
-							<CardLink
-								icon={link.icon}
-								title={link.title}
-								description={link.description}
-								link={link.link}
-								url={link.url}
-								backgroundIcon={link.backgroundIcon}
-							/>
-						</View>
-					))}
+					{links.map((link) => {
+						if (id !== USER_LEONIE_ID && id !== USER_MATHIEU_ID && link.link === "/(tabs)/sports") return;
+						return (
+							<View key={link.title} className="w-[32%] items-center ">
+								<CardLink
+									icon={link.icon}
+									title={link.title}
+									description={link.description}
+									link={link.link}
+									url={link.url}
+									backgroundIcon={link.backgroundIcon}
+								/>
+							</View>
+						);
+					})}
 				</View>
 
 				<Link
@@ -105,10 +104,10 @@ export default function Page() {
 						<View className="flex-row items-center justify-between">
 							<View className="flex-1 flex-row items-center gap-3">
 								<Sparkles size={15} color="#FDB022" fill="#FDB022" />
-								<Text className="flex-1 font-bold text-md text-primary">Notre sélection du moment</Text>
+								<Text className="text-md flex-1 font-bold text-primary">Notre sélection du moment</Text>
 							</View>
 
-								<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
+							<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
 						</View>
 					</TouchableOpacity>
 				</Link>
@@ -315,11 +314,11 @@ const links: {
 		url: "https://www.groupe-dalbade-immobilier.fr/acheter",
 		backgroundIcon: "bg-[#ffffff]",
 	},
-	// {
-	// 	icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
-	// 	title: "Sport & Patrimoine",
-	// 	description: "Vie d'agence",
-	// 	link: "/(tabs)/sports",
-	// 	backgroundIcon: "bg-[#FEF3C7]",
-	// },
+	{
+		icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
+		title: "Sport & Patrimoine",
+		description: "Vie d'agence",
+		link: "/(tabs)/sports",
+		backgroundIcon: "bg-[#FEF3C7]",
+	},
 ];

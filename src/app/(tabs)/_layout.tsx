@@ -41,7 +41,8 @@ export default function AppLayout() {
 						firstname: userInfos.user.firstname,
 						lastname: userInfos.user.lastname,
 						photo: userInfos.user.photo,
-						createdAt: userInfos.user.createdAt,
+						// createdAt: userInfos.user.createdAt,
+						id: userInfos.user.id,
 					}),
 				}}
 				options={{

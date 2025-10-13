@@ -3,13 +3,11 @@ import { getReservationQuery, deleteReservationQuery } from "@/api/queries/reser
 import { ActivityIndicator, Alert, Platform, Text, TouchableOpacity, View } from "react-native";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { FadeInDown, FadeOut } from "react-native-reanimated";
 import BackgroundLayout from "@/layouts/background-layout";
 import { labels, Reservation } from "@/types/reservation";
 import EmployeesIcon from "@/components/emloyees-icon";
 import { PaginatedResponse } from "@/types/response";
 import { getStorageUserInfos } from "@/utils/store";
-import Animated from "react-native-reanimated";
 import { queryClient } from "@/api/_queries";
 import Title from "@/components/ui/title";
 import config from "tailwind.config";
