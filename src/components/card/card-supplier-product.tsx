@@ -9,16 +9,16 @@ import config from "tailwind.config";
 export default function CardSupplierProduct({
 	supplierProduct,
 	link,
-	multipleSupplierProducts = [],
+	// multipleSupplierProducts = [],
 }: {
-	multipleSupplierProducts?: SupplierProduct[];
+	// multipleSupplierProducts?: SupplierProduct[];
 	supplierProduct: SupplierProduct;
 	link: HrefObject;
 }) {
 	const onPress = React.useCallback(() => {
-		for (const product of multipleSupplierProducts) {
-			queryClient.setQueryData(["supplier-product", product.id], product);
-		}
+		// for (const product of multipleSupplierProducts) {
+		// 	queryClient.setQueryData(["supplier-product", product.id], product);
+		// }
 		queryClient.setQueryData(["supplier-product", supplierProduct.id], supplierProduct);
 	}, [supplierProduct]);
 

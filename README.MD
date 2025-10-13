@@ -196,11 +196,12 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 // 18  entre 10h et 11h
 // excel organigramme
 
+nouveau message nom de la personne
 
 cookie session qui s'expire ?
 
 //
-pré rempli commissions  / private equity à refaire + public pour david // inclure les indé sur la carte // mot de passe oublié bug
+pré rempli commissions  / public pour david // inclure les indé sur la carte // mot de passe oublié bug // organigramme laggy
 //
 
 liens réseaux sociaux notion + linkedin + insta. à refaire

@@ -1,7 +1,9 @@
+import { getPrivateEquityQuery } from "@/api/queries/private-equity-queries";
 import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
+import { PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { cn } from "@/utils/cn";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
@@ -28,12 +30,19 @@ export default function Page({ previousCategories = true }: { previousCategories
 		"supplier-category": supplierCategoryId,
 		"supplier-category-name": supplierCategoryName,
 		"supplier-product-name": supplierProductName,
+		"private-equity": privateEquityId,
 	} = useLocalSearchParams();
 
 	const { data } = useQuery({
 		queryKey: ["supplier", supplierId],
 		queryFn: getSupplierQuery,
 		enabled: !!supplierId,
+	});
+
+	const { data: privateEquity } = useQuery({
+		queryKey: ["private-supplier", privateEquityId],
+		queryFn: getPrivateEquityQuery,
+		enabled: !!privateEquityId,
 	});
 
 	if (!data) return null;
@@ -123,7 +132,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 				)}
 
 				{/* PRIVATE EQUITY */}
-				{!!data?.fond?.length && (
+				{!!privateEquity?.fond?.length && (
 					<FlashList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -131,12 +140,9 @@ export default function Page({ previousCategories = true }: { previousCategories
 								title: "Contact",
 								subtitle: "",
 							},
-							...data.fond.map((info, idx) => {
-								return {
-									title:
-										idx === 0 ? "Entrepreneur croissance" : idx === 1 ? "Entrepreneur secondaire" : "Fond sans titre",
-								};
-							}),
+							...privateEquity.fond.map((fond) => ({
+								title: fond.name,
+							})),
 						]}
 						horizontal
 						className="my-4"
@@ -165,7 +171,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									}}
 								>
 									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
-										{item.title}
+										{item?.title}
 									</Text>
 								</Pressable>
 							);
@@ -179,7 +185,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data?.other_information?.length && !data?.fond?.length ? (
+					{!data?.other_information?.length && !privateEquity?.fond?.length ? (
 						<View className="mt-4 gap-4">
 							{data?.enveloppe && data.enveloppe.amount && (
 								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
@@ -342,7 +348,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								}
 							/>
 						</View>
-					) : !!data?.fond?.length ? (
+					) : !!privateEquity?.fond?.length ? (
 						<ScrollView
 							ref={horizontalScrollRef}
 							horizontal
@@ -403,7 +409,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									}
 								/>
 							</View>
-							{data.fond?.map((fond, idx) => (
+							{privateEquity.fond.map((fond, idx) => (
 								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 									<FondComponent
 										previousCategories={previousCategories}
@@ -727,7 +733,7 @@ const FondComponent = ({
 	previousCategories,
 	updatedAt,
 }: {
-	information: NonNullable<Supplier["fond"]>[number];
+	information: NonNullable<PrivateEquity["fond"]>[number];
 	supplierCategoryId: string | string[];
 	supplierProductId: string | string[];
 	supplierId: string | string[];
@@ -737,39 +743,26 @@ const FondComponent = ({
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="font-semibold text-sm text-primaryLight">Durée</Text>
-				<Text className="font-semibold text-sm text-primary">{information.duration}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Montant mini sur versement</Text>
+				<Text className="font-semibold text-sm text-primary">{information?.versement}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Thèse d'investissement</Text>
-				<Text className="font-semibold text-base text-primary">{information.investment}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Montant mini sur arbitrage</Text>
+				<Text className="font-semibold text-base text-primary">{information.arbitrage}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Ticket mini</Text>
-				<Text className="font-semibold text-base text-primary">{information.ticket}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Allocation max sur contrat</Text>
+				<Text className="font-semibold text-base text-primary">{information.allocation}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Durée appel de fond</Text>
-				<Text className="font-semibold text-base text-primary">{information.duration_found}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Fréquence de liquidité</Text>
+				<Text className="font-semibold text-base text-primary">{information.liquidite}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="flex flex-row items-center justify-between">
-					<Text className="font-semibold text-sm text-primaryLight">Distribution</Text>
-					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-						{information.distribution ? "Oui" : "Non"}
-					</Text>
-				</View>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">TRI cible</Text>
+				<Text className="font-semibold text-sm text-primaryLight">TRI annuel cible</Text>
 				<Text className="font-semibold text-base text-primary">{information.tri}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Multiple cible</Text>
-				<Text className="font-semibold text-base text-primary">{information.multiple}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Rétrocession</Text>
+				<Text className="font-semibold text-base text-primary">{information.retrocession}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Éligible 150 0b ter</Text>
-				<Text className="font-semibold text-base text-primary">{information.eligibility}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Rétro upfront</Text>
-				<Text className="font-semibold text-base text-primary">{information.upfront}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Rétro encours</Text>
-				<Text className="font-semibold text-base text-primary">{information.encours}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Sous-jacent</Text>
+				<Text className="font-semibold text-base text-primary">{information["sous-jacent"]}</Text>
 			</View>
 			{information.brochure && (
 				<Brochure
