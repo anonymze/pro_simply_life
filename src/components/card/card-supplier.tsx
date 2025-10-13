@@ -1,13 +1,14 @@
 import { queryClient } from "@/api/_queries";
 import { PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
+import { cn } from "@/utils/cn";
 import { HrefObject, Link } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
-const DEFAULT_MAX_VALUE = 1_000_000;
+const DEFAULT_MAX_VALUE = 5_000_000;
 
 export default function CardSupplier({
 	icon,
@@ -57,20 +58,31 @@ export default function CardSupplier({
 												style={{
 													// minWidth: structuredProduct.max / structuredProduct.current,
 													width:
-														supplier.enveloppe.amount >= DEFAULT_MAX_VALUE
+														supplier.enveloppe.amount >= (supplier.enveloppe.global || DEFAULT_MAX_VALUE)
 															? "100%"
-															: supplier.enveloppe.amount / DEFAULT_MAX_VALUE < 0.1
+															: supplier.enveloppe.amount / (supplier.enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
 																? "10%"
-																: (supplier.enveloppe.amount / DEFAULT_MAX_VALUE) * 100 + "%",
+																: (supplier.enveloppe.amount / (supplier.enveloppe.global || DEFAULT_MAX_VALUE)) * 100 +
+																	"%",
 												}}
 											>
-												<View className="h-1.5 w-full rounded-full bg-production" />
+												<View
+													className={cn(
+														"h-1.5 w-full rounded-full bg-green-600",
+														supplier.enveloppe.amount <= 0 && "bg-production",
+													)}
+												/>
 											</View>
 										</View>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
-										<View className="size-2 rounded-full bg-production" />
-										<Text className="text-xs text-backgroundChat">Enveloppe montant restant</Text>
+										<View
+											className={cn(
+												"size-2 rounded-full bg-green-600",
+												supplier.enveloppe.amount <= 0 && "bg-production",
+											)}
+										/>
+										<Text className="text-xs text-backgroundChat">Montant enveloppe disponible</Text>
 										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{supplier.enveloppe.amount.toLocaleString("fr-FR")}€
 										</Text>

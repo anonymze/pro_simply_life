@@ -14,6 +14,7 @@ export interface PrivateEquity {
 				arbitrage?: string | null;
 				allocation?: string | null;
 				liquidite?: string | null;
+				penalite?: string | null;
 				tri?: string | null;
 				retrocession?: string | null;
 				"sous-jacent"?: string | null;

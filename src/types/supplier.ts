@@ -24,6 +24,7 @@ export interface Supplier {
 		password?: string | null;
 	};
 	enveloppe?: {
+		global?: number | null;
 		amount?: number | null;
 		reduction?: number | null;
 		echeance?: string | null;
