@@ -9,19 +9,11 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { User } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { withQueryWrapper } from "@/utils/libs/react-query";
+import { FlashList } from "@shopify/flash-list";
 import { HrefObject, Link } from "expo-router";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
-
-// utility function to split array into chunks
-const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
-	const chunks: T[][] = [];
-	for (let i = 0; i < array.length; i += chunkSize) {
-		chunks.push(array.slice(i, i + chunkSize));
-	}
-	return chunks;
-};
 
 export default function Page() {
 	return withQueryWrapper<User>(
@@ -93,8 +85,14 @@ export default function Page() {
 				return classified;
 			}, [data]);
 
-			const independentChunks = React.useMemo(() => {
-				return chunkArray(classifiedUsers.independent, 9);
+			// Sort independents by firstname and group into columns of 2
+			const independentColumns = React.useMemo(() => {
+				const sorted = [...classifiedUsers.independent].sort((a, b) => a.firstname.localeCompare(b.firstname, "fr"));
+				const columns: User[][] = [];
+				for (let i = 0; i < sorted.length; i += 2) {
+					columns.push(sorted.slice(i, i + 2));
+				}
+				return columns;
 			}, [classifiedUsers.independent]);
 
 			return (
@@ -171,34 +169,30 @@ export default function Page() {
 									</TouchableOpacity>
 								</Link>
 							</View>
-							<ScrollView
+							<FlashList
+								data={independentColumns}
 								horizontal
 								showsHorizontalScrollIndicator={false}
-								className="-mr-4"
-								decelerationRate={0.1}
-								contentContainerStyle={{ paddingRight: 16, gap: 16 }} // keep right padding for last card
-								scrollEventThrottle={undefined}
-								style={{ flexGrow: 0 }}
-							>
-								{independentChunks.map((independentPage) => {
-									return (
-										<View key={independentPage[0].id} className="flex-row flex-wrap gap-x-8 gap-y-4">
-											{independentPage.map((independent) => (
-												<CardEmployeeCarousel
-													key={independent.id}
-													user={independent}
-													link={{
-														pathname: "/organigramme/[organigramme]",
-														params: {
-															organigramme: independent.id,
-														},
-													}}
-												/>
-											))}
-										</View>
-									);
-								})}
-							</ScrollView>
+								estimatedItemSize={100}
+								contentContainerStyle={{ paddingRight: 16, paddingBottom: 16 }}
+								ItemSeparatorComponent={() => <View style={{ width: 32 }} />}
+								renderItem={({ item: column }) => (
+									<View className="gap-y-4">
+										{column.map((independent) => (
+											<CardEmployeeCarousel
+												key={independent.id}
+												user={independent}
+												link={{
+													pathname: "/organigramme/[organigramme]",
+													params: {
+														organigramme: independent.id,
+													},
+												}}
+											/>
+										))}
+									</View>
+								)}
+							/>
 						</ScrollView>
 					) : (
 						<>
