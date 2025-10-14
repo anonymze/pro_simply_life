@@ -40,36 +40,36 @@ export default function Page() {
 			},
 		},
 		({ data }) => {
-			const mutationChatRoom = useMutation({
-				mutationFn: deleteChatRoomQuery,
-				// when mutate is called:
-				onMutate: async (chatRoomId) => {
-					// cancel any outgoing refetches
-					// (so they don't overwrite our optimistic update)
-					await queryClient.cancelQueries({ queryKey: ["chat-rooms"] });
+			// const mutationChatRoom = useMutation({
+			// 	mutationFn: deleteChatRoomQuery,
+			// 	// when mutate is called:
+			// 	onMutate: async (chatRoomId) => {
+			// 		// cancel any outgoing refetches
+			// 		// (so they don't overwrite our optimistic update)
+			// 		await queryClient.cancelQueries({ queryKey: ["chat-rooms"] });
 
-					// snapshot the previous value
-					const previousChatRooms = queryClient.getQueryData(["chat-rooms"]);
+			// 		// snapshot the previous value
+			// 		const previousChatRooms = queryClient.getQueryData(["chat-rooms"]);
 
-					// optimistically update to the new value
-					queryClient.setQueryData(["chat-rooms"], (old: PaginatedResponse<ChatRoom>) => {
-						return {
-							...old,
-							docs: old.docs.filter((chatRoom) => chatRoom.id !== chatRoomId),
-						};
-					});
+			// 		// optimistically update to the new value
+			// 		queryClient.setQueryData(["chat-rooms"], (old: PaginatedResponse<ChatRoom>) => {
+			// 			return {
+			// 				...old,
+			// 				docs: old.docs.filter((chatRoom) => chatRoom.id !== chatRoomId),
+			// 			};
+			// 		});
 
-					// return old messages before optimistic update for the context in onError
-					return previousChatRooms;
-				},
-				// if the mutation fails,
-				// use the context returned from onMutate to roll back
-				onError: (err, chatRoomId, context) => {
-					queryClient.setQueryData(["chat-rooms"], context);
-				},
-				// always refetch after error or success:
-				onSettled: () => queryClient.invalidateQueries({ queryKey: ["chat-rooms"] }),
-			});
+			// 		// return old messages before optimistic update for the context in onError
+			// 		return previousChatRooms;
+			// 	},
+			// 	// if the mutation fails,
+			// 	// use the context returned from onMutate to roll back
+			// 	onError: (err, chatRoomId, context) => {
+			// 		queryClient.setQueryData(["chat-rooms"], context);
+			// 	},
+			// 	// always refetch after error or success:
+			// 	onSettled: () => queryClient.invalidateQueries({ queryKey: ["chat-rooms"] }),
+			// });
 
 			const prefetchMessages = React.useCallback(async (chatId: string) => {
 				// Check if messages are already in cache

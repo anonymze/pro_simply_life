@@ -180,7 +180,9 @@ export default function Page() {
 						if (form.getFieldMeta("email")?.isValid) {
 							form.reset();
 							mutationForgotPassword.mutate(form.getFieldValue("email"));
-							Alert.alert("Un email pour réinitialiser votre mot de passe vient d'être envoyé.");
+							Alert.alert(
+								"Un email pour réinitialiser votre mot de passe vient d'être envoyé. Si vous n'avez rien reçu c'est que cet email n'existe pas chez nous.",
+							);
 						}
 					}}
 					className="mt-4"
