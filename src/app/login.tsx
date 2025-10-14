@@ -33,7 +33,7 @@ export default function Page() {
 				email: z.string().email({
 					message: i18n[languageCode]("ERROR_EMAIL_INVALID"),
 				}),
-				password: z.string().min(10, {
+				password: z.string().min(8, {
 					message: i18n[languageCode]("ERROR_PASSWORD_MIN_LENGTH"),
 				}),
 			}),
