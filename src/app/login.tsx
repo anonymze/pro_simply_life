@@ -24,6 +24,8 @@ export default function Page() {
 	const { height } = useReanimatedKeyboardAnimation();
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
 	const [showPassword, setShowPassword] = React.useState(false);
+	const emailInputRef = React.useRef<TextInput>(null);
+	const passwordInputRef = React.useRef<TextInput>(null);
 
 	const formSchema = React.useMemo(
 		() =>
@@ -94,6 +96,7 @@ export default function Page() {
 						{(field) => (
 							<React.Fragment>
 								<TextInput
+									ref={emailInputRef}
 									testID="email-input"
 									returnKeyType="done"
 									autoCapitalize="none"
@@ -120,6 +123,7 @@ export default function Page() {
 							<React.Fragment>
 								<View className="relative">
 									<TextInput
+										ref={passwordInputRef}
 										testID="password-input"
 										secureTextEntry={!showPassword}
 										returnKeyType="done"
@@ -183,6 +187,10 @@ export default function Page() {
 							Alert.alert(
 								"Un email pour réinitialiser votre mot de passe vient d'être envoyé. Si vous n'avez rien reçu c'est que cet email n'existe pas chez nous.",
 							);
+							
+							// Blur inputs to dismiss keyboard
+							emailInputRef.current?.blur();
+							passwordInputRef.current?.blur();
 						}
 					}}
 					className="mt-4"
