@@ -9,6 +9,6 @@ export async function loginQuery({ email, password, expoPushToken }: { email: st
 }
 
 export async function forgotPasswordQuery(email: string) {
-  const response = await api.post("/api/app-users/forgot-password", { email });
+  const response = await api.post("/api/app-users/password-forgot", { email });
   return response.data;
 }
