@@ -182,13 +182,12 @@ export default function Page() {
 						form.resetField("password");
 
 						if (form.getFieldMeta("email")?.isValid) {
-							form.reset();
 							mutationForgotPassword.mutate(form.getFieldValue("email"));
+							form.reset();
 							Alert.alert(
 								"Un email pour réinitialiser votre mot de passe vient d'être envoyé. Si vous n'avez rien reçu c'est que cet email n'existe pas chez nous.",
 							);
-							
-							// Blur inputs to dismiss keyboard
+
 							emailInputRef.current?.blur();
 							passwordInputRef.current?.blur();
 						}
