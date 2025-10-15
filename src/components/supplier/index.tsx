@@ -317,7 +317,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								previousCategories={previousCategories}
 							/>
 
-							{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password) && (
+							{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
 								<Logs
 									title="Identifiants généraux"
 									link={
@@ -389,7 +389,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									previousCategories
 								/>
 
-								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password) && (
+								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
 									<Logs
 										title="Identifiants généraux"
 										link={
@@ -474,7 +474,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									previousCategories
 								/>
 
-								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password) && (
+								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
 									<Logs
 										title="Identifiants généraux"
 										link={
