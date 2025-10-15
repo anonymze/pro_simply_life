@@ -197,7 +197,7 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 cookie session qui s'expire ?
 
 //
-pré rempli commissions // inclure les indé sur la carte // mot de passe oublié bug // nouveau message nom de la personne
+pré rempli commissions // inclure les indé sur la carte // nouveau message nom de la personne // ajouter une personne à un chat
 //
 
 produits structurés, entrer un mail pour envoyer la brochure ?
