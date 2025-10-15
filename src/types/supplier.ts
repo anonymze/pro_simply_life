@@ -22,6 +22,7 @@ export interface Supplier {
 	connexion: {
 		email?: string | null;
 		password?: string | null;
+		remarques?: string | null;
 	};
 	enveloppe?: {
 		global?: number | null;

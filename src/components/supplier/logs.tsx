@@ -11,7 +11,7 @@ export default function SupplierLogs() {
 
 	if (!logs || typeof supplier !== "string") return <Redirect href="../" />;
 
-	const connexion = JSON.parse(logs as string) as { email?: string; password?: string };
+	const connexion = JSON.parse(logs as string) as { email?: string; password?: string, remarques?: string };
 
 	return (
 		<BackgroundLayout className="p-4">
@@ -21,7 +21,7 @@ export default function SupplierLogs() {
 	);
 }
 
-const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: string } }) => {
+const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: string, remarques?: string } }) => {
 	return (
 		<View className="w-full gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 			<View className="flex-row items-center justify-between gap-2">
@@ -60,6 +60,13 @@ const ContactInfo = ({ connexion }: { connexion: { email?: string; password?: st
 						<CopyIcon size={16} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
 				)}
+			</View>
+			<View className="my-2 h-px w-full bg-defaultGray/15" />
+			<View className="flex-row items-center justify-between gap-2">
+				<View className="gap-2">
+					<Text className="text-sm text-primaryLight">Remarques</Text>
+					<Text className="font-semibold text-base text-primary" numberOfLines={4}>{connexion?.remarques}</Text>
+				</View>
 			</View>
 		</View>
 	);
