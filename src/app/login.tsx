@@ -64,7 +64,7 @@ export default function Page() {
 		<BackgroundLayout className="p-6">
 			<Animated.View className="flex-1 justify-center gap-3" style={animatedStyle}>
 				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 80 }} contentFit="contain" />
-				<Text className="font-medium text-lg text-primary max-w-[90%] text-start mt-4">{i18n[languageCode]("SUBTITLE_LOGIN")}</Text>
+				<Text className="font-medium text-lg text-primary max-w-[90%] text-start mt-4">Helloooo</Text>
 
 				<View className="mt-8 w-full gap-3">
 					<Text className="text-md self-start text-primary">{i18n[languageCode]("INPUT_EMAIL_LOGIN")}</Text>
