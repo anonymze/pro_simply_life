@@ -1,6 +1,6 @@
 import type { Media } from "@/types/media";
 import { downloadFile, getFile } from "@/utils/download";
-import { HrefObject, router } from "expo-router";
+import { Href, router } from "expo-router";
 import { DownloadIcon, EyeIcon, FileIcon } from "lucide-react-native";
 import React from "react";
 import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
@@ -14,7 +14,7 @@ export const Brochure = ({
 }: {
 	brochure: Media;
 	updatedAt: string;
-	link: HrefObject;
+	link: Href;
 	title?: string;
 }) => {
 	const [loadingDownload, setLoadingDownload] = React.useState(false);

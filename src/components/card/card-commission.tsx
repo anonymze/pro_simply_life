@@ -2,13 +2,13 @@ import { Pressable, Text, TouchableOpacity } from "react-native";
 import { SupplierProduct } from "@/types/supplier";
 import { ArrowRight } from "lucide-react-native";
 import { Commission } from "@/types/commission";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
 import config from "tailwind.config";
 import React from "react";
 
 
-export default function CardCommission({ commission, link }: { commission: Commission; link: HrefObject }) {
+export default function CardCommission({ commission, link }: { commission: Commission; link: Href }) {
 	const onPress = React.useCallback(() => {
 		queryClient.setQueryData(["commission", commission.id], commission);
 	}, [commission]);

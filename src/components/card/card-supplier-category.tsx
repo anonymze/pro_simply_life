@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { SupplierCategory } from "@/types/supplier";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
 import { Image } from "expo-image";
 import React from "react";
@@ -15,10 +15,11 @@ export default function CardSupplierCategory({
 	backgroundIcon?: string;
 	icon?: React.ReactNode;
 	supplierCategory: SupplierCategory;
-	link: HrefObject;
+	link: Href;
 }) {
 	const onPress = React.useCallback(() => {
-		queryClient.setQueryData(["supplier-category", link.params?.["supplier-category"]], supplierCategory);
+		const params = typeof link === 'object' ? link.params : undefined;
+		queryClient.setQueryData(["supplier-category", params?.["supplier-category"]], supplierCategory);
 	}, [link]);
 
 	const description = React.useMemo(() => {

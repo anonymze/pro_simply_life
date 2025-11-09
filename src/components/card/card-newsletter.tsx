@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { ArrowRight } from "lucide-react-native";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
 import { Supplier } from "@/types/supplier";
 import { Fundesys } from "@/types/fundesys";
@@ -17,7 +17,7 @@ export default function CardNewsletter({
 }: {
 	icon: React.ReactNode;
 	newsletter: Fundesys | Fidnet;
-	link: HrefObject;
+	link: Href;
 	queryKey: "fundesys" | "fidnet";
 }) {
 	const onPress = React.useCallback(() => {

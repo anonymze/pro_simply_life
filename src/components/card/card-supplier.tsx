@@ -2,7 +2,7 @@ import { queryClient } from "@/api/_queries";
 import { PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { cn } from "@/utils/cn";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -21,14 +21,15 @@ export default function CardSupplier({
 }: {
 	icon: React.ReactNode;
 	supplier: Supplier;
-	link: HrefObject;
+	link: Href;
 	description?: string | null;
 	privateEquity?: PrivateEquity;
 	enveloppe?: boolean;
 	queryName?: string;
 }) {
 	const onPress = React.useCallback(() => {
-		queryClient.setQueryData([queryName, link.params?.["supplier"]], supplier);
+		const params = typeof link === 'object' ? link.params : undefined;
+		queryClient.setQueryData([queryName, params?.["supplier"]], supplier);
 
 		if (privateEquity) {
 			queryClient.setQueryData(["private-supplier", privateEquity.id], privateEquity);

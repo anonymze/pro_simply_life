@@ -18,7 +18,10 @@ export default function Page() {
 	const scrollRef = React.useRef<ScrollView>(null);
 	const [search, setSearch] = React.useState("");
 	const { "supplier-category": supplierCategoryId, "supplier-category-name": supplierCategoryName } =
-		useLocalSearchParams();
+		useLocalSearchParams<{
+			"supplier-category": string;
+			"supplier-category-name": string;
+		}>();
 
 	const { data } = useQuery({
 		queryKey: ["supplier-category", supplierCategoryId],
@@ -45,6 +48,7 @@ export default function Page() {
 					...supplier,
 					productName: productSupplier.name,
 					productId: productSupplier.id,
+					categoryId: supplierCategoryId,
 					searchName: supplier.name.toLowerCase(),
 					categoryName: data.name,
 				})),
@@ -68,7 +72,7 @@ export default function Page() {
 
 			{!!data?.offers?.length && (
 				<Picker
-					style={{ width: 260, marginBottom: 16, marginHorizontal: "auto" }}
+					// style={{ width: 260, marginBottom: 16, marginHorizontal: "auto" }}
 					variant="segmented"
 					options={["Produits", "Offres du moment"]}
 					selectedIndex={null}
@@ -177,7 +181,7 @@ export default function Page() {
 										pathname: "/supplier-category/[supplier-category]/supplier-product/pdf/[pdf]",
 										params: {
 											"supplier-category": supplierCategoryId,
-											pdf: offer.file.filename,
+											pdf: offer.file.filename || "",
 										},
 									}}
 								/>

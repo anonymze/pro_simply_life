@@ -10,7 +10,7 @@ import { User } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import { FlashList } from "@shopify/flash-list";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
@@ -173,7 +173,7 @@ export default function Page() {
 								data={independentColumns}
 								horizontal
 								showsHorizontalScrollIndicator={false}
-								estimatedItemSize={100}
+								// estimatedItemSize={100}
 								contentContainerStyle={{ paddingRight: 16, paddingBottom: 16 }}
 								ItemSeparatorComponent={() => <View style={{ width: 32 }} />}
 								renderItem={({ item: column }) => (
@@ -244,7 +244,7 @@ export default function Page() {
 	)();
 }
 
-const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: string }) => {
+const Card = ({ link, icon, title }: { link: Href; icon: any; title: string }) => {
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">

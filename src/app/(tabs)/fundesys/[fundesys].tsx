@@ -81,7 +81,7 @@ export default function Page() {
 					link={{
 						pathname: "/fundesys/pdf/[pdf]",
 						params: {
-							pdf: fundesys.file.filename,
+							pdf: fundesys.file.filename || "",
 						},
 					}}
 				/>

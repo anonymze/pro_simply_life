@@ -6,7 +6,7 @@ import { Media } from "@/types/media";
 import { Selection } from "@/types/selection";
 import { Supplier } from "@/types/supplier";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
 import { useMemo } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -84,7 +84,7 @@ export default function Page() {
 											<Card
 												key={selection.id}
 												link={{
-													pathname: `selection/[supplier]`,
+													pathname: `/selection/[supplier]`,
 													params: {
 														supplier: selection.supplier.id,
 													},
@@ -112,7 +112,7 @@ export default function Page() {
 	)();
 }
 
-const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: string }) => {
+const Card = ({ link, icon, title }: { link: Href; icon: any; title: string }) => {
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-lg bg-white p-2">
@@ -140,10 +140,10 @@ const ImmobilierCard = ({
 	return (
 		<Link
 			href={{
-				pathname: "selection/pdf/[pdf]",
+				pathname: "/selection/pdf/[pdf]",
 				params: {
-					pdf: brochure.filename,
-					link: website,
+					pdf: brochure.filename || "",
+					link: website || "",
 				},
 			}}
 			push

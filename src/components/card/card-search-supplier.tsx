@@ -8,7 +8,7 @@ import CardSupplier from "./card-supplier";
 export default function CardSearchSupplier({
 	supplier,
 }: {
-	supplier: Supplier & { productName: string; productId: string; categoryName: string };
+	supplier: Supplier & { productName: string; productId: string; categoryId: string; categoryName: string };
 }) {
 	return (
 		<View>
@@ -21,8 +21,9 @@ export default function CardSearchSupplier({
 				link={{
 					pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]`,
 					params: {
-						"supplier-category": supplier.productId,
+						"supplier-category": supplier.categoryId,
 						"supplier-category-name": supplier.categoryName,
+						"supplier-product": supplier.productId,
 						"supplier-product-name": supplier.productName,
 						supplier: supplier.id,
 					},

@@ -221,7 +221,7 @@ export default function Page() {
 							}
 						}}
 					>
-						<AntDesign name="linkedin-square" size={35} color={config.theme.extend.colors.primary} />
+						<AntDesign name="linkedin" size={35} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
 					<TouchableOpacity
 						hitSlop={10}

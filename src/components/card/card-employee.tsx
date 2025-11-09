@@ -1,13 +1,13 @@
 import { queryClient } from "@/api/_queries";
 import { User } from "@/types/user";
 import { isNewEmployee } from "@/utils/helper";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
-export default function CardSupplier({ icon, user, link }: { icon: React.ReactNode; user: User; link: HrefObject }) {
+export default function CardSupplier({ icon, user, link }: { icon: React.ReactNode; user: User; link: Href }) {
 	const onPress = React.useCallback(() => {
 		queryClient.setQueryData(["app-user", user.id], user);
 	}, [link]);

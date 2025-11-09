@@ -64,7 +64,7 @@ export default function Page() {
 			<FlashList
 				data={flatData}
 				renderItem={renderItem}
-				estimatedItemSize={67}
+				// estimatedItemSize={67}
 				keyExtractor={(item) => (item.typed === "header" ? item.typeTitle : item.id)}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: 10 }}

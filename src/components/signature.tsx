@@ -1,4 +1,4 @@
-import Animated, { runOnJS, SharedValue, useAnimatedReaction, useAnimatedStyle, useDerivedValue, useSharedValue, withSpring, withTiming, } from "react-native-reanimated";
+import Animated, { SharedValue, useAnimatedReaction, useAnimatedStyle, useDerivedValue, useSharedValue, withSpring, withTiming, } from "react-native-reanimated";
 import { Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Eraser, Eye, LucideProps, PenLine, RotateCcw, Undo } from "lucide-react-native";
 import React, { useEffect, useRef, useState } from "react";
@@ -6,6 +6,7 @@ import config from "tailwind.config";
 
 import DrawPad, { DrawPadHandle } from "./drawpad";
 import MaskedText from "./masket-text";
+import { scheduleOnRN } from "react-native-worklets";
 
 
 const BTN_HEIGHT = 38;
@@ -93,9 +94,9 @@ const ActionBar = ({
 		() => pressing.value,
 		(isPressing) => {
 			if (isPressing) {
-				runOnJS(onPlay)();
+				scheduleOnRN(onPlay);
 			} else {
-				runOnJS(onStop)();
+				scheduleOnRN(onStop);
 			}
 		},
 	);

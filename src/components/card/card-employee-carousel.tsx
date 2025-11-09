@@ -1,7 +1,7 @@
 import { queryClient } from "@/api/_queries";
 import { User } from "@/types/user";
 import { isNewEmployee } from "@/utils/helper";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -13,7 +13,7 @@ export default function CardEmployeeCarousel({
 	associate = false,
 }: {
 	user: User;
-	link: HrefObject;
+	link: Href;
 	associate?: boolean;
 }) {
 	const onPress = React.useCallback(() => {

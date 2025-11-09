@@ -34,7 +34,7 @@ export default function Page() {
 				link={{
 					pathname: "/fidnet/pdf/[pdf]",
 					params: {
-						pdf: fidnet.file.filename,
+						pdf: fidnet.file.filename || "",
 					},
 				}}
 			/>

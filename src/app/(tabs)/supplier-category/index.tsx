@@ -32,6 +32,7 @@ export default function Page() {
 								...supplier,
 								productName: product.name,
 								productId: product.id,
+								categoryId: category.id,
 								searchName: supplier.name.toLowerCase(),
 								categoryName: category.name,
 							})),

@@ -1,6 +1,5 @@
 import { queryClient } from "@/api/_queries";
 import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
-import FormCommissionCodes from "@/components/form-commission-codes";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
@@ -11,16 +10,16 @@ import { Picker } from "@expo/ui/jetpack-compose";
 import { FlashList } from "@shopify/flash-list";
 import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
 import { useQuery } from "@tanstack/react-query";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
 import React from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { scheduleOnRN } from "react-native-worklets";
 import Animated, {
 	FadeIn,
 	FadeInDown,
 	FadeInUp,
 	FadeOut,
-	runOnJS,
 	useDerivedValue,
 	useSharedValue,
 	withTiming,
@@ -40,7 +39,7 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 		animatedValue.value = withTiming(value, { duration }, (finished) => {
 			if (finished) {
 				// when an animation is finished, we set the display real value
-				runOnJS(setDisplayValue)(value);
+				scheduleOnRN(setDisplayValue, value);
 			}
 		});
 	}, [value, duration]);
@@ -48,7 +47,7 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 	useDerivedValue(() => {
 		if (animatedValue.value === value) return;
 		const currentValue = Math.round(animatedValue.value);
-		runOnJS(setDisplayValue)(currentValue);
+		scheduleOnRN(setDisplayValue, currentValue);
 	});
 
 	return <Text className="font-bold text-2xl text-primary">{displayValue.toLocaleString('fr-FR')}€</Text>;
@@ -150,7 +149,7 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 				showsHorizontalScrollIndicator={false}
 				data={type === "monthly" ? data.monthlyData : data.yearlyData}
 				horizontal
-				estimatedItemSize={140}
+				// estimatedItemSize={140}
 				extraData={lastMonth.id}
 				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => {
@@ -463,6 +462,7 @@ const Content = ({
 											config.theme.extend.colors.primaryLight,
 											config.theme.extend.colors.primary,
 										]}
+										positions={[0, 1]}
 									/>
 									{isActive ? (
 										<SkiaText
@@ -499,7 +499,7 @@ function SeeDetails({
 }: {
 	id: CommissionMonthlyAndYearlyData["monthlyData"][number]["id"];
 	commissions: CommissionLight[];
-	link: HrefObject;
+	link: Href;
 }) {
 	const onPress = React.useCallback(() => {
 		queryClient.setQueryData(["commissions", id], commissions);

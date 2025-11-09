@@ -87,11 +87,11 @@ export default function Page() {
 					<View className="iems-center flex-row justify-between">
 						<Title title="Évènements agence" />
 						<Picker
-							style={{
-								width: 128,
-								alignSelf: "center",
-								marginTop: 8,
-							}}
+							// style={{
+							// 	width: 128,
+							// 	alignSelf: "center",
+							// 	marginTop: 8,
+							// }}
 							variant="segmented"
 							options={["Agenda", "Liste"]}
 							selectedIndex={null}

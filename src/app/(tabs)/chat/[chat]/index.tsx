@@ -283,8 +283,8 @@ export default function Page() {
 							keyExtractor={(item) => item.id}
 							showsVerticalScrollIndicator={false}
 							data={messages}
-							inverted={true}
-							estimatedItemSize={50}
+							// inverted={true}
+							// estimatedItemSize={50}
 							renderItem={({ item, index }) => {
 								const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
 								const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;

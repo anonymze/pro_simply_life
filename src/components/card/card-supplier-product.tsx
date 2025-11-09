@@ -1,6 +1,6 @@
 import { queryClient } from "@/api/_queries";
 import { SupplierProduct } from "@/types/supplier";
-import { HrefObject, Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
@@ -13,7 +13,7 @@ export default function CardSupplierProduct({
 }: {
 	// multipleSupplierProducts?: SupplierProduct[];
 	supplierProduct: SupplierProduct;
-	link: HrefObject;
+	link: Href;
 }) {
 	const onPress = React.useCallback(() => {
 		// for (const product of multipleSupplierProducts) {

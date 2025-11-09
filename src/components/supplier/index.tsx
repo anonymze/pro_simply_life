@@ -12,7 +12,7 @@ import { getStorageUserInfos } from "@/utils/store";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import * as Clipboard from "expo-clipboard";
-import { HrefObject, Link, useLocalSearchParams } from "expo-router";
+import { Href, Link, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { ChevronRight, CopyIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
@@ -34,7 +34,14 @@ export default function Page({ previousCategories = true }: { previousCategories
 		"supplier-category-name": supplierCategoryName,
 		"supplier-product-name": supplierProductName,
 		"private-equity": privateEquityId,
-	} = useLocalSearchParams();
+	} = useLocalSearchParams<{
+		supplier: string;
+		"supplier-product": string;
+		"supplier-category": string;
+		"supplier-category-name": string;
+		"supplier-product-name": string;
+		"private-equity"?: string;
+	}>();
 
 	const { data } = useQuery({
 		queryKey: ["supplier", supplierId],
@@ -98,8 +105,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 						]}
 						horizontal
 						className="my-4"
-						estimatedItemSize={100}
-						renderItem={({ item, index }) => {
+							renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
 							return (
@@ -149,8 +155,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 						]}
 						horizontal
 						className="my-4"
-						estimatedItemSize={100}
-						renderItem={({ item, index }) => {
+							renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
 							return (
@@ -333,7 +338,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 													},
 												}
 											: {
-													pathname: "selection/[supplier]/logs/[logs]",
+													pathname: "/selection/[supplier]/logs/[logs]",
 													params: {
 														supplier: supplierId,
 														logs: JSON.stringify(data.connexion),
@@ -358,7 +363,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 												},
 											}
 										: {
-												pathname: "selection/[supplier]/perso/[perso]",
+												pathname: "/selection/[supplier]/perso/[perso]",
 												params: {
 													supplier: supplierId,
 													perso: "hey",
@@ -405,7 +410,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 														},
 													}
 												: {
-														pathname: "selection/[supplier]/logs/[logs]",
+														pathname: "/selection/[supplier]/logs/[logs]",
 														params: {
 															supplier: supplierId,
 															logs: JSON.stringify(data.connexion),
@@ -430,7 +435,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 													},
 												}
 											: {
-													pathname: "selection/[supplier]/perso/[perso]",
+													pathname: "/selection/[supplier]/perso/[perso]",
 													params: {
 														supplier: supplierId,
 														perso: "hey",
@@ -490,7 +495,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 														},
 													}
 												: {
-														pathname: "selection/[supplier]/logs/[logs]",
+														pathname: "/selection/[supplier]/logs/[logs]",
 														params: {
 															supplier: supplierId,
 															logs: JSON.stringify(data.connexion),
@@ -515,7 +520,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 													},
 												}
 											: {
-													pathname: "selection/[supplier]/perso/[perso]",
+													pathname: "/selection/[supplier]/perso/[perso]",
 													params: {
 														supplier: supplierId,
 														perso: "hey",
@@ -544,7 +549,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 	);
 }
 
-const Logs = ({ link, title }: { link: HrefObject; title: string }) => {
+const Logs = ({ link, title }: { link: Href; title: string }) => {
 	return (
 		<Link href={link} push asChild>
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10">
@@ -663,17 +668,17 @@ const ContactInfo = ({
 									pathname:
 										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
 									params: {
-										"supplier-category": supplierCategoryId,
-										"supplier-product": supplierProductId,
-										supplier: supplierId,
-										pdf: brochure.brochure.filename,
+										"supplier-category": supplierCategoryId as string,
+										"supplier-product": supplierProductId as string,
+										supplier: supplierId as string,
+										pdf: brochure.brochure.filename || "",
 									},
 								}
 							: {
-									pathname: "selection/[supplier]/pdf/[pdf]",
+									pathname: "/selection/[supplier]/pdf/[pdf]",
 									params: {
-										supplier: supplierId,
-										pdf: brochure.brochure.filename,
+										supplier: supplierId as string,
+										pdf: brochure.brochure.filename || "",
 									},
 								}
 					}
@@ -745,17 +750,17 @@ const ScpiComponent = ({
 									pathname:
 										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
 									params: {
-										"supplier-category": supplierCategoryId,
-										"supplier-product": supplierProductId,
-										supplier: supplierId,
-										pdf: information.brochure.filename,
+										"supplier-category": supplierCategoryId as string,
+										"supplier-product": supplierProductId as string,
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
 									},
 								}
 							: {
-									pathname: "selection/[supplier]/pdf/[pdf]",
+									pathname: "/selection/[supplier]/pdf/[pdf]",
 									params: {
-										supplier: supplierId,
-										pdf: information.brochure.filename,
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
 									},
 								}
 					}
@@ -825,17 +830,17 @@ const FondComponent = ({
 									pathname:
 										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
 									params: {
-										"supplier-category": supplierCategoryId,
-										"supplier-product": supplierProductId,
-										supplier: supplierId,
-										pdf: information.brochure.filename,
+										"supplier-category": supplierCategoryId as string,
+										"supplier-product": supplierProductId as string,
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
 									},
 								}
 							: {
 									pathname: "/selection/[supplier]/pdf/[pdf]",
 									params: {
-										supplier: supplierId,
-										pdf: information.brochure.filename,
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
 									},
 								}
 					}

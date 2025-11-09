@@ -1,22 +1,17 @@
 import { queryClient } from "@/api/_queries";
-import { deleteChatRoomQuery, getChatRoomsQuery } from "@/api/queries/chat-room-queries";
+import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { getMessagesQuery } from "@/api/queries/message-queries";
-import EmployeesIcon from "@/components/emloyees-icon";
 import MessagesIcon from "@/components/svg/messages-icon";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ChatRoom } from "@/types/chat";
-import { PaginatedResponse } from "@/types/response";
-import { userHierarchy } from "@/types/user";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import { getStorageUserInfos } from "@/utils/store";
-import { useMutation } from "@tanstack/react-query";
-import { HrefObject, Link } from "expo-router";
-import { PlusIcon, TrashIcon } from "lucide-react-native";
+import { Href, Link } from "expo-router";
+import { PlusIcon } from "lucide-react-native";
 import React from "react";
-import { FlatList, Platform, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
-import * as DropdownMenu from "zeego/dropdown-menu";
 
 export const MAX_MESSAGES = 25;
 
@@ -216,7 +211,7 @@ const Card = ({
 	chatRoom,
 }: {
 	chatRoom: ChatRoom;
-	link: HrefObject;
+	link: Href;
 	icon: any;
 	title: string;
 	description: string | null;

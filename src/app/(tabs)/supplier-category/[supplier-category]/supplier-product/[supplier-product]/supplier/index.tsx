@@ -22,7 +22,12 @@ export default function Page() {
 		"supplier-category-name": supplierCategoryName,
 		"supplier-product-name": supplierProductName,
 		// "multiple-supplier-products": multipleSupplierProducts,
-	} = useLocalSearchParams();
+	} = useLocalSearchParams<{
+		"supplier-product": string;
+		"supplier-category": string;
+		"supplier-category-name": string;
+		"supplier-product-name": string;
+	}>();
 
 	const isPrivateEquity = PRIVATE_EQUITY_ID === supplierProductId;
 
@@ -86,10 +91,10 @@ const SupplierListComponent = ({
 	supplierProductName,
 }: {
 	groupedSuppliers: Record<string, Supplier[]>;
-	supplierCategoryId: string | string[];
-	supplierCategoryName: string | string[];
-	supplierProductId: string | string[];
-	supplierProductName: string | string[];
+	supplierCategoryId: string;
+	supplierCategoryName: string;
+	supplierProductId: string;
+	supplierProductName: string;
 }) => {
 	return (
 		<ScrollView
@@ -148,10 +153,10 @@ const PrivateEquityComponent = ({
 	supplierProductId,
 	supplierProductName,
 }: {
-	supplierCategoryId: string | string[];
-	supplierCategoryName: string | string[];
-	supplierProductId: string | string[];
-	supplierProductName: string | string[];
+	supplierCategoryId: string;
+	supplierCategoryName: string;
+	supplierProductId: string;
+	supplierProductName: string;
 }) => {
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["private-suppliers"],
@@ -197,8 +202,7 @@ const PrivateEquityComponent = ({
 				data={orderedTypes}
 				horizontal
 				className="mb-4"
-				estimatedItemSize={45}
-				renderItem={({ item: type, index }) => {
+					renderItem={({ item: type, index }) => {
 					const isActive = currentIndex === index;
 
 					return (

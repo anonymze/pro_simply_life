@@ -1,12 +1,11 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Platform, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+
 import Animated, {
 	Easing,
 	Extrapolation,
 	interpolate,
-	runOnJS,
-	runOnUI,
 	SharedValue,
 	useAnimatedProps,
 	useAnimatedReaction,
@@ -14,6 +13,7 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 import Svg, { G, Path, PathProps } from "react-native-svg";
+import { scheduleOnUI, scheduleOnRN } from "react-native-worklets";
 import { svgPathProperties } from "svg-path-properties";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
@@ -98,9 +98,9 @@ const DrawPad = forwardRef<DrawPadHandle, DrawPadProps>(({ strokeWidth = 3.5, st
 			clearTimeout(timeoutRef.current);
 			timeoutRef.current = null;
 		}
-		runOnUI(() => {
+		scheduleOnUI(() => {
 			playing.value = false;
-		})();
+		});
 	}, [playing]);
 
 	useImperativeHandle(ref, () => ({
@@ -119,7 +119,7 @@ const DrawPad = forwardRef<DrawPadHandle, DrawPadProps>(({ strokeWidth = 3.5, st
 			currentPath.value += ` L ${e.x} ${e.y}`;
 		})
 		.onEnd(() => {
-			runOnJS(finishPath)();
+			scheduleOnRN(finishPath);
 		});
 
 	useAnimatedReaction(

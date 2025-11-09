@@ -1,7 +1,7 @@
 import EmployeesIcon from "@/components/emloyees-icon";
 import { truncateText } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
-import { HrefObject, Link, LinkProps, router } from "expo-router";
+import { Href, Link, LinkProps, router } from "expo-router";
 import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
@@ -10,7 +10,7 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 	title?: string;
 	chat?: {
 		description: string;
-		link: HrefObject;
+		link: Href;
 	};
 	sheet?: {
 		link: LinkProps["href"];

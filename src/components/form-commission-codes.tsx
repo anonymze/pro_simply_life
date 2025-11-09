@@ -1,5 +1,6 @@
 import { createAppUserCommissionCodeQuery, getAppUserCommissionCodesQuery } from "@/api/queries/commission-queries";
 import BackgroundLayout from "@/layouts/background-layout";
+import { cn } from "@/utils/cn";
 import { getStorageUserInfos, setStorageFirstCommission } from "@/utils/store";
 import { FlashList } from "@shopify/flash-list";
 import { useForm } from "@tanstack/react-form";
@@ -12,7 +13,6 @@ import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-re
 import config from "tailwind.config";
 import { z } from "zod";
 import Title from "./ui/title";
-import { cn } from "@/utils/cn";
 
 interface CommissionCodeInputProps {
 	provider: { id: string; name: string };
@@ -129,7 +129,6 @@ export default function FormCommissionCodes() {
 					</View>
 				) : (
 					<FlashList
-						estimatedItemSize={95}
 						data={commissionProviders}
 						showsVerticalScrollIndicator={false}
 						// contentContainerStyle={{ paddingBottom: 16 }}

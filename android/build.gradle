@@ -19,6 +19,25 @@ allprojects {
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
   }
+
+  afterEvaluate { project ->
+    if (project.hasProperty("android")) {
+      android {
+        if (android.hasProperty("defaultConfig")) {
+          defaultConfig {
+            if (android.defaultConfig.hasProperty("externalNativeBuild")) {
+              externalNativeBuild {
+                cmake {
+                  cppFlags "-std=c++20"
+                  arguments "-DANDROID_STL=c++_shared"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 apply plugin: "expo-root-project"

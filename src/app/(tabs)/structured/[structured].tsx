@@ -187,9 +187,9 @@ export default function Page() {
 										brochure={offer.file}
 										updatedAt={structuredProduct.updatedAt}
 										link={{
-											pathname: "structured/pdf/[pdf]",
+											pathname: "/structured/pdf/[pdf]",
 											params: {
-												pdf: offer.file.filename,
+												pdf: offer.file.filename || "",
 											},
 										}}
 									/>
