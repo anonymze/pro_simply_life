@@ -1,28 +1,19 @@
 import { queryClient } from "@/api/_queries";
 import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission-queries";
-import FormCommissionCodes from "@/components/form-commission-codes";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight, CommissionMonthlyAndYearlyData } from "@/types/commission";
 import { generateYAxisTickValues, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
 import { getStorageFirstCommission, getStorageUserInfos } from "@/utils/store";
-import { Picker } from "@expo/ui/swift-ui";
+import { Host, Picker } from "@expo/ui/swift-ui";
 import { FlashList } from "@shopify/flash-list";
 import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
 import { useQuery } from "@tanstack/react-query";
 import { Href, Link } from "expo-router";
 import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
 import React from "react";
-import {
-	ActivityIndicator,
-	Pressable,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
 	FadeIn,
 	FadeInDown,
@@ -77,7 +68,6 @@ export default function Page() {
 		queryFn: getCommissionMonthlyAndYearlyDataQuery,
 	});
 
-
 	if (isLoading) {
 		return (
 			<ActivityIndicator
@@ -108,27 +98,30 @@ export default function Page() {
 		<BackgroundLayout className="pt-safe px-4">
 			<View className="iems-center flex-row justify-between">
 				<Title title="Commissions" />
-				<Picker
-					// style={{
-					// 	width: 140,
-					// 	alignSelf: "center",
-					// 	marginTop: 8,
-					// }}
-					variant="segmented"
-					options={["Mois", "Année"]}
-					selectedIndex={null}
-					onOptionSelected={({ nativeEvent: { index } }) => {
-						if (index === 0) {
-							scrollRef.current?.scrollTo({ x: 0, animated: true });
-						} else {
-							scrollRef.current?.scrollToEnd();
-						}
+				<Host
+					style={{
+						width: 140,
+						alignSelf: "center",
+						marginTop: 8,
 					}}
-				/>
+				>
+					<Picker
+						variant="segmented"
+						options={["Mois", "Année"]}
+						selectedIndex={null}
+						onOptionSelected={({ nativeEvent: { index } }) => {
+							if (index === 0) {
+								scrollRef.current?.scrollTo({ x: 0, animated: true });
+							} else {
+								scrollRef.current?.scrollToEnd();
+							}
+						}}
+					/>
+				</Host>
 			</View>
 
 			<ScrollView
-				ref={scrollRef}
+				scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				scrollEnabled={false}

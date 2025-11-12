@@ -225,7 +225,7 @@ export default function Page() {
 											opacity: 0,
 										},
 										animations: {
-											transform: [{ translateY: withSpring(0, { damping: 16, stiffness: 140 }) }],
+											transform: [{ translateY: withSpring(0, { damping: 90, stiffness: 1000 }) }],
 											opacity: withTiming(1, { duration: 300 }),
 										},
 									};

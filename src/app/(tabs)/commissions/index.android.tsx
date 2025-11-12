@@ -14,7 +14,6 @@ import { Href, Link } from "expo-router";
 import { ArrowDownRightIcon, ArrowUpRightIcon, ListIcon } from "lucide-react-native";
 import React from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { scheduleOnRN } from "react-native-worklets";
 import Animated, {
 	FadeIn,
 	FadeInDown,
@@ -24,6 +23,7 @@ import Animated, {
 	useSharedValue,
 	withTiming,
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 import config from "tailwind.config";
 // import resolveConfig from "tailwindcss/resolveConfig";
 import { Bar, CartesianChart, useChartPressState } from "victory-native";
@@ -50,7 +50,7 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 		scheduleOnRN(setDisplayValue, currentValue);
 	});
 
-	return <Text className="font-bold text-2xl text-primary">{displayValue.toLocaleString('fr-FR')}€</Text>;
+	return <Text className="font-bold text-2xl text-primary">{displayValue.toLocaleString("fr-FR")}€</Text>;
 };
 
 export default function Page() {
@@ -117,7 +117,7 @@ export default function Page() {
 			</View>
 
 			<ScrollView
-				ref={scrollRef}
+				scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				scrollEnabled={false}

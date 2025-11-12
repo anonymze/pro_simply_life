@@ -5,13 +5,12 @@ import CardSupplierProduct from "@/components/card/card-supplier-product";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
-import { SupplierProduct } from "@/types/supplier";
-import { excludedProductSupplierIds, OB_TER_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
-import { Picker } from "@expo/ui/swift-ui";
+import { excludedProductSupplierIds, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { Host, Picker } from "@expo/ui/swift-ui";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Text, View, ScrollView } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -64,31 +63,37 @@ export default function Page() {
 		return allSuppliers.filter((supplier) => supplier.searchName.includes(searchTerm));
 	}, [allSuppliers, search]);
 
-
 	return (
 		<BackgroundLayout className="px-4 pt-4">
 			<Title className="mb-2 mt-0" title={data.name} />
 			<Text className="mb-5 text-sm text-defaultGray">{description}</Text>
 
 			{!!data?.offers?.length && (
-				<Picker
-					// style={{ width: 260, marginBottom: 16, marginHorizontal: "auto" }}
-					variant="segmented"
-					options={["Produits", "Offres du moment"]}
-					selectedIndex={null}
-					onOptionSelected={({ nativeEvent: { index } }) => {
-						if (index === 0) {
-							scrollRef.current?.scrollTo({ x: 0, animated: true });
-						} else {
-							scrollRef.current?.scrollToEnd({ animated: true });
-						}
+				<Host
+					style={{
+						width: 260,
+						marginBottom: 16,
+						marginHorizontal: "auto",
 					}}
-				/>
+				>
+					<Picker
+						variant="segmented"
+						options={["Produits", "Offres du moment"]}
+						selectedIndex={null}
+						onOptionSelected={({ nativeEvent: { index } }) => {
+							if (index === 0) {
+								scrollRef.current?.scrollTo({ x: 0, animated: true });
+							} else {
+								scrollRef.current?.scrollToEnd({ animated: true });
+							}
+						}}
+					/>
+				</Host>
 			)}
 
 			{!!data?.offers?.length ? (
 				<ScrollView
-					ref={scrollRef}
+					scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 					horizontal
 					showsHorizontalScrollIndicator={false}
 					scrollEnabled={false}

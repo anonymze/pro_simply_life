@@ -68,6 +68,7 @@ function Card({ structuredProduct }: { structuredProduct: StructuredProduct }) {
 				</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{structuredProduct.supplier.name}</Text>
+					<Text className="text-sm text-primaryLight">{structuredProduct.name}</Text>
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>

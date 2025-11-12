@@ -22,11 +22,29 @@ export async function getEventStatusQuery({ queryKey }: { queryKey: QueryKey }) 
 	return response.data;
 }
 
-export async function createEventStatusQuery(params: { app_user: string, agency_life: string, status: EventStatus["status"] }) {
+export async function createEventStatusQuery(params: {
+	app_user: string;
+	agency_life: string;
+	status: EventStatus["status"];
+}) {
 	const response = await api.post("/api/agency-life-status", {
 		app_user: params.app_user,
 		agency_life: params.agency_life,
 		status: params.status,
+	});
+	return response.data;
+}
+
+export async function updateEventStatusQuery(params: {
+	app_user: string;
+	agency_life: string;
+	status: EventStatus["status"];
+	agencyLifeStatus: EventStatus["id"];
+}) {
+	const response = await api.patch(`/api/agency-life-status/${params.agencyLifeStatus}`, {
+		status: params.status,
+		app_user: params.app_user,
+		agency_life: params.agency_life,
 	});
 	return response.data;
 }

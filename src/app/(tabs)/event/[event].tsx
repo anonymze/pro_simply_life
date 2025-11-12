@@ -1,5 +1,10 @@
 import { queryClient } from "@/api/_queries";
-import { createEventStatusQuery, getEventQuery, getEventStatusQuery } from "@/api/queries/event-queries";
+import {
+	createEventStatusQuery,
+	getEventQuery,
+	getEventStatusQuery,
+	updateEventStatusQuery,
+} from "@/api/queries/event-queries";
 import BackgroundLayout from "@/layouts/background-layout";
 import { eventLabel } from "@/types/event";
 import { cn } from "@/utils/libs/tailwind";
@@ -7,8 +12,7 @@ import { getStorageUserInfos } from "@/utils/store";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { CalendarArrowDownIcon, CalendarArrowUpIcon, CalendarIcon, ClockIcon, MapPinIcon } from "lucide-react-native";
-import React from "react";
-import { ActivityIndicator, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Platform, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
 const isEventTodayOrLater = (eventStartDate: string): boolean => {
@@ -21,7 +25,6 @@ const isEventTodayOrLater = (eventStartDate: string): boolean => {
 
 export default function Page() {
 	const { event: eventId } = useLocalSearchParams();
-	const [attendance, setAttendance] = React.useState<boolean | null>(null);
 	const appUser = getStorageUserInfos();
 
 	const { data } = useQuery({
@@ -48,10 +51,73 @@ export default function Page() {
 		enabled: !!appUser?.user?.id && !!eventId,
 	});
 
+	const statusQueryKey = [
+		"event-status",
+		{
+			where: {
+				app_user: {
+					equals: appUser?.user?.id,
+				},
+				agency_life: {
+					equals: eventId,
+				},
+			},
+		},
+	];
+
 	const mutation = useMutation({
 		mutationFn: createEventStatusQuery,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["event-status"] });
+		onMutate: async (variables) => {
+			await queryClient.cancelQueries({ queryKey: statusQueryKey });
+			const previousStatus = queryClient.getQueryData(statusQueryKey);
+
+			queryClient.setQueryData(statusQueryKey, (old: any) => ({
+				...old,
+				docs: [
+					{
+						app_user: variables.app_user,
+						agency_life: variables.agency_life,
+						status: variables.status,
+						id: "temp-id",
+					},
+				],
+			}));
+
+			return { previousStatus };
+		},
+		onError: (err, variables, context) => {
+			if (context?.previousStatus) {
+				queryClient.setQueryData(statusQueryKey, context.previousStatus);
+			}
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: statusQueryKey });
+		},
+	});
+
+	const mutationPatch = useMutation({
+		mutationFn: updateEventStatusQuery,
+		onMutate: async (variables) => {
+			await queryClient.cancelQueries({ queryKey: statusQueryKey });
+			const previousStatus = queryClient.getQueryData(statusQueryKey);
+
+			queryClient.setQueryData(statusQueryKey, (old: any) => ({
+				...old,
+				docs:
+					old?.docs?.map((doc: any) =>
+						doc.id === variables.agencyLifeStatus ? { ...doc, status: variables.status } : doc,
+					) || [],
+			}));
+
+			return { previousStatus };
+		},
+		onError: (err, variables, context) => {
+			if (context?.previousStatus) {
+				queryClient.setQueryData(statusQueryKey, context.previousStatus);
+			}
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: statusQueryKey });
 		},
 	});
 
@@ -145,54 +211,70 @@ export default function Page() {
 								<>
 									<Text className="font-bold text-lg text-primary">Êtes-vous présent à l'événement ?</Text>
 									<View className="flex-row gap-3">
-										<TouchableOpacity
+										<Pressable
 											className={cn(
 												"flex-1 items-center justify-center rounded-2xl p-4",
-												attendance === true || status?.docs[0]?.status === "yes" ? "bg-green-500" : "bg-white",
+												status?.docs[0]?.status === "yes" ? "bg-green-500" : "bg-white",
 											)}
-											disabled={mutation.isPending || isLoadingStatus || !!status?.docs?.length || attendance !== null}
+											// disabled={mutation.isPending || mutationPatch.isPending || isLoadingStatus}
 											onPress={() => {
-												setAttendance(true);
-												mutation.mutate({
-													agency_life: eventId.toString(),
-													app_user: appUser.user.id,
-													status: "yes",
-												});
+												if (status?.docs[0]?.id) {
+													mutationPatch.mutate({
+														agencyLifeStatus: status.docs[0].id,
+														agency_life: eventId.toString(),
+														app_user: appUser.user.id,
+														status: "yes",
+													});
+												} else {
+													mutation.mutate({
+														agency_life: eventId.toString(),
+														app_user: appUser.user.id,
+														status: "yes",
+													});
+												}
 											}}
 										>
 											<Text
 												className={cn(
 													"font-semibold text-lg",
-													attendance === true || status?.docs[0]?.status === "yes" ? "text-white" : "text-primary",
+													status?.docs[0]?.status === "yes" ? "text-white" : "text-primary",
 												)}
 											>
 												Oui
 											</Text>
-										</TouchableOpacity>
-										<TouchableOpacity
+										</Pressable>
+										<Pressable
 											className={cn(
 												"flex-1 items-center justify-center rounded-2xl p-4",
-												attendance === false || status?.docs[0]?.status === "no" ? "bg-red-500" : "bg-white",
+												status?.docs[0]?.status === "no" ? "bg-red-500" : "bg-white",
 											)}
-											disabled={mutation.isPending || isLoadingStatus || !!status?.docs?.length ||  attendance !== null}
+											// disabled={mutation.isPending || mutationPatch.isPending || isLoadingStatus}
 											onPress={() => {
-												setAttendance(false);
-												mutation.mutate({
+												if (status?.docs[0]?.id) {
+													mutationPatch.mutate({
+													agencyLifeStatus: status.docs[0].id,
 													agency_life: eventId.toString(),
 													app_user: appUser.user.id,
 													status: "no",
-												});
+													});
+												} else {
+													mutation.mutate({
+														agency_life: eventId.toString(),
+														app_user: appUser.user.id,
+														status: "no",
+													});
+												}
 											}}
 										>
 											<Text
 												className={cn(
 													"font-semibold text-lg",
-													attendance === false || status?.docs[0]?.status === "no" ? "text-white" : "text-primary",
+													status?.docs[0]?.status === "no" ? "text-white" : "text-primary",
 												)}
 											>
 												Non
 											</Text>
-										</TouchableOpacity>
+										</Pressable>
 									</View>
 								</>
 							)}
@@ -202,8 +284,8 @@ export default function Page() {
 					{!!data?.intervenants?.length ? (
 						<View className="gap-3">
 							<Text className="font-bold text-lg text-primary">Intervenants</Text>
-							{data?.intervenants?.map((intervenant) => (
-								<View className="gap-3" key={intervenant.name}>
+							{data?.intervenants?.map((intervenant, idx) => (
+								<View className="gap-3" key={idx}>
 									<ContactInfo name={intervenant.name} company={intervenant.company} theme={intervenant.theme} />
 								</View>
 							))}

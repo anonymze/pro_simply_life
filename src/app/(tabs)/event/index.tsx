@@ -6,7 +6,7 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { Event, eventLabel } from "@/types/event";
 import { SCREEN_DIMENSIONS, truncateText } from "@/utils/helper";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { Picker } from "@expo/ui/swift-ui";
+import { Host, Picker } from "@expo/ui/swift-ui";
 import { Link } from "expo-router";
 import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
 import { cssInterop } from "nativewind";
@@ -53,7 +53,7 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [selectedDate, setSelectedDate] = useState("");
-			const scrollRef = React.useRef<ScrollView>(null);
+			const scrollRef = React.useRef<ScrollView | null>(null);
 
 			const events = React.useMemo(
 				() =>
@@ -86,27 +86,29 @@ export default function Page() {
 				<BackgroundLayout className="pt-safe px-4">
 					<View className="iems-center flex-row justify-between">
 						<Title title="Évènements agence" />
-						<Picker
-							// style={{
-							// 	width: 128,
-							// 	alignSelf: "center",
-							// 	marginTop: 8,
-							// }}
-							variant="segmented"
-							options={["Agenda", "Liste"]}
-							selectedIndex={null}
-							onOptionSelected={({ nativeEvent: { index } }) => {
-								if (index === 0) {
-									scrollRef.current?.scrollTo({ x: 0, animated: true });
-								} else {
-									scrollRef.current?.scrollToEnd();
-								}
-							}}
-						/>
+						<Host style={{ width: 150, marginTop: 6 }}>
+							<Picker
+								// style={{
+								// 	width: 128,
+								// 	alignSelf: "center",
+								// 	marginTop: 8,
+								// }}
+								variant="segmented"
+								options={["Agenda", "Liste"]}
+								selectedIndex={null}
+								onOptionSelected={({ nativeEvent: { index } }) => {
+									if (index === 0) {
+										scrollRef.current?.scrollTo({ x: 0, animated: true });
+									} else {
+										scrollRef.current?.scrollToEnd();
+									}
+								}}
+							/>
+						</Host>
 					</View>
 
 					<ScrollView
-						ref={scrollRef}
+						scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 						horizontal
 						showsHorizontalScrollIndicator={false}
 						scrollEnabled={false}

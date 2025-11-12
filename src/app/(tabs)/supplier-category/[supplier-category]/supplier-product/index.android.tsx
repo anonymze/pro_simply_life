@@ -87,7 +87,7 @@ export default function Page() {
 
 			{!!data?.offers?.length ? (
 				<ScrollView
-					ref={scrollRef}
+					scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 					horizontal
 					showsHorizontalScrollIndicator={false}
 					scrollEnabled={false}

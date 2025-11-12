@@ -1,25 +1,32 @@
-import Animated, { useAnimatedStyle, useSharedValue, withTiming, withSequence, Easing, SharedValue, } from "react-native-reanimated";
-import { createMessageQuery, createMessageWithFilesQuery, getMessagesQuery } from "@/api/queries/message-queries";
-import { View, TextInput, Text, Platform, TouchableOpacity, Pressable, Alert, Keyboard } from "react-native";
-import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
-import { ImageIcon, PaperclipIcon, SendIcon } from "lucide-react-native";
-import { Redirect, Stack, useLocalSearchParams, useFocusEffect } from "expo-router";
-import { UIImagePickerPresentationStyle } from "expo-image-picker";
-import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import BackgroundLayout from "@/layouts/background-layout";
-import { Message, MessageOptimistic } from "@/types/chat";
-import * as DocumentPicker from "expo-document-picker";
-import HeaderLayout from "@/layouts/headert-layout";
-import { getStorageUserInfos } from "@/utils/store";
-import * as ImagePicker from "expo-image-picker";
-import { FlashList } from "@shopify/flash-list";
-import { useForm } from "@tanstack/react-form";
-import { Item } from "@/components/item-chat";
 import { queryClient } from "@/api/_queries";
-import config from "tailwind.config";
+import { createMessageQuery, createMessageWithFilesQuery, getMessagesQuery } from "@/api/queries/message-queries";
+import { Item } from "@/components/item-chat";
+import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
+import BackgroundLayout from "@/layouts/background-layout";
+import HeaderLayout from "@/layouts/headert-layout";
+import { Message, MessageOptimistic } from "@/types/chat";
 import { cn } from "@/utils/cn";
+import { getStorageUserInfos } from "@/utils/store";
+import { LegendList } from "@legendapp/list";
+import { useForm } from "@tanstack/react-form";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import * as DocumentPicker from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
+import { UIImagePickerPresentationStyle } from "expo-image-picker";
+import { Redirect, Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { ImageIcon, PaperclipIcon, SendIcon } from "lucide-react-native";
 import React from "react";
+import { Alert, Keyboard, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
+import Animated, {
+	Easing,
+	SharedValue,
+	useAnimatedStyle,
+	useSharedValue,
+	withSequence,
+	withTiming,
+} from "react-native-reanimated";
+import config from "tailwind.config";
 import { z } from "zod";
 
 import { MAX_MESSAGES } from "../index";
@@ -205,7 +212,6 @@ export default function Page() {
 
 		if (result.canceled) return;
 
-
 		mutationMessagesFile.mutate({
 			// id is set later (to have differents ids for each file)
 			id: "",
@@ -261,7 +267,7 @@ export default function Page() {
 			return () => {
 				Keyboard.dismiss();
 			};
-		}, [])
+		}, []),
 	);
 
 	return (
@@ -271,20 +277,11 @@ export default function Page() {
 			<Animated.View className="flex-1" style={animatedStyle}>
 				<View className="flex-1">
 					{!!messages?.length ? (
-						<FlashList
-							// ListEmptyComponent={() => {
-							// 	return (
-							// 		<View className="flex-1 items-center justify-center">
-							// 			<Text className="text-gray-500">Pas de message</Text>
-							// 		</View>
-							// 	);
-							// }}
-							// drawDistance={300}
+						<LegendList
 							keyExtractor={(item) => item.id}
 							showsVerticalScrollIndicator={false}
+							// initialScrollIndex={messages.length - 1}
 							data={messages}
-							// inverted={true}
-							// estimatedItemSize={50}
 							renderItem={({ item, index }) => {
 								const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
 								const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
@@ -303,17 +300,23 @@ export default function Page() {
 									/>
 								);
 							}}
-							// don't invert on empty list
-							// inverted={true}
-
-							// disableRecycling={true}
-							onEndReached={() => {
-								// add more messages when on end scroll
-								if (!!messages.length && messages.length >= maxMessages) {
-									setMaxMessages((props) => props + MAX_MESSAGES);
-								}
+							estimatedItemSize={320}
+							// onEndReached={() => {
+							// 	console.log("hey");
+							// 	// add more messages when on end scroll
+							// 	if (!!messages.length && messages.length >= maxMessages) {
+							// 		setMaxMessages((props) => props + MAX_MESSAGES);
+							// 	}
+							// }}
+							          decelerationRate={0.975}
+							alignItemsAtEnd
+							maintainScrollAtEnd
+							maintainVisibleContentPosition
+							maintainScrollAtEndThreshold={0.5}
+							onStartReachedThreshold={0.7}
+							contentContainerStyle={{
+								padding: 10,
 							}}
-							onEndReachedThreshold={0.1}
 						/>
 					) : (
 						<View className="flex-1 items-center justify-center">

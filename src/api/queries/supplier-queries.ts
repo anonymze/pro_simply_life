@@ -10,13 +10,13 @@ export async function getSupplierQuery({ queryKey }: { queryKey: QueryKey }) {
 	return response.data;
 }
 
-export async function getSuppliersSelectionQuery({ queryKey }: { queryKey: QueryKey }) {
-	const [, filters] = queryKey;
-	const response = await api.get<PaginatedResponse<Supplier>>(`/api/suppliers/selection`, {
-		params: filters,
-	});
-	return response.data;
-}
+// export async function getSuppliersSelectionQuery({ queryKey }: { queryKey: QueryKey }) {
+// 	const [, filters] = queryKey;
+// 	const response = await api.get<PaginatedResponse<Supplier>>(`/api/suppliers/selection`, {
+// 		params: filters,
+// 	});
+// 	return response.data;
+// }
 
 export async function getSupplierSelectionQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, filters] = queryKey;

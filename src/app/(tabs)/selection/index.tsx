@@ -5,11 +5,13 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { Media } from "@/types/media";
 import { Selection } from "@/types/selection";
 import { Supplier } from "@/types/supplier";
+import { downloadFile, getFile } from "@/utils/download";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { Href, Link } from "expo-router";
+import { Href, Link, router } from "expo-router";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
-import { useMemo } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useMemo, useState } from "react";
+import { ActivityIndicator, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -137,28 +139,54 @@ const ImmobilierCard = ({
 	brochure: Media;
 	website?: string;
 }) => {
-	return (
-		<Link
-			href={{
+	const [downloading, setDownloading] = useState(false);
+
+	const handlePress = async () => {
+	if (!brochure.url || !brochure.filename || !brochure.mimeType) return;
+
+		try {
+			const file = getFile(brochure.filename);
+
+			if (!file.exists) {
+			console.log("ici")
+				setDownloading(true);
+				await downloadFile(brochure.url, brochure.filename, brochure.mimeType);
+				setDownloading(false);
+			}
+
+			router.push({
 				pathname: "/selection/pdf/[pdf]",
 				params: {
-					pdf: brochure.filename || "",
+					pdf: brochure.filename,
 					link: website || "",
 				},
-			}}
-			push
-			asChild
-		>
-			<TouchableOpacity className="w-[46%] rounded-2xl border-2 border-amber-300">
-				<ImagePlaceholder
-					transition={300}
-					contentFit="cover"
-					placeholder={image?.blurhash}
-					source={image?.url}
-					style={{ width: "100%", aspectRatio: 1, borderRadius: 16 }}
-				/>
-				<Text className="mb-3 mt-2 text-center font-semibold text-primary">{supplier.name}</Text>
-			</TouchableOpacity>
-		</Link>
+			});
+		} catch (error) {
+			console.error("Download failed:", error);
+		}
+	};
+
+	return (
+		<Pressable className="w-[46%] rounded-2xl border-2 border-amber-300" onPress={handlePress} disabled={downloading}>
+			<ImagePlaceholder
+				transition={300}
+				contentFit="cover"
+				placeholder={image?.blurhash}
+				placeholderContentFit="cover"
+				source={image?.url}
+				style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
+			/>
+			<View className="mb-3 mt-2 items-center">
+				{downloading ? (
+					<Animated.View entering={FadeInDown.springify(300)} exiting={FadeOut.duration(300)}>
+						<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
+					</Animated.View>
+				) : (
+					<Animated.Text entering={FadeInDown.springify(300)} className="text-center font-semibold text-primary">
+						{supplier.name}
+					</Animated.Text>
+				)}
+			</View>
+		</Pressable>
 	);
 };

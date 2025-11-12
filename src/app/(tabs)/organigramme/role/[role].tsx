@@ -1,16 +1,15 @@
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
-import { Dimensions, ScrollView, Text, View } from "react-native";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
 import CardEmployee from "@/components/card/card-employee";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
-import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
+import { useLocalSearchParams } from "expo-router";
+import { ScrollView, Text, View } from "react-native";
 // import { Picker } from "@expo/ui/swift-ui";
 import Title from "@/components/ui/title";
-import config from "tailwind.config";
-import React from "react";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
-
+import React from "react";
+import config from "tailwind.config";
 
 export default function Page() {
 	const { role } = useLocalSearchParams();
@@ -66,7 +65,7 @@ export default function Page() {
 			</View>
 
 			<ScrollView
-				ref={scrollRef}
+				scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				scrollEnabled={false}

@@ -5,7 +5,6 @@ import { queryClient } from "@/api/_queries";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
-import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
 import { NotificationProvider } from "@/context/push-notifications";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PortalHost } from "@rn-primitives/portal";
@@ -94,10 +93,10 @@ const Layout = () => {
 				queryKey: ["supplier-categories"],
 				queryFn: getSupplierCategoriesQuery,
 			}),
-			queryClient.prefetchQuery({
-				queryKey: ["suppliers-selection"],
-				queryFn: getSuppliersSelectionQuery,
-			}),
+			// queryClient.prefetchQuery({
+			// 	queryKey: ["suppliers-selection"],
+			// 	queryFn: getSuppliersSelectionQuery,
+			// }),
 		]).finally(() => {
 			prefetchSomeData();
 			setReady(true);

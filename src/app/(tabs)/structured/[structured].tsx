@@ -22,7 +22,9 @@ export default function Page() {
 
 	if (!structuredProduct) return null;
 
-	const percentage = (structuredProduct.current / structuredProduct.max) * 100;
+	const percentage = ((structuredProduct.max - structuredProduct.current) / structuredProduct.max) * 100;
+
+	console.log(percentage);
 
 	return (
 		<>
@@ -63,13 +65,10 @@ export default function Page() {
 								<View
 									className="gap-1"
 									style={{
-										// minWidth: structuredProduct.max / structuredProduct.current,
-										width: percentage > 10 ? `${10}%` : 28,
+										width: percentage > 100 ? `100%` : percentage < 0 ? 28 : `${percentage}%`,
 									}}
 								>
-									<Text className="text-center text-xs text-primaryLight">
-										{Math.ceil((structuredProduct.current / structuredProduct.max) * 100)}%
-									</Text>
+									<Text className="text-center text-xs text-primaryLight">{Math.ceil(percentage)}%</Text>
 									<View
 										className={cn(
 											"h-1.5 w-full rounded-full bg-green-600",
@@ -80,7 +79,9 @@ export default function Page() {
 							</View>
 						</View>
 						<View className="mt-6 flex-row items-center gap-2">
-							<View className={cn("size-2 rounded-full bg-green-600", structuredProduct.current <= 0 && "bg-production")} />
+							<View
+								className={cn("size-2 rounded-full bg-green-600", structuredProduct.current <= 0 && "bg-production")}
+							/>
 							<Text className="text-backgroundChat">Solde enveloppe</Text>
 							<Text className="ml-auto font-light text-sm text-primaryLight">
 								{structuredProduct.current.toLocaleString()}€

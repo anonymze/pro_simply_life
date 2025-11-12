@@ -30,8 +30,8 @@ const InputSearch = React.forwardRef<InputSearchRef, InputSearchProps>(
 			if (!clearable) return { width: "100%" };
 			return {
 				width: withSpring(value.length > 0 ? widthTextInputAnimated : widthTextInput, {
-					damping: 23,
-					stiffness: 225,
+					damping: 75,
+					stiffness: 1000,
 				}),
 			};
 		});

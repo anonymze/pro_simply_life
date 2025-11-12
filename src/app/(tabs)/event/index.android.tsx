@@ -11,7 +11,7 @@ import { Link } from "expo-router";
 import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
 import { cssInterop } from "nativewind";
 import React, { useState } from "react";
-import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import config from "tailwind.config";
 
@@ -48,7 +48,7 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [selectedDate, setSelectedDate] = useState("");
-			const scrollRef = React.useRef<ScrollView>(null);
+			const scrollRef = React.useRef<ScrollView | null>(null);
 
 			const events = React.useMemo(
 				() =>
@@ -101,7 +101,7 @@ export default function Page() {
 					</View>
 
 					<ScrollView
-						ref={scrollRef}
+						scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 						horizontal
 						showsHorizontalScrollIndicator={false}
 						scrollEnabled={false}

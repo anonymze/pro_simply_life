@@ -118,13 +118,13 @@ export function NewConversation({ currentUser, selectedIds }: { currentUser: Use
 			>
 				{mutationChatRoom.isPending ? (
 					<Animated.View
-						entering={FadeInDown.springify().duration(1200)}
+						entering={FadeInDown.springify().duration(300)}
 						exiting={FadeOut.duration(300).withCallback((finished) => {})}
 					>
 						<ActivityIndicator size="small" color="#fff" />
 					</Animated.View>
 				) : (
-					<Animated.Text entering={FadeInDown.springify().duration(1200)} className="text-center text-white">
+					<Animated.Text entering={FadeInDown.springify().duration(300)} className="text-center text-white">
 						{i18n[languageCode]("BUTTON_CREATE_ROOM")}
 					</Animated.Text>
 				)}

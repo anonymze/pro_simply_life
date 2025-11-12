@@ -7,6 +7,7 @@ export default function Page() {
 
 	if (!pdf || typeof pdf !== "string") return <Redirect href="../" />;
 
+
 	const file = getFile(pdf);
 
 	if (!file.exists) return <Redirect href="../" />;

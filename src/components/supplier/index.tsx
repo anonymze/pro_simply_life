@@ -374,7 +374,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 						</View>
 					) : !!privateEquity?.fond?.length ? (
 						<ScrollView
-							ref={horizontalScrollRef}
+							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
 							horizontal
 							showsHorizontalScrollIndicator={false}
 							scrollEnabled={false}
@@ -459,7 +459,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 						</ScrollView>
 					) : (
 						<ScrollView
-							ref={horizontalScrollRef}
+							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
 							horizontal
 							showsHorizontalScrollIndicator={false}
 							scrollEnabled={false}

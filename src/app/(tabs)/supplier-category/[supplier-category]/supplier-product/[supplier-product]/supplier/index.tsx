@@ -228,7 +228,7 @@ const PrivateEquityComponent = ({
 
 			{/* Suppliers grouped by type */}
 			<ScrollView
-				ref={scrollRef}
+				scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				scrollEnabled={false}
