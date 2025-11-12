@@ -82,21 +82,22 @@ export default function Page() {
 					<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
 				</View>
 			) : (
-				<ScrollView
-					ref={scrollRef}
-					horizontal
-					showsHorizontalScrollIndicator={false}
-					scrollEnabled={false}
-					decelerationRate={"fast"}
-					contentContainerStyle={{ gap: 16 }}
-				>
+				// <ScrollView
+				// 	ref={scrollRef}
+				// 	horizontal
+				// 	showsHorizontalScrollIndicator={false}
+				// 	scrollEnabled={false}
+				// 	decelerationRate={"fast"}
+				// 	contentContainerStyle={{ gap: 16 }}
+				// >
+
 					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						<NewGroup data={data ?? []} dispatch={dispatch} selectedIds={selectedIds} />
-					</View>
-					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 						<NewConversation currentUser={appUser.user} selectedIds={Array.from(selectedIds)} />
 					</View>
-				</ScrollView>
+
+
+				// </ScrollView>
 			)}
 		</BackgroundLayout>
 	);

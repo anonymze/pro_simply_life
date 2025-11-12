@@ -23,7 +23,7 @@ export default function AppLayout() {
 			// initialRouteName="index"
 			screenOptions={{
 				headerShown: false,
-				animation: "shift",
+				// animation: "shift",
 				tabBarActiveTintColor: config.theme.extend.colors.primary,
 				tabBarLabelStyle: {
 					fontSize: 10.5,

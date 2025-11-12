@@ -163,12 +163,12 @@ export default function Page() {
 					className="mt-4 h-14 w-full items-center justify-center rounded-xl bg-primary disabled:opacity-70"
 				>
 					{mutationLogin.isPending ? (
-						<Animated.View entering={FadeInDown.springify().duration(1200)} exiting={FadeOut.duration(300)}>
+						<Animated.View entering={FadeInDown.springify(300)} exiting={FadeOut.duration(300)}>
 							<ActivityIndicator size="small" color="white" />
 						</Animated.View>
 					) : (
 						<Animated.Text
-							entering={FadeInDown.springify().duration(1200)}
+							entering={FadeInDown.springify(300)}
 							className="text-center font-semibold text-lg text-white"
 						>
 							{i18n[languageCode]("BUTTON_LOGIN")}
