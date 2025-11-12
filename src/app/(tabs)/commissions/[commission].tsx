@@ -171,7 +171,7 @@ export default function Page() {
 						// </View>
 					);
 				}}
-				// estimatedItemSize={42}
+				estimatedItemSize={42}
 				keyExtractor={(item) => item.id}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: 16 }}

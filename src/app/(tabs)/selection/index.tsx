@@ -44,10 +44,11 @@ export default function Page() {
 			const categoryNames: { [key: string]: string } = {
 				girardin: "Girardin Industriel",
 				immobilier: "Immobilier",
+				other: "Autre"
 			};
 
 			// Define the order of categories
-			const categoryOrder = ["girardin", "immobilier"];
+			const categoryOrder = ["girardin", "immobilier", "other"];
 			const orderedCategories = categoryOrder
 				.filter((cat) => groupedSelections[cat])
 				.map((cat) => [cat, groupedSelections[cat]] as [string, Selection[]]);
@@ -68,14 +69,13 @@ export default function Page() {
 								<Text className="mb-2 font-semibold text-base text-defaultGray">
 									{categoryNames[category] || category}
 								</Text>
-								{category === "immobilier" ? (
+								{category === "immobilier" || category === "other" ? (
 									<View className="flex-row flex-wrap gap-5">
 										{selections.map((selection) => (
 											<ImmobilierCard
 												website={selection.website}
 												brochure={selection.brochure!}
 												key={selection.id}
-												supplier={selection.supplier}
 												image={selection.image}
 											/>
 										))}
@@ -88,19 +88,19 @@ export default function Page() {
 												link={{
 													pathname: `/selection/[supplier]`,
 													params: {
-														supplier: selection.supplier.id,
+														supplier: selection.supplier!.id,
 													},
 												}}
 												icon={
 													<ImagePlaceholder
 														transition={300}
 														contentFit="contain"
-														placeholder={selection.supplier.logo_mini?.blurhash}
-														source={selection.supplier.logo_mini?.url}
+														placeholder={selection.supplier!.logo_mini?.blurhash}
+														source={selection.supplier!.logo_mini?.url}
 														style={{ width: 40, height: 40, borderRadius: 4 }}
 													/>
 												}
-												title={selection.supplier.name}
+												title={selection.supplier!.name}
 											/>
 										))}
 									</View>
@@ -130,12 +130,10 @@ const Card = ({ link, icon, title }: { link: Href; icon: any; title: string }) =
 
 const ImmobilierCard = ({
 	image,
-	supplier,
 	brochure,
 	website,
 }: {
 	image: Media | undefined;
-	supplier: Supplier;
 	brochure: Media;
 	website?: string;
 }) => {
@@ -176,17 +174,11 @@ const ImmobilierCard = ({
 				source={image?.url}
 				style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
 			/>
-			<View className="mb-3 mt-2 items-center">
-				{downloading ? (
-					<Animated.View entering={FadeInDown.springify(300)} exiting={FadeOut.duration(300)}>
-						<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
-					</Animated.View>
-				) : (
-					<Animated.Text entering={FadeInDown.springify(300)} className="text-center font-semibold text-primary">
-						{supplier.name}
-					</Animated.Text>
-				)}
-			</View>
+			{downloading && (
+				<View className="absolute inset-0 items-center justify-center">
+					<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
+				</View>
+			)}
 		</Pressable>
 	);
 };

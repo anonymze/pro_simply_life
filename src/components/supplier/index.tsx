@@ -22,7 +22,7 @@ import config from "tailwind.config";
 const DEFAULT_MAX_VALUE = 5_000_000;
 
 export default function Page({ previousCategories = true }: { previousCategories?: boolean }) {
-  const appUser = getStorageUserInfos();
+	const appUser = getStorageUserInfos();
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
 	const verticalScrollRef = React.useRef<ScrollView>(null);
 	const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -105,7 +105,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 						]}
 						horizontal
 						className="my-4"
-							renderItem={({ item, index }) => {
+						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
 							return (
@@ -155,7 +155,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 						]}
 						horizontal
 						className="my-4"
-							renderItem={({ item, index }) => {
+						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
 							return (
@@ -269,6 +269,12 @@ export default function Page({ previousCategories = true }: { previousCategories
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
+										<Text className="text-xs text-green-600">Commissions négociées par Groupe Valorem</Text>
+										<Text className="ml-auto font-light text-sm text-green-600">
+											{data.enveloppe.commission_valorem ? data.enveloppe.commission_valorem + "%" : "Non renseigné"}
+										</Text>
+									</View>
+									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Plein droit</Text>
 										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 											{data.enveloppe.droits === "yes" ? "Oui" : "Non"}
@@ -322,31 +328,32 @@ export default function Page({ previousCategories = true }: { previousCategories
 								previousCategories={previousCategories}
 							/>
 
-							{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-								<Logs
-									title="Identifiants généraux"
-									link={
-										previousCategories
-											? {
-													pathname:
-														"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-													params: {
-														"supplier-category": supplierCategoryId,
-														"supplier-product": supplierProductId,
-														supplier: supplierId,
-														logs: JSON.stringify(data.connexion),
-													},
-												}
-											: {
-													pathname: "/selection/[supplier]/logs/[logs]",
-													params: {
-														supplier: supplierId,
-														logs: JSON.stringify(data.connexion),
-													},
-												}
-									}
-								/>
-							)}
+							{userHierarchy[appUser.user.role] < 2 &&
+								(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+									<Logs
+										title="Identifiants généraux"
+										link={
+											previousCategories
+												? {
+														pathname:
+															"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+														params: {
+															"supplier-category": supplierCategoryId,
+															"supplier-product": supplierProductId,
+															supplier: supplierId,
+															logs: JSON.stringify(data.connexion),
+														},
+													}
+												: {
+														pathname: "/selection/[supplier]/logs/[logs]",
+														params: {
+															supplier: supplierId,
+															logs: JSON.stringify(data.connexion),
+														},
+													}
+										}
+									/>
+								)}
 
 							<Logs
 								title="Identifiants personnels"
@@ -394,31 +401,32 @@ export default function Page({ previousCategories = true }: { previousCategories
 									previousCategories
 								/>
 
-								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-									<Logs
-										title="Identifiants généraux"
-										link={
-											previousCategories
-												? {
-														pathname:
-															"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-														params: {
-															"supplier-category": supplierCategoryId,
-															"supplier-product": supplierProductId,
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-												: {
-														pathname: "/selection/[supplier]/logs/[logs]",
-														params: {
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-										}
-									/>
-								)}
+								{userHierarchy[appUser.user.role] < 2 &&
+									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+										<Logs
+											title="Identifiants généraux"
+											link={
+												previousCategories
+													? {
+															pathname:
+																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-product": supplierProductId,
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+													: {
+															pathname: "/selection/[supplier]/logs/[logs]",
+															params: {
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+											}
+										/>
+									)}
 
 								<Logs
 									title="Identifiants personnels"
@@ -479,31 +487,32 @@ export default function Page({ previousCategories = true }: { previousCategories
 									previousCategories
 								/>
 
-								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-									<Logs
-										title="Identifiants généraux"
-										link={
-											previousCategories
-												? {
-														pathname:
-															"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-														params: {
-															"supplier-category": supplierCategoryId,
-															"supplier-product": supplierProductId,
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-												: {
-														pathname: "/selection/[supplier]/logs/[logs]",
-														params: {
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-										}
-									/>
-								)}
+								{userHierarchy[appUser.user.role] < 2 &&
+									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+										<Logs
+											title="Identifiants généraux"
+											link={
+												previousCategories
+													? {
+															pathname:
+																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-product": supplierProductId,
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+													: {
+															pathname: "/selection/[supplier]/logs/[logs]",
+															params: {
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+											}
+										/>
+									)}
 
 								<Logs
 									title="Identifiants personnels"

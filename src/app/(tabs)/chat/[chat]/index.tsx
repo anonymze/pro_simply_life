@@ -7,7 +7,6 @@ import HeaderLayout from "@/layouts/headert-layout";
 import { Message, MessageOptimistic } from "@/types/chat";
 import { cn } from "@/utils/cn";
 import { getStorageUserInfos } from "@/utils/store";
-import { LegendList } from "@legendapp/list";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as DocumentPicker from "expo-document-picker";
@@ -29,6 +28,7 @@ import Animated, {
 import config from "tailwind.config";
 import { z } from "zod";
 
+import { FlashList } from "@shopify/flash-list";
 import { MAX_MESSAGES } from "../index";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -277,11 +277,20 @@ export default function Page() {
 			<Animated.View className="flex-1" style={animatedStyle}>
 				<View className="flex-1">
 					{!!messages?.length ? (
-						<LegendList
+						<FlashList
+							// ListEmptyComponent={() => {
+							// 	return (
+							// 		<View className="flex-1 items-center justify-center">
+							// 			<Text className="text-gray-500">Pas de message</Text>
+							// 		</View>
+							// 	);
+							// }}
+							// drawDistance={300}
 							keyExtractor={(item) => item.id}
 							showsVerticalScrollIndicator={false}
-							// initialScrollIndex={messages.length - 1}
 							data={messages}
+							inverted={true}
+							estimatedItemSize={50}
 							renderItem={({ item, index }) => {
 								const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
 								const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
@@ -300,23 +309,17 @@ export default function Page() {
 									/>
 								);
 							}}
-							estimatedItemSize={320}
-							// onEndReached={() => {
-							// 	console.log("hey");
-							// 	// add more messages when on end scroll
-							// 	if (!!messages.length && messages.length >= maxMessages) {
-							// 		setMaxMessages((props) => props + MAX_MESSAGES);
-							// 	}
-							// }}
-							          decelerationRate={0.975}
-							alignItemsAtEnd
-							maintainScrollAtEnd
-							maintainVisibleContentPosition
-							maintainScrollAtEndThreshold={0.5}
-							onStartReachedThreshold={0.7}
-							contentContainerStyle={{
-								padding: 10,
+							// don't invert on empty list
+							// inverted={true}
+
+							// disableRecycling={true}
+							onEndReached={() => {
+								// add more messages when on end scroll
+								if (!!messages.length && messages.length >= maxMessages) {
+									setMaxMessages((props) => props + MAX_MESSAGES);
+								}
 							}}
+							onEndReachedThreshold={0.1}
 						/>
 					) : (
 						<View className="flex-1 items-center justify-center">

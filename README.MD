@@ -204,7 +204,6 @@ produits structurés, entrer un mail pour envoyer la brochure ?
 
 include denis dans le gros point v2
 
-
 fcpi / fip / parts socials (créé) regroupés
 3 colonnes dans les 3
 
@@ -214,25 +213,12 @@ ajouter des personnes en plus dans le chat
 
 mail pro / mail perso
 
-pas de fournisseur optionnel ? dans selection du momment
-
 lunettes ?
 
 popup evenement reccent ?
-
-produits structurés -> ajouter un titre dessous le produit
-
-
-eveloppe pleine pour produit strucutré
-
-
-brochure selection du moment ? bug site ??
-
-
-Commissions négociées par le groupe valorem dans cif girardin (back et app)
 
 guide de débutant
 
 lire des excels sur un téléphone
 
-selection du moment category libre
+selection des bureaux

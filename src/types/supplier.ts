@@ -31,6 +31,7 @@ export interface Supplier {
 		echeance?: string | null;
 		actualisation?: string | null;
 		commission?: string | null;
+		commission_valorem?: string | null;
 		droits?: ("yes" | "no") | null;
 		agrement?: ("yes" | "no") | null;
 		assurance?: ("yes" | "no" | "maybe") | null;

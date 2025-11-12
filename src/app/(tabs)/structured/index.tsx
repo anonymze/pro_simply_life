@@ -28,7 +28,7 @@ export default function Page() {
 						renderItem={(item) => {
 							return <Card structuredProduct={item.item} />;
 						}}
-							keyExtractor={(item) => item.id}
+						keyExtractor={(item) => item.id}
 						showsVerticalScrollIndicator={false}
 						contentContainerStyle={{ paddingBottom: 10 }}
 						ItemSeparatorComponent={() => <View className="h-2.5" />}
