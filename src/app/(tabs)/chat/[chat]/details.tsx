@@ -9,8 +9,8 @@ import { User, userRoleLabels } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { getStorageUserInfos } from "@/utils/store";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { router, useLocalSearchParams } from "expo-router";
-import { LogOutIcon, TrashIcon } from "lucide-react-native";
+import { Link, router, useLocalSearchParams } from "expo-router";
+import { LogOutIcon, PlusIcon, TrashIcon } from "lucide-react-native";
 import { ActivityIndicator, Alert, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
@@ -127,12 +127,20 @@ export default function Page() {
 			</TouchableOpacity>
 
 			<View className="mt-5 flex-row items-center justify-between">
-				<Text className="font-semibold text-xl text-primary">{chatRoom.guests.length} membres</Text>
-				{/* <Link href="/chat/new-room" asChild> */}
-				{/* <TouchableOpacity className="rounded-full bg-primaryUltraLight p-2.5">
-					<PlusIcon size={18} color={config.theme.extend.colors.primary} />
-				</TouchableOpacity> */}
-				{/* </Link> */}
+				<Text className="font-semibold text-xl text-primary">{chatRoom.guests.length} membre(s)</Text>
+				<Link
+					href={{
+						pathname: "/(tabs)/chat/[chat]/add",
+						params: {
+							chat: chatId as string,
+						},
+					}}
+					asChild
+				>
+					<TouchableOpacity className="rounded-full bg-darkGray p-2.5">
+						<PlusIcon size={18} color={config.theme.extend.colors.primary} />
+					</TouchableOpacity>
+				</Link>
 			</View>
 
 			<ScrollView

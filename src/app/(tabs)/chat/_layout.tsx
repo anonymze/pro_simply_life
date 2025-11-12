@@ -42,6 +42,15 @@ export default function ChatLayout() {
 					headerShown: true,
 				}}
 			/>
+			<Stack.Screen
+				name="[chat]/add"
+				options={{
+					presentation: "modal",
+					sheetGrabberVisible: true,
+					header: () => Platform.OS === "ios" ? <HeaderGrabberIos /> : <HeaderLayout  />,
+					headerShown: true,
+				}}
+			/>
 		</Stack>
 	);
 }

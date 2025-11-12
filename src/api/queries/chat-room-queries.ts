@@ -45,3 +45,16 @@ export async function leaveChatRoomQuery({
 	const response = await api.delete(`/api/chat-rooms/leave/${chatRoomId}/${userId}`);
 	return response.data;
 }
+
+export async function updateChatRoomQuery({
+	chatRoomId,
+	users,
+}: {
+	chatRoomId: ChatRoom["id"];
+	users: User["id"][];
+}) {
+	const response = await api.patch(`/api/chat-rooms/${chatRoomId}/add`, {
+	  users
+	});
+	return response.data;
+}
