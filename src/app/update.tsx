@@ -17,7 +17,7 @@ export default function Page() {
 				onPress={() => {
 					Linking.openURL(Platform.OS === "ios" ? APP_URL_IOS : APP_URL_ANDROID);
 				}}
-				className="mt-4 h-14 w-full items-center justify-center rounded-lg bg-primary disabled:opacity-70"
+				className="mt-8 h-14 w-full items-center justify-center rounded-lg bg-primary disabled:opacity-70"
 			>
 				<Text className="text-center text-white">Mettre à jour</Text>
 			</Pressable>
