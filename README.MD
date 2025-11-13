@@ -220,3 +220,5 @@ popup evenement reccent ?
 guide de débutant
 
 lire des excels sur un téléphone
+
+bug android + david private

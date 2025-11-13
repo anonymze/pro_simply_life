@@ -10,9 +10,8 @@ const ORIGIN_MOBILE = "simply-life-app://mobile";
  * @description ON REACT NATIVE, IT SEND THE COOKIES FROM THE NATIVE NETWORK LAYER
  */
 export const api = axios.create({
-	// TODO
-	baseURL: process.env.EXPO_PUBLIC_API_URL || "",
 	// baseURL: "http://localhost:3000",
+	baseURL: process.env.EXPO_PUBLIC_API_URL || "",
 	timeout: 30 * 1000, // 30 seconds because mobile can have slow connections
 	responseType: "json",
 	headers: {

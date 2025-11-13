@@ -174,7 +174,7 @@ export default function Page() {
 								data={independentColumns}
 								horizontal
 								showsHorizontalScrollIndicator={false}
-								estimatedItemSize={100}
+								// estimatedItemSize={100}
 								contentContainerStyle={{ paddingRight: 16, paddingBottom: 16 }}
 								ItemSeparatorComponent={() => <View style={{ width: 32 }} />}
 								renderItem={({ item: column }) => (

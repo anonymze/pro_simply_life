@@ -11,7 +11,7 @@ import { getStorageUserInfos } from "@/utils/store";
 import { Href, Link } from "expo-router";
 import { PlusIcon } from "lucide-react-native";
 import React from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import config from "tailwind.config";
 
 export const MAX_MESSAGES = 25;

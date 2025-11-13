@@ -15,7 +15,7 @@ import { UIImagePickerPresentationStyle } from "expo-image-picker";
 import { Redirect, Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { ImageIcon, PaperclipIcon, SendIcon } from "lucide-react-native";
 import React from "react";
-import { Alert, Keyboard, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Keyboard, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import Animated, {
 	Easing,
@@ -277,7 +277,7 @@ export default function Page() {
 			<Animated.View className="flex-1" style={animatedStyle}>
 				<View className="flex-1">
 					{!!messages?.length ? (
-						<FlashList
+						<FlatList
 							// ListEmptyComponent={() => {
 							// 	return (
 							// 		<View className="flex-1 items-center justify-center">
@@ -290,7 +290,7 @@ export default function Page() {
 							showsVerticalScrollIndicator={false}
 							data={messages}
 							inverted={true}
-							estimatedItemSize={50}
+							// estimatedItemSize={50}
 							renderItem={({ item, index }) => {
 								const lastMessageUser = messages[index + 1]?.app_user.id !== item.app_user.id;
 								const newMessageUser = messages[index - 1]?.app_user.id !== item.app_user.id;
@@ -309,8 +309,6 @@ export default function Page() {
 									/>
 								);
 							}}
-							// don't invert on empty list
-							// inverted={true}
 
 							// disableRecycling={true}
 							onEndReached={() => {
@@ -364,15 +362,6 @@ export default function Page() {
 		</BackgroundLayout>
 	);
 }
-
-// const onMessageWebsocket = (event: any) => {
-// 	const { data, success } = messageReceivedSchema.safeParse(JSON.parse(event));
-// 	if (!success) return;
-
-// 	queryClient.invalidateQueries({ queryKey: ["messages", chatId, maxMessages] });
-// };
-
-// const websocketConnected = useWebSocket(chatId, onMessageWebsocket);
 
 const SendButton = React.memo(
 	({
