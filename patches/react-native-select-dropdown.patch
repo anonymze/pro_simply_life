@@ -1,0 +1,67 @@
+diff --git a/src/SelectDropdown.js b/src/SelectDropdown.js
+index d114c064d94ebf46709622b4816e5226687bb90a..8b5d9af285d3aab27cd05d360f1e48ac6fcb2a40 100644
+--- a/src/SelectDropdown.js
++++ b/src/SelectDropdown.js
+@@ -62,6 +62,9 @@ const SelectDropdown = (
+     dropdownWindowStyle,
+     onRequestClose,
+   } = useLayoutDropdown(data, dropdownStyle);
++
++  const [buttonPosition, setButtonPosition] = React.useState(null);
++
+   useImperativeHandle(ref, () => ({
+     reset: () => {
+       reset();
+@@ -78,12 +81,12 @@ const SelectDropdown = (
+   }));
+   /* ******************* Methods ******************* */
+   const openDropdown = () => {
+-    dropdownButtonRef.current.measure((fx, fy, w, h, px, py) => {
+-      onDropdownButtonLayout(w, h, px, py);
+-      setIsVisible(true);
+-      onFocus && onFocus();
+-      scrollToSelectedItem();
+-    });
++    if (!buttonPosition) return;
++    const {width, height, x, y} = buttonPosition;
++    onDropdownButtonLayout(width, height, x, y);
++    setIsVisible(true);
++    onFocus && onFocus();
++    scrollToSelectedItem();
+   };
+   const closeDropdown = () => {
+     setIsVisible(false);
+@@ -190,7 +193,17 @@ const SelectDropdown = (
+   let clonedElement = renderButton ? renderButton(selectedItem, isVisible) : <View />;
+   let props = {...clonedElement.props};
+   return (
+-    <TouchableOpacity {...props} activeOpacity={0.8} ref={dropdownButtonRef} disabled={disabled} onPress={openDropdown}>
++    <TouchableOpacity
++      {...props}
++      activeOpacity={0.8}
++      disabled={disabled}
++      onPress={openDropdown}
++      ref={dropdownButtonRef}
++      onLayout={(event) => {
++        const {width, height, x, y} = event.nativeEvent.layout;
++        setButtonPosition({width, height, x, y});
++      }}
++    >
+       {renderDropdown()}
+       {props?.children}
+     </TouchableOpacity>
+diff --git a/src/hooks/useRefs.js b/src/hooks/useRefs.js
+index 45cbcbe141e9f67eb7e4fd44f411b4bfc4c7578f..3ede8b01957cbdd61b906c6339cf4cd0247d46a6 100644
+--- a/src/hooks/useRefs.js
++++ b/src/hooks/useRefs.js
+@@ -1,9 +1,8 @@
+ import {useRef} from 'react';
+ 
+ export const useRefs = () => {
+-  const dropdownButtonRef = useRef(); // button ref to get positions
++  const dropdownButtonRef = useRef(null); // button ref to get positions
+   const dropDownFlatlistRef = useRef(null); // ref to the drop down flatlist
+-
+   return {
+     dropdownButtonRef,
+     dropDownFlatlistRef,

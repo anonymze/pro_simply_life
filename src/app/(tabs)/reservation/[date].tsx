@@ -159,7 +159,7 @@ export default function Page() {
 				/>
 
 				<SelectDropdown
-					// key={`bureau-${dropdownKey}`}
+					key={`bureau-${dropdownKey}`}
 					data={bureauData}
 					defaultValue={selectedBureau ? bureauData.find((item) => item.value === selectedBureau) : undefined}
 					onSelect={(selectedItem) => {
