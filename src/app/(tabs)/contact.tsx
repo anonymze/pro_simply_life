@@ -71,8 +71,6 @@ export default function Page() {
 		// }, [queries, selectedCategories]);
 	}, [queries]);
 
-	console.log(queries[1].data?.docs);
-
 	if (queries[0].error || queries[1].error) {
 		Alert.alert("Erreur de connexion", "Les contacts n'ont pas pu être récupérés.");
 	}
