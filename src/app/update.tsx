@@ -1,3 +1,4 @@
+
 import BackgroundLayout from "@/layouts/background-layout";
 import { APP_URL_ANDROID, APP_URL_IOS, VERSION_NUMBER } from "@/utils/helper";
 import { Image } from "expo-image";
@@ -10,9 +11,15 @@ export default function Page() {
 			<Text className="mt-4 max-w-[90%] text-start font-medium text-lg text-primary">
 				Une importante mise à jour de l'application est nécessaire pour continuer à l'utiliser.
 			</Text>
-			<Text className="mt-4 max-w-[90%] text-start font-medium text-lg text-primary">
+			{/*<Text className="mt-4 max-w-[90%] text-start font-medium text-lg text-primary">
 				Veuillez télécharger la mise à jour sur le store en appuyant sur le bouton ci-dessous.
-			</Text>
+			</Text>*/}
+			{Platform.OS === "ios" && (
+				<Text className="text-lg mt-4 max-w-[90%] text-start font-medium text-red-500">
+					Vous allez être redirigé vers l'App Store avec toutes vos applications, il suffit de scroller
+					jusqu'à trouver Simply Life et mettre à jour.
+				</Text>
+			)}
 			<Pressable
 				onPress={() => {
 					Linking.openURL(Platform.OS === "ios" ? APP_URL_IOS : APP_URL_ANDROID);
