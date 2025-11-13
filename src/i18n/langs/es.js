@@ -16,7 +16,7 @@ export default {
 	ERROR_LOGIN: "Error de conexión",
 	ERROR_LOGIN_MESSAGE: "Verifique sus credenciales.",
 	ERROR_EMAIL_INVALID: "Correo electrónico inválido",
-	ERROR_PASSWORD_MIN_LENGTH: "La contraseña debe tener al menos 10 caracteres.",
+	ERROR_PASSWORD_MIN_LENGTH: "La contraseña debe tener al menos 8 caracteres.",
 	ERROR_INPUT_MIN_LENGTH: "El campo debe tener al menos 2 caracteres.",
 	ERROR_PDF: "Error PDF",
 	ERROR_PDF_MESSAGE: "No se puede guardar el PDF",

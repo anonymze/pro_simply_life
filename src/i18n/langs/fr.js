@@ -16,7 +16,7 @@ export default {
 	ERROR_GENERIC_PART2: "Contactez les développeurs.",
 	ERROR_LOGIN_MESSAGE: "Vérifiez vos identifiants.",
 	ERROR_EMAIL_INVALID: "Entrez un email valide.",
-	ERROR_PASSWORD_MIN_LENGTH: "Le mot de passe doit contenir au moins 10 caractères.",
+	ERROR_PASSWORD_MIN_LENGTH: "Le mot de passe doit contenir au moins 8 caractères.",
 	ERROR_INPUT_MIN_LENGTH: "Le champ doit contenir au moins 2 caractères.",
 	ERROR_PDF: "Erreur PDF",
 	ERROR_PDF_MESSAGE: "Impossible d'enregistrer le PDF",

@@ -6,6 +6,7 @@ import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
 import { NotificationProvider } from "@/context/push-notifications";
+import { needImportantVersion } from "@/utils/helper";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PortalHost } from "@rn-primitives/portal";
 import * as Sentry from "@sentry/react-native";
@@ -128,7 +129,11 @@ const Layout = () => {
 			<GestureHandlerRootView>
 				<BottomSheetModalProvider>
 					<KeyboardProvider>
-						<PressablesConfig animationType="spring" animationConfig={{ damping: 90, stiffness: 1500 }}  config={{ minScale: 0.9 }}>
+						<PressablesConfig
+							animationType="spring"
+							animationConfig={{ damping: 90, stiffness: 1500 }}
+							config={{ minScale: 0.9 }}
+						>
 							<StatusBar style="dark" translucent />
 							{/* already added by expo router on every route */}
 							{/* <SafeAreaProvider> */}
@@ -140,8 +145,13 @@ const Layout = () => {
 									fullScreenGestureEnabled: false,
 								}}
 							>
-								<Stack.Screen name="(tabs)" />
-								<Stack.Screen name="login" />
+								<Stack.Protected guard={!needImportantVersion()}>
+									<Stack.Screen name="(tabs)" />
+									<Stack.Screen name="login" />
+								</Stack.Protected>
+								<Stack.Protected guard={needImportantVersion()}>
+									<Stack.Screen name="update" />
+								</Stack.Protected>
 							</Stack>
 							<PortalHost />
 							{/* </SafeAreaProvider> */}

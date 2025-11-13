@@ -213,12 +213,10 @@ ajouter des personnes en plus dans le chat
 
 mail pro / mail perso
 
-lunettes ?
-
 popup evenement reccent ?
 
 guide de débutant
 
 lire des excels sur un téléphone
 
-bug android + david private
+david private + guard mise à jour + bug android on pages
