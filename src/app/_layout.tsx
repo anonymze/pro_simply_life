@@ -7,7 +7,6 @@ import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
 import { getSuppliersSelectionQuery } from "@/api/queries/supplier-queries";
 import { NotificationProvider } from "@/context/push-notifications";
-import { needImportantVersion } from "@/utils/helper";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PortalHost } from "@rn-primitives/portal";
 import * as Sentry from "@sentry/react-native";
@@ -22,6 +21,7 @@ import React from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import { needImportantVersion } from "@/utils/helper";
 
 Sentry.init({
 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
@@ -140,6 +140,9 @@ const Layout = () => {
 								fullScreenGestureEnabled: false,
 							}}
 						>
+							{/*<Stack.Screen name="(tabs)" />
+							<Stack.Screen name="login" />*/}
+
 							<Stack.Protected guard={!needImportantVersion()}>
 								<Stack.Screen name="(tabs)" />
 								<Stack.Screen name="login" />
