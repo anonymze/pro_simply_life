@@ -2,6 +2,7 @@ import { forgotPasswordQuery, loginQuery } from "@/api/queries/login-queries";
 import { useNotification } from "@/context/push-notifications";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import BackgroundLayout from "@/layouts/background-layout";
+import { VERSION_NUMBER } from "@/utils/helper";
 import { setStorageUserInfos } from "@/utils/store";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm } from "@tanstack/react-form";
@@ -16,8 +17,6 @@ import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller
 import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-reanimated";
 import config from "tailwind.config";
 import { z } from "zod";
-
-const version = Constants.expoConfig?.version;
 
 export default function Page() {
 	const { expoPushToken } = useNotification();
@@ -214,7 +213,7 @@ export default function Page() {
 					</Text>
 				</TouchableOpacity>
 
-				<Text className="mt-1 text-center text-xs text-primaryLight">Version {version}</Text>
+				<Text className="mt-1 text-center text-xs text-primaryLight">Version {VERSION_NUMBER}</Text>
 			</Animated.View>
 		</BackgroundLayout>
 	);

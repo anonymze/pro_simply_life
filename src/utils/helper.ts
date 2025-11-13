@@ -1,4 +1,5 @@
 import { Dimensions } from "react-native";
+import Constants from "expo-constants";
 
 /**
  * @description correctly type Object.keys
@@ -68,6 +69,10 @@ export const isNewEmployee = (entry_date?: string): boolean => {
 	return entryDate > threeMonthsAgo;
 };
 
+export const needImportantVersion = () => {
+	return (VERSION_NUMBER ?? "") < "1.2.6";
+};
+
 export const excludedProductSupplierIds = [
 	// dettes privées obligatoires
 	"46c9b876-9b9b-4779-b8ff-e4af9d56914e",
@@ -91,3 +96,7 @@ export const USER_DEV_2_ID = "34346fc6-2fe6-4009-92b3-5936073c7c19";
 export const FCPR_ID = "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8";
 
 export const SCREEN_DIMENSIONS = Dimensions.get("window");
+export const VERSION_NUMBER = Constants.expoConfig?.version;
+export const APP_URL_ANDROID = "https://play.google.com/store/apps/details?id=com.anonymze.simplylife";
+export const APP_URL_IOS = "https://apps.apple.com/app/id6742592384";
+// itms-apps://itunes.apple.com/app/id6742592384`
