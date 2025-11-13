@@ -7,6 +7,7 @@ import * as DropdownMenu from "zeego/dropdown-menu";
 
 import { router } from "expo-router";
 import ImagePlaceholder from "./ui/image-placeholder";
+import { MyTouchableScale } from "./my-pressable";
 
 export default function ProfileDashboard({
 	firstname,
@@ -42,11 +43,11 @@ export default function ProfileDashboard({
 			<View className="ml-auto">
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
-						<TouchableOpacity className="p-3" hitSlop={5}>
+						<MyTouchableScale className="p-3" hitSlop={5}>
 							<View className="size-10 items-center justify-center rounded-full bg-white shadow-sm shadow-defaultGray/20">
 								<MenuIcon size={20} color={config.theme.extend.colors.primary} />
 							</View>
-						</TouchableOpacity>
+						</MyTouchableScale>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
 						<DropdownMenu.Item

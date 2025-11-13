@@ -1,6 +1,6 @@
 import { queryClient } from "@/api/_queries";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
-import { updateChatRoomQuery } from "@/api/queries/chat-room-queries";
+import { getChatRoomQuery, updateChatRoomQuery } from "@/api/queries/chat-room-queries";
 import { NewGroup } from "@/components/new-group";
 import BackgroundLayout from "@/layouts/background-layout";
 import { User } from "@/types/user";
@@ -16,7 +16,18 @@ import config from "tailwind.config";
 export default function Page() {
 	const appUser = getStorageUserInfos();
 	const { chat: chatId } = useLocalSearchParams();
-	const [selectedIds, dispatch] = React.useReducer(selectionReducer, new Set());
+	const { data: chatRoom } = useQuery({
+		queryKey: ["chat-room", chatId],
+		queryFn: getChatRoomQuery,
+		enabled: !!chatId,
+	});
+
+	const initialSelectedIds = React.useMemo(
+		() => new Set(chatRoom?.guests?.map((guest) => guest.id) ?? []),
+		[chatRoom?.guests]
+	);
+
+	const [selectedIds, dispatch] = React.useReducer(selectionReducer, initialSelectedIds);
 
 	if (!appUser) {
 		return (
