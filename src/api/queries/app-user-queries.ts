@@ -1,12 +1,11 @@
 import { PaginatedResponse } from "@/types/response";
+import { User, UserContact } from "@/types/user";
 import { QueryKey } from "@tanstack/react-query";
-import { User } from "@/types/user";
 
 import { api } from "../_config";
 
-
 export async function getAppUsersQuery({ queryKey }: { queryKey: QueryKey }) {
-	const [,role] = queryKey;
+	const [, role] = queryKey;
 	const response = await api.get<PaginatedResponse<User>>("/api/app-users", {
 		params: {
 			where: {
@@ -15,9 +14,14 @@ export async function getAppUsersQuery({ queryKey }: { queryKey: QueryKey }) {
 				},
 			},
 			// disable pagination
-			limit: 0
+			limit: 0,
 		},
 	});
+	return response.data;
+}
+
+export async function getAppUsersContactsQuery({ queryKey }: { queryKey: QueryKey }) {
+	const response = await api.get<PaginatedResponse<UserContact>>("/api/app-users/contacts");
 	return response.data;
 }
 

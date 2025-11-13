@@ -18,8 +18,20 @@ export interface User {
 	photo?: Media;
 	entry_date?: string;
 	notifications_token?: string | null;
+	latitude?: string;
+	longitude?: string;
 	createdAt: string;
 	updatedAt: string;
+}
+
+export interface UserContact {
+	id: string;
+	lastname: string;
+	firstname: string;
+	cabinet?: string | undefined;
+	phone?: string;
+	latitude?: string;
+	longitude?: string;
 }
 
 type UserRole = "associate" | "independent" | "visitor" | "employee";
