@@ -2,6 +2,7 @@ import { queryClient } from "@/api/_queries";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import CardEmployee from "@/components/card/card-employee";
 import CardEmployeeCarousel from "@/components/card/card-employee-carousel";
+import { MyTouchableOpacity } from "@/components/my-pressable";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
@@ -157,7 +158,7 @@ export default function Page() {
 									}}
 									asChild
 								>
-									<TouchableOpacity
+									<MyTouchableOpacity
 										hitSlop={10}
 										onPress={() => {
 											queryClient.setQueryData(["app-users", "independent"], {
@@ -166,7 +167,7 @@ export default function Page() {
 										}}
 									>
 										<Text className="font-semibold text-primaryLight">Voir tout</Text>
-									</TouchableOpacity>
+									</MyTouchableOpacity>
 								</Link>
 							</View>
 							<FlashList

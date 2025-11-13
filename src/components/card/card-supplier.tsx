@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
+import { MyTouchableScaleOpacity } from "../my-pressable";
 
 const DEFAULT_MAX_VALUE = 5_000_000;
 
@@ -38,7 +39,7 @@ export default function CardSupplier({
 
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity
+			<MyTouchableScaleOpacity
 				onPressIn={onPress}
 				className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
@@ -109,7 +110,7 @@ export default function CardSupplier({
 					) : null}
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 }

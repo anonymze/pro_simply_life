@@ -6,6 +6,7 @@ import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import ImagePlaceholder from "../ui/image-placeholder";
+import { MyTouchableOpacity } from "../my-pressable";
 
 export default function CardEmployeeCarousel({
 	user,
@@ -24,7 +25,7 @@ export default function CardEmployeeCarousel({
 
 	return (
 		<Link href={link} asChild>
-			<TouchableOpacity onPressIn={onPress} hitSlop={5} className="items-center">
+			<MyTouchableOpacity onPressIn={onPress} hitSlop={5} className="items-center">
 				<View className="relative" style={{ overflow: "visible" }}>
 					<ImagePlaceholder
 						transition={300}
@@ -44,7 +45,7 @@ export default function CardEmployeeCarousel({
 					)}
 				</View>
 				<Text className="mt-2 text-sm text-primary text-center">{user.firstname + " " + user.lastname}</Text>
-			</TouchableOpacity>
+			</MyTouchableOpacity>
 		</Link>
 	);
 }

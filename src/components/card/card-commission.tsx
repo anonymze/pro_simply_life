@@ -6,6 +6,7 @@ import { Href, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
 import config from "tailwind.config";
 import React from "react";
+import { MyTouchableOpacity } from "../my-pressable";
 
 
 export default function CardCommission({ commission, link }: { commission: Commission; link: Href }) {
@@ -15,7 +16,7 @@ export default function CardCommission({ commission, link }: { commission: Commi
 
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity
+			<MyTouchableOpacity
 				onPressIn={onPress}
 				className="w-full flex-row items-center justify-between gap-3 rounded-xl bg-white p-4 shadow-sm shadow-defaultGray/10"
 			>
@@ -24,7 +25,7 @@ export default function CardCommission({ commission, link }: { commission: Commi
 					// year: "numeric",
 				})}</Text>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} />
-			</TouchableOpacity>
+			</MyTouchableOpacity>
 		</Link>
 	);
 }

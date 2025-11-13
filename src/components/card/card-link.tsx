@@ -3,7 +3,8 @@ import { SCREEN_DIMENSIONS, truncateText } from "@/utils/helper";
 import { Link, LinkProps } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import { Dimensions, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { MyTouchableScaleOpacity } from "../my-pressable";
 
 const windowWidth = SCREEN_DIMENSIONS.width;
 
@@ -25,7 +26,7 @@ export default function CardLink({
 	if (link) {
 		return (
 			<Link href={link} push asChild>
-				<TouchableOpacity className="items-center gap-1 rounded-2xl" hitSlop={5}>
+				<MyTouchableScaleOpacity className="items-center gap-1 rounded-2xl" hitSlop={5}>
 					<View className={cn("size-24 items-center justify-center rounded-2xl bg-primaryUltraLight", backgroundIcon)}>
 						{icon}
 					</View>
@@ -33,7 +34,7 @@ export default function CardLink({
 						{truncateText(title, 12)}
 					</Text>
 					{/* <Text className="text font-medium text-lightGray text-center">{truncateText(description, 10)}</Text> */}
-				</TouchableOpacity>
+				</MyTouchableScaleOpacity>
 			</Link>
 		);
 	}

@@ -13,6 +13,7 @@ import Title from "@/components/ui/title";
 import { cssInterop } from "nativewind";
 import config from "tailwind.config";
 import React from "react";
+import { MyTouchableScaleOpacity } from "@/components/my-pressable";
 
 
 const TouchableOpacityAnimated = Animated.createAnimatedComponent(TouchableOpacity);
@@ -161,7 +162,7 @@ export default function Page() {
 										key={reservation.id}
 										asChild
 									>
-										<TouchableOpacity
+										<MyTouchableScaleOpacity
 											className="mt-2 flex-row items-center justify-between gap-3"
 											onPressIn={() => {
 												queryClient.setQueryData(["reservation", reservation.id], reservation);
@@ -200,7 +201,7 @@ export default function Page() {
 													</View>
 												</View>
 											</View>
-										</TouchableOpacity>
+										</MyTouchableScaleOpacity>
 									</Link>
 								))}
 							</View>

@@ -27,6 +27,7 @@ import { Image } from "expo-image";
 import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
+import { MyTouchableOpacity, MyTouchableScaleOpacity } from "@/components/my-pressable";
 
 export default function Page() {
 	// const notification = useNotification();
@@ -96,11 +97,7 @@ export default function Page() {
 					push
 					asChild
 				>
-					<TouchableOpacity
-						activeOpacity={0.8}
-						className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5"
-					>
-						{/* Main content */}
+					<MyTouchableScaleOpacity className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5">
 						<View className="flex-row items-center justify-between">
 							<View className="flex-1 flex-row items-center gap-3">
 								<Sparkles size={15} color="#FDB022" fill="#FDB022" />
@@ -109,18 +106,18 @@ export default function Page() {
 
 							<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
 						</View>
-					</TouchableOpacity>
+					</MyTouchableScaleOpacity>
 				</Link>
 
 				<Title title="Newsletter" />
+
 				<Link
 					href={{
 						pathname: "/fundesys",
 					}}
 					push
-					asChild
 				>
-					<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
+					<MyTouchableScaleOpacity className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
 						<View className="size-14 items-center justify-center overflow-hidden rounded-lg border border-defaultGray/10">
 							<ImagePlaceholder
 								source={require("@/assets/images/fundesys.png")}
@@ -131,8 +128,9 @@ export default function Page() {
 							<Text className="font-semibold text-lg text-primary">Fundesys</Text>
 						</View>
 						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
-					</TouchableOpacity>
+					</MyTouchableScaleOpacity>
 				</Link>
+
 				<Link
 					href={{
 						pathname: "/fidnet",
@@ -140,7 +138,7 @@ export default function Page() {
 					push
 					asChild
 				>
-					<TouchableOpacity className="mt-3 w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
+					<MyTouchableScaleOpacity className="mt-3 w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10">
 						<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
 							<ImagePlaceholder
 								contentFit="contain"
@@ -152,14 +150,14 @@ export default function Page() {
 							<Text className="font-semibold text-lg text-primary">Fidnet</Text>
 						</View>
 						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
-					</TouchableOpacity>
+					</MyTouchableScaleOpacity>
 				</Link>
 				<View className="mb-4 mt-7 flex-row items-center justify-between">
 					<Title title="Évènements agence" className="mb-0 mt-0" />
 					<Link href="/(tabs)/event" asChild>
-						<TouchableOpacity hitSlop={10}>
+						<MyTouchableOpacity hitSlop={10}>
 							<Text className="font-semibold text-primaryLight">Voir tout</Text>
-						</TouchableOpacity>
+						</MyTouchableOpacity>
 					</Link>
 				</View>
 				<Carousel
@@ -202,7 +200,7 @@ export default function Page() {
 
 				<Title title="Réseaux sociaux" className="mx-auto text-lg" />
 				<View className="flex-row items-center justify-center gap-16">
-					<TouchableOpacity
+					<MyTouchableOpacity
 						hitSlop={10}
 						onPress={async () => {
 							const linkedinUrl = "linkedin://company/groupe-valorem-conseil";
@@ -222,8 +220,8 @@ export default function Page() {
 						}}
 					>
 						<AntDesign name="linkedin" size={35} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
-					<TouchableOpacity
+					</MyTouchableOpacity>
+					<MyTouchableOpacity
 						hitSlop={10}
 						onPress={async () => {
 							const instagramUrl = "instagram://user?username=groupe_valorem";
@@ -243,7 +241,7 @@ export default function Page() {
 						}}
 					>
 						<AntDesign name="instagram" size={35} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
+					</MyTouchableOpacity>
 				</View>
 			</ScrollView>
 		</BackgroundLayout>

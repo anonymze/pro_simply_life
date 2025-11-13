@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
+import { MyTouchableOpacity } from "../my-pressable";
 
 export default function CardSupplier({ icon, user, link }: { icon: React.ReactNode; user: User; link: Href }) {
 	const onPress = React.useCallback(() => {
@@ -16,7 +17,7 @@ export default function CardSupplier({ icon, user, link }: { icon: React.ReactNo
 
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity
+			<MyTouchableOpacity
 				onPressIn={onPress}
 				className="w-full flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
@@ -33,7 +34,7 @@ export default function CardSupplier({ icon, user, link }: { icon: React.ReactNo
 					<Text className="font-semibold text-lg text-primary">{user.firstname + " " + user.lastname}</Text>
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
-			</TouchableOpacity>
+			</MyTouchableOpacity>
 		</Link>
 	);
 }

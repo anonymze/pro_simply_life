@@ -5,6 +5,7 @@ import {
 	getEventStatusQuery,
 	updateEventStatusQuery,
 } from "@/api/queries/event-queries";
+import { MyTouchableOpacity } from "@/components/my-pressable";
 import BackgroundLayout from "@/layouts/background-layout";
 import { eventLabel } from "@/types/event";
 import { cn } from "@/utils/libs/tailwind";
@@ -211,7 +212,7 @@ export default function Page() {
 								<>
 									<Text className="font-bold text-lg text-primary">Êtes-vous présent à l'événement ?</Text>
 									<View className="flex-row gap-3">
-										<Pressable
+										<MyTouchableOpacity
 											className={cn(
 												"flex-1 items-center justify-center rounded-2xl p-4",
 												status?.docs[0]?.status === "yes" ? "bg-green-500" : "bg-white",
@@ -242,8 +243,8 @@ export default function Page() {
 											>
 												Oui
 											</Text>
-										</Pressable>
-										<Pressable
+										</MyTouchableOpacity>
+										<MyTouchableOpacity
 											className={cn(
 												"flex-1 items-center justify-center rounded-2xl p-4",
 												status?.docs[0]?.status === "no" ? "bg-red-500" : "bg-white",
@@ -274,7 +275,7 @@ export default function Page() {
 											>
 												Non
 											</Text>
-										</Pressable>
+										</MyTouchableOpacity>
 									</View>
 								</>
 							)}

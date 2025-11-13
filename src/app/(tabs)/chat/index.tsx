@@ -1,6 +1,7 @@
 import { queryClient } from "@/api/_queries";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { getMessagesQuery } from "@/api/queries/message-queries";
+import { MyTouchableOpacity, MyTouchableScale, MyTouchableScaleOpacity } from "@/components/my-pressable";
 import MessagesIcon from "@/components/svg/messages-icon";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -85,9 +86,9 @@ export default function Page() {
 						<Title title="Messages" />
 						{/* {userHierarchy[userInfos?.user.role ?? "visitor"] < 2 && ( */}
 						<Link href="/chat/new-room" asChild>
-							<TouchableOpacity className="rounded-full bg-darkGray p-2.5">
+							<MyTouchableScale className="rounded-full bg-darkGray p-2.5">
 								<PlusIcon size={18} color={config.theme.extend.colors.primary} />
-							</TouchableOpacity>
+							</MyTouchableScale>
 						</Link>
 						{/* )} */}
 					</View>
@@ -222,7 +223,7 @@ const Card = ({
 
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity
+			<MyTouchableScaleOpacity
 				onPress={onPress}
 				className="flex-1 flex-row items-center gap-3 rounded-xl bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
@@ -234,7 +235,7 @@ const Card = ({
 				{/* <View className="mr-3 size-5 items-center justify-center rounded-full bg-primary">
 					<Text className="font-semibold text-xs text-white">1</Text>
 				</View> */}
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 };

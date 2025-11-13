@@ -16,6 +16,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import * as Updates from "expo-updates";
+import { PressablesConfig } from "pressto";
 import React from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -127,22 +128,24 @@ const Layout = () => {
 			<GestureHandlerRootView>
 				<BottomSheetModalProvider>
 					<KeyboardProvider>
-						<StatusBar style="dark" translucent />
-						{/* already added by expo router on every route */}
-						{/* <SafeAreaProvider> */}
-						<Stack
-							screenOptions={{
-								headerShown: false,
-								animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
-								gestureEnabled: false,
-								fullScreenGestureEnabled: false,
-							}}
-						>
-							<Stack.Screen name="(tabs)" />
-							<Stack.Screen name="login" />
-						</Stack>
-						<PortalHost />
-						{/* </SafeAreaProvider> */}
+						<PressablesConfig animationType="spring" animationConfig={{ damping: 90, stiffness: 1500 }}  config={{ minScale: 0.9 }}>
+							<StatusBar style="dark" translucent />
+							{/* already added by expo router on every route */}
+							{/* <SafeAreaProvider> */}
+							<Stack
+								screenOptions={{
+									headerShown: false,
+									animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
+									gestureEnabled: false,
+									fullScreenGestureEnabled: false,
+								}}
+							>
+								<Stack.Screen name="(tabs)" />
+								<Stack.Screen name="login" />
+							</Stack>
+							<PortalHost />
+							{/* </SafeAreaProvider> */}
+						</PressablesConfig>
 					</KeyboardProvider>
 				</BottomSheetModalProvider>
 			</GestureHandlerRootView>

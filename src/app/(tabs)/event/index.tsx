@@ -1,6 +1,7 @@
 import { queryClient } from "@/api/_queries";
 import { getEventsQuery } from "@/api/queries/event-queries";
 import CardList from "@/components/card/card-event";
+import { MyTouchableScaleOpacity } from "@/components/my-pressable";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Event, eventLabel } from "@/types/event";
@@ -234,7 +235,7 @@ const CardEvent = ({ event }: { event: Event }) => {
 			}}
 			asChild
 		>
-			<TouchableOpacity
+			<MyTouchableScaleOpacity
 				onPressIn={onPress}
 				className="rounded-2xl border border-darkGray bg-white p-5 shadow-sm shadow-defaultGray/10"
 			>
@@ -251,7 +252,7 @@ const CardEvent = ({ event }: { event: Event }) => {
 						</Text>
 					</View>
 				</View>
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 };

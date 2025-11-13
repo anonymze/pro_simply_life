@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import config from "tailwind.config";
+import { MyTouchableScaleOpacity } from "../my-pressable";
 
 export default function CardSupplierProduct({
 	supplierProduct,
@@ -24,13 +25,13 @@ export default function CardSupplierProduct({
 
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity
+			<MyTouchableScaleOpacity
 				onPressIn={onPress}
 				className="w-full flex-row items-center justify-between gap-3 rounded-xl bg-white p-4 shadow-sm shadow-defaultGray/10"
 			>
 				<Text className="flex-shrink font-semibold text-lg text-primary">{supplierProduct.name}</Text>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} />
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 }

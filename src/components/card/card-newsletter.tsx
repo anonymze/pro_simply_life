@@ -7,6 +7,7 @@ import { Fundesys } from "@/types/fundesys";
 import { Fidnet } from "@/types/fidnet";
 import config from "tailwind.config";
 import React from "react";
+import { MyTouchableScaleOpacity } from "../my-pressable";
 
 
 export default function CardNewsletter({
@@ -26,7 +27,7 @@ export default function CardNewsletter({
 
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity
+			<MyTouchableScaleOpacity
 				onPressIn={onPress}
 				className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
@@ -42,7 +43,7 @@ export default function CardNewsletter({
 					</Text>
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 }

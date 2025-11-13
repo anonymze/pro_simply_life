@@ -9,6 +9,7 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import config from "tailwind.config";
 
 import { SkeletonPlaceholder } from "../skeleton-placeholder";
+import { MyTouchableScaleOpacity } from "../my-pressable";
 
 export default function CardEvent({
 	event,
@@ -76,7 +77,7 @@ export default function CardEvent({
 					push
 					asChild
 				>
-					<TouchableOpacity onPressIn={onPress}>
+					<MyTouchableScaleOpacity onPressIn={onPress}>
 						<Animated.View
 							entering={FadeIn.duration(300)}
 							className="h-[190px] gap-4 rounded-2xl bg-white p-4"
@@ -109,7 +110,7 @@ export default function CardEvent({
 								<ArrowRight strokeWidth={2.5} size={16} color={config.theme.extend.colors.primary} />
 							</View>
 						</Animated.View>
-					</TouchableOpacity>
+					</MyTouchableScaleOpacity>
 				</Link>
 			)}
 		</>

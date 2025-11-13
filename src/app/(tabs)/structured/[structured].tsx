@@ -23,9 +23,6 @@ export default function Page() {
 	if (!structuredProduct) return null;
 
 	const percentage = ((structuredProduct.max - structuredProduct.current) / structuredProduct.max) * 100;
-
-	console.log(percentage);
-
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">

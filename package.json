@@ -57,6 +57,7 @@
 		"expo-web-browser": "~15.0.9",
 		"lucide-react-native": "^0.507.0",
 		"nativewind": "^4.1.23",
+		"pressto": "^0.6.0",
 		"react": "19.1.0",
 		"react-native": "0.81.5",
 		"react-native-bouncy-checkbox": "^4.1.2",

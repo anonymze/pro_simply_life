@@ -4,6 +4,7 @@ import { Href, Link } from "expo-router";
 import { queryClient } from "@/api/_queries";
 import { Image } from "expo-image";
 import React from "react";
+import { MyTouchableScaleOpacity } from "../my-pressable";
 
 
 export default function CardSupplierCategory({
@@ -33,7 +34,7 @@ export default function CardSupplierCategory({
 
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity
+			<MyTouchableScaleOpacity
 				onPressIn={onPress}
 				className="flex-1 items-center rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10"
 			>
@@ -44,7 +45,7 @@ export default function CardSupplierCategory({
 				{description && <Text className="text-primaryLight text-center">{description}</Text>}
 
 				{/* <ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10, alignSelf: "flex-end" }} /> */}
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 }

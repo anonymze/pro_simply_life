@@ -1,5 +1,6 @@
 import { queryClient } from "@/api/_queries";
 import { getStructuredProductsQuery } from "@/api/queries/structured-product-queries";
+import { MyTouchableScaleOpacity } from "@/components/my-pressable";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -53,7 +54,7 @@ function Card({ structuredProduct }: { structuredProduct: StructuredProduct }) {
 			push
 			asChild
 		>
-			<TouchableOpacity
+			<MyTouchableScaleOpacity
 				onPressIn={onPress}
 				className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 shadow-sm shadow-defaultGray/10"
 			>
@@ -71,7 +72,7 @@ function Card({ structuredProduct }: { structuredProduct: StructuredProduct }) {
 					<Text className="text-sm text-primaryLight">{structuredProduct.name}</Text>
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 }

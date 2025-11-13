@@ -2,6 +2,7 @@ import { queryClient } from "@/api/_queries";
 import { deleteChatRoomQuery, getChatRoomQuery, leaveChatRoomQuery } from "@/api/queries/chat-room-queries";
 import EmployeesIcon from "@/components/emloyees-icon";
 import IndependantIcon from "@/components/independant-icon";
+import { MyTouchableScale } from "@/components/my-pressable";
 import BackgroundLayout from "@/layouts/background-layout";
 import { ChatRoom } from "@/types/chat";
 import { PaginatedResponse } from "@/types/response";
@@ -11,7 +12,7 @@ import { getStorageUserInfos } from "@/utils/store";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { LogOutIcon, PlusIcon, TrashIcon } from "lucide-react-native";
-import { ActivityIndicator, Alert, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Platform, ScrollView, Text, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -75,8 +76,8 @@ export default function Page() {
 			<ContactInfo firstname={chatRoom.app_user.firstname} lastname={chatRoom.app_user.lastname} />
 
 			{isOwner && (
-				<TouchableOpacity
-					disabled={deleteChatRoom.isPending}
+				<MyTouchableScale
+					enabled={!deleteChatRoom.isPending}
 					onPress={() => {
 						deleteChatRoom.mutate(chatId as string);
 					}}
@@ -89,11 +90,11 @@ export default function Page() {
 					{deleteChatRoom.isPending && (
 						<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red2} />
 					)}
-				</TouchableOpacity>
+				</MyTouchableScale>
 			)}
 
-			<TouchableOpacity
-				disabled={deleteChatRoom.isPending}
+			<MyTouchableScale
+				enabled={!deleteChatRoom.isPending}
 				onPress={() => {
 					if (isOwner) {
 						Alert.alert(
@@ -124,7 +125,7 @@ export default function Page() {
 				{leaveChatRoom.isPending && (
 					<ActivityIndicator size="small" className="ml-auto mr-3" color={config.theme.extend.colors.red2} />
 				)}
-			</TouchableOpacity>
+			</MyTouchableScale>
 
 			<View className="mt-5 flex-row items-center justify-between">
 				<Text className="font-semibold text-xl text-primary">{chatRoom.guests.length} membre(s)</Text>
@@ -137,9 +138,9 @@ export default function Page() {
 					}}
 					asChild
 				>
-					<TouchableOpacity className="rounded-full bg-darkGray p-2.5">
+					<MyTouchableScale className="rounded-full bg-darkGray p-2.5">
 						<PlusIcon size={18} color={config.theme.extend.colors.primary} />
-					</TouchableOpacity>
+					</MyTouchableScale>
 				</Link>
 			</View>
 

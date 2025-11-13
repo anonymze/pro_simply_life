@@ -1,17 +1,16 @@
 import { getSelectionsQuery } from "@/api/queries/selection-queries";
+import { MyTouchableScaleOpacity } from "@/components/my-pressable";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Media } from "@/types/media";
 import { Selection } from "@/types/selection";
-import { Supplier } from "@/types/supplier";
 import { downloadFile, getFile } from "@/utils/download";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import { Href, Link, router } from "expo-router";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
 import { useMemo, useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
+import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -44,7 +43,7 @@ export default function Page() {
 			const categoryNames: { [key: string]: string } = {
 				girardin: "Girardin Industriel",
 				immobilier: "Immobilier",
-				other: "Autre"
+				other: "Autre",
 			};
 
 			// Define the order of categories
@@ -117,13 +116,13 @@ export default function Page() {
 const Card = ({ link, icon, title }: { link: Href; icon: any; title: string }) => {
 	return (
 		<Link href={link} push asChild>
-			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-lg bg-white p-2">
+			<MyTouchableScaleOpacity className="w-full flex-row items-center gap-3 rounded-lg bg-white p-2">
 				<View className="size-14 items-center justify-center rounded-lg bg-amber-200">{icon}</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{title}</Text>
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
-			</TouchableOpacity>
+			</MyTouchableScaleOpacity>
 		</Link>
 	);
 };
@@ -140,13 +139,13 @@ const ImmobilierCard = ({
 	const [downloading, setDownloading] = useState(false);
 
 	const handlePress = async () => {
-	if (!brochure.url || !brochure.filename || !brochure.mimeType) return;
+		if (!brochure.url || !brochure.filename || !brochure.mimeType) return;
 
 		try {
 			const file = getFile(brochure.filename);
 
 			if (!file.exists) {
-			console.log("ici")
+				console.log("ici");
 				setDownloading(true);
 				await downloadFile(brochure.url, brochure.filename, brochure.mimeType);
 				setDownloading(false);
@@ -165,7 +164,7 @@ const ImmobilierCard = ({
 	};
 
 	return (
-		<Pressable className="w-[46%] rounded-2xl border-2 border-amber-300" onPress={handlePress} disabled={downloading}>
+		<MyTouchableScaleOpacity className="w-[46%] rounded-2xl border-2 border-amber-300" onPress={handlePress} enabled={!downloading}>
 			<ImagePlaceholder
 				transition={300}
 				contentFit="cover"
@@ -179,6 +178,6 @@ const ImmobilierCard = ({
 					<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
 				</View>
 			)}
-		</Pressable>
+		</MyTouchableScaleOpacity>
 	);
 };
