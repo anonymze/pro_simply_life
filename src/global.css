@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+	/* Disable core plugins */
+	/*--font-weight-*: initial;*/
+
+	/* Font families */
+	/*not working cause on RN*/
+	--default-font-family: "PlusJakartaSans-Regular";
+	--font-sans: "PlusJakartaSans-Regular";
+	--font-light: "PlusJakartaSans-Light";
+	--font-regular: "PlusJakartaSans-Regular";
+	--font-medium: "PlusJakartaSans-Medium";
+	--font-semibold: "PlusJakartaSans-SemiBold";
+	--font-bold: "PlusJakartaSans-Bold";
+	--font-italic: "PlusJakartaSans-Italic";
+
+	/* Custom colors */
+	--color-dark: #15202a;
+	--color-primary: #363f72;
+	--color-primaryLight: #717bbc;
+	--color-primaryUltraLight: #ebf2ff;
+	--color-backgroundChat: #4e5ba6;
+	--color-textChat: #15202a;
+	--color-background: #f4f5f6;
+	--color-secondary: #fce7f6;
+	--color-secondaryLight: #fcebf7;
+	--color-defaultGray: #6a829a;
+	--color-lightGray: #afb5d9;
+	--color-darkGray: #eaecf5;
+	--color-pink: #f670c7;
+	--color-red2: #b42318;
+	--color-production: #fda29b;
+	--color-encours: #6172f3;
+	--color-structured: #7cd4fd;
+}
+
+@layer base {
+	/*not working cause on RN*/
+	* {
+		font-family: var(--font-sans);
+	}
+}

@@ -24,12 +24,14 @@ import Title from "@/components/ui/title";
 import { User } from "@/types/user";
 import { USER_LEONIE_ID, USER_MATHIEU_ID } from "@/utils/helper";
 import { Image } from "expo-image";
-import { Linking, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Linking, ScrollView, Text, View } from "react-native";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 import { MyTouchableOpacity, MyTouchableScaleOpacity } from "@/components/my-pressable";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	// const notification = useNotification();
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
@@ -56,7 +58,7 @@ export default function Page() {
 	// const math = NitroModules.createHybridObject<Math>("Math");
 
 	return (
-		<BackgroundLayout className="pt-safe mt-4 px-4">
+		<BackgroundLayout className="mt-4 px-4" style={{ paddingTop: insets.top }}>
 			{/*{lastname === "Metier" || lastname === "Dev" ? (
 				<View className="">
 					<Text className="font-bold">DEV MODE</Text>

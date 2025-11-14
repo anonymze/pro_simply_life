@@ -6,10 +6,12 @@ import { useEvent } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useCallback, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const videoSource = require("@/assets/videos/guide.mp4");
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	const [isLoading, setIsLoading] = useState(true);
 
 	const player = useVideoPlayer(videoSource, (player) => {
@@ -45,7 +47,7 @@ export default function Page() {
 	// };
 
 	return (
-		<BackgroundLayout className={cn("pt-safe flex-1 justify-center px-4 pb-4")}>
+		<BackgroundLayout className={cn("flex-1 justify-center px-4 pb-4")} style={{ paddingTop: insets.top }}>
 			<View className="aspect-video items-center justify-center overflow-hidden rounded-xl">
 				{isLoading && (
 					<View className="absolute inset-0 z-10 items-center justify-center bg-black/50">

@@ -1,4 +1,4 @@
-import "@/styles/app.css";
+import "@/global.css";
 import "react-native-reanimated";
 
 import { queryClient } from "@/api/_queries";
@@ -9,7 +9,6 @@ import { NotificationProvider } from "@/context/push-notifications";
 import { needImportantVersion } from "@/utils/helper";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PortalHost } from "@rn-primitives/portal";
-import * as Sentry from "@sentry/react-native";
 import { focusManager, onlineManager, QueryClientProvider } from "@tanstack/react-query";
 import * as Network from "expo-network";
 import * as Notifications from "expo-notifications";
@@ -23,18 +22,18 @@ import { AppState, AppStateStatus, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 
-Sentry.init({
-	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
-	// TODO
-	enabled: false,
-	// Configure Session Replay
-	replaysSessionSampleRate: 0.1,
-	replaysOnErrorSampleRate: 1,
-	integrations: [Sentry.mobileReplayIntegration()],
+// Sentry.init({
+// 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
+// 	// TODO
+// 	enabled: false,
+// 	// Configure Session Replay
+// 	replaysSessionSampleRate: 0.1,
+// 	replaysOnErrorSampleRate: 1,
+// 	integrations: [Sentry.mobileReplayIntegration()],
 
-	// uncomment the line below to enable Spotlight (https://spotlightjs.com)
-	// spotlight: __DEV__,
-});
+// 	// uncomment the line below to enable Spotlight (https://spotlightjs.com)
+// 	// spotlight: __DEV__,
+// });
 
 // here we set if we should show the alert of push notifications even if the app is running
 Notifications.setNotificationHandler({
@@ -69,13 +68,14 @@ function onAppStateChange(status: AppStateStatus) {
 	}
 }
 
-export default Sentry.wrap(function RootLayout() {
+// export default Sentry.wrap(function RootLayout() {
+export default function RootLayout() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Layout />
 		</QueryClientProvider>
 	);
-});
+};
 
 const Layout = () => {
 	const { isUpdateAvailable, isUpdatePending } = Updates.useUpdates();
@@ -95,10 +95,6 @@ const Layout = () => {
 				queryKey: ["supplier-categories"],
 				queryFn: getSupplierCategoriesQuery,
 			}),
-			// queryClient.prefetchQuery({
-			// 	queryKey: ["suppliers-selection"],
-			// 	queryFn: getSuppliersSelectionQuery,
-			// }),
 		]).finally(() => {
 			prefetchSomeData();
 			setReady(true);

@@ -11,6 +11,7 @@ import { BuildingIcon, Calendar1Icon, ChevronDownIcon, ClockIcon } from "lucide-
 import { useState } from "react";
 import { ActivityIndicator, Alert, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SelectDropdown from "react-native-select-dropdown";
 import config from "tailwind.config";
 
@@ -45,6 +46,7 @@ const timeSlots = [
 ];
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	const { date } = useLocalSearchParams();
 	const [selectedBureau, setSelectedBureau] = useState<Reservation["desk"] | null>(null);
 	const [selectedDebut, setSelectedDebut] = useState<string | null>(null);
@@ -86,7 +88,7 @@ export default function Page() {
 	const isAllGood = selectedBureau && selectedDebut && selectedFin && title;
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
+	<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" && "pt-0")} style={{ paddingTop: insets.top }}>
 			<View className={cn("flex-row items-center justify-between bg-background pb-6")}>
 				<View className="w-24 p-2">
 					<TouchableOpacity

@@ -13,10 +13,12 @@ import { PlusIcon } from "lucide-react-native";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
 import config from "tailwind.config";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const MAX_MESSAGES = 25;
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	const userInfos = getStorageUserInfos();
 
 	return withQueryWrapper<ChatRoom>(
@@ -81,7 +83,7 @@ export default function Page() {
 			}, []);
 
 			return (
-				<BackgroundLayout className="pt-safe">
+				<BackgroundLayout style={{ paddingTop: insets.top }}>
 					<View className="flex-row items-center justify-between px-4">
 						<Title title="Messages" />
 						{/* {userHierarchy[userInfos?.user.role ?? "visitor"] < 2 && ( */}

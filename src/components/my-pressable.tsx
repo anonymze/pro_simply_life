@@ -1,5 +1,5 @@
-import { cssInterop } from "nativewind";
 import { createAnimatedPressable, CustomPressableProps, PressableOpacity, PressableScale } from "pressto";
+import { withUniwind } from "uniwind";
 
 // Extend CustomPressableProps to include className
 type CustomPressablePropsWithClassName = CustomPressableProps & { className?: string };
@@ -20,20 +20,22 @@ const PressableScaleOpacity = createAnimatedPressable((progress) => {
 	};
 });
 
+
+const StyledPressableScaleOpacity = withUniwind(PressableScaleOpacity);
+const StyledPressableOpacity = withUniwind(PressableOpacity);
+const StyledPressableScale = withUniwind(PressableScale);
+
 const MyTouchableScaleOpacity = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <PressableScaleOpacity {...props}>{children}</PressableScaleOpacity>;
+	return <StyledPressableScaleOpacity {...props}>{children}</StyledPressableScaleOpacity>;
 };
 
 const MyTouchableOpacity = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <PressableOpacity {...props}>{children}</PressableOpacity>;
+	return <StyledPressableOpacity {...props}>{children}</StyledPressableOpacity>;
 };
 
 const MyTouchableScale = ({ children, ...props }: CustomPressablePropsWithClassName) => {
-	return <PressableScale {...props}>{children}</PressableScale>;
+	return <StyledPressableScale {...props}>{children}</StyledPressableScale>;
 };
 
-cssInterop(PressableScaleOpacity, { className: "style" });
-cssInterop(PressableOpacity, { className: "style" });
-cssInterop(PressableScale, { className: "style" });
 
 export { MyTouchableOpacity, MyTouchableScale, MyTouchableScaleOpacity };

@@ -10,11 +10,12 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import { Host, Picker } from "@expo/ui/swift-ui";
 import { Link } from "expo-router";
 import { ArrowLeftIcon, ArrowRightIcon, ClockIcon } from "lucide-react-native";
-import { cssInterop } from "nativewind";
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
+import { withUniwind } from "uniwind";
 
 // Configure French locale
 LocaleConfig.locales["fr"] = {
@@ -39,9 +40,10 @@ LocaleConfig.locales["fr"] = {
 };
 
 LocaleConfig.defaultLocale = "fr";
-cssInterop(Calendar, { className: "style" });
+const StyledCalendar = withUniwind(Calendar);
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
 			queryKey: [
@@ -84,7 +86,7 @@ export default function Page() {
 			}, [data]);
 
 			return (
-				<BackgroundLayout className="pt-safe px-4">
+				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<View className="iems-center flex-row justify-between">
 						<Title title="Évènements agence" />
 						<Host style={{ width: 150, marginTop: 6 }}>
@@ -117,7 +119,7 @@ export default function Page() {
 						contentContainerStyle={{ gap: 16 }}
 					>
 						<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
-							<Calendar
+							<StyledCalendar
 								firstDay={1}
 								className="m-0 mt-5 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
 								onDayPress={(day) => {

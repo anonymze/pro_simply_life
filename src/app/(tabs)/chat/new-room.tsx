@@ -10,9 +10,11 @@ import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React from "react";
 import { ActivityIndicator, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	const appUser = getStorageUserInfos();
 	const [selectedIds, dispatch] = React.useReducer(selectionReducer, new Set());
 	const [nextStep, setNextStep] = React.useState(false);
@@ -41,7 +43,7 @@ export default function Page() {
 	}
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
+	<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" && "pt-0")} style={{ paddingTop: insets.top }}>
 			<View className={cn("flex-row items-center justify-between bg-background pb-4")}>
 				<View className="w-24 p-2">
 					<TouchableOpacity

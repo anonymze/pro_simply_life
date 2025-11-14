@@ -11,9 +11,11 @@ import { Link } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import React from "react";
 import { Text, View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
 			queryKey: ["structured"],
@@ -21,7 +23,7 @@ export default function Page() {
 		},
 		({ data }) => {
 			return (
-				<BackgroundLayout className="pt-safe px-4">
+				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<Title title="Produits structurés" className="mb-7" />
 
 					<LegendList

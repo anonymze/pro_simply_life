@@ -12,8 +12,10 @@ import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { ActivityIndicator, Alert, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	const appUser = getStorageUserInfos();
 	const { chat: chatId } = useLocalSearchParams();
 	const { data: chatRoom } = useQuery({
@@ -65,7 +67,7 @@ export default function Page() {
 	}
 
 	return (
-		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-safe")}>
+		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" && "pt-0")} style={{ paddingTop: insets.top }}>
 			<View className={cn("flex-row items-center justify-between bg-background pb-4")}>
 				<View className="w-24 p-2">
 					<TouchableOpacity

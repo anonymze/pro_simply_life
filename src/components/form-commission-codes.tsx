@@ -10,6 +10,7 @@ import React from "react";
 import { ActivityIndicator, Alert, Pressable, Text, TextInput, View } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-reanimated";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
 import { z } from "zod";
 import Title from "./ui/title";
@@ -55,6 +56,7 @@ function CommissionCodeInput({ provider, index, form }: CommissionCodeInputProps
 }
 
 export default function FormCommissionCodes() {
+    const insets = useSafeAreaInsets();
 	const { height } = useReanimatedKeyboardAnimation();
 	const appUser = getStorageUserInfos();
 
@@ -113,7 +115,7 @@ export default function FormCommissionCodes() {
 	});
 
 	return (
-		<BackgroundLayout className="pt-safe px-4">
+		<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 			<Animated.View style={[animatedStyle, { flex: 1 }]}>
 				<Title title="Vos codes commissions" />
 

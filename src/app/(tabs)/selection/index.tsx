@@ -10,10 +10,12 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import { Href, Link, router } from "expo-router";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
 import { useMemo, useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	return withQueryWrapper<Selection>(
 		{
 			queryKey: ["selection"],
@@ -53,7 +55,7 @@ export default function Page() {
 				.map((cat) => [cat, groupedSelections[cat]] as [string, Selection[]]);
 
 			return (
-				<BackgroundLayout className="pt-safe px-4">
+				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<View className="flex-row items-center gap-3">
 						<Title title="Notre sélection du moment" />
 						<SparklesIcon size={15} color="#FDB022" fill="#FDB022" />

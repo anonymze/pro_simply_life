@@ -7,6 +7,7 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import { LegendList } from "@legendapp/list";
 import React from "react";
 import { Text, View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface FlatListItem {
 	type: "header" | "item";
@@ -15,6 +16,7 @@ interface FlatListItem {
 }
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
 			queryKey: ["fundesys"],
@@ -73,7 +75,7 @@ export default function Page() {
 			};
 
 			return (
-				<BackgroundLayout className="pt-safe px-4">
+				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<Title title="Fundesys" />
 					<Text className="mb-5 text-sm text-defaultGray">Newsletter hebdomadaire</Text>
 

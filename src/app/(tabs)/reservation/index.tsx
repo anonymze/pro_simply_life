@@ -1,19 +1,20 @@
-import { ArrowLeftIcon, ArrowRightIcon, BuildingIcon, Calendar1Icon, ClockIcon } from "lucide-react-native";
-import Animated, { withSpring, withTiming } from "react-native-reanimated";
+import { queryClient } from "@/api/_queries";
 import { getReservationsQuery } from "@/api/queries/reservation-queries";
+import { MyTouchableScaleOpacity } from "@/components/my-pressable";
+import Title from "@/components/ui/title";
+import BackgroundLayout from "@/layouts/background-layout";
+import { labels } from "@/types/reservation";
+import { withQueryWrapper } from "@/utils/libs/react-query";
+import { cn } from "@/utils/libs/tailwind";
+import { Link, router } from "expo-router";
+import { ArrowLeftIcon, ArrowRightIcon, BuildingIcon, Calendar1Icon, ClockIcon } from "lucide-react-native";
+import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { withQueryWrapper } from "@/utils/libs/react-query";
-import BackgroundLayout from "@/layouts/background-layout";
-import { queryClient } from "@/api/_queries";
-import { labels } from "@/types/reservation";
-import { Link, router } from "expo-router";
-import { cn } from "@/utils/libs/tailwind";
-import Title from "@/components/ui/title";
-import { cssInterop } from "nativewind";
+import Animated, { withSpring, withTiming } from "react-native-reanimated";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
-import React from "react";
-import { MyTouchableScaleOpacity } from "@/components/my-pressable";
+import { withUniwind } from "uniwind";
 
 
 const TouchableOpacityAnimated = Animated.createAnimatedComponent(TouchableOpacity);
@@ -41,9 +42,10 @@ LocaleConfig.locales["fr"] = {
 };
 
 LocaleConfig.defaultLocale = "fr";
-cssInterop(Calendar, { className: "style" });
+const StyledCalendar = withUniwind(Calendar);
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
 			queryKey: ["reservations", { limit: 99 }],
@@ -71,7 +73,7 @@ export default function Page() {
 			}, [data, selectedDate]);
 
 			return (
-				<BackgroundLayout className="pt-safe px-4">
+				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<Title title="Réservation de bureaux" />
 
 					<ScrollView
@@ -79,7 +81,7 @@ export default function Page() {
 						contentContainerStyle={{ paddingBottom: 80 }}
 						className="mt-5"
 					>
-						<Calendar
+						<StyledCalendar
 							firstDay={1}
 							className="m-0 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
 							onDayPress={(day) => {

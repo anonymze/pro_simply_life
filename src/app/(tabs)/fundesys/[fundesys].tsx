@@ -7,14 +7,12 @@ import { cn } from "@/utils/libs/tailwind";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
-import { cssInterop } from "nativewind";
 import React from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import config from "tailwind.config";
+import { withUniwind } from "uniwind";
 
-cssInterop(VideoView, {
-	className: "style",
-});
+const StyledVideo = withUniwind(VideoView);
 
 export default function Page() {
 	const { fundesys: fundesysId } = useLocalSearchParams();
@@ -67,7 +65,7 @@ export default function Page() {
 						{loading ? (
 							<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
 						) : (
-							<VideoView player={player} className="h-full w-full" allowsFullscreen nativeControls />
+							<StyledVideo player={player} className="h-full w-full" allowsFullscreen nativeControls />
 						)}
 					</View>
 				</View>

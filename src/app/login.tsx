@@ -14,10 +14,12 @@ import React from "react";
 import { ActivityIndicator, Alert, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import Animated, { FadeInDown, FadeOut, useAnimatedStyle } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 import { z } from "zod";
 
 export default function Page() {
+	const insets = useSafeAreaInsets();
 	const { expoPushToken } = useNotification();
 	const { height } = useReanimatedKeyboardAnimation();
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
@@ -81,10 +83,10 @@ export default function Page() {
 	});
 
 	return (
-		<BackgroundLayout className="p-6">
+		<BackgroundLayout className="m-6" style={{ paddingTop: insets.top }}>
 			<Animated.View className="flex-1 justify-center gap-3" style={animatedStyle}>
 				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 80 }} contentFit="contain" />
-				<Text className="mt-4 max-w-[90%] text-start font-medium text-lg text-primary">
+				<Text className="mt-4 max-w-[90%] text-start font-semibold text-lg text-primary">
 					{i18n[languageCode]("SUBTITLE_LOGIN")}
 				</Text>
 
@@ -191,7 +193,7 @@ export default function Page() {
 						}
 					}}
 					className="mt-4"
-					hitSlop={5}
+					hitSlop={6}
 				>
 					<Animated.Text
 						entering={FadeInDown.springify().duration(800)}
@@ -206,6 +208,7 @@ export default function Page() {
 						WebBrowser.openBrowserAsync("https://rgpd-and-confidentiality.vercel.app/simply_life/rgpd.html");
 					}}
 					className="mt-8"
+					hitSlop={6}
 				>
 					<Text className="text-center font-semibold text-xs text-primaryLight underline">
 						Politique de confidentialité

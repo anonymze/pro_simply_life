@@ -4,6 +4,7 @@ import { cn } from "@/utils/libs/tailwind";
 import { Href, Link, LinkProps, router } from "expo-router";
 import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
 
 interface HeaderLayoutProps extends Partial<LinkProps> {
@@ -21,8 +22,9 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 }
 
 export default function HeaderLayout({ title, chat, sheet, backgroundColor, backLink, backButton = true }: HeaderLayoutProps) {
+    const insets = useSafeAreaInsets();
 	return (
-		<View className={cn("pt-safe flex-row items-center justify-between bg-background px-2 pb-2", backgroundColor)}>
+		<View className={cn("flex-row items-center justify-between bg-background px-2 pb-2", backgroundColor)} style={{ paddingTop: insets.top }}>
 			{backButton ? (
 				<Link className={cn("w-24 p-2", chat && "w-10")} dismissTo href={chat?.link ? "/chat"  : backLink ? "/" : "../"} asChild>
 					<TouchableOpacity className="flex-row items-center gap-3" hitSlop={10}>

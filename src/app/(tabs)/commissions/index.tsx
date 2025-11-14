@@ -27,6 +27,7 @@ import { scheduleOnRN } from "react-native-worklets";
 import config from "tailwind.config";
 // import resolveConfig from "tailwindcss/resolveConfig";
 import { Bar, CartesianChart, useChartPressState } from "victory-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // const fullConfig = resolveConfig(config);
 
@@ -54,6 +55,7 @@ const AnimatedNumber = ({ value, duration = 400 }: { value: number; duration?: n
 };
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	// setStorageFirstCommission(false);
 	const scrollRef = React.useRef<ScrollView>(null);
 	const appUser = getStorageUserInfos();
@@ -95,7 +97,7 @@ export default function Page() {
 	}
 
 	return (
-		<BackgroundLayout className="pt-safe px-4">
+		<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 			<View className="iems-center flex-row justify-between">
 				<Title title="Commissions" />
 				<Host

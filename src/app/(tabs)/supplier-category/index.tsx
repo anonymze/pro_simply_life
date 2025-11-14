@@ -12,9 +12,11 @@ import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
 			queryKey: ["supplier-categories"],
@@ -50,7 +52,7 @@ export default function Page() {
 			}, [allSuppliers, search]);
 
 			return (
-				<BackgroundLayout className="pt-safe px-4">
+				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<Title title="Répertoire des fournisseurs" />
 					<InputSearch
 						placeholder="Rechercher un fournisseur..."

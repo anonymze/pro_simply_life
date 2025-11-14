@@ -14,9 +14,10 @@ import { LegendList } from "@legendapp/list";
 import { Href, Link } from "expo-router";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import config from "tailwind.config";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function Page() {
+    const insets = useSafeAreaInsets();
 	return withQueryWrapper<User>(
 		{
 			queryKey: ["app-users"],
@@ -106,7 +107,7 @@ export default function Page() {
 			}, [classifiedUsers.independent]);
 
 			return (
-				<BackgroundLayout className="pt-safe px-4">
+				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<Title title="Organigramme" />
 					<InputSearch
 						placeholder="Rechercher une personne..."
