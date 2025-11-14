@@ -26,6 +26,7 @@ export default function Page() {
 
 					<LegendList
 						data={data.docs}
+						estimatedItemSize={85}
 						renderItem={(item) => {
 							return <Card structuredProduct={item.item} />;
 						}}
