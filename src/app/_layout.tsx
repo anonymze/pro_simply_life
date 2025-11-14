@@ -21,6 +21,7 @@ import React from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import { HeroUINativeProvider } from 'heroui-native';
 
 // Sentry.init({
 // 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
@@ -75,7 +76,7 @@ export default function RootLayout() {
 			<Layout />
 		</QueryClientProvider>
 	);
-};
+}
 
 const Layout = () => {
 	const { isUpdateAvailable, isUpdatePending } = Updates.useUpdates();
@@ -124,35 +125,37 @@ const Layout = () => {
 		<NotificationProvider>
 			<GestureHandlerRootView>
 				<BottomSheetModalProvider>
-					<KeyboardProvider>
-						<PressablesConfig
-							animationType="spring"
-							animationConfig={{ damping: 90, stiffness: 1500 }}
-							config={{ minScale: 0.9 }}
-						>
-							<StatusBar style="dark" translucent />
-							{/* already added by expo router on every route */}
-							{/* <SafeAreaProvider> */}
-							<Stack
-								screenOptions={{
-									headerShown: false,
-									animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
-									gestureEnabled: false,
-									fullScreenGestureEnabled: false,
-								}}
+					<HeroUINativeProvider>
+						<KeyboardProvider>
+							<PressablesConfig
+								animationType="spring"
+								animationConfig={{ damping: 90, stiffness: 1500 }}
+								config={{ minScale: 0.9 }}
 							>
-								<Stack.Protected guard={!needImportantVersion()}>
-									<Stack.Screen name="(tabs)" />
-									<Stack.Screen name="login" />
-								</Stack.Protected>
-								<Stack.Protected guard={needImportantVersion()}>
-									<Stack.Screen name="update" />
-								</Stack.Protected>
-							</Stack>
-							<PortalHost />
-							{/* </SafeAreaProvider> */}
-						</PressablesConfig>
-					</KeyboardProvider>
+								<StatusBar style="dark" translucent />
+								{/* already added by expo router on every route */}
+								{/* <SafeAreaProvider> */}
+								<Stack
+									screenOptions={{
+										headerShown: false,
+										animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
+										gestureEnabled: false,
+										fullScreenGestureEnabled: false,
+									}}
+								>
+									<Stack.Protected guard={!needImportantVersion()}>
+										<Stack.Screen name="(tabs)" />
+										<Stack.Screen name="login" />
+									</Stack.Protected>
+									<Stack.Protected guard={needImportantVersion()}>
+										<Stack.Screen name="update" />
+									</Stack.Protected>
+								</Stack>
+								<PortalHost />
+								{/* </SafeAreaProvider> */}
+							</PressablesConfig>
+						</KeyboardProvider>
+					</HeroUINativeProvider>
 				</BottomSheetModalProvider>
 			</GestureHandlerRootView>
 		</NotificationProvider>

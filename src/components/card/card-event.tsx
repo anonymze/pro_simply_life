@@ -90,7 +90,7 @@ export default function CardEvent({
 										{new Date(event.event_start).toLocaleDateString("fr-FR", { month: "long" })}
 									</Text>
 								</View>
-								<View className="flex-shrink justify-center gap-2">
+								<View className="shrink justify-center gap-2">
 									<View className="self-start rounded-[0.3rem] bg-darkGray px-1.5 py-1">
 										<Text className="font-semibold text-xs text-primaryLight">{eventLabel[event.type]}</Text>
 									</View>

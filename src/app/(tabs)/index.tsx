@@ -11,6 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
+import { Select } from "heroui-native";
 import { ArrowRightIcon, MapPinnedIcon, Sparkles } from "lucide-react-native";
 import config from "tailwind.config";
 
@@ -28,10 +29,10 @@ import { Linking, ScrollView, Text, View } from "react-native";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 import { MyTouchableOpacity, MyTouchableScaleOpacity } from "@/components/my-pressable";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Page() {
-    const insets = useSafeAreaInsets();
+	const insets = useSafeAreaInsets();
 	// const notification = useNotification();
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
@@ -127,7 +128,7 @@ export default function Page() {
 							/>
 						</View>
 						<View className="flex-1">
-							<Text className="font-semibold text-lg text-primary">Fundesys</Text>
+							<Text className="text-lg font-semibold text-primary">Fundesys</Text>
 						</View>
 						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 					</MyTouchableScaleOpacity>
@@ -149,7 +150,7 @@ export default function Page() {
 							/>
 						</View>
 						<View className="flex-1">
-							<Text className="font-semibold text-lg text-primary">Fidnet</Text>
+							<Text className="text-lg font-semibold text-primary">Fidnet</Text>
 						</View>
 						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 					</MyTouchableScaleOpacity>

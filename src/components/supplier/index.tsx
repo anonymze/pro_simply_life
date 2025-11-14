@@ -609,7 +609,7 @@ const ContactInfo = ({
 				</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex-row items-center justify-between gap-2">
-					<View className="flex-shrink gap-2">
+					<View className="shrink gap-2">
 						<Text className="text-sm text-primaryLight">Téléphone</Text>
 						<Text selectable className="font-semibold text-base text-primary">
 							{numbersString}
@@ -628,7 +628,7 @@ const ContactInfo = ({
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex-row items-center justify-between gap-2">
-					<View className="flex-shrink flex-grow-0 gap-2">
+					<View className="shrink grow-0 gap-2">
 						<Text className="text-sm text-primaryLight">E-mail</Text>
 						<Text selectable className="font-semibold text-base text-primary">
 							{email}
@@ -645,7 +645,7 @@ const ContactInfo = ({
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex-row items-center justify-between gap-2">
-					<View className="flex-shrink flex-grow-0 gap-2">
+					<View className="shrink grow-0 gap-2">
 						<Text className="text-sm text-primaryLight">Adresse du site internet</Text>
 						<Text selectable className="font-semibold text-base text-primary">
 							{website}
