@@ -11,7 +11,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link, LinkProps, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
-import { Select } from "heroui-native";
 import { ArrowRightIcon, MapPinnedIcon, Sparkles } from "lucide-react-native";
 import config from "tailwind.config";
 
