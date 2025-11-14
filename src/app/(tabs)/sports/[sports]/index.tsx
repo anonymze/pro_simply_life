@@ -4,7 +4,7 @@ import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Sport } from "@/types/sport";
 import { cn } from "@/utils/libs/tailwind";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocalSearchParams } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
@@ -61,10 +61,10 @@ export default function Page() {
 		<BackgroundLayout className={cn("px-4 pb-4")}>
 			<Title title={category.toString()} />
 
-			<FlashList
+			<LegendList
 				data={flatData}
 				renderItem={renderItem}
-				// estimatedItemSize={67}
+				estimatedItemSize={67}
 				keyExtractor={(item) => (item.typed === "header" ? item.typeTitle : item.id)}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: 10 }}

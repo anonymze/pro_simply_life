@@ -6,11 +6,11 @@ import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { StructuredProduct } from "@/types/structured-product";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { Link } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -24,7 +24,7 @@ export default function Page() {
 				<BackgroundLayout className="pt-safe px-4">
 					<Title title="Produits structurés" className="mb-7" />
 
-					<FlashList
+					<LegendList
 						data={data.docs}
 						renderItem={(item) => {
 							return <Card structuredProduct={item.item} />;

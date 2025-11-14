@@ -2,7 +2,7 @@ import { createAppUserCommissionCodeQuery, getAppUserCommissionCodesQuery } from
 import BackgroundLayout from "@/layouts/background-layout";
 import { cn } from "@/utils/cn";
 import { getStorageUserInfos, setStorageFirstCommission } from "@/utils/store";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
@@ -23,7 +23,6 @@ interface CommissionCodeInputProps {
 function CommissionCodeInput({ provider, index, form }: CommissionCodeInputProps) {
 	const lastProviderId = React.useRef(provider.id);
 
-	// Reset component state when provider changes (FlashList reuse)
 	if (provider.id !== lastProviderId.current) {
 		lastProviderId.current = provider.id;
 	}
@@ -128,7 +127,7 @@ export default function FormCommissionCodes() {
 						<ActivityIndicator size={"large"} color={config.theme.extend.colors.primary} />
 					</View>
 				) : (
-					<FlashList
+					<LegendList
 						data={commissionProviders}
 						showsVerticalScrollIndicator={false}
 						// contentContainerStyle={{ paddingBottom: 16 }}

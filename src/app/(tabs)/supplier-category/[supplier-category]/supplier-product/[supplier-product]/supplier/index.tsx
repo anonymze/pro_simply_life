@@ -8,7 +8,7 @@ import { PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { cn } from "@/utils/cn";
 import { GIRARDIN_INDUSTRIEL_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
@@ -197,12 +197,12 @@ const PrivateEquityComponent = ({
 	return (
 		<>
 			{/* Type filter tabs */}
-			<FlashList
+			<LegendList
 				showsHorizontalScrollIndicator={false}
 				data={orderedTypes}
 				horizontal
 				className="mb-4"
-					renderItem={({ item: type, index }) => {
+				renderItem={({ item: type, index }) => {
 					const isActive = currentIndex === index;
 
 					return (
@@ -224,7 +224,7 @@ const PrivateEquityComponent = ({
 						</Pressable>
 					);
 				}}
-			></FlashList>
+			></LegendList>
 
 			{/* Suppliers grouped by type */}
 			<ScrollView

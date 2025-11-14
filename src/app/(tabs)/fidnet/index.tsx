@@ -6,7 +6,7 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { Fidnet } from "@/types/fidnet";
 import { PaginatedResponse } from "@/types/response";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { Link } from "expo-router";
 import { KeyRoundIcon } from "lucide-react-native";
 import React from "react";
@@ -85,10 +85,10 @@ const FidnetContent = ({ data }: { data: PaginatedResponse<Fidnet> }) => {
 			</View>
 			<Text className="mb-5 text-sm text-defaultGray">Newsletter hebdomadaire</Text>
 
-			<FlashList
+			<LegendList
 				data={flatData}
 				renderItem={renderItem}
-				// estimatedItemSize={100}
+				estimatedItemSize={100}
 				keyExtractor={(item) => (item.type === "header" ? item.date : item.id)}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: 10 }}

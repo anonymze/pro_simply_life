@@ -9,7 +9,7 @@ import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import { getStorageUserInfos } from "@/utils/store";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
 import * as Clipboard from "expo-clipboard";
 import { Href, Link, useLocalSearchParams } from "expo-router";
@@ -89,7 +89,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 			<BackgroundLayout className="px-4">
 				{/* SCPI */}
 				{!!data?.other_information?.length && (
-					<FlashList
+					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
 							{
@@ -137,12 +137,12 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</Pressable>
 							);
 						}}
-					></FlashList>
+					></LegendList>
 				)}
 
 				{/* PRIVATE EQUITY */}
 				{!!privateEquity?.fond?.length && (
-					<FlashList
+					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
 							{
@@ -184,7 +184,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</Pressable>
 							);
 						}}
-					></FlashList>
+					></LegendList>
 				)}
 
 				<ScrollView

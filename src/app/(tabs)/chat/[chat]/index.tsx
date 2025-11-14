@@ -28,7 +28,6 @@ import Animated, {
 import config from "tailwind.config";
 import { z } from "zod";
 
-import { FlashList } from "@shopify/flash-list";
 import { MAX_MESSAGES } from "../index";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -309,7 +308,6 @@ export default function Page() {
 									/>
 								);
 							}}
-
 							// disableRecycling={true}
 							onEndReached={() => {
 								// add more messages when on end scroll

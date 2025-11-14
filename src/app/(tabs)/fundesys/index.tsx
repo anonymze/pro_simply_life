@@ -1,14 +1,12 @@
-import ImagePlaceholder from "@/components/ui/image-placeholder";
-import CardNewsletter from "@/components/card/card-newsletter";
-import { withQueryWrapper } from "@/utils/libs/react-query";
 import { getFundesysesQuery } from "@/api/queries/fundesys";
-import BackgroundLayout from "@/layouts/background-layout";
-import { View, Text, FlatList } from "react-native";
-import { FlashList } from "@shopify/flash-list";
+import CardNewsletter from "@/components/card/card-newsletter";
+import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
-import config from "tailwind.config";
+import BackgroundLayout from "@/layouts/background-layout";
+import { withQueryWrapper } from "@/utils/libs/react-query";
+import { LegendList } from "@legendapp/list";
 import React from "react";
-
+import { Text, View } from "react-native";
 
 interface FlatListItem {
 	type: "header" | "item";
@@ -62,7 +60,7 @@ export default function Page() {
 								style={{ width: 36, height: 36, borderRadius: 4 }}
 							/>
 						}
-						key={item.id}
+						// key={item.id}
 						newsletter={item}
 						link={{
 							pathname: `/fundesys/[fundesys]`,
@@ -79,10 +77,10 @@ export default function Page() {
 					<Title title="Fundesys" />
 					<Text className="mb-5 text-sm text-defaultGray">Newsletter hebdomadaire</Text>
 
-					<FlashList
+					<LegendList
 						data={flatData}
 						renderItem={renderItem}
-						// estimatedItemSize={100}
+						estimatedItemSize={100}
 						keyExtractor={(item) => (item.type === "header" ? item.date : item.id)}
 						showsVerticalScrollIndicator={false}
 						contentContainerStyle={{ paddingBottom: 10 }}

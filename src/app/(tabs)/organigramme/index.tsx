@@ -10,7 +10,7 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { User } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { Href, Link } from "expo-router";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -36,10 +36,8 @@ export default function Page() {
 				);
 			}, [data, search]);
 
-			let groupedUsers: Record<string, User[]> | undefined = undefined;
-
 			// sort and group suppliers by first letter
-			groupedUsers = React.useMemo(
+			const groupedUsers = React.useMemo(
 				() =>
 					filteredData
 						?.slice()
@@ -54,6 +52,17 @@ export default function Page() {
 							{} as Record<string, typeof data.docs>,
 						),
 				[data, filteredData],
+			);
+
+			const searchSections = React.useMemo(
+				() =>
+					groupedUsers
+						? Object.keys(groupedUsers).map((letter) => ({
+								letter,
+								users: groupedUsers[letter],
+						  }))
+						: [],
+				[groupedUsers],
 			);
 
 			const classifiedUsers = React.useMemo(() => {
@@ -112,7 +121,7 @@ export default function Page() {
 						<ScrollView
 							showsVerticalScrollIndicator={false}
 							contentContainerStyle={{ paddingBottom: 16 }}
-							className="mt-0"
+							className="mt-0 flex-1"
 						>
 							<Title title="Associés" />
 							<View className="flex-row flex-wrap items-center justify-center gap-x-8 gap-y-4">
@@ -170,11 +179,12 @@ export default function Page() {
 									</MyTouchableOpacity>
 								</Link>
 							</View>
-							<FlashList
+							<LegendList
 								data={independentColumns}
 								horizontal
 								showsHorizontalScrollIndicator={false}
-								// estimatedItemSize={100}
+								estimatedItemSize={140}
+								style={{ height: 210 }}
 								contentContainerStyle={{ paddingRight: 16, paddingBottom: 16 }}
 								ItemSeparatorComponent={() => <View style={{ width: 32 }} />}
 								renderItem={({ item: column }) => (
@@ -202,40 +212,41 @@ export default function Page() {
 									<Text className="text-sm text-defaultGray">Aucune personne trouvée</Text>
 								</View>
 							) : (
-								<ScrollView
+								<LegendList
 									className="flex-1"
 									showsVerticalScrollIndicator={false}
-									style={{ backgroundColor: config.theme.extend.colors.background }}
-								>
-									<View className="mt-2 gap-2">
-										{Object.keys(groupedUsers!).map((letter) => (
-											<View key={letter} className="gap-2">
-												<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
-												{groupedUsers?.[letter].map((user) => (
-													<CardEmployee
-														icon={
-															<ImagePlaceholder
-																contentFit="cover"
-																placeholder={user?.photo?.blurhash}
-																placeholderContentFit="cover"
-																source={user?.photo?.url}
-																style={{ width: 56, height: 56, borderRadius: 5 }}
-															/>
-														}
-														key={user.id}
-														user={user}
-														link={{
-															pathname: "/organigramme/[organigramme]",
-															params: {
-																organigramme: user.id,
-															},
-														}}
-													/>
-												))}
-											</View>
-										))}
-									</View>
-								</ScrollView>
+									contentContainerStyle={{ gap: 8, paddingBottom: 16 }}
+									estimatedItemSize={200}
+									data={searchSections}
+									renderItem={({ item: section }) => (
+										<View key={section.letter} className="gap-2">
+											<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">
+												{section.letter}
+											</Text>
+											{section.users.map((user) => (
+												<CardEmployee
+													icon={
+														<ImagePlaceholder
+															contentFit="cover"
+															placeholder={user?.photo?.blurhash}
+															placeholderContentFit="cover"
+															source={user?.photo?.url}
+															style={{ width: 56, height: 56, borderRadius: 5 }}
+														/>
+													}
+													key={user.id}
+													user={user}
+													link={{
+														pathname: "/organigramme/[organigramme]",
+														params: {
+															organigramme: user.id,
+														},
+													}}
+												/>
+											))}
+										</View>
+									)}
+								/>
 							)}
 						</>
 					)}

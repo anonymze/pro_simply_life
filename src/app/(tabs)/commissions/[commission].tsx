@@ -2,12 +2,11 @@ import { getCommissionMonthlyAndYearlyDataQuery } from "@/api/queries/commission
 import BackgroundLayout from "@/layouts/background-layout";
 import { CommissionLight } from "@/types/commission";
 import { cn } from "@/utils/libs/tailwind";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
-
 
 export default function Page() {
 	const { commission: commissionId } = useLocalSearchParams();
@@ -33,7 +32,7 @@ export default function Page() {
 				<Text className="w-40 text-center text-sm text-primary">Type</Text>
 				<Text className="w-40 text-center text-sm text-primary">Montant</Text>
 			</View>
-			<FlashList
+			<LegendList
 				data={commissions as unknown as CommissionLight[]}
 				extraData={idLoadingDownload}
 				renderItem={({ item }) => {
@@ -55,15 +54,21 @@ export default function Page() {
 							)}
 							{item.structured_product ? (
 								<View className="w-40 items-center justify-center gap-2">
-									<Text className="text-sm text-[#026AA2]">{item.informations?.up_front?.toLocaleString('fr-FR')}€</Text>
+									<Text className="text-sm text-[#026AA2]">
+										{item.informations?.up_front?.toLocaleString("fr-FR")}€
+									</Text>
 								</View>
 							) : (
 								<View className="w-40 items-center justify-center gap-2">
 									{item.informations?.production ? (
-										<Text className="text-sm text-[#B42318]">{item.informations?.production?.toLocaleString('fr-FR')}€</Text>
+										<Text className="text-sm text-[#B42318]">
+											{item.informations?.production?.toLocaleString("fr-FR")}€
+										</Text>
 									) : null}
 									{item.informations?.encours ? (
-										<Text className="text-sm text-[#3538CD]">{item.informations?.encours?.toLocaleString('fr-FR')}€</Text>
+										<Text className="text-sm text-[#3538CD]">
+											{item.informations?.encours?.toLocaleString("fr-FR")}€
+										</Text>
 									) : null}
 								</View>
 							)}

@@ -7,7 +7,7 @@ import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 // import { Picker } from "@expo/ui/swift-ui";
 import Title from "@/components/ui/title";
-import { SCREEN_DIMENSIONS } from "@/utils/helper";
+import { LegendList } from "@legendapp/list";
 import React from "react";
 import config from "tailwind.config";
 
@@ -41,79 +41,56 @@ export default function Page() {
 		[data],
 	);
 
+	const sections = React.useMemo(
+		() =>
+			Object.keys(groupedUsers!).map((letter) => ({
+				letter,
+				users: groupedUsers![letter],
+			})),
+		[groupedUsers],
+	);
+
 	return (
-		<BackgroundLayout className="px-4">
+		<BackgroundLayout className="flex-1 px-4">
 			<View className="iems-center flex-row justify-between">
 				<Title title={role === "employee" ? "Staff" : "Indépendants"} />
-				{/* <Picker
-					style={{
-						width: 150,
-						alignSelf: "center",
-						marginTop: 8,
-					}}
-					variant="segmented"
-					options={["Liste", "Carte"]}
-					selectedIndex={null}
-					onOptionSelected={({ nativeEvent: { index } }) => {
-						if (index === 0) {
-							scrollRef.current?.scrollTo({ x: 0, animated: true });
-						} else {
-							scrollRef.current?.scrollToEnd();
-						}
-					}}
-				/> */}
 			</View>
 
-			<ScrollView
-				scrollViewRef={scrollRef as React.RefObject<ScrollView>}
-				horizontal
-				showsHorizontalScrollIndicator={false}
-				scrollEnabled={false}
-				decelerationRate={"fast"}
-				contentContainerStyle={{ gap: 16 }}
-			>
-				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
-					<ScrollView
-						className="flex-1"
-						showsVerticalScrollIndicator={false}
-						style={{ backgroundColor: config.theme.extend.colors.background }}
-						contentContainerStyle={{ paddingBottom: 16 }}
-					>
-						<View className="mt-2 gap-2">
-							{Object.keys(groupedUsers!).map((letter) => (
-								<View key={letter} className="gap-2">
-									<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
-									{groupedUsers?.[letter].map((user) => (
-										<CardEmployee
-											icon={
-												<ImagePlaceholder
-													contentFit="cover"
-													placeholder={user?.photo?.blurhash}
-													placeholderContentFit="cover"
-													source={user?.photo?.url}
-													style={{ width: 56, height: 56, borderRadius: 5 }}
-												/>
-											}
-											key={user.id}
-											user={user}
-											link={{
-												pathname: "/organigramme/role/organigramme/[organigramme]",
-												params: {
-													role,
-													organigramme: user.id,
-												},
-											}}
-										/>
-									))}
-								</View>
-							))}
-						</View>
-					</ScrollView>
-				</View>
-				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
-					<Text>En cours de développement</Text>
-				</View>
-			</ScrollView>
+			<LegendList
+				className="flex-1"
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{ gap: 16, paddingBottom: 16 }}
+				estimatedItemSize={235}
+				data={sections}
+				renderItem={({ item: section }) => (
+					<View key={section.letter} className="gap-2">
+						<Text className="mb-2 font-semibold text-base text-defaultGray">
+							{section.letter}
+						</Text>
+						{section.users.map((user) => (
+							<CardEmployee
+								icon={
+									<ImagePlaceholder
+										contentFit="cover"
+										placeholder={user?.photo?.blurhash}
+										placeholderContentFit="cover"
+										source={user?.photo?.url}
+										style={{ width: 56, height: 56, borderRadius: 5 }}
+									/>
+								}
+								key={user.id}
+								user={user}
+								link={{
+									pathname: "/organigramme/[organigramme]",
+									params: {
+										organigramme: user.id,
+									},
+								}}
+							/>
+						))}
+					</View>
+				)}
+			/>
 		</BackgroundLayout>
 	);
 }

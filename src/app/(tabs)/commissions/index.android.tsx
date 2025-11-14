@@ -7,7 +7,7 @@ import { generateYAxisTickValues, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { cn } from "@/utils/libs/tailwind";
 import { getStorageFirstCommission, getStorageUserInfos } from "@/utils/store";
 import { Picker } from "@expo/ui/jetpack-compose";
-import { FlashList } from "@shopify/flash-list";
+import { LegendList } from "@legendapp/list";
 import { LinearGradient, Text as SkiaText, useFont, vec } from "@shopify/react-native-skia";
 import { useQuery } from "@tanstack/react-query";
 import { Href, Link } from "expo-router";
@@ -145,11 +145,11 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 
 	return (
 		<>
-			<FlashList
+			<LegendList
 				showsHorizontalScrollIndicator={false}
 				data={type === "monthly" ? data.monthlyData : data.yearlyData}
 				horizontal
-				// estimatedItemSize={140}
+				estimatedItemSize={140}
 				extraData={lastMonth.id}
 				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => {
@@ -167,7 +167,7 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 						</Pressable>
 					);
 				}}
-			></FlashList>
+			></LegendList>
 			<Content allCommissions={type === "monthly" ? data.monthlyData : data.yearlyData} data={lastMonth} />
 		</>
 	);

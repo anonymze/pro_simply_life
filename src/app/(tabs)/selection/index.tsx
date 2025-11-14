@@ -145,7 +145,6 @@ const ImmobilierCard = ({
 			const file = getFile(brochure.filename);
 
 			if (!file.exists) {
-				console.log("ici");
 				setDownloading(true);
 				await downloadFile(brochure.url, brochure.filename, brochure.mimeType);
 				setDownloading(false);
