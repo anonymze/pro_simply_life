@@ -106,7 +106,7 @@ const SupplierListComponent = ({
 			<View className="gap-2">
 				{Object.keys(groupedSuppliers).map((letter) => (
 					<View key={letter} className="gap-2">
-						<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
+						<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
 						{groupedSuppliers[letter].map((supplier) => (
 							<CardSupplier
 								enveloppe={supplierProductId === GIRARDIN_INDUSTRIEL_ID}
@@ -174,9 +174,7 @@ const PrivateEquityComponent = ({
 		);
 	}
 
-	if (!data || isError) {
-		return null;
-	}
+	if (!data || isError) return null
 
 	// Group private equities by type
 	const groupedByType = data.docs.reduce(
@@ -194,9 +192,9 @@ const PrivateEquityComponent = ({
 		(type) => groupedByType[type] && groupedByType[type].length > 0,
 	);
 
+
 	return (
 		<>
-			{/* Type filter tabs */}
 			<LegendList
 				showsHorizontalScrollIndicator={false}
 				data={orderedTypes}
@@ -218,13 +216,13 @@ const PrivateEquityComponent = ({
 								scrollRef.current?.scrollTo({ x: scrollX, animated: true });
 							}}
 						>
-							<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+							<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
 								{PRIVATE_EQUITY_TYPE_LABELS[type]}
 							</Text>
 						</Pressable>
 					);
 				}}
-			></LegendList>
+			/>
 
 			{/* Suppliers grouped by type */}
 			<ScrollView

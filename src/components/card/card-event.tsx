@@ -27,7 +27,7 @@ export default function CardEvent({
 		<>
 			{isLoading ? (
 				<Animated.View key="skeleton" exiting={FadeOut.duration(2000)}>
-					<View className="h-[190px] gap-4  rounded-2xl bg-white p-4" style={{ width }}>
+					<View className="h-[220px] gap-4  rounded-2xl bg-white p-4" style={{ width }}>
 						<View className="flex-row gap-5">
 							<View className="h-32 w-24 overflow-hidden rounded-xl">
 								<SkeletonPlaceholder
@@ -80,7 +80,7 @@ export default function CardEvent({
 					<MyTouchableScaleOpacity onPressIn={onPress}>
 						<Animated.View
 							entering={FadeIn.duration(300)}
-							className="h-[190px] gap-4 rounded-2xl bg-white p-4"
+							className="h-[220px] gap-4 rounded-2xl bg-white p-4"
 							style={{ width }}
 						>
 							<View className="flex-row gap-5">

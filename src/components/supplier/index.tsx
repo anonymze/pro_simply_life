@@ -103,16 +103,16 @@ export default function Page({ previousCategories = true }: { previousCategories
 								};
 							}),
 						]}
+
 						horizontal
-						className="my-4"
+						className="my-4 h-14"
 						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
-
 							return (
 								<Pressable
 									hitSlop={5}
 									className={cn(
-										"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+										"mr-3.5 h-12 flex items-center justify-center rounded-lg px-3.5",
 										isActive ? "bg-primary" : "bg-darkGray",
 									)}
 									onPress={() => {
@@ -269,8 +269,8 @@ export default function Page({ previousCategories = true }: { previousCategories
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
-										<Text className="text-xs text-green-600">Commissions négociées par Groupe Valorem</Text>
-										<Text className="ml-auto font-light text-sm text-green-600">
+										<Text className="text-xs text-green-600">Commissions négociées Groupe Valorem</Text>
+										<Text className="ml-auto font-light text-xs text-green-600">
 											{data.enveloppe.commission_valorem ? data.enveloppe.commission_valorem + "%" : "Non renseigné"}
 										</Text>
 									</View>
