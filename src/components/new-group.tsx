@@ -111,7 +111,7 @@ export function NewGroup({
 					className="flex-1"
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{ paddingBottom: 16, gap: 8 }}
-					estimatedItemSize={60}
+					estimatedItemSize={70}
 					recycleItems={false}
 					extraData={selectedIds}
 					data={listItems}

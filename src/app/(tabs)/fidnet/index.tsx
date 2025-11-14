@@ -88,7 +88,7 @@ const FidnetContent = ({ data }: { data: PaginatedResponse<Fidnet> }) => {
 			<LegendList
 				data={flatData}
 				renderItem={renderItem}
-				estimatedItemSize={100}
+				estimatedItemSize={80}
 				keyExtractor={(item) => (item.type === "header" ? item.date : item.id)}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ paddingBottom: 10 }}
