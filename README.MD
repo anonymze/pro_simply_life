@@ -218,5 +218,3 @@ popup evenement reccent ?
 guide de débutant
 
 lire des excels sur un téléphone
-
-david private + guard mise à jour + bug android on pages
