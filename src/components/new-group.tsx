@@ -9,6 +9,7 @@ import ImagePlaceholder from "./ui/image-placeholder";
 import IndependentIcon from "./independant-icon";
 import InputSearch from "./ui/input-search";
 import EmployeesIcon from "./emloyees-icon";
+import { LegendList } from "@legendapp/list";
 
 
 const lengthSearch = 3;
@@ -73,6 +74,27 @@ export function NewGroup({
 			);
 	}, [data, filteredUsers]);
 
+	const listItems = React.useMemo(() => {
+		const items: Array<
+			| { type: 'groups' }
+			| { type: 'header'; letter: string }
+			| { type: 'user'; user: User }
+		> = [];
+
+		if (search.length < lengthSearch) {
+			items.push({ type: 'groups' });
+		}
+
+		Object.keys(groupedUsers).forEach((letter) => {
+			items.push({ type: 'header', letter });
+			groupedUsers[letter].forEach((user) => {
+				items.push({ type: 'user', user });
+			});
+		});
+
+		return items;
+	}, [groupedUsers, search.length]);
+
 	return (
 		<>
 			<InputSearch
@@ -85,52 +107,64 @@ export function NewGroup({
 				}}
 			/>
 			{search.length < lengthSearch || !!filteredUsers?.length ? (
-				<ScrollView
+				<LegendList
 					className="flex-1"
 					showsVerticalScrollIndicator={false}
-					style={{ backgroundColor: config.theme.extend.colors.background }}
-					contentContainerStyle={{ paddingBottom: 16 }}
-				>
-					{search.length < lengthSearch && (
-						<View className="mt-5 gap-2">
-							<Text className="font-medium text-lg text-defaultGray">Groupes</Text>
-							<CardGroup
-								users={associates}
-								icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
-								title="Associés"
-								description={associates.length + " personnes"}
-								dispatch={dispatch}
+					contentContainerStyle={{ paddingBottom: 16, gap: 8 }}
+					estimatedItemSize={60}
+					recycleItems={false}
+					extraData={selectedIds}
+					data={listItems}
+					renderItem={({ item }) => {
+						if (item.type === 'groups') {
+							return (
+								<View className="mt-5 gap-2">
+									<Text className="font-medium text-lg text-defaultGray">Groupes</Text>
+									<CardGroup
+										users={associates}
+										icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
+										title="Associés"
+										description={associates.length + " personnes"}
+										dispatch={dispatch}
+										selectedIds={selectedIds}
+									/>
+									<CardGroup
+										users={employees}
+										icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
+										title="Staff"
+										description={employees.length + " personnes"}
+										dispatch={dispatch}
+										selectedIds={selectedIds}
+									/>
+									<CardGroup
+										users={independents}
+										icon={<IndependentIcon color={config.theme.extend.colors.primary} />}
+										title="Indépendants"
+										description={independents.length + " personnes"}
+										dispatch={dispatch}
+										selectedIds={selectedIds}
+									/>
+								</View>
+							);
+						}
+
+						if (item.type === 'header') {
+							return (
+								<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">
+									{item.letter}
+								</Text>
+							);
+						}
+
+						return (
+							<CardIndividual
+								user={item.user}
 								selectedIds={selectedIds}
-							/>
-							<CardGroup
-								users={employees}
-								icon={<EmployeesIcon color={config.theme.extend.colors.primary} />}
-								title="Staff"
-								description={employees.length + " personnes"}
 								dispatch={dispatch}
-								selectedIds={selectedIds}
 							/>
-							<CardGroup
-								users={independents}
-								icon={<IndependentIcon color={config.theme.extend.colors.primary} />}
-								title="Indépendants"
-								description={independents.length + " personnes"}
-								dispatch={dispatch}
-								selectedIds={selectedIds}
-							/>
-						</View>
-					)}
-					<View className="mt-2 gap-2">
-						{Object.keys(groupedUsers).map((letter) => (
-							<View key={letter} className="gap-2">
-								<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
-								{groupedUsers[letter].map((user) => (
-									<CardIndividual key={user.id} user={user} selectedIds={selectedIds} dispatch={dispatch} />
-								))}
-							</View>
-						))}
-					</View>
-				</ScrollView>
+						);
+					}}
+				/>
 			) : (
 				<View className="flex-1 items-center justify-center">
 					<Text className="text-sm text-defaultGray">Aucune personne trouvée</Text>
