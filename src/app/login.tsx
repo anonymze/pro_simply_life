@@ -86,11 +86,11 @@ export default function Page() {
 		<BackgroundLayout className="m-6" style={{ paddingTop: insets.top }}>
 			<Animated.View className="flex-1 justify-center gap-3" style={animatedStyle}>
 				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 80 }} contentFit="contain" />
-				<Text className="mt-4 max-w-[90%] text-start font-semibold text-lg text-primary">
+				<Text className="mt-2 max-w-[90%] text-start font-semibold text-lg text-primary">
 					{i18n[languageCode]("SUBTITLE_LOGIN")}
 				</Text>
 
-				<View className="mt-8 w-full gap-3">
+				<View className="mt-4 w-full gap-3">
 					<Text className="text-md self-start text-primary">{i18n[languageCode]("INPUT_EMAIL_LOGIN")}</Text>
 					<form.Field name="email">
 						{(field) => (
@@ -207,7 +207,7 @@ export default function Page() {
 					onPress={() => {
 						WebBrowser.openBrowserAsync("https://rgpd-and-confidentiality.vercel.app/simply_life/rgpd.html");
 					}}
-					className="mt-8"
+					className="mt-4"
 					hitSlop={6}
 				>
 					<Text className="text-center font-semibold text-xs text-primaryLight underline">
