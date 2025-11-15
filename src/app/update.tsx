@@ -16,7 +16,7 @@ export default function Page() {
 			{Platform.OS === "ios" && (
 				<Text className="text-lg mt-4 max-w-[90%] text-start font-medium text-red-500">
 					Vous allez être redirigé vers l'App Store avec toutes vos applications, il suffit de scroller
-					jusqu'à trouver Simply Life et mettre à jour.
+					jusqu'à trouver Simply Life puis mettre à jour.
 				</Text>
 			)}
 			<Pressable
