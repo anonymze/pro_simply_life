@@ -8,7 +8,7 @@ export default function Page() {
 		<BackgroundLayout className="justify-center p-6">
 			<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 80 }} contentFit="contain" />
 			<Text className="mt-4 max-w-[90%] text-start font-medium text-lg text-primary">
-				Une importante mise à jour de l'application est nécessaire pour continuer à l'utiliser.
+				Une importante mise à jour de l'application Simply Life est nécessaire pour continuer à l'utiliser.
 			</Text>
 			{/*<Text className="mt-4 max-w-[90%] text-start font-medium text-lg text-primary">
 				Veuillez télécharger la mise à jour sur le store en appuyant sur le bouton ci-dessous.
