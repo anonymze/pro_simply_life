@@ -98,5 +98,5 @@ export const FCPR_ID = "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8";
 export const SCREEN_DIMENSIONS = Dimensions.get("window");
 export const VERSION_NUMBER = Constants.expoConfig?.version;
 export const APP_URL_ANDROID = "https://play.google.com/store/apps/details?id=com.anonymze.simplylife";
-export const APP_URL_IOS = "https://apps.apple.com/app/id6742592384";
+export const APP_URL_IOS = "https://apps.apple.com/updates";
 // itms-apps://itunes.apple.com/app/id6742592384`
