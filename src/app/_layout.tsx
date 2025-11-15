@@ -140,16 +140,16 @@ const Layout = () => {
 								fullScreenGestureEnabled: false,
 							}}
 						>
-							<Stack.Screen name="(tabs)" />
-							<Stack.Screen name="login" />
+							{/*<Stack.Screen name="(tabs)" />
+							<Stack.Screen name="login" />*/}
 
-							{/*<Stack.Protected guard={!needImportantVersion()}>
+							<Stack.Protected guard={!needImportantVersion()}>
 								<Stack.Screen name="(tabs)" />
 								<Stack.Screen name="login" />
 							</Stack.Protected>
 							<Stack.Protected guard={needImportantVersion()}>
 								<Stack.Screen name="update" />
-							</Stack.Protected>*/}
+							</Stack.Protected>
 						</Stack>
 						<PortalHost />
 						{/* </SafeAreaProvider> */}
