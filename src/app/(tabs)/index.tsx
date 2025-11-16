@@ -28,9 +28,11 @@ import { Linking, ScrollView, Text, View } from "react-native";
 // import type { Math } from "react-native-math";
 // import  { NitroModules } from "react-native-nitro-modules";
 import { MyTouchableOpacity, MyTouchableScaleOpacity } from "@/components/my-pressable";
+import { useSonnerRN } from "@/components/sonner/context/sonner-context";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Page() {
+	const { toast } = useSonnerRN();
 	const insets = useSafeAreaInsets();
 	// const notification = useNotification();
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
@@ -73,6 +75,8 @@ export default function Page() {
 			>
 				<ProfileDashboard firstname={firstname} lastname={lastname} photo={photo} />
 
+				{/*<Example />*/}
+
 				<Title title="Fonctionnalités" />
 				<View className="flex-row flex-wrap justify-between gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
 					{links.map((link) => {
@@ -99,16 +103,18 @@ export default function Page() {
 					push
 					asChild
 				>
-					<MyTouchableScaleOpacity className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5">
-						<View className="flex-row items-center justify-between">
-							<View className="flex-1 flex-row items-center gap-3">
-								<Sparkles size={15} color="#FDB022" fill="#FDB022" />
-								<Text className="text-md flex-1 font-bold text-primary">Notre sélection du moment</Text>
-							</View>
-
-							<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
+				<MyTouchableScaleOpacity
+					className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5"
+				>
+					<View className="flex-row items-center justify-between">
+						<View className="flex-1 flex-row items-center gap-3">
+							<Sparkles size={15} color="#FDB022" fill="#FDB022" />
+							<Text className="text-md flex-1 font-bold text-primary">Notre sélection du moment</Text>
 						</View>
-					</MyTouchableScaleOpacity>
+
+						<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
+					</View>
+				</MyTouchableScaleOpacity>
 				</Link>
 
 				<Title title="Newsletter" />

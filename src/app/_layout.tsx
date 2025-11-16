@@ -5,10 +5,10 @@ import { queryClient } from "@/api/_queries";
 import { getAppUsersQuery } from "@/api/queries/app-user-queries";
 import { getChatRoomsQuery } from "@/api/queries/chat-room-queries";
 import { getSupplierCategoriesQuery } from "@/api/queries/supplier-categories-queries";
+import { SonnerRNProvider } from "@/components/sonner/context/sonner-context";
 import { NotificationProvider } from "@/context/push-notifications";
 import { needImportantVersion } from "@/utils/helper";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { PortalHost } from "@rn-primitives/portal";
 import { focusManager, onlineManager, QueryClientProvider } from "@tanstack/react-query";
 import * as Network from "expo-network";
 import * as Notifications from "expo-notifications";
@@ -16,12 +16,13 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import * as Updates from "expo-updates";
+import { HeroUINativeProvider } from "heroui-native";
 import { PressablesConfig } from "pressto";
 import React from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
-import { HeroUINativeProvider } from 'heroui-native';
+import { PortalHost } from "@rn-primitives/portal";
 
 // Sentry.init({
 // 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
@@ -127,33 +128,31 @@ const Layout = () => {
 				<BottomSheetModalProvider>
 					<HeroUINativeProvider>
 						<KeyboardProvider>
-							<PressablesConfig
-								animationType="spring"
-								animationConfig={{ damping: 90, stiffness: 1500 }}
-								config={{ minScale: 0.9 }}
-							>
-								<StatusBar style="dark" translucent />
-								{/* already added by expo router on every route */}
-								{/* <SafeAreaProvider> */}
-								<Stack
-									screenOptions={{
-										headerShown: false,
-										animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
-										gestureEnabled: false,
-										fullScreenGestureEnabled: false,
-									}}
+							<SonnerRNProvider>
+								<PressablesConfig
+									animationType="spring"
+									animationConfig={{ damping: 90, stiffness: 1500 }}
+									config={{ minScale: 0.9 }}
 								>
-									<Stack.Protected guard={!needImportantVersion()}>
-										<Stack.Screen name="(tabs)" />
-										<Stack.Screen name="login" />
-									</Stack.Protected>
-									<Stack.Protected guard={needImportantVersion()}>
-										<Stack.Screen name="update" />
-									</Stack.Protected>
-								</Stack>
-								<PortalHost />
-								{/* </SafeAreaProvider> */}
-							</PressablesConfig>
+									<StatusBar style="dark" translucent />
+									<Stack
+										screenOptions={{
+											headerShown: false,
+											animation: Platform.OS === "ios" ? "simple_push" : "fade_from_bottom",
+											gestureEnabled: false,
+											fullScreenGestureEnabled: false,
+										}}
+									>
+										<Stack.Protected guard={!needImportantVersion()}>
+											<Stack.Screen name="(tabs)" />
+											<Stack.Screen name="login" />
+										</Stack.Protected>
+										<Stack.Protected guard={needImportantVersion()}>
+											<Stack.Screen name="update" />
+										</Stack.Protected>
+									</Stack>
+								</PressablesConfig>
+							</SonnerRNProvider>
 						</KeyboardProvider>
 					</HeroUINativeProvider>
 				</BottomSheetModalProvider>
