@@ -4,7 +4,7 @@ import { useNotification } from "@/context/push-notifications";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import BackgroundLayout from "@/layouts/background-layout";
 import { VERSION_NUMBER } from "@/utils/helper";
-import { setStorageFirstLogin, setStorageUserInfos } from "@/utils/store";
+import { getStorageFirstLogin, setStorageFirstLogin, setStorageUserInfos } from "@/utils/store";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
@@ -50,7 +50,7 @@ export default function Page() {
 		},
 		onSuccess: async (data) => {
 			setStorageUserInfos(data);
-			if (true) {
+			if (!getStorageFirstLogin()) {
 				setStorageFirstLogin(true);
 				toast("Bienvenue dans Simply Life !", {
 					description: "Appuyer sur cette notification pour découvrir notre présentation.",
