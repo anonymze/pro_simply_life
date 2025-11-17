@@ -194,20 +194,16 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 // 18 entre 10h et 11h
 // excel organigramme
 
-cookie session qui s'expire ?
 
 //
 pré rempli commissions //  evènements groupe valorem par personnes (selectionnés)
 //
 
-produits structurés, entrer un mail pour envoyer la brochure ?
-
 include denis dans le gros point v2
 
 mail pro / mail perso
+cookie session qui s'expire ?
 
 popup evenement reccent ?
-
-guide de débutant
 
 lire des excels sur un téléphone

@@ -15,7 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN } from "react-native-worklets";
 import { SonnerRN } from "./types/sonner";
 
-const DEFAULT_SECONDS = 500;
+const DEFAULT_SECONDS = 5;
 const DEFAULT_ANIMATION = {
 	damping: 130,
 	stiffness: 1500,
