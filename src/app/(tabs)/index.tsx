@@ -96,35 +96,24 @@ export default function Page() {
 					})}
 				</View>
 
-				{/*<Link
+				<Link
 					href={{
 						pathname: "/selection",
 					}}
 					push
 					asChild
-				>*/}
-				<MyTouchableScaleOpacity
-					className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5"
-					onPress={() => {
-						toast("zefhozefzoeif", {
-							description: "zoifhhzeoifhizef",
-							action: {
-								label: "hey",
-								onPress: () => {},
-							},
-						});
-					}}
 				>
-					<View className="flex-row items-center justify-between">
-						<View className="flex-1 flex-row items-center gap-3">
-							<Sparkles size={15} color="#FDB022" fill="#FDB022" />
-							<Text className="text-md flex-1 font-bold text-primary">Notre sélection du moment</Text>
-						</View>
+					<MyTouchableScaleOpacity className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5">
+						<View className="flex-row items-center justify-between">
+							<View className="flex-1 flex-row items-center gap-3">
+								<Sparkles size={15} color="#FDB022" fill="#FDB022" />
+								<Text className="text-md flex-1 font-bold text-primary">Notre sélection du moment</Text>
+							</View>
 
-						<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
-					</View>
-				</MyTouchableScaleOpacity>
-				{/*</Link>*/}
+							<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
+						</View>
+					</MyTouchableScaleOpacity>
+				</Link>
 
 				<Title title="Newsletter" />
 
