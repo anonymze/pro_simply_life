@@ -5,23 +5,24 @@ import CardSupplierProduct from "@/components/card/card-supplier-product";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
-import { SupplierProduct } from "@/types/supplier";
-import { excludedProductSupplierIds, OB_TER_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { ALL_SCPI_ID, excludedProductSupplierIds, SCPI_CATEGORY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker } from "@expo/ui/jetpack-compose";
 import { useQuery } from "@tanstack/react-query";
-import { useLocalSearchParams } from "expo-router";
+import { Redirect, useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Text, View, ScrollView } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
-	const scrollRef = React.useRef<ScrollView>(null);
-	const [search, setSearch] = React.useState("");
 	const { "supplier-category": supplierCategoryId, "supplier-category-name": supplierCategoryName } =
 		useLocalSearchParams<{
 			"supplier-category": string;
 			"supplier-category-name": string;
 		}>();
+
+
+	const scrollRef = React.useRef<ScrollView>(null);
+	const [search, setSearch] = React.useState("");
 
 	const { data } = useQuery({
 		queryKey: ["supplier-category", supplierCategoryId],

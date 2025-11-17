@@ -89,11 +89,14 @@ export const excludedProductSupplierIds = [
 export const PRIVATE_EQUITY_ID = "42369074-6134-4d77-8a91-46f9a2efb1c4";
 export const GIRARDIN_INDUSTRIEL_ID = "36a662a2-c846-41a2-942e-b8748e34feed";
 export const OB_TER_ID = "6871100f-d1ae-4326-93f9-d4f5117243ab";
+export const FCPR_ID = "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8";
+export const ALL_SCPI_ID = "e7ce6f33-422f-4101-ae19-c4db08227630";
+export const SCPI_CATEGORY_ID = "c3ad1f0e-af17-4425-b1cf-4ec3da2f9877";
+
 export const USER_LEONIE_ID = "3aec92de-0d1f-4909-ae0b-71156f40b854";
 export const USER_MATHIEU_ID = "da45b442-babf-4c37-af20-2f79c57fb51f";
 export const USER_DEV_ID = "9e817b3c-50bf-4564-a653-28516ef84f59";
 export const USER_DEV_2_ID = "34346fc6-2fe6-4009-92b3-5936073c7c19";
-export const FCPR_ID = "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8";
 
 export const SCREEN_DIMENSIONS = Dimensions.get("window");
 export const VERSION_NUMBER = Constants.expoConfig?.version;

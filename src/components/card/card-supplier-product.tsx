@@ -1,9 +1,10 @@
 import { queryClient } from "@/api/_queries";
 import { SupplierProduct } from "@/types/supplier";
-import { Href, Link } from "expo-router";
+import { ALL_SCPI_ID, SCPI_CATEGORY_ID } from "@/utils/helper";
+import { Href, Link, Redirect } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text } from "react-native";
 import config from "tailwind.config";
 import { MyTouchableScaleOpacity } from "../my-pressable";
 
@@ -23,13 +24,30 @@ export default function CardSupplierProduct({
 		queryClient.setQueryData(["supplier-product", supplierProduct.id], supplierProduct);
 	}, [supplierProduct]);
 
+	if (supplierProduct.id === ALL_SCPI_ID) {
+		queryClient.setQueryData(["supplier-product", supplierProduct.id], supplierProduct);
+		return (
+			<Redirect
+				href={{
+					pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+					params: {
+						"supplier-category": SCPI_CATEGORY_ID,
+						"supplier-category-name": "SCPI",
+						"supplier-product": supplierProduct.id,
+						"supplier-product-name": supplierProduct.name
+					},
+				}}
+			/>
+		);
+	}
+
 	return (
 		<Link href={link} push asChild>
 			<MyTouchableScaleOpacity
 				onPressIn={onPress}
 				className="w-full flex-row items-center justify-between gap-3 rounded-xl bg-white p-4 shadow-sm shadow-defaultGray/10"
 			>
-				<Text className="flex-shrink font-semibold text-lg text-primary">{supplierProduct.name}</Text>
+				<Text className="shrink text-lg font-semibold text-primary">{supplierProduct.name}</Text>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} />
 			</MyTouchableScaleOpacity>
 		</Link>
