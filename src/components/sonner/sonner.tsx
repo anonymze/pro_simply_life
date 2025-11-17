@@ -149,23 +149,10 @@ const gestureAnimationPan = ({
 			})
 			// .onFinalize((e) => {})
 			.onEnd((e) => {
-				if (e.translationY <= DETECTION_TOP) {
+				if (e.translationY <= DETECTION_TOP || e.translationY >= DETECTION_BOTTOM) {
 					sharedOpacity.value = withTiming(0);
 					sharedScale.value = withTiming(0.95);
-					sharedTranslate.value = withTiming(
-						e.translationY - 200,
-						{
-							duration: 200,
-						},
-						(finished) => {
-							"worklet";
-							if (finished) scheduleOnRN(dispatchToast, { type: "CLEAR" });
-						},
-					);
-				} else if (e.translationY >= DETECTION_BOTTOM) {
-					sharedOpacity.value = withTiming(0);
-					sharedTranslate.value = withTiming(-100);
-					sharedScale.value = withTiming(0.95, undefined, (finished) => {
+					sharedTranslate.value = withTiming(-250, undefined, (finished) => {
 						"worklet";
 						if (finished) scheduleOnRN(dispatchToast, { type: "CLEAR" });
 					});
@@ -204,12 +191,14 @@ const gestureAnimationTap = ({
 	sharedOpacity: SharedValue<number>;
 	action: SonnerRN.ToastOptions["action"];
 }) => {
-	return Gesture.Tap().onEnd((e) => {
-		sharedOpacity.value = withTiming(0, undefined, (finished) => {
-			"worklet";
-			if (finished) scheduleOnRN(dispatchToast, { type: "CLEAR" });
-		});
+	return Gesture.Tap()
+		.maxDistance(0)
+		.onEnd((e) => {
+			sharedOpacity.value = withTiming(0, undefined, (finished) => {
+				"worklet";
+				if (finished) scheduleOnRN(dispatchToast, { type: "CLEAR" });
+			});
 
-		if (action) scheduleOnRN(action.onPress);
-	});
+			if (action) scheduleOnRN(action.onPress);
+		});
 };

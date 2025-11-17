@@ -96,15 +96,24 @@ export default function Page() {
 					})}
 				</View>
 
-				<Link
+				{/*<Link
 					href={{
 						pathname: "/selection",
 					}}
 					push
 					asChild
-				>
+				>*/}
 				<MyTouchableScaleOpacity
 					className="relative mt-6 rounded-xl border border-primary bg-white  px-5 py-5"
+					onPress={() => {
+						toast("zefhozefzoeif", {
+							description: "zoifhhzeoifhizef",
+							action: {
+								label: "hey",
+								onPress: () => {},
+							},
+						});
+					}}
 				>
 					<View className="flex-row items-center justify-between">
 						<View className="flex-1 flex-row items-center gap-3">
@@ -115,7 +124,7 @@ export default function Page() {
 						<ArrowRightIcon size={20} color={config.theme.extend.colors.primary} strokeWidth={3} />
 					</View>
 				</MyTouchableScaleOpacity>
-				</Link>
+				{/*</Link>*/}
 
 				<Title title="Newsletter" />
 

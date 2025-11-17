@@ -50,10 +50,10 @@ export default function Page() {
 		},
 		onSuccess: async (data) => {
 			setStorageUserInfos(data);
-			if (!getStorageFirstLogin()) {
+			if (getStorageFirstLogin()) {
 				setStorageFirstLogin(true);
 				toast("Bienvenue dans Simply Life !", {
-					description: "Appuyer sur cette notification pour découvrir notre présentation.",
+					description: "Appuyer sur cette notification pour découvrir notre présentation vidéo.",
 					action: {
 						label: "Voir",
 						onPress: () => {
