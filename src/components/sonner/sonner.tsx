@@ -210,6 +210,6 @@ const gestureAnimationTap = ({
 			if (finished) scheduleOnRN(dispatchToast, { type: "CLEAR" });
 		});
 
-		if (action?.onPress) scheduleOnRN(action.onPress);
+		if (action) scheduleOnRN(action.onPress);
 	});
 };
