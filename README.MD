@@ -197,19 +197,12 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 cookie session qui s'expire ?
 
 //
-pré rempli commissions // inclure les indé sur la carte // nouveau message nom de la personne // ajouter une personne à un chat // evènements groupe valorem par personnes (selectionnés)
+pré rempli commissions //  evènements groupe valorem par personnes (selectionnés)
 //
 
 produits structurés, entrer un mail pour envoyer la brochure ?
 
 include denis dans le gros point v2
-
-fcpi / fip / parts socials (créé) regroupés
-3 colonnes dans les 3
-
-cardif tu peux avoir assurnce vie, per ou assurance pret, comment faire pour grouper les brochures ???
-
-ajouter des personnes en plus dans le chat
 
 mail pro / mail perso
 

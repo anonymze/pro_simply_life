@@ -5,6 +5,7 @@ export const storage = createMMKV();
 
 const USER_INFOS_KEY = "user.data";
 const FIRST_COMMISSION_KEY = "commission.data";
+const FIRST_LOGIN_KEY = "user.first_login";
 
 let cachedUser: AppUser | null = null;
 
@@ -35,4 +36,20 @@ const setStorageFirstCommission = (state: boolean) => {
 	storage.set(FIRST_COMMISSION_KEY, state);
 };
 
-export { getStorageUserInfos, removeStorageUserInfos, setStorageUserInfos, setStorageFirstCommission, getStorageFirstCommission };
+const setStorageFirstLogin = (state: boolean) => {
+	storage.set(FIRST_LOGIN_KEY, state);
+};
+
+const getStorageFirstLogin = () => {
+	return storage.getBoolean(FIRST_LOGIN_KEY) ?? false;
+};
+
+export {
+	getStorageFirstCommission,
+	getStorageFirstLogin,
+	getStorageUserInfos,
+	removeStorageUserInfos,
+	setStorageFirstCommission,
+	setStorageFirstLogin,
+	setStorageUserInfos,
+};

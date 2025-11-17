@@ -1,9 +1,10 @@
 import { forgotPasswordQuery, loginQuery } from "@/api/queries/login-queries";
+import { useSonnerRN } from "@/components/sonner/context/sonner-context";
 import { useNotification } from "@/context/push-notifications";
 import { getLanguageCodeLocale, i18n } from "@/i18n/translations";
 import BackgroundLayout from "@/layouts/background-layout";
 import { VERSION_NUMBER } from "@/utils/helper";
-import { setStorageUserInfos } from "@/utils/store";
+import { setStorageFirstLogin, setStorageUserInfos } from "@/utils/store";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
@@ -19,6 +20,7 @@ import config from "tailwind.config";
 import { z } from "zod";
 
 export default function Page() {
+	const { toast } = useSonnerRN();
 	const insets = useSafeAreaInsets();
 	const { expoPushToken } = useNotification();
 	const { height } = useReanimatedKeyboardAnimation();
@@ -48,6 +50,18 @@ export default function Page() {
 		},
 		onSuccess: async (data) => {
 			setStorageUserInfos(data);
+			if (true) {
+				setStorageFirstLogin(true);
+				toast("Bienvenue dans Simply Life !", {
+					description: "Appuyer sur cette notification pour découvrir notre présentation.",
+					action: {
+						label: "Voir",
+						onPress: () => {
+							router.push("/(tabs)/help");
+						},
+					},
+				});
+			}
 			router.replace("/(tabs)");
 		},
 	});
@@ -58,11 +72,8 @@ export default function Page() {
 			console.log(error);
 			// Alert.alert("Une erreur est survenue, contactez l'administrateur.");
 		},
-		onSuccess: async (data) => {
-			// console.log(data);
-			// Alert.alert("Un email pour réinitialiser votre mot de passe vient d'être envoyé.");
-			// form.reset();
-		},
+		// onSuccess: async (data) => {
+		// },
 	});
 
 	const form = useForm({
@@ -86,7 +97,7 @@ export default function Page() {
 		<BackgroundLayout className="m-6" style={{ paddingTop: insets.top }}>
 			<Animated.View className="flex-1 justify-center gap-3" style={animatedStyle}>
 				<Image source={require("@/assets/images/logo.png")} style={{ height: 80, width: 80 }} contentFit="contain" />
-				<Text className="mt-2 max-w-[90%] text-start font-semibold text-lg text-primary">
+				<Text className="mt-2 max-w-[90%] text-start text-lg font-semibold text-primary">
 					{i18n[languageCode]("SUBTITLE_LOGIN")}
 				</Text>
 
@@ -169,7 +180,7 @@ export default function Page() {
 					) : (
 						<Animated.Text
 							entering={FadeInDown.springify(300)}
-							className="text-center font-semibold text-lg text-white"
+							className="text-center text-lg font-semibold text-white"
 						>
 							{i18n[languageCode]("BUTTON_LOGIN")}
 						</Animated.Text>
@@ -197,7 +208,7 @@ export default function Page() {
 				>
 					<Animated.Text
 						entering={FadeInDown.springify().duration(800)}
-						className="text-center font-semibold text-sm text-primaryLight underline"
+						className="text-center text-sm font-semibold text-primaryLight underline"
 					>
 						Mot de passe oublié ?
 					</Animated.Text>
@@ -210,7 +221,7 @@ export default function Page() {
 					className="mt-4"
 					hitSlop={6}
 				>
-					<Text className="text-center font-semibold text-xs text-primaryLight underline">
+					<Text className="text-center text-xs font-semibold text-primaryLight underline">
 						Politique de confidentialité
 					</Text>
 				</TouchableOpacity>

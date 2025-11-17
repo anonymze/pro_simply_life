@@ -24,6 +24,7 @@ export default function CardSupplierProduct({
 		queryClient.setQueryData(["supplier-product", supplierProduct.id], supplierProduct);
 	}, [supplierProduct]);
 
+	// we ignore SCPI product, we skip it
 	if (supplierProduct.id === ALL_SCPI_ID) {
 		queryClient.setQueryData(["supplier-product", supplierProduct.id], supplierProduct);
 		return (
