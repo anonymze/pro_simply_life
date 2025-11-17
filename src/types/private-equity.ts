@@ -1,6 +1,33 @@
 import { Media } from "./media";
 import { Supplier } from "./supplier";
 
+export const FOND_LABELS: Record<string, string> = {
+	name: "Nom",
+	duration: "Durée",
+	blocage_minimum: "Blocage minimum",
+	strategy_investissement: "Stratégie d'investissement",
+	liquidity: "Liquidité",
+	subscription: "Souscription",
+	ticket_mini_direct: "Ticket minimum direct",
+	ticket_max: "Ticket maximum",
+	allocation_max: "Allocation maximum",
+	constraint: "Contrainte",
+	tri_cible: "TRI cible",
+	retro_upfront: "Rétro upfront",
+	retro_encours: "Rétro encours",
+	form: "Forme",
+	duration_minimum: "Durée minimum",
+	duration_prolongation: "Durée prolongation",
+	duration_appel_found: "Durée appel fonds",
+	these_investissement: "Thèse d'investissement",
+	retro_subscription: "Rétro souscription",
+	"150_0_b_ter": "150-0 B ter",
+	"163_quinquies_b": "163 quinquies B",
+	multi_cible: "Multi cible",
+	tri_cible_in_fine: "TRI cible in fine",
+	tri_cible_distribute: "TRI cible distribué",
+};
+
 export interface PrivateEquity {
 	id: string;
 	type: "capital" | "dettes" | "assurance";

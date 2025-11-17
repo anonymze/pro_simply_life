@@ -3,7 +3,7 @@ import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
-import { PrivateEquity } from "@/types/private-equity";
+import { FOND_LABELS, PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
@@ -800,7 +800,7 @@ const FondComponent = ({
 					.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
 					.map(([key, value], idx, arr) => (
 						<React.Fragment key={key}>
-							<Text className="text-sm font-semibold text-primaryLight">{key}</Text>
+							<Text className="text-sm font-semibold text-primaryLight">{FOND_LABELS[key] || key}</Text>
 							<Text className="text-sm font-semibold text-primary">{value as string}</Text>
 							{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
 						</React.Fragment>
