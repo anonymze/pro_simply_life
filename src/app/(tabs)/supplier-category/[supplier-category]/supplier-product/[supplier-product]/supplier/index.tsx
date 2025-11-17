@@ -200,6 +200,8 @@ const PrivateEquityComponent = ({
 				data={orderedTypes}
 				horizontal
 				className="mb-4"
+				style={{ maxHeight: 48 }}
+				extraData={currentIndex}
 				renderItem={({ item: type, index }) => {
 					const isActive = currentIndex === index;
 
