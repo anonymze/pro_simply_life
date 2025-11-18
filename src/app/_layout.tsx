@@ -22,7 +22,6 @@ import React from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
-import { PortalHost } from "@rn-primitives/portal";
 
 // Sentry.init({
 // 	dsn: "https://b03eb0b4608556d0eed1d4cad51d1786@o4509069379043328.ingest.de.sentry.io/4509114349715536",
