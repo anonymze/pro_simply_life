@@ -79,7 +79,6 @@ export default Sentry.wrap(function RootLayout() {
 
 const Layout = () => {
 	const { isUpdateAvailable, isUpdatePending } = Updates.useUpdates();
-	const channel = Updates.channel;
 	const [ready, setReady] = React.useState(false);
 
 	// refetch on app focus
@@ -119,13 +118,9 @@ const Layout = () => {
 	// TODO
 	React.useEffect(() => {
 		if (isUpdateAvailable) {
-			// Only fetch updates for production channel
-
-			// if (channel === "production") {
 				Updates.fetchUpdateAsync();
-			// }
 		}
-	}, [isUpdateAvailable, channel]);
+	}, [isUpdateAvailable]);
 
 	if (!ready) null;
 
