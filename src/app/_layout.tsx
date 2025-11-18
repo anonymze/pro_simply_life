@@ -120,6 +120,7 @@ const Layout = () => {
 	React.useEffect(() => {
 		if (isUpdateAvailable) {
 			// Only fetch updates for production channel
+
 			if (channel === "production") {
 				Updates.fetchUpdateAsync();
 			}
