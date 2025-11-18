@@ -7,9 +7,9 @@ import { setStorageUserInfos } from "@/utils/store";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
-import Constants from "expo-constants";
 import { Image } from "expo-image";
 import { router } from "expo-router";
+import * as Updates from "expo-updates";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { ActivityIndicator, Alert, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -19,6 +19,7 @@ import config from "tailwind.config";
 import { z } from "zod";
 
 export default function Page() {
+	const channel = Updates.channel;
 	const { expoPushToken } = useNotification();
 	const { height } = useReanimatedKeyboardAnimation();
 	const languageCode = React.useMemo(() => getLanguageCodeLocale(), []);
@@ -213,7 +214,7 @@ export default function Page() {
 					</Text>
 				</TouchableOpacity>
 
-				<Text className="mt-1 text-center text-xs text-primaryLight">Version {VERSION_NUMBER}</Text>
+				<Text className="mt-1 text-center text-xs text-primaryLight">Version {VERSION_NUMBER} ({channel})</Text>
 			</Animated.View>
 		</BackgroundLayout>
 	);
