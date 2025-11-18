@@ -35,3 +35,8 @@ expo-env.d.ts
 # @end expo-cli
 
 react-native-nitro-modules/
+
+!resources/google-services.json
+
+ios/
+android/
