@@ -6,6 +6,8 @@ import config from "tailwind.config";
 
 
 export async function registerForPushNotificationsAsync() {
+	if (!Device.isDevice) throw new Error("Must use physical device for push notifications");
+
 	if (Platform.OS === "android") {
 		await Notifications.setNotificationChannelAsync("default", {
 			name: "default",
@@ -15,7 +17,6 @@ export async function registerForPushNotificationsAsync() {
 		});
 	}
 
-	if (!Device.isDevice) throw new Error("Must use physical device for push notifications");
 
 	const { status: existingStatus } = await Notifications.getPermissionsAsync();
 	let finalStatus = existingStatus;

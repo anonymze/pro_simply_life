@@ -204,6 +204,19 @@ include denis dans le gros point v2
 mail pro / mail perso
 cookie session qui s'expire ?
 
-popup evenement reccent ?
+popup evenement recent ?
 
 lire des excels sur un téléphone
+
+
+casual
+
+plusieurs dev ?
+
+
+client peut valider des contenus
+
+rview tracker pour les avis
+
+plus de re&seaux, linkedin, tiktok,
+une partie notes en plus ?
