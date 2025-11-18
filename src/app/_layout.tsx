@@ -121,9 +121,9 @@ const Layout = () => {
 		if (isUpdateAvailable) {
 			// Only fetch updates for production channel
 
-			if (channel === "production") {
+			// if (channel === "production") {
 				Updates.fetchUpdateAsync();
-			}
+			// }
 		}
 	}, [isUpdateAvailable, channel]);
 

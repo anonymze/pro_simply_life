@@ -29,5 +29,5 @@ export default {
 	SIGNATURE_HERE: "Signer ici",
 	SIGNATURE: "Signature",
 	SIGNATURES: "Signatures",
-	SUBTITLE_LOGIN: "La gestion de votre quotidien professionnelle n'a jamais été aussi simplifiée.",
+	SUBTITLE_LOGIN: "La gestion de votre quotidien professionnelle n'a jamais été aussi simplifiée",
 };
