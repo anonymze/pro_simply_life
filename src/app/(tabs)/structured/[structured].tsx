@@ -22,8 +22,7 @@ export default function Page() {
 
 	if (!structuredProduct) return null;
 
-	const percentage = (structuredProduct.current / structuredProduct.max) * 100;
-
+	const percentage = ((structuredProduct.max - structuredProduct.current) / structuredProduct.max) * 100;
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
@@ -77,7 +76,9 @@ export default function Page() {
 							</View>
 						</View>
 						<View className="mt-6 flex-row items-center gap-2">
-							<View className={cn("size-2 rounded-full bg-green-600", structuredProduct.current <= 0 && "bg-production")} />
+							<View
+								className={cn("size-2 rounded-full bg-green-600", structuredProduct.current <= 0 && "bg-production")}
+							/>
 							<Text className="text-backgroundChat">Solde enveloppe</Text>
 							<Text className="ml-auto font-light text-sm text-primaryLight">
 								{structuredProduct.current.toLocaleString()}€
@@ -184,9 +185,9 @@ export default function Page() {
 										brochure={offer.file}
 										updatedAt={structuredProduct.updatedAt}
 										link={{
-											pathname: "structured/pdf/[pdf]",
+											pathname: "/structured/pdf/[pdf]",
 											params: {
-												pdf: offer.file.filename,
+												pdf: offer.file.filename || "",
 											},
 										}}
 									/>
