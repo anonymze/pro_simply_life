@@ -205,7 +205,7 @@ const PrivateEquityComponent = ({
 						<Pressable
 							hitSlop={5}
 							className={cn(
-								"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+								"mr-3.5 flex w-full h-12 items-center justify-center rounded-lg px-3.5",
 								isActive ? "bg-primary" : "bg-darkGray",
 							)}
 							onPress={() => {
