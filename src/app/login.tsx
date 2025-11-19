@@ -10,6 +10,7 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { router } from "expo-router";
+import * as Updates from "expo-updates";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { ActivityIndicator, Alert, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -20,6 +21,7 @@ import config from "tailwind.config";
 import { z } from "zod";
 
 export default function Page() {
+	const channel = Updates.channel;
 	const { toast } = useSonnerRN();
 	const insets = useSafeAreaInsets();
 	const { expoPushToken } = useNotification();
@@ -226,7 +228,9 @@ export default function Page() {
 					</Text>
 				</TouchableOpacity>
 
-				<Text className="mt-1 text-center text-xs text-primaryLight">Version {VERSION_NUMBER}</Text>
+				<Text className="mt-1 text-center text-xs text-primaryLight">
+					Version {VERSION_NUMBER} ({channel})
+				</Text>
 			</Animated.View>
 		</BackgroundLayout>
 	);
