@@ -63,13 +63,10 @@ export default function Page() {
 								<View
 									className="gap-1"
 									style={{
-										// minWidth: structuredProduct.max / structuredProduct.current,
-										width: percentage > 10 ? `${10}%` : 28,
+										width: percentage > 100 ? `100%` : percentage < 0 ? 28 : `${percentage}%`,
 									}}
 								>
-									<Text className="text-center text-xs text-primaryLight">
-										{Math.ceil((structuredProduct.current / structuredProduct.max) * 100)}%
-									</Text>
+									<Text className="text-center text-xs text-primaryLight">{Math.ceil(percentage)}%</Text>
 									<View
 										className={cn(
 											"h-1.5 w-full rounded-full bg-green-600",
