@@ -17,8 +17,8 @@ export default function PdfViewer({ uri, link }: PdfViewerProps) {
 	return (
 		<View className="flex-1">
 			{typeof link === "string" && link && (
-				<View className="flex-row items-center justify-between gap-2 bg-white px-5 pb-2">
-					<Text className="font-semibold text-base text-primary">{link}</Text>
+				<View className="flex-row items-center justify-between gap-3 bg-white px-5 pb-4">
+					<Text className="font-semibold text-base text-primary flex-1">{link}</Text>
 					<TouchableOpacity
 						onPress={async () => {
 							await WebBrowser.openBrowserAsync(link);
