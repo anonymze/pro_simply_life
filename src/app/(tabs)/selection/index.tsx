@@ -4,11 +4,11 @@ import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Media } from "@/types/media";
 import { Selection } from "@/types/selection";
-import { Supplier } from "@/types/supplier";
+import { downloadFile, getFile } from "@/utils/download";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { HrefObject, Link } from "expo-router";
+import { HrefObject, Link, router } from "expo-router";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
@@ -63,18 +63,18 @@ export default function Page() {
 					>
 						{orderedCategories.map(([category, selections]) => (
 							<View key={category} className="mb-6">
-								<Text className="mb-2 font-semibold text-base text-defaultGray">
+								<Text className="mb-2 text-base font-semibold text-defaultGray">
 									{categoryNames[category] || category}
 								</Text>
 								{category === "immobilier" ? (
 									<View className="flex-row flex-wrap gap-5">
 										{selections.map((selection) => (
-										<ImmobilierCard
-											website={selection.website}
-											brochure={selection.brochure!}
-											key={selection.id}
-											image={selection.image}
-										/>
+											<ImmobilierCard
+												website={selection.website}
+												brochure={selection.brochure!}
+												key={selection.id}
+												image={selection.image}
+											/>
 										))}
 									</View>
 								) : (
@@ -117,7 +117,7 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-lg bg-white p-2">
 				<View className="size-14 items-center justify-center rounded-lg bg-amber-200">{icon}</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-primary">{title}</Text>
+					<Text className="text-lg font-semibold text-primary">{title}</Text>
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
@@ -127,37 +127,49 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 
 const ImmobilierCard = ({
 	image,
-	supplier,
 	brochure,
 	website,
 }: {
 	image: Media | undefined;
-	supplier: Supplier;
 	brochure: Media;
 	website?: string;
 }) => {
-	return (
-		<Link
-			href={{
-				pathname: "selection/pdf/[pdf]",
+	const [downloading, setDownloading] = useState(false);
+
+	const handlePress = async () => {
+		if (!brochure.url || !brochure.filename || !brochure.mimeType) return;
+
+		try {
+			const file = getFile(brochure.filename);
+
+			if (!file.exists) {
+				setDownloading(true);
+				await downloadFile(brochure.url, brochure.filename, brochure.mimeType);
+				setDownloading(false);
+			}
+
+			router.push({
+				pathname: "/selection/pdf/[pdf]",
 				params: {
 					pdf: brochure.filename,
-					link: website,
+					link: website || "",
 				},
-			}}
-			push
-			asChild
-		>
-			<TouchableOpacity className="w-[46%] rounded-2xl border-2 border-amber-300">
-				<ImagePlaceholder
-					transition={300}
-					contentFit="cover"
-					placeholder={image?.blurhash}
-					source={image?.url}
-					style={{ width: "100%", aspectRatio: 1, borderRadius: 16 }}
-				/>
-				<Text className="mb-3 mt-2 text-center font-semibold text-primary">{supplier.name}</Text>
-			</TouchableOpacity>
-		</Link>
+			});
+		} catch (error) {
+			console.error("Download failed:", error);
+		}
+	};
+
+	return (
+		<TouchableOpacity className="w-[46%] rounded-2xl border-2 border-amber-300">
+			<ImagePlaceholder
+				transition={300}
+				contentFit="cover"
+				placeholder={image?.blurhash}
+				source={image?.url}
+				style={{ width: "100%", aspectRatio: 1, borderRadius: 16 }}
+			/>
+			<Text className="mb-3 mt-2 text-center font-semibold text-primary">{supplier.name}</Text>
+		</TouchableOpacity>
 	);
 };
