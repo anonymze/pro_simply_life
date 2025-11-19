@@ -69,13 +69,12 @@ export default function Page() {
 								{category === "immobilier" ? (
 									<View className="flex-row flex-wrap gap-5">
 										{selections.map((selection) => (
-											<ImmobilierCard
-												website={selection.website}
-												brochure={selection.brochure!}
-												key={selection.id}
-												supplier={selection.supplier}
-												image={selection.image}
-											/>
+										<ImmobilierCard
+											website={selection.website}
+											brochure={selection.brochure!}
+											key={selection.id}
+											image={selection.image}
+										/>
 										))}
 									</View>
 								) : (
