@@ -8,11 +8,10 @@ import { PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { cn } from "@/utils/cn";
 import { GIRARDIN_INDUSTRIEL_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
-import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -101,7 +100,7 @@ const SupplierListComponent = ({
 			<View className="gap-2">
 				{Object.keys(groupedSuppliers).map((letter) => (
 					<View key={letter} className="gap-2">
-						<Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{letter}</Text>
+						<Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{letter}</Text>
 						{groupedSuppliers[letter].map((supplier) => (
 							<CardSupplier
 								enveloppe={supplierProductId === GIRARDIN_INDUSTRIEL_ID}
@@ -192,12 +191,12 @@ const PrivateEquityComponent = ({
 	return (
 		<>
 			{/* Type filter tabs */}
-			<FlashList
+			<FlatList
 				showsHorizontalScrollIndicator={false}
 				data={orderedTypes}
 				horizontal
 				className="mb-4"
-				estimatedItemSize={45}
+				style
 				renderItem={({ item: type, index }) => {
 					const isActive = currentIndex === index;
 
@@ -205,7 +204,7 @@ const PrivateEquityComponent = ({
 						<Pressable
 							hitSlop={5}
 							className={cn(
-								"mr-3.5 flex w-full h-12 items-center justify-center rounded-lg px-3.5",
+								"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
 								isActive ? "bg-primary" : "bg-darkGray",
 							)}
 							onPress={() => {
@@ -214,13 +213,13 @@ const PrivateEquityComponent = ({
 								scrollRef.current?.scrollTo({ x: scrollX, animated: true });
 							}}
 						>
-							<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+							<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
 								{PRIVATE_EQUITY_TYPE_LABELS[type]}
 							</Text>
 						</Pressable>
 					);
 				}}
-			></FlashList>
+			></FlatList>
 
 			{/* Suppliers grouped by type */}
 			<ScrollView
