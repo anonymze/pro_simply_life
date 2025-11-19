@@ -3,7 +3,7 @@ import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
-import { PrivateEquity } from "@/types/private-equity";
+import { FOND_LABELS, PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
@@ -783,37 +783,15 @@ const FondComponent = ({
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="font-semibold text-sm text-primaryLight">Montant mini sur versement</Text>
-				<Text className="font-semibold text-sm text-primary">
-					{information?.versement ? information.versement + "€" : ""}
-				</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Montant mini sur arbitrage</Text>
-				<Text className="font-semibold text-base text-primary">
-					{information.arbitrage ? information.arbitrage + "€" : ""}
-				</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Allocation max sur contrat</Text>
-				<Text className="font-semibold text-base text-primary">
-					{information.allocation ? information.allocation + "%" : ""}
-				</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Pénalité</Text>
-				<Text className="font-semibold text-base text-primary">{information.penalite}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Fréquence de liquidité</Text>
-				<Text className="font-semibold text-base text-primary">{information.liquidite}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">TRI annuel cible</Text>
-				<Text className="font-semibold text-base text-primary">{information.tri ? information.tri + "%" : ""}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Rétrocession</Text>
-				<Text className="font-semibold text-base text-primary">
-					{information.retrocession ? information.retrocession + "%" : ""}
-				</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Sous-jacent</Text>
-				<Text className="font-semibold text-base text-primary">{information["sous-jacent"]}</Text>
+			{Object.entries(information)
+				.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
+				.map(([key, value], idx, arr) => (
+					<React.Fragment key={key}>
+						<Text className="text-sm font-semibold text-primaryLight">{FOND_LABELS[key] || key}</Text>
+						<Text className="text-sm font-semibold text-primary">{value as string}</Text>
+						{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+					</React.Fragment>
+				))}
 			</View>
 			{information.brochure && (
 				<Brochure
