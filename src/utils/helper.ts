@@ -70,7 +70,7 @@ export const isNewEmployee = (entry_date?: string): boolean => {
 };
 
 export const needImportantVersion = () => {
-	return (VERSION_NUMBER ?? "") < "1.2.6";
+	return (VERSION_NUMBER ?? "") < "1.2.8";
 };
 
 export const excludedProductSupplierIds = [
