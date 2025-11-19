@@ -3,7 +3,7 @@ import { Supplier } from "./supplier";
 
 export type Selection = {
 	id: string;
-	supplier?: Supplier;
+	supplier: Supplier;
 	category: "girardin" | "immobilier" | "other";
 	image?: Media;
 	brochure?: Media;
