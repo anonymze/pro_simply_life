@@ -161,7 +161,7 @@ const ImmobilierCard = ({
 	};
 
 	return (
-		<TouchableOpacity className="w-[46%] rounded-2xl border-2 border-amber-300">
+		<TouchableOpacity className="w-[46%] rounded-2xl border-2 border-amber-300" onPress={handlePress}>
 			<ImagePlaceholder
 				transition={300}
 				contentFit="cover"
