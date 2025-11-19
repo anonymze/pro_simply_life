@@ -9,7 +9,7 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import { HrefObject, Link, router } from "expo-router";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
 import { useMemo, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -166,10 +166,15 @@ const ImmobilierCard = ({
 				transition={300}
 				contentFit="cover"
 				placeholder={image?.blurhash}
+				placeholderContentFit="cover"
 				source={image?.url}
-				style={{ width: "100%", aspectRatio: 1, borderRadius: 16 }}
+				style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
 			/>
-			<Text className="mb-3 mt-2 text-center font-semibold text-primary">{supplier.name}</Text>
+			{downloading && (
+				<View className="absolute inset-0 items-center justify-center">
+					<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
+				</View>
+			)}
 		</TouchableOpacity>
 	);
 };
