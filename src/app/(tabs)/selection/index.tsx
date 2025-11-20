@@ -177,11 +177,9 @@ const ImmobilierCard = ({
 					</View>
 				)}
 			</TouchableOpacity>
-			{brochure && (
-				<Text className="mt-2 text-center text-primaryLight" numberOfLines={1}>
-					{brochure.filename?.replace(/\.[^.]+$/, "").trimEnd()}
-				</Text>
-			)}
+			<Text className="mt-2 text-center text-primaryLight" numberOfLines={1}>
+				{brochure.filename?.replace(/\.[^.]+$/, "").trimEnd()}
+			</Text>
 		</View>
 	);
 };
