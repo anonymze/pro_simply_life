@@ -163,6 +163,6 @@ export default {
 				projectId: "71cf24a7-3efc-4fe5-9b69-f37c315aebbc",
 			},
 		},
-		runtimeVersion: "1.0.0",
+		runtimeVersion: "1.0.1",
 	},
 };
