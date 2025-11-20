@@ -75,6 +75,8 @@ export default function Page() {
 		Alert.alert("Erreur de connexion", "Les contacts n'ont pas pu être récupérés.");
 	}
 
+  // console.log(queries[1].data?.docs);
+
 	return (
 		<>
 			<View className="flex-row items-center gap-4 bg-white px-4 pb-4">
