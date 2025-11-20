@@ -11,11 +11,11 @@ import { Href, Link, router } from "expo-router";
 import { ArrowRightIcon, SparklesIcon } from "lucide-react-native";
 import { useMemo, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 
 export default function Page() {
-    const insets = useSafeAreaInsets();
+	const insets = useSafeAreaInsets();
 	return withQueryWrapper<Selection>(
 		{
 			queryKey: ["selection"],
@@ -165,20 +165,31 @@ const ImmobilierCard = ({
 	};
 
 	return (
-		<MyTouchableScaleOpacity className="w-[46%] rounded-2xl border-2 border-amber-300" onPress={handlePress} enabled={!downloading}>
-			<ImagePlaceholder
-				transition={300}
-				contentFit="cover"
-				placeholder={image?.blurhash}
-				placeholderContentFit="cover"
-				source={image?.url}
-				style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
-			/>
-			{downloading && (
-				<View className="absolute inset-0 items-center justify-center">
-					<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
-				</View>
-			)}
-		</MyTouchableScaleOpacity>
+		<View className="w-[46%]">
+			<MyTouchableScaleOpacity
+				className="rounded-2xl border-2 border-amber-300"
+				onPress={handlePress}
+				enabled={!downloading}
+			>
+				<ImagePlaceholder
+					transition={300}
+					contentFit="cover"
+					placeholder={image?.blurhash}
+					placeholderContentFit="cover"
+					source={image?.url}
+					style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
+				/>
+				{downloading && (
+					<View className="absolute inset-0 items-center justify-center">
+						<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
+					</View>
+				)}
+				{brochure && (
+					<Text className="mt-2 text-center text-primaryLight" numberOfLines={1}>
+						{brochure.filename?.replace(/\.[^.]+$/, "").trimEnd()}
+					</Text>
+				)}
+			</MyTouchableScaleOpacity>
+		</View>
 	);
 };
