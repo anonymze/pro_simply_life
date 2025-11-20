@@ -184,11 +184,10 @@ const ImmobilierCard = ({
 						<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
 					</View>
 				)}
-				{brochure && (
-					<Text className="mt-2 text-center text-primaryLight" numberOfLines={1}>
-						{brochure.filename?.replace(/\.[^.]+$/, "").trimEnd()}
-					</Text>
-				)}
+
+				<Text className="mt-2 text-center text-primaryLight" numberOfLines={1}>
+					{brochure.filename?.replace(/\.[^.]+$/, "").trimEnd()}
+				</Text>
 			</MyTouchableScaleOpacity>
 		</View>
 	);
