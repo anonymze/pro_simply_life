@@ -63,7 +63,7 @@ export default function Page() {
 					>
 						{orderedCategories.map(([category, selections]) => (
 							<View key={category} className="mb-6">
-								<Text className="mb-2 text-base font-semibold text-defaultGray">
+								<Text className="mb-2 font-semibold text-base text-defaultGray">
 									{categoryNames[category] || category}
 								</Text>
 								{category === "immobilier" ? (
@@ -117,7 +117,7 @@ const Card = ({ link, icon, title }: { link: HrefObject; icon: any; title: strin
 			<TouchableOpacity className="w-full flex-row items-center gap-3 rounded-lg bg-white p-2">
 				<View className="size-14 items-center justify-center rounded-lg bg-amber-200">{icon}</View>
 				<View className="flex-1">
-					<Text className="text-lg font-semibold text-primary">{title}</Text>
+					<Text className="font-semibold text-lg text-primary">{title}</Text>
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</TouchableOpacity>
@@ -161,20 +161,25 @@ const ImmobilierCard = ({
 	};
 
 	return (
-		<TouchableOpacity className="w-[46%] rounded-2xl border-2 border-amber-300" onPress={handlePress}>
-			<ImagePlaceholder
-				transition={300}
-				contentFit="cover"
-				placeholder={image?.blurhash}
-				placeholderContentFit="cover"
-				source={image?.url}
-				style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
-			/>
-			{downloading && (
-				<View className="absolute inset-0 items-center justify-center">
-					<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
-				</View>
-			)}
-		</TouchableOpacity>
+		<View className="w-[46%]">
+			<TouchableOpacity className="rounded-2xl border-2 border-amber-300" onPress={handlePress}>
+				<ImagePlaceholder
+					transition={300}
+					contentFit="cover"
+					placeholder={image?.blurhash}
+					placeholderContentFit="cover"
+					source={image?.url}
+					style={{ width: "100%", aspectRatio: 1, borderRadius: 12 }}
+				/>
+				{downloading && (
+					<View className="absolute inset-0 items-center justify-center">
+						<ActivityIndicator size="large" color={config.theme.extend.colors.primary} />
+					</View>
+				)}
+			</TouchableOpacity>
+			<Text className="mt-2 text-center text-primaryLight" numberOfLines={1}>
+				{brochure.filename?.replace(/\.[^.]+$/, "").trimEnd()}
+			</Text>
+		</View>
 	);
 };
