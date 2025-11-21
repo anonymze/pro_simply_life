@@ -37,7 +37,7 @@ export default function Page() {
 				</View>
 			</View>
 			<BackgroundLayout className="mt-4 px-4">
-				<ContactInfo phone={data.phone} email={data.email} entryDate={data.entry_date} birthday={data.birthday} cabinet={data.cabinet} />
+				<ContactInfo phone={data.phone} email={data.email} entryDate={data.entry_date} emailPro={data.email_pro} birthday={data.birthday} cabinet={data.cabinet} />
 			</BackgroundLayout>
 		</>
 	);
@@ -56,13 +56,15 @@ const ContactInfo = ({
 	email,
 	entryDate,
 	birthday,
-	cabinet
+	cabinet,
+	emailPro
 }: {
 	phone?: string | null;
 	email?: string | null;
 	entryDate?: string | null;
 	birthday?: string | null;
 	cabinet?: string | null;
+		emailPro?: string | null
 }) => {
 	const numbersString = phone?.replace(",", " / ");
 	const numbers = numbersString?.split(" / ").map((number) => number.replace(/^\s+|\s+$/g, ""));
@@ -89,16 +91,16 @@ const ContactInfo = ({
 			<View className="flex-row items-center justify-between gap-2">
 				<View className="gap-2">
 					<Text className="text-sm text-primaryLight">E-mail</Text>
-					<Text className="font-semibold text-base text-primary">{email}</Text>
+					<Text className="font-semibold text-base text-primary">{emailPro ? emailPro : email}</Text>
 				</View>
-				{email && (
+				{(email || emailPro) ? (
 					<TouchableOpacity
 						onPress={() => Linking.openURL(`mailto:${email}`)}
 						className="rounded-full bg-primaryUltraLight p-3"
 					>
 						<MailIcon size={16} color={config.theme.extend.colors.primary} />
 					</TouchableOpacity>
-				)}
+				): null}
 			</View>
 			<View className="my-2 h-px w-full bg-defaultGray/15" />
 			<View className="flex-row items-center justify-between gap-2">
