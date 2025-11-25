@@ -13,6 +13,17 @@
 			"autoIncrement": true,
 			"channel": "preview"
 		},
+		"preview-local": {
+			"channel": "preview",
+			"distribution": "store",
+			"autoIncrement": true,
+			"ios": {
+				"buildConfiguration": "Release"
+			},
+			"android": {
+				"buildType": "app-bundle"
+			}
+		},
 		"production": {
 			"autoIncrement": true,
 			"channel": "production"
