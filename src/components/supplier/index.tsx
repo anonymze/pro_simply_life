@@ -1075,9 +1075,6 @@ const FondComponent = ({
 
 const PEAComponent = ({
 	information,
-	supplierCategoryId,
-	supplierProductId,
-	supplierId,
 }: {
 	information: Supplier["pea"];
 	supplierCategoryId: string | string[];
