@@ -196,8 +196,8 @@ export default function Page({ previousCategories = true }: { previousCategories
 								subtitle: "",
 							},
 							{
-							title: "PEA",
-							subtitle: "",
+								title: "PEA",
+								subtitle: "",
 							},
 						]}
 						horizontal
@@ -240,7 +240,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-				{!data?.other_information?.length && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
+					{!data?.other_information?.length && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">
 							{data?.enveloppe && data.enveloppe.amount && (
 								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
@@ -512,8 +512,200 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</View>
 							))}
 						</ScrollView>
-					): supplierProductId === PEA_ID ? (
+					) : supplierProductId === PEA_ID ? (
+						<ScrollView
+							ref={horizontalScrollRef}
+							horizontal
+							showsHorizontalScrollIndicator={false}
+							scrollEnabled={false}
+							decelerationRate={"fast"}
+							contentContainerStyle={{ gap: 16 }}
+						>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+								{data?.enveloppe && data.enveloppe.amount && (
+									<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
+										<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
+										<View className="mt-5">
+											<View className="flex-row">
+												<View
+													className="gap-1"
+													// @ts-ignore
+													style={{
+														width:
+															data.enveloppe.amount >= (data.enveloppe.global || DEFAULT_MAX_VALUE)
+																? "100%"
+																: data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
+																	? "10%"
+																	: (data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE)) * 100 + "%",
+													}}
+												>
+													<View
+														className={cn(
+															"h-1.5 w-full rounded-full bg-green-600",
+															data.enveloppe.amount <= 0 && "bg-production",
+														)}
+													/>
+												</View>
+											</View>
+										</View>
+										<View className="mb-3 mt-6 flex-row items-center gap-2">
+											<View
+												className={cn(
+													"size-2 rounded-full bg-green-600",
+													data.enveloppe.amount <= 0 && "bg-production",
+												)}
+											/>
+											<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.amount.toLocaleString("fr-FR")}€
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.echeance
+													? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
+															day: "numeric",
+															month: "numeric",
+															year: "numeric",
+														})
+													: "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.reduction
+													? data.enveloppe.reduction.toLocaleString("fr-FR") + "%"
+													: "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.actualisation
+													? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+															day: "numeric",
+															month: "numeric",
+															year: "numeric",
+														})
+													: "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Commissions</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Plein droit</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.droits === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Agrément</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.agrement === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Garantie de bonne fin fiscale</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.assurance === "yes"
+													? "Oui"
+													: data.enveloppe.assurance === "maybe"
+														? "Parfois"
+														: "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.investisseur === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Clause de non retour</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.close === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 gap-2">
+											<Text className="text-sm text-backgroundChat">Remarques :</Text>
+											<Text className=" font-light text-sm text-primaryLight">{data.enveloppe.remarque}</Text>
+										</View>
+									</View>
+								)}
 
+								<ContactInfo
+									supplierId={supplierId}
+									supplierCategoryId={supplierCategoryId}
+									supplierProductId={supplierProductId}
+									phone={data.contact_info?.phone}
+									email={data.contact_info?.email}
+									firstname={data.contact_info?.firstname}
+									lastname={data.contact_info?.lastname}
+									brochures={data.brochures}
+									previousCategories
+								/>
+
+								{userHierarchy[appUser.user.role] < 2 &&
+									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+										<Logs
+											title="Identifiants généraux"
+											link={
+												previousCategories
+													? {
+															pathname:
+																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-product": supplierProductId,
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+													: {
+															pathname: "selection/[supplier]/logs/[logs]",
+															params: {
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+											}
+										/>
+									)}
+
+								<Logs
+									title="Identifiants personnels"
+									link={
+										previousCategories
+											? {
+													pathname:
+														"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
+													params: {
+														"supplier-category": supplierCategoryId,
+														"supplier-product": supplierProductId,
+														supplier: supplierId,
+														perso: "hey",
+													},
+												}
+											: {
+													pathname: "selection/[supplier]/perso/[perso]",
+													params: {
+														supplier: supplierId,
+														perso: "hey",
+													},
+												}
+									}
+								/>
+							</View>
+							<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+								<PEAComponent information={data?.pea} />
+							</View>
+						</ScrollView>
 					) : (
 						<ScrollView
 							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
