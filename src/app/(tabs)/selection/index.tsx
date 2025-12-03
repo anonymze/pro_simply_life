@@ -185,7 +185,7 @@ const ImmobilierCard = ({
 					</View>
 				)}
 
-				<Text className="mt-2 text-center text-primaryLight" numberOfLines={1}>
+				<Text className="mt-2 text-center text-primaryLight px-2 pb-1 font-semibold" numberOfLines={1}>
 					{brochure.filename?.replace(/\.[^.]+$/, "").trimEnd()}
 				</Text>
 			</MyTouchableScaleOpacity>
