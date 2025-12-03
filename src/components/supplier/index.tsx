@@ -695,9 +695,6 @@ export default function Page({ previousCategories = true }: { previousCategories
 							<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
 								<PEAComponent
 									information={data?.pea}
-									supplierCategoryId={supplierCategoryId}
-									supplierId={supplierId}
-									supplierProductId={supplierProductId}
 								/>
 							</View>
 						</ScrollView>
@@ -1077,9 +1074,6 @@ const PEAComponent = ({
 	information,
 }: {
 	information: Supplier["pea"];
-	supplierCategoryId: string | string[];
-	supplierProductId: string | string[];
-	supplierId: string | string[];
 }) => {
 	return (
 		<View className="gap-2">
