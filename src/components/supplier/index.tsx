@@ -7,7 +7,7 @@ import { FOND_LABELS, PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
-import { SCREEN_DIMENSIONS } from "@/utils/helper";
+import { PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { getStorageUserInfos } from "@/utils/store";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ import config from "tailwind.config";
 const DEFAULT_MAX_VALUE = 5_000_000;
 
 export default function Page({ previousCategories = true }: { previousCategories?: boolean }) {
-  const appUser = getStorageUserInfos();
+	const appUser = getStorageUserInfos();
 	const horizontalScrollRef = React.useRef<ScrollView>(null);
 	const verticalScrollRef = React.useRef<ScrollView>(null);
 	const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -182,13 +182,61 @@ export default function Page({ previousCategories = true }: { previousCategories
 					></FlashList>
 				)}
 
+				{supplierProductId === PEA_ID && (
+					<FlashList
+						showsHorizontalScrollIndicator={false}
+						data={[
+							{
+								title: "Contact",
+								subtitle: "",
+							},
+							{
+								title: "PEA",
+								subtitle: "",
+							},
+						]}
+						horizontal
+						className="my-4"
+						estimatedItemSize={100}
+						renderItem={({ item, index }) => {
+							const isActive = currentIndex === index;
+
+							return (
+								<Pressable
+									hitSlop={5}
+									className={cn(
+										"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+										isActive ? "bg-primary" : "bg-darkGray",
+									)}
+									onPress={() => {
+										setCurrentIndex(index);
+
+										if (index === 0) {
+											horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										} else {
+											const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
+											horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										}
+									}}
+								>
+									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+										{item?.title}
+									</Text>
+								</Pressable>
+							);
+						}}
+					></FlashList>
+				)}
+
 				<ScrollView
 					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data?.other_information?.length && !privateEquity?.fond?.length ? (
+					{!data?.other_information?.length && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">
 							{data?.enveloppe && data.enveloppe.amount && (
 								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
@@ -317,31 +365,32 @@ export default function Page({ previousCategories = true }: { previousCategories
 								previousCategories={previousCategories}
 							/>
 
-							{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-								<Logs
-									title="Identifiants généraux"
-									link={
-										previousCategories
-											? {
-													pathname:
-														"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-													params: {
-														"supplier-category": supplierCategoryId,
-														"supplier-product": supplierProductId,
-														supplier: supplierId,
-														logs: JSON.stringify(data.connexion),
-													},
-												}
-											: {
-													pathname: "selection/[supplier]/logs/[logs]",
-													params: {
-														supplier: supplierId,
-														logs: JSON.stringify(data.connexion),
-													},
-												}
-									}
-								/>
-							)}
+							{userHierarchy[appUser.user.role] < 2 &&
+								(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+									<Logs
+										title="Identifiants généraux"
+										link={
+											previousCategories
+												? {
+														pathname:
+															"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+														params: {
+															"supplier-category": supplierCategoryId,
+															"supplier-product": supplierProductId,
+															supplier: supplierId,
+															logs: JSON.stringify(data.connexion),
+														},
+													}
+												: {
+														pathname: "selection/[supplier]/logs/[logs]",
+														params: {
+															supplier: supplierId,
+															logs: JSON.stringify(data.connexion),
+														},
+													}
+										}
+									/>
+								)}
 
 							<Logs
 								title="Identifiants personnels"
@@ -389,31 +438,32 @@ export default function Page({ previousCategories = true }: { previousCategories
 									previousCategories
 								/>
 
-								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-									<Logs
-										title="Identifiants généraux"
-										link={
-											previousCategories
-												? {
-														pathname:
-															"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-														params: {
-															"supplier-category": supplierCategoryId,
-															"supplier-product": supplierProductId,
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-												: {
-														pathname: "selection/[supplier]/logs/[logs]",
-														params: {
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-										}
-									/>
-								)}
+								{userHierarchy[appUser.user.role] < 2 &&
+									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+										<Logs
+											title="Identifiants généraux"
+											link={
+												previousCategories
+													? {
+															pathname:
+																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-product": supplierProductId,
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+													: {
+															pathname: "selection/[supplier]/logs/[logs]",
+															params: {
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+											}
+										/>
+									)}
 
 								<Logs
 									title="Identifiants personnels"
@@ -452,6 +502,205 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</View>
 							))}
 						</ScrollView>
+					) : supplierProductId === PEA_ID ? (
+						<ScrollView
+							ref={horizontalScrollRef}
+							horizontal
+							showsHorizontalScrollIndicator={false}
+							scrollEnabled={false}
+							decelerationRate={"fast"}
+							contentContainerStyle={{ gap: 16 }}
+						>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+								{data?.enveloppe && data.enveloppe.amount && (
+									<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
+										<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
+										<View className="mt-5">
+											<View className="flex-row">
+												<View
+													className="gap-1"
+													// @ts-ignore
+													style={{
+														width:
+															data.enveloppe.amount >= (data.enveloppe.global || DEFAULT_MAX_VALUE)
+																? "100%"
+																: data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
+																	? "10%"
+																	: (data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE)) * 100 + "%",
+													}}
+												>
+													<View
+														className={cn(
+															"h-1.5 w-full rounded-full bg-green-600",
+															data.enveloppe.amount <= 0 && "bg-production",
+														)}
+													/>
+												</View>
+											</View>
+										</View>
+										<View className="mb-3 mt-6 flex-row items-center gap-2">
+											<View
+												className={cn(
+													"size-2 rounded-full bg-green-600",
+													data.enveloppe.amount <= 0 && "bg-production",
+												)}
+											/>
+											<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.amount.toLocaleString("fr-FR")}€
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.echeance
+													? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
+															day: "numeric",
+															month: "numeric",
+															year: "numeric",
+														})
+													: "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.reduction
+													? data.enveloppe.reduction.toLocaleString("fr-FR") + "%"
+													: "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.actualisation
+													? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+															day: "numeric",
+															month: "numeric",
+															year: "numeric",
+														})
+													: "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Commissions</Text>
+											<Text className="ml-auto font-light text-sm text-primaryLight">
+												{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Plein droit</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.droits === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Agrément</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.agrement === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Garantie de bonne fin fiscale</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.assurance === "yes"
+													? "Oui"
+													: data.enveloppe.assurance === "maybe"
+														? "Parfois"
+														: "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.investisseur === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-sm text-backgroundChat">Clause de non retour</Text>
+											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+												{data.enveloppe.close === "yes" ? "Oui" : "Non"}
+											</Text>
+										</View>
+										<View className="mt-3 gap-2">
+											<Text className="text-sm text-backgroundChat">Remarques :</Text>
+											<Text className=" font-light text-sm text-primaryLight">{data.enveloppe.remarque}</Text>
+										</View>
+									</View>
+								)}
+
+								<ContactInfo
+									supplierId={supplierId}
+									supplierCategoryId={supplierCategoryId}
+									supplierProductId={supplierProductId}
+									phone={data.contact_info?.phone}
+									email={data.contact_info?.email}
+									firstname={data.contact_info?.firstname}
+									lastname={data.contact_info?.lastname}
+									brochures={data.brochures}
+									previousCategories
+								/>
+
+								{userHierarchy[appUser.user.role] < 2 &&
+									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+										<Logs
+											title="Identifiants généraux"
+											link={
+												previousCategories
+													? {
+															pathname:
+																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-product": supplierProductId,
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+													: {
+															pathname: "selection/[supplier]/logs/[logs]",
+															params: {
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+											}
+										/>
+									)}
+
+								<Logs
+									title="Identifiants personnels"
+									link={
+										previousCategories
+											? {
+													pathname:
+														"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
+													params: {
+														"supplier-category": supplierCategoryId,
+														"supplier-product": supplierProductId,
+														supplier: supplierId,
+														perso: "hey",
+													},
+												}
+											: {
+													pathname: "selection/[supplier]/perso/[perso]",
+													params: {
+														supplier: supplierId,
+														perso: "hey",
+													},
+												}
+									}
+								/>
+							</View>
+							<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+								<PEAComponent
+									information={data?.pea}
+									supplierCategoryId={supplierCategoryId}
+									supplierId={supplierId}
+									supplierProductId={supplierProductId}
+								/>
+							</View>
+						</ScrollView>
 					) : (
 						<ScrollView
 							ref={horizontalScrollRef}
@@ -474,31 +723,32 @@ export default function Page({ previousCategories = true }: { previousCategories
 									previousCategories
 								/>
 
-								{userHierarchy[appUser.user.role] < 2 && (data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-									<Logs
-										title="Identifiants généraux"
-										link={
-											previousCategories
-												? {
-														pathname:
-															"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-														params: {
-															"supplier-category": supplierCategoryId,
-															"supplier-product": supplierProductId,
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-												: {
-														pathname: "selection/[supplier]/logs/[logs]",
-														params: {
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-										}
-									/>
-								)}
+								{userHierarchy[appUser.user.role] < 2 &&
+									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+										<Logs
+											title="Identifiants généraux"
+											link={
+												previousCategories
+													? {
+															pathname:
+																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-product": supplierProductId,
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+													: {
+															pathname: "selection/[supplier]/logs/[logs]",
+															params: {
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+											}
+										/>
+									)}
 
 								<Logs
 									title="Identifiants personnels"
@@ -783,15 +1033,15 @@ const FondComponent = ({
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-			{Object.entries(information)
-				.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
-				.map(([key, value], idx, arr) => (
-					<React.Fragment key={key}>
-						<Text className="text-sm font-semibold text-primaryLight">{FOND_LABELS[key] || key}</Text>
-						<Text className="text-sm font-semibold text-primary">{value as string}</Text>
-						{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
-					</React.Fragment>
-				))}
+				{Object.entries(information)
+					.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
+					.map(([key, value], idx, arr) => (
+						<React.Fragment key={key}>
+							<Text className="font-semibold text-sm text-primaryLight">{FOND_LABELS[key] || key}</Text>
+							<Text className="font-semibold text-sm text-primary">{value as string}</Text>
+							{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+						</React.Fragment>
+					))}
 			</View>
 			{information.brochure && (
 				<Brochure
@@ -819,6 +1069,63 @@ const FondComponent = ({
 					}
 				/>
 			)}
+		</View>
+	);
+};
+
+const PEAComponent = ({
+	information,
+	supplierCategoryId,
+	supplierProductId,
+	supplierId,
+}: {
+	information: Supplier["pea"];
+	supplierCategoryId: string | string[];
+	supplierProductId: string | string[];
+	supplierId: string | string[];
+}) => {
+	return (
+		<View className="gap-2">
+			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				<Text className="font-semibold text-sm text-primaryLight">Banque dépositaire</Text>
+				<Text className="font-semibold text-sm text-primary">{information?.banque}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Titre vif</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information?.title_vif === "yes" ? "Oui" : "Non"}
+					</Text>
+				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Architecture ouverte</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information?.architecture_open === "yes" ? "Oui" : "Non"}
+					</Text>
+				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Nombre de fonds</Text>
+				<Text className="font-semibold text-base text-primary">{information?.fonds}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Versement programmé</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information?.vp === "yes" ? "Oui" : "Non"}
+					</Text>
+				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Retrocession gestion libre</Text>
+				<Text className="font-semibold text-base text-primary">{information?.retrocession_gestion_libre}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Retrocession gestion sous mandat</Text>
+				<Text className="font-semibold text-base text-primary">{information?.retrocession_gestion_mandat}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Coût passage d'ordre</Text>
+				<Text className="font-semibold text-base text-primary">{information?.passage_order}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Interface</Text>
+				<Text className="font-semibold text-base text-primary">{information?.interface}</Text>
+			</View>
 		</View>
 	);
 };

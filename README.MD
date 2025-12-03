@@ -210,3 +210,6 @@ fcpi / fip / parts socials (créé) regroupés
 
 
 cardif tu peux avoir assurnce vie, per ou assurance pret, comment faire pour grouper les brochures ???
+
+
+fix when you search supplier you have no suppleirproductId and category too ??
