@@ -54,15 +54,15 @@ export default function Page() {
 			setStorageUserInfos(data);
 			if (!getStorageFirstLogin()) {
 				setStorageFirstLogin(true);
-				toast("Bienvenue dans Simply Life !", {
-					description: "Appuyer sur cette notification pour découvrir notre présentation vidéo.",
-					action: {
-						label: "Voir",
-						onPress: () => {
-							router.push("/(tabs)/help");
-						},
-					},
-				});
+				// toast("Bienvenue dans Simply Life !", {
+				// 	description: "Appuyer sur cette notification pour découvrir notre présentation vidéo.",
+				// 	action: {
+				// 		label: "Voir",
+				// 		onPress: () => {
+				// 			router.push("/(tabs)/help");
+				// 		},
+				// 	},
+				// });
 			}
 			router.replace("/(tabs)");
 		},

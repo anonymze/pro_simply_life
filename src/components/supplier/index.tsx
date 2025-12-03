@@ -104,7 +104,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							}),
 						]}
 						horizontal
-						className="my-4 h-14"
+						className="my-4 h-15"
 						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 							return (
@@ -153,7 +153,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							})),
 						]}
 						horizontal
-						className="my-4 h-14"
+						className="my-4 h-15"
 						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
@@ -201,7 +201,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							},
 						]}
 						horizontal
-						className="my-4 h-14"
+						className="my-4 h-15"
 						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
