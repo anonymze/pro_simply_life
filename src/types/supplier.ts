@@ -24,6 +24,17 @@ export interface Supplier {
 		password?: string | null;
 		remarques?: string | null;
 	};
+	pea?: {
+		banque?: string | null;
+		title_vif?: ("yes" | "no") | null;
+		architecture_open?: ("yes" | "no") | null;
+		fonds?: string | null;
+		vp?: ("yes" | "no") | null;
+		retrocession_gestion_libre?: string | null;
+		retrocession_gestion_mandat?: string | null;
+		passage_order?: string | null;
+		interface?: string | null;
+	};
 	enveloppe?: {
 		global?: number | null;
 		amount?: number | null;
