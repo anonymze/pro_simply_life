@@ -835,3 +835,54 @@ const FondComponent = ({
 		</View>
 	);
 };
+
+const PEAComponent = ({
+	information,
+}: {
+	information: Supplier["pea"];
+}) => {
+	return (
+		<View className="gap-2">
+			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				<Text className="font-semibold text-sm text-primaryLight">Banque dépositaire</Text>
+				<Text className="font-semibold text-sm text-primary">{information?.banque}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Titre vif</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information?.title_vif === "yes" ? "Oui" : "Non"}
+					</Text>
+				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Architecture ouverte</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information?.architecture_open === "yes" ? "Oui" : "Non"}
+					</Text>
+				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Nombre de fonds</Text>
+				<Text className="font-semibold text-base text-primary">{information?.fonds}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="flex flex-row items-center justify-between">
+					<Text className="font-semibold text-sm text-primaryLight">Versement programmé</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information?.vp === "yes" ? "Oui" : "Non"}
+					</Text>
+				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Retrocession gestion libre</Text>
+				<Text className="font-semibold text-base text-primary">{information?.retrocession_gestion_libre}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Retrocession gestion sous mandat</Text>
+				<Text className="font-semibold text-base text-primary">{information?.retrocession_gestion_mandat}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Coût passage d'ordre</Text>
+				<Text className="font-semibold text-base text-primary">{information?.passage_order}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="font-semibold text-sm text-primaryLight">Interface</Text>
+				<Text className="font-semibold text-base text-primary">{information?.interface}</Text>
+			</View>
+		</View>
+	);
+};
