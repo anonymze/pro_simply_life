@@ -7,7 +7,7 @@ import { FOND_LABELS, PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
-import { SCREEN_DIMENSIONS } from "@/utils/helper";
+import { PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { getStorageUserInfos } from "@/utils/store";
 import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
@@ -62,9 +62,9 @@ export default function Page({ previousCategories = true }: { previousCategories
 			<View className="items-center rounded-b-2xl bg-white pb-4">
 				{previousCategories && (
 					<View className="mb-4 flex-row items-center gap-2">
-						<Text className="text-sm font-semibold text-primary ">{supplierCategoryName}</Text>
+						<Text className="font-semibold text-sm text-primary ">{supplierCategoryName}</Text>
 						<ChevronRight size={14} color={config.theme.extend.colors.primary} />
-						<Text className="text-sm font-semibold text-primary">{supplierProductName}</Text>
+						<Text className="font-semibold text-sm text-primary">{supplierProductName}</Text>
 					</View>
 				)}
 				<ImagePlaceholder
@@ -75,7 +75,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ width: "95%", height: 60 }}
 				/>
 				<View className="mt-4 flex-row items-center gap-3">
-					<Text className="text-xl font-bold">{data.name}</Text>
+					<Text className="font-bold text-xl">{data.name}</Text>
 					{data.website && (
 						<TouchableOpacity
 							className="rounded-full bg-primaryUltraLight p-2.5"
@@ -127,7 +127,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										}
 									}}
 								>
-									<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
+									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
 										{item.title}
 									</Text>
 									{item.subtitle && (
@@ -177,7 +177,55 @@ export default function Page({ previousCategories = true }: { previousCategories
 										}
 									}}
 								>
-									<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
+									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+										{item?.title}
+									</Text>
+								</Pressable>
+							);
+						}}
+					/>
+				)}
+
+				{/* PEA */}
+				{supplierProductId === PEA_ID && (
+					<LegendList
+						showsHorizontalScrollIndicator={false}
+						data={[
+							{
+								title: "Contact",
+								subtitle: "",
+							},
+							{
+							title: "PEA",
+							subtitle: "",
+							},
+						]}
+						horizontal
+						className="my-4 h-14"
+						renderItem={({ item, index }) => {
+							const isActive = currentIndex === index;
+
+							return (
+								<Pressable
+									hitSlop={5}
+									className={cn(
+										"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+										isActive ? "bg-primary" : "bg-darkGray",
+									)}
+									onPress={() => {
+										setCurrentIndex(index);
+
+										if (index === 0) {
+											horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										} else {
+											const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
+											horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
+											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
+										}
+									}}
+								>
+									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
 										{item?.title}
 									</Text>
 								</Pressable>
@@ -192,7 +240,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data?.other_information?.length && !privateEquity?.fond?.length ? (
+				{!data?.other_information?.length && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">
 							{data?.enveloppe && data.enveloppe.amount && (
 								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
@@ -225,13 +273,13 @@ export default function Page({ previousCategories = true }: { previousCategories
 											className={cn("size-2 rounded-full bg-green-600", data.enveloppe.amount <= 0 && "bg-production")}
 										/>
 										<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
-										<Text className="ml-auto text-sm font-light text-primaryLight">
+										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.amount.toLocaleString("fr-FR")}€
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
-										<Text className="ml-auto text-sm font-light text-primaryLight">
+										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.echeance
 												? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
 														day: "numeric",
@@ -243,7 +291,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
-										<Text className="ml-auto text-sm font-light text-primaryLight">
+										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.reduction
 												? data.enveloppe.reduction.toLocaleString("fr-FR") + "%"
 												: "Non renseigné"}
@@ -251,7 +299,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
-										<Text className="ml-auto text-sm font-light text-primaryLight">
+										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.actualisation
 												? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 														day: "numeric",
@@ -263,13 +311,13 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Commissions</Text>
-										<Text className="ml-auto text-sm font-light text-primaryLight">
+										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-xs text-green-600">Commissions négociées Groupe Valorem</Text>
-										<Text className="ml-auto text-xs font-light text-green-600">
+										<Text className="ml-auto font-light text-xs text-green-600">
 											{data.enveloppe.commission_valorem ? data.enveloppe.commission_valorem + "%" : "Non renseigné"}
 										</Text>
 									</View>
@@ -309,7 +357,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 gap-2">
 										<Text className="text-sm text-backgroundChat">Remarques :</Text>
-										<Text className=" text-sm font-light text-primaryLight">{data.enveloppe.remarque}</Text>
+										<Text className=" font-light text-sm text-primaryLight">{data.enveloppe.remarque}</Text>
 									</View>
 								</View>
 							)}
@@ -464,6 +512,8 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</View>
 							))}
 						</ScrollView>
+					): supplierProductId === PEA_ID ? (
+
 					) : (
 						<ScrollView
 							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
@@ -565,7 +615,7 @@ const Logs = ({ link, title }: { link: Href; title: string }) => {
 					<KeyRoundIcon size={20} color={config.theme.extend.colors.primary} />
 				</View>
 				<View className="flex-1">
-					<Text className="text-lg font-semibold text-primary">{title}</Text>
+					<Text className="font-semibold text-lg text-primary">{title}</Text>
 				</View>
 				{/* <ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} /> */}
 			</TouchableOpacity>
@@ -610,7 +660,7 @@ const ContactInfo = ({
 				<View className="flex-row items-center justify-between gap-2">
 					<View className="shrink gap-2">
 						<Text className="text-sm text-primaryLight">Téléphone</Text>
-						<Text selectable className="text-base font-semibold text-primary">
+						<Text selectable className="font-semibold text-base text-primary">
 							{numbersString}
 						</Text>
 					</View>
@@ -629,7 +679,7 @@ const ContactInfo = ({
 				<View className="flex-row items-center justify-between gap-2">
 					<View className="shrink grow-0 gap-2">
 						<Text className="text-sm text-primaryLight">E-mail</Text>
-						<Text selectable className="text-base font-semibold text-primary">
+						<Text selectable className="font-semibold text-base text-primary">
 							{email}
 						</Text>
 					</View>
@@ -646,7 +696,7 @@ const ContactInfo = ({
 				<View className="flex-row items-center justify-between gap-2">
 					<View className="shrink grow-0 gap-2">
 						<Text className="text-sm text-primaryLight">Adresse du site internet</Text>
-						<Text selectable className="text-base font-semibold text-primary">
+						<Text selectable className="font-semibold text-base text-primary">
 							{website}
 						</Text>
 					</View>
@@ -714,39 +764,39 @@ const ScpiComponent = ({
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="text-sm font-semibold text-primaryLight">SCPI</Text>
-				<Text className="text-sm font-semibold text-primary">{information.scpi}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
+				<Text className="font-semibold text-sm text-primary">{information.scpi}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Thématique</Text>
-				<Text className="text-base font-semibold text-primary">{information.theme}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
+				<Text className="font-semibold text-base text-primary">{information.theme}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex flex-row items-center justify-between">
-					<Text className="text-sm font-semibold text-primaryLight">Épargne</Text>
+					<Text className="font-semibold text-sm text-primaryLight">Épargne</Text>
 					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 						{information.epargne ? "Oui" : "Non"}
 					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Remarque</Text>
-				<Text className="text-base font-semibold text-primary">{information.annotation}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
+				<Text className="font-semibold text-base text-primary">{information.annotation}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
-				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Minimum de versement</Text>
+				<Text className="font-semibold text-base text-primary">{information.minimum_versement}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
-				<Text className="text-base font-semibold text-primary">{information.subscription_fee}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Frais de souscription</Text>
+				<Text className="font-semibold text-base text-primary">{information.subscription_fee}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Délai de jouissance</Text>
-				<Text className="text-base font-semibold text-primary">{information.duration}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Délai de jouissance</Text>
+				<Text className="font-semibold text-base text-primary">{information.duration}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Rentabilité N1</Text>
-				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Rentabilité N1</Text>
+				<Text className="font-semibold text-base text-primary">{information.rentability_n1}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
-				<Text className="text-base font-semibold text-green-600">{information.commission_offer_group_valorem}</Text>
+				<Text className="font-semibold text-sm text-green-600">Commission pour le groupe Valorem</Text>
+				<Text className="font-semibold text-base text-green-600">{information.commission_offer_group_valorem}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
-				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
+				<Text className="font-semibold text-sm text-primaryLight">Commission pour l'offre publique</Text>
+				<Text className="font-semibold text-base text-primary">{information.commission_public_offer}</Text>
 			</View>
 			{information.brochure && (
 				<Brochure
@@ -800,8 +850,8 @@ const FondComponent = ({
 					.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
 					.map(([key, value], idx, arr) => (
 						<React.Fragment key={key}>
-							<Text className="text-sm font-semibold text-primaryLight">{FOND_LABELS[key] || key}</Text>
-							<Text className="text-sm font-semibold text-primary">{value as string}</Text>
+							<Text className="font-semibold text-sm text-primaryLight">{FOND_LABELS[key] || key}</Text>
+							<Text className="font-semibold text-sm text-primary">{value as string}</Text>
 							{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
 						</React.Fragment>
 					))}
@@ -836,11 +886,7 @@ const FondComponent = ({
 	);
 };
 
-const PEAComponent = ({
-	information,
-}: {
-	information: Supplier["pea"];
-}) => {
+const PEAComponent = ({ information }: { information: Supplier["pea"] }) => {
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
