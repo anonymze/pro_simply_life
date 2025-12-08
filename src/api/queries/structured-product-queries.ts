@@ -6,7 +6,16 @@ import { api } from "../_config";
 
 export async function getStructuredProductsQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, filter] = queryKey;
-	const response = await api.get<PaginatedResponse<StructuredProduct>>(`/api/structured`);
+	const today = new Date().toISOString().split('T')[0];
+	const response = await api.get<PaginatedResponse<StructuredProduct>>(`/api/structured`, {
+		params: {
+			where: {
+				end_comm: {
+					greater_than_equal: today
+				}
+			}
+		}
+	});
 	return response.data;
 }
 

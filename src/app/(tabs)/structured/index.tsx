@@ -6,11 +6,10 @@ import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { StructuredProduct } from "@/types/structured-product";
 import { withQueryWrapper } from "@/utils/libs/react-query";
-import { LegendList } from "@legendapp/list";
 import { Link } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import React from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import config from "tailwind.config";
 
@@ -22,21 +21,52 @@ export default function Page() {
 			queryFn: getStructuredProductsQuery,
 		},
 		({ data }) => {
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
+
+			const enCours = data.docs.filter((product) => {
+				const startComm = new Date(product.start_comm);
+				const endComm = new Date(product.end_comm);
+				return today >= startComm && today < endComm;
+			});
+
+			const aVenir = data.docs.filter((product) => {
+				const startComm = new Date(product.start_comm);
+				return today < startComm;
+			});
+
 			return (
 				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<Title title="Produits structurés" className="mb-7" />
 
-					<LegendList
-						data={data.docs}
-						estimatedItemSize={85}
-						renderItem={(item) => {
-							return <Card structuredProduct={item.item} />;
-						}}
-						keyExtractor={(item) => item.id}
+					<ScrollView
 						showsVerticalScrollIndicator={false}
 						contentContainerStyle={{ paddingBottom: 10 }}
-						ItemSeparatorComponent={() => <View className="h-2.5" />}
-					/>
+					>
+						{enCours.length > 0 && (
+							<View className="mb-6">
+								<Text className="mb-3 text-base font-semibold text-primary">En cours</Text>
+								{enCours.map((product, index) => (
+									<View key={product.id}>
+										<Card structuredProduct={product} />
+										{index < enCours.length - 1 && <View className="h-2.5" />}
+									</View>
+								))}
+							</View>
+						)}
+
+						{aVenir.length > 0 && (
+							<View>
+								<Text className="mb-3 text-base font-semibold text-primary">À venir</Text>
+								{aVenir.map((product, index) => (
+									<View key={product.id}>
+										<Card structuredProduct={product} />
+										{index < aVenir.length - 1 && <View className="h-2.5" />}
+									</View>
+								))}
+							</View>
+						)}
+					</ScrollView>
 				</BackgroundLayout>
 			);
 		},

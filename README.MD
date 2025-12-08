@@ -208,15 +208,14 @@ popup evenement recent ?
 
 lire des excels sur un téléphone
 
+Offres du moment / Newsletter / Nouveau fournisseur / Private equity / Nouvel évènement NOTIFS
 
-casual
+Jeudi 18 décembre
 
-plusieurs dev ?
+espace dédié / envoyé fichier perso par user ?
+
+Notifé utilisateur qui n'a pas répondu à évènement 3 jours avant
 
 
-client peut valider des contenus
 
-rview tracker pour les avis
-
-plus de re&seaux, linkedin, tiktok,
-une partie notes en plus ?
+SHOPIFY / clients excel à customiser
