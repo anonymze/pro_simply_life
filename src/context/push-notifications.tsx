@@ -1,10 +1,18 @@
 import { updateAppUserToken } from "@/api/queries/app-user-queries";
-import { registerForPushNotificationsAsync } from "@/utils/register-push-notifications";
 import { getStorageUserInfos } from "@/utils/store";
 import { EventSubscription } from "expo-modules-core";
 import * as Notifications from "expo-notifications";
 import { router } from "expo-router";
 import React, { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
+
+type NotificationData =
+	| { type: "message"; data: { chatRoomId: string; [key: string]: any } }
+	| { type: "private"; data: { privateEquityId: string; [key: string]: any } }
+	| { type: "supplier"; data: { supplierId: string; supplierProductId: string | null; supplierCategoryId: string | null; [key: string]: any } }
+	| { type: "selection"; data: { selectionId: string; [key: string]: any } }
+	| { type: "fundesys"; data: { fundesysId: string; [key: string]: any } }
+	| { type: "fidnet"; data: { fidnetId: string; [key: string]: any } }
+	| { type: "agency"; data: { agencyLifeId: string; [key: string]: any } };
 
 interface NotificationContextType {
 	expoPushToken: string | null;
@@ -31,7 +39,6 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 	const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
 	const [notification, setNotification] = useState<Notifications.Notification | null>(null);
 	const [error, setError] = useState<Error | null>(null);
-
 	const notificationListener = useRef<EventSubscription>(null);
 	const responseListener = useRef<EventSubscription>(null);
 	const tokenListener = useRef<EventSubscription>(null);
@@ -41,26 +48,52 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			.then((token) => {
 				setExpoPushToken(token);
 				// Only update DB if it's a valid Expo token
-				if (token?.startsWith('ExponentPushToken[')) {
+				if (token?.startsWith("ExponentPushToken[")) {
 					updateAppUserToken(userInfos?.user?.id, token);
 				}
 			})
 			.catch((error) => setError(error));
 
 		// Check if app was opened from a notification (when app was completely closed)
-		Notifications.getLastNotificationResponseAsync().then((response) => {
-			if (!response) return;
-
-			if ("chatRoomId" in response.notification.request.content.data) {
-				router.replace(`/chat/${response.notification.request.content.data.chatRoomId}`);
+		const response = Notifications.getLastNotificationResponse();
+		if (response) {
+			const notifData = response.notification.request.content.data as NotificationData;
+			switch (notifData.type) {
+				case "message":
+					router.push(`/chat/${notifData.data.chatRoomId}`);
+					break;
+				case "private":
+					// router.push(`/private-equity/${notifData.data.privateEquityId}`);
+					break;
+				case "supplier":
+					// if (notifData.data.supplierProductId) {
+					// 	router.push(`/supplier/${notifData.data.supplierId}/product/${notifData.data.supplierProductId}`);
+					// } else if (notifData.data.supplierCategoryId) {
+					// 	router.push(`/supplier/${notifData.data.supplierId}/category/${notifData.data.supplierCategoryId}`);
+					// } else {
+					// 	router.push(`/supplier/${notifData.data.supplierId}`);
+					// }
+					break;
+				case "selection":
+					router.push(`/selection/${notifData.data.selectionId}`);
+					break;
+				case "fundesys":
+					router.push(`/fundesys/${notifData.data.fundesysId}`);
+					break;
+				case "fidnet":
+					router.push(`/fidnet/${notifData.data.fidnetId}`);
+					break;
+				case "agency":
+					router.push(`/event/${notifData.data.agencyLifeId}`);
+					break;
 			}
-		});
+		}
 
 		// Listen for token changes/updates
 		tokenListener.current = Notifications.addPushTokenListener((token) => {
 			setExpoPushToken(token.data);
 			// Only update DB if it's a valid Expo token
-			if (token.data?.startsWith('ExponentPushToken[')) {
+			if (token.data?.startsWith("ExponentPushToken[")) {
 				updateAppUserToken(userInfos?.user?.id, token.data);
 			}
 		});
@@ -73,9 +106,35 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 		// when notification is clicked, can redirect inside etc...
 		responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
 			if (!response.notification) return;
-
-			if ("chatRoomId" in response.notification.request.content.data) {
-				router.replace(`/chat/${response.notification.request.content.data.chatRoomId}`);
+			const notifData = response.notification.request.content.data as NotificationData;
+			switch (notifData.type) {
+				case "message":
+					router.replace(`/chat/${notifData.data.chatRoomId}`);
+					break;
+				case "private":
+					// router.replace(`/private-equity/${notifData.data.privateEquityId}`);
+					break;
+				case "supplier":
+					// if (notifData.data.supplierProductId) {
+					// 	router.replace(`/supplier/${notifData.data.supplierId}/product/${notifData.data.supplierProductId}`);
+					// } else if (notifData.data.supplierCategoryId) {
+					// 	router.replace(`/supplier/${notifData.data.supplierId}/category/${notifData.data.supplierCategoryId}`);
+					// } else {
+					// 	router.replace(`/supplier/${notifData.data.supplierId}`);
+					// }
+					break;
+				case "selection":
+					router.replace(`/selection/${notifData.data.selectionId}`);
+					break;
+				case "fundesys":
+					router.replace(`/fundesys/${notifData.data.fundesysId}`);
+					break;
+				case "fidnet":
+					router.replace(`/fidnet/${notifData.data.fidnetId}`);
+					break;
+				case "agency":
+					router.replace(`/event/${notifData.data.agencyLifeId}`);
+					break;
 			}
 		});
 

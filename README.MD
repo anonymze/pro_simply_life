@@ -201,21 +201,10 @@ pré rempli commissions //  evènements groupe valorem par personnes (selectionn
 
 include denis dans le gros point v2
 
-mail pro / mail perso
-cookie session qui s'expire ?
-
-popup evenement recent ?
-
-lire des excels sur un téléphone
-
-Offres du moment / Newsletter / Nouveau fournisseur / Private equity / Nouvel évènement NOTIFS
-
 Jeudi 18 décembre
 
 espace dédié / envoyé fichier perso par user ?
 
 Notifé utilisateur qui n'a pas répondu à évènement 3 jours avant
 
-
-
-SHOPIFY / clients excel à customiser
+clients excel à customiser
