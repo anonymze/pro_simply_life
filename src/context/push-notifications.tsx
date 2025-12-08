@@ -1,4 +1,5 @@
 import { updateAppUserToken } from "@/api/queries/app-user-queries";
+import { registerForPushNotificationsAsync } from "@/utils/register-push-notifications";
 import { getStorageUserInfos } from "@/utils/store";
 import { EventSubscription } from "expo-modules-core";
 import * as Notifications from "expo-notifications";
@@ -8,7 +9,15 @@ import React, { createContext, ReactNode, useContext, useEffect, useRef, useStat
 type NotificationData =
 	| { type: "message"; data: { chatRoomId: string; [key: string]: any } }
 	| { type: "private"; data: { privateEquityId: string; [key: string]: any } }
-	| { type: "supplier"; data: { supplierId: string; supplierProductId: string | null; supplierCategoryId: string | null; [key: string]: any } }
+	| {
+			type: "supplier";
+			data: {
+				supplierId: string;
+				supplierProductId: string | null;
+				supplierCategoryId: string | null;
+				[key: string]: any;
+			};
+	  }
 	| { type: "selection"; data: { selectionId: string; [key: string]: any } }
 	| { type: "fundesys"; data: { fundesysId: string; [key: string]: any } }
 	| { type: "fidnet"; data: { fidnetId: string; [key: string]: any } }
