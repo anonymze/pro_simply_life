@@ -21,7 +21,8 @@ type NotificationData =
 	| { type: "selection"; data: { selectionId: string; [key: string]: any } }
 	| { type: "fundesys"; data: { fundesysId: string; [key: string]: any } }
 	| { type: "fidnet"; data: { fidnetId: string; [key: string]: any } }
-	| { type: "agency"; data: { agencyLifeId: string; [key: string]: any } };
+	| { type: "agency"; data: { agencyLifeId: string; [key: string]: any } }
+	| { type: "profil"; data: { userId: string; [key: string]: any } };
 
 interface NotificationContextType {
 	expoPushToken: string | null;
@@ -95,6 +96,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 				case "agency":
 					router.push(`/event/${notifData.data.agencyLifeId}`);
 					break;
+				case "profil":
+					router.push(`/profil`);
+					break;
 			}
 		}
 
@@ -143,6 +147,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 					break;
 				case "agency":
 					router.replace(`/event/${notifData.data.agencyLifeId}`);
+					break;
+				case "profil":
+					router.replace(`/profil`);
 					break;
 			}
 		});
