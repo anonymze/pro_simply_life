@@ -66,12 +66,12 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			.catch((error) => setError(error));
 
 		// Check if app was opened from a notification (when app was completely closed)
-		const response = Notifications.getLastNotificationResponse();
+		Notifications.getLastNotificationResponseAsync().then((response) => {
 		if (response) {
 			const notifData = response.notification.request.content.data as NotificationData;
 			switch (notifData.type) {
 				case "message":
-					router.replace(`/chat/${notifData.data.chatRoomId}`);
+					router.push(`/chat/${notifData.data.chatRoomId}`);
 					break;
 				case "private":
 					// router.push(`/private-equity/${notifData.data.privateEquityId}`);
@@ -98,10 +98,11 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 					router.push(`/event/${notifData.data.agencyLifeId}`);
 					break;
 				case "profil":
-					// router.push(`/profil`);
+					router.push(`/profil`);
 					break;
 			}
 		}
+		});
 
 		// Listen for token changes/updates
 		tokenListener.current = Notifications.addPushTokenListener((token) => {
