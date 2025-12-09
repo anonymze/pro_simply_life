@@ -143,6 +143,14 @@ export default function AppLayout() {
 				}}
 			/>
 			<Tabs.Screen
+				name="profil"
+				options={{
+					headerShown: true,
+					header: () => <HeaderLayout backgroundColor="bg-white" backButton={false} />,
+					href: null,
+				}}
+			/>
+			<Tabs.Screen
 				name="help"
 				options={{
 					headerShown: false,

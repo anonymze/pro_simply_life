@@ -31,7 +31,7 @@ export default function Page() {
 					// contentPosition="top"
 					style={{ width: 150, height: 150, borderRadius: 99 }}
 				/>
-				<View className="mt-4 items-center gap-3">
+				<View className="mt-1 items-center gap-3">
 					<Text className="font-bold text-xl">{data.firstname + " " + data.lastname}</Text>
 					<Tag title={userRoleLabels[data.role]} />
 				</View>

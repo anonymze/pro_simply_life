@@ -4,7 +4,7 @@ import { cn } from "@/utils/libs/tailwind";
 import { Href, Link, LinkProps, router } from "expo-router";
 import { ArrowLeftIcon, PlusCircleIcon } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 
 interface HeaderLayoutProps extends Partial<LinkProps> {
@@ -21,12 +21,27 @@ interface HeaderLayoutProps extends Partial<LinkProps> {
 	backButton?: boolean;
 }
 
-export default function HeaderLayout({ title, chat, sheet, backgroundColor, backLink, backButton = true }: HeaderLayoutProps) {
-    const insets = useSafeAreaInsets();
+export default function HeaderLayout({
+	title,
+	chat,
+	sheet,
+	backgroundColor,
+	backLink,
+	backButton = true,
+}: HeaderLayoutProps) {
+	const insets = useSafeAreaInsets();
 	return (
-		<View className={cn("flex-row items-center justify-between bg-background px-2 pb-2", backgroundColor)} style={{ paddingTop: insets.top }}>
+		<View
+			className={cn("flex-row items-center justify-between bg-background px-2 pb-2", backgroundColor)}
+			style={{ paddingTop: insets.top }}
+		>
 			{backButton ? (
-				<Link className={cn("w-24 p-2", chat && "w-10")} dismissTo href={chat?.link ? "/chat"  : backLink ? "/" : "../"} asChild>
+				<Link
+					className={cn("w-24 p-2", chat && "w-10")}
+					dismissTo
+					href={chat?.link ? "/chat" : backLink ? "/" : "../"}
+					asChild
+				>
 					<TouchableOpacity className="flex-row items-center gap-3" hitSlop={10}>
 						<ArrowLeftIcon size={20} color={config.theme.extend.colors.primary} />
 						{!chat && <Text className="font-semibold text-primary">Retour</Text>}
@@ -43,13 +58,13 @@ export default function HeaderLayout({ title, chat, sheet, backgroundColor, back
 							<EmployeesIcon color={config.theme.extend.colors.primary} />
 						</View>
 						<View className="">
-							<Text className="font-bold text-lg">{truncateText(title || "", 26)}</Text>
+							<Text className="text-lg font-bold">{truncateText(title || "", 26)}</Text>
 							<Text className="text-sm text-primaryLight">{truncateText(chat?.description || "", 30)}</Text>
 						</View>
 					</View>
 				</Link>
 			) : (
-				<Text className="font-bold text-lg">{truncateText(title || "", 24)}</Text>
+				<Text className="text-lg font-bold">{truncateText(title || "", 24)}</Text>
 			)}
 
 			{sheet ? (

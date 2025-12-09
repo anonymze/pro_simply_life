@@ -50,6 +50,28 @@ export default function ProfileDashboard({
 						</MyTouchableScale>
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content>
+					<DropdownMenu.Item
+						key="profil"
+						onSelect={() => {
+							router.push("/(tabs)/profil");
+						}}
+					>
+						<DropdownMenu.ItemTitle>Mon espace</DropdownMenu.ItemTitle>
+						<DropdownMenu.ItemIcon
+							// androidIconName="arrow_down_float"
+							ios={{
+								name: "person.circle",
+								pointSize: 21,
+								paletteColors: [
+									{
+										dark: config.theme.extend.colors.primary,
+										light: config.theme.extend.colors.primary,
+									},
+								],
+							}}
+						/>
+					</DropdownMenu.Item>
+
 						<DropdownMenu.Item
 							key="help"
 							onSelect={() => {
