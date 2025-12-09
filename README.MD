@@ -203,8 +203,6 @@ include denis dans le gros point v2
 
 Jeudi 18 décembre
 
-espace dédié / envoyé fichier perso par user ?
-
 Notifé utilisateur qui n'a pas répondu à évènement 3 jours avant
 
 clients excel à customiser
