@@ -43,7 +43,7 @@ export default function Page() {
 	}
 
 	return (
-	<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" && "pt-0")} style={{ paddingTop: insets.top }}>
+	<BackgroundLayout className={"px-4 pb-4"} style={{ paddingTop: Platform.OS === "android" ? insets.top: 0 }}>
 			<View className={cn("flex-row items-center justify-between bg-background pb-4")}>
 				<View className="w-24 p-2">
 					<TouchableOpacity
@@ -92,10 +92,10 @@ export default function Page() {
 					decelerationRate={"fast"}
 					contentContainerStyle={{ gap: 16 }}
 				>
-					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 						<NewGroup data={data ?? []} dispatch={dispatch} selectedIds={selectedIds} />
 					</View>
-					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 						<NewConversation currentUser={appUser.user} selectedIds={Array.from(selectedIds)} />
 					</View>
 				</ScrollView>

@@ -236,7 +236,7 @@ const PrivateEquityComponent = ({
 				contentContainerStyle={{ gap: 16 }}
 			>
 				{orderedTypes.map((type) => (
-					<View key={type} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+					<View key={type} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 						<ScrollView
 							className="flex-1"
 							showsVerticalScrollIndicator={false}

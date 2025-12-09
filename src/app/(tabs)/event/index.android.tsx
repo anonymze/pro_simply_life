@@ -111,7 +111,7 @@ export default function Page() {
 						decelerationRate={"fast"}
 						contentContainerStyle={{ gap: 16 }}
 					>
-						<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+						<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 							<StyledCalendar
 								firstDay={1}
 								className="m-0 mt-5 rounded-2xl p-2 shadow-sm shadow-defaultGray/10"
@@ -193,7 +193,7 @@ export default function Page() {
 								) : null}
 							</ScrollView>
 						</View>
-						<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+						<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 							{!!eventsStartingFromToday.length ? (
 								<ScrollView
 									showsVerticalScrollIndicator={false}

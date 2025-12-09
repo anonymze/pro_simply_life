@@ -71,7 +71,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 			const notifData = response.notification.request.content.data as NotificationData;
 			switch (notifData.type) {
 				case "message":
-					router.push(`/chat/${notifData.data.chatRoomId}`);
+					router.replace(`/chat/${notifData.data.chatRoomId}`);
 					break;
 				case "private":
 					// router.push(`/private-equity/${notifData.data.privateEquityId}`);

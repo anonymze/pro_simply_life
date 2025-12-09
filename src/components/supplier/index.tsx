@@ -435,7 +435,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							decelerationRate={"fast"}
 							contentContainerStyle={{ gap: 16 }}
 						>
-							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 								<ContactInfo
 									supplierId={supplierId}
 									supplierCategoryId={supplierCategoryId}
@@ -500,7 +500,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								/>
 							</View>
 							{privateEquity.fond.map((fond, idx) => (
-								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 									<FondComponent
 										previousCategories={previousCategories}
 										information={fond}
@@ -521,7 +521,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							decelerationRate={"fast"}
 							contentContainerStyle={{ gap: 16 }}
 						>
-							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 								{data?.enveloppe && data.enveloppe.amount && (
 									<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
 										<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
@@ -702,7 +702,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									}
 								/>
 							</View>
-							<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+							<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 								<PEAComponent information={data?.pea} />
 							</View>
 						</ScrollView>
@@ -715,7 +715,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							decelerationRate={"fast"}
 							contentContainerStyle={{ gap: 16 }}
 						>
-							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 								<ContactInfo
 									supplierId={supplierId}
 									supplierCategoryId={supplierCategoryId}
@@ -780,7 +780,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								/>
 							</View>
 							{data.other_information?.map((information, idx) => (
-								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 									<ScpiComponent
 										previousCategories={previousCategories}
 										information={information}

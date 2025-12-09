@@ -112,7 +112,7 @@ export default function Page() {
 					decelerationRate={"fast"}
 					contentContainerStyle={{ gap: 16 }}
 				>
-					<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+					<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 						<NewGroup data={data ?? []} dispatch={dispatch} selectedIds={selectedIds} />
 					</View>
 				</ScrollView>

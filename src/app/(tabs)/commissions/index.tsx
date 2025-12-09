@@ -133,10 +133,10 @@ export default function Page() {
 					marginTop: 16,
 				}}
 			>
-				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 					<WrappeContent type="monthly" data={data} />
 				</View>
-				<View style={{ width: SCREEN_DIMENSIONS.width - 28 }}>
+				<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 					<WrappeContent type="yearly" data={data} />
 				</View>
 			</ScrollView>
