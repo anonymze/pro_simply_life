@@ -153,6 +153,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 					queryClient.invalidateQueries({
 						queryKey: ["app-user-profil"],
 					});
+					router.replace(`/profil`);
 					break;
 			}
 		});
