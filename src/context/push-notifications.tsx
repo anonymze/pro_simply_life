@@ -1,3 +1,4 @@
+import { queryClient } from "@/api/_queries";
 import { updateAppUserToken } from "@/api/queries/app-user-queries";
 import { registerForPushNotificationsAsync } from "@/utils/register-push-notifications";
 import { getStorageUserInfos } from "@/utils/store";
@@ -97,7 +98,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 					router.push(`/event/${notifData.data.agencyLifeId}`);
 					break;
 				case "profil":
-					router.push(`/profil`);
+					// router.push(`/profil`);
 					break;
 			}
 		}
@@ -149,7 +150,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 					router.replace(`/event/${notifData.data.agencyLifeId}`);
 					break;
 				case "profil":
-					router.replace(`/profil`);
+					queryClient.invalidateQueries({
+						queryKey: ["app-user-profil"],
+					});
 					break;
 			}
 		});
