@@ -50,3 +50,16 @@ export const userRoleLabels: Record<UserRole, string> = {
 	independent: "Indépendant",
 	visitor: "Visiteur",
 } as const;
+
+export interface AppUsersProfil {
+  id: string;
+  app_user: AppUser;
+  files?:
+    | {
+        file: Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}

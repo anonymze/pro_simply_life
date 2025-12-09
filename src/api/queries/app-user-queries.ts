@@ -1,5 +1,5 @@
 import { PaginatedResponse } from "@/types/response";
-import { User, UserContact } from "@/types/user";
+import { AppUsersProfil, User, UserContact } from "@/types/user";
 import { QueryKey } from "@tanstack/react-query";
 
 import { api } from "../_config";
@@ -33,5 +33,22 @@ export async function getAppUserQuery({ queryKey }: { queryKey: QueryKey }) {
 
 export async function updateAppUserToken(userId: User["id"] | undefined, token: User["notifications_token"]) {
 	const response = await api.post(`/api/app-users/update-token`, { userId, token });
+	return response.data;
+}
+
+export async function getAppUsersProfilQuery({ queryKey }: { queryKey: QueryKey }) {
+	const [, appUserId] = queryKey;
+
+	console.log(appUserId)
+	const response = await api.get<PaginatedResponse<AppUsersProfil>>("/api/app-users-profil", {
+		params: appUserId ? {
+			where: {
+				"app_user": {
+					equals: appUserId,
+				},
+			},
+			limit: 1
+		} : undefined,
+	});
 	return response.data;
 }
