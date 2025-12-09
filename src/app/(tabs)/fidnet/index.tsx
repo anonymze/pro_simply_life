@@ -11,8 +11,8 @@ import { Link } from "expo-router";
 import { KeyRoundIcon } from "lucide-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface FlatListItem {
 	type: "header" | "item";
@@ -21,7 +21,7 @@ interface FlatListItem {
 }
 
 const FidnetContent = ({ data }: { data: PaginatedResponse<Fidnet> }) => {
-    const insets = useSafeAreaInsets();
+	const insets = useSafeAreaInsets();
 	// Convert grouped data to flat array for FlatList
 	const flatData = React.useMemo(() => {
 		const addedDates = new Set<string>();
@@ -47,7 +47,7 @@ const FidnetContent = ({ data }: { data: PaginatedResponse<Fidnet> }) => {
 
 	const renderItem = React.useCallback(({ item }: { item: any }) => {
 		if (item.type === "header") {
-			return <Text className="mb-2 mt-4 font-semibold text-base text-defaultGray">{item.date}</Text>;
+			return <Text className="mb-2 mt-4 text-base font-semibold text-defaultGray">{item.date}</Text>;
 		}
 
 		return (

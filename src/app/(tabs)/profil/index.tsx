@@ -6,10 +6,12 @@ import BackgroundLayout from "@/layouts/background-layout";
 import { getStorageUserInfos } from "@/utils/store";
 import { useQuery } from "@tanstack/react-query";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 
 export default function Page() {
 	const appUser = getStorageUserInfos();
+	const insets = useSafeAreaInsets();
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["app-user", appUser?.user.id],
@@ -46,13 +48,13 @@ export default function Page() {
 	const appUserProfil = appUsersProfil?.docs[0];
 
 	return (
-		<BackgroundLayout>
+		<BackgroundLayout style={{ paddingTop: insets.top }}>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 				style={{ backgroundColor: config.theme.extend.colors.background }}
 				contentContainerStyle={{ paddingBottom: 10 }}
 			>
-				<View className="items-center rounded-b-2xl bg-white pb-4">
+				<View className="items-center rounded-b-2xl bg-white pb-4 pt-4">
 					<ImagePlaceholder
 						transition={300}
 						contentFit="cover"

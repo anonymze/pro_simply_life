@@ -14,9 +14,9 @@ export default function Page() {
 	return (
 		<ImagePlaceholder
 			transition={0}
-			contentFit="cover"
+			contentFit="contain"
 			source={file}
-			style={{ height: "50%" }}
+			style={{ flex: 1, height: 320 }}
 		/>
 	);
 }

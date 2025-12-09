@@ -145,8 +145,8 @@ export default function AppLayout() {
 			<Tabs.Screen
 				name="profil"
 				options={{
-					headerShown: true,
-					header: () => <HeaderLayout backgroundColor="bg-white" backButton={false} />,
+					title: "profil",
+					headerShown: false,
 					href: null,
 				}}
 			/>
