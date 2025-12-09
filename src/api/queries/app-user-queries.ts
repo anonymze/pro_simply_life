@@ -38,8 +38,6 @@ export async function updateAppUserToken(userId: User["id"] | undefined, token: 
 
 export async function getAppUsersProfilQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, appUserId] = queryKey;
-
-	console.log(appUserId)
 	const response = await api.get<PaginatedResponse<AppUsersProfil>>("/api/app-users-profil", {
 		params: appUserId ? {
 			where: {

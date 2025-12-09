@@ -76,8 +76,8 @@ export default function Page() {
 					<View className="mt-4 gap-3">
 						{isLoadingProfil ? (
 							<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
-						) : appUserProfil?.files?.length === 0 ? (
-							<Text className="text-sm text-defaultGray">Aucun fichier déposé</Text>
+						) : !appUserProfil?.files?.length ? (
+							<Text className="text-sm text-defaultGray text-center mt-3">Aucun fichier déposé</Text>
 						) : (
 							appUserProfil?.files?.map((file) => {
 								const isNotOpenable =
