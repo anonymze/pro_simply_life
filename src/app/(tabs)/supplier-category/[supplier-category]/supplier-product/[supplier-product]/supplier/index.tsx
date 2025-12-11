@@ -1,6 +1,7 @@
 import { getPrivateEquitiesQuery } from "@/api/queries/private-equity-queries";
 import { getSupplierProductQuery } from "@/api/queries/supplier-products-queries";
 import CardSupplier from "@/components/card/card-supplier";
+import { MyTouchableOpacity } from "@/components/my-pressable";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
@@ -206,7 +207,7 @@ const PrivateEquityComponent = ({
 					const isActive = currentIndex === index;
 
 					return (
-						<Pressable
+						<MyTouchableOpacity
 							hitSlop={5}
 							className={cn(
 								"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
@@ -221,7 +222,7 @@ const PrivateEquityComponent = ({
 							<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
 								{PRIVATE_EQUITY_TYPE_LABELS[type]}
 							</Text>
-						</Pressable>
+						</MyTouchableOpacity>
 					);
 				}}
 			/>

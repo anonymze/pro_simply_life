@@ -93,6 +93,7 @@ export const FCPR_ID = "949d4203-a2f3-40cc-b5cc-fcfe4464ccd8";
 export const ALL_SCPI_ID = "e7ce6f33-422f-4101-ae19-c4db08227630";
 export const SCPI_CATEGORY_ID = "c3ad1f0e-af17-4425-b1cf-4ec3da2f9877";
 export const PEA_ID = "5e7420dc-faa7-4964-954a-d1df690bfeec";
+export const CIF_ID = "59cdc1f8-2282-4a2c-83f4-53a124107876";
 
 export const USER_LEONIE_ID = "3aec92de-0d1f-4909-ae0b-71156f40b854";
 export const USER_MATHIEU_ID = "da45b442-babf-4c37-af20-2f79c57fb51f";

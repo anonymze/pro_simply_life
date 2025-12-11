@@ -28,6 +28,7 @@ import config from "tailwind.config";
 // import resolveConfig from "tailwindcss/resolveConfig";
 import { Bar, CartesianChart, useChartPressState } from "victory-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MyTouchableOpacity } from "@/components/my-pressable";
 
 // const fullConfig = resolveConfig(config);
 
@@ -160,7 +161,7 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 				keyExtractor={(item) => item.id}
 				renderItem={({ item }) => {
 					return (
-						<Pressable
+						<MyTouchableOpacity
 							className={cn(
 								"mr-3 rounded-lg bg-darkGray px-3.5 py-2",
 								lastMonth.id === item.id && "bg-primary text-white",
@@ -170,7 +171,7 @@ const WrappeContent = ({ data, type }: { data: CommissionMonthlyAndYearlyData; t
 							<Text className={cn("font-semibold text-sm text-primary", lastMonth.id === item.id && "text-white")}>
 								{item.labelDate}
 							</Text>
-						</Pressable>
+						</MyTouchableOpacity>
 					);
 				}}
 			></LegendList>

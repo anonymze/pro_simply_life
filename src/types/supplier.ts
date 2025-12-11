@@ -92,13 +92,13 @@ export interface Supplier {
 }
 
 export interface SupplierProduct {
-	id: string;
-	name: string;
-	suppliers: Supplier[];
-	updatedAt: string;
-	createdAt: string;
+  id: string;
+  name: string;
+  suppliers: Supplier[];
+  impot?: 'yes' | 'no';
+  updatedAt: string;
+  createdAt: string;
 }
-
 export interface SupplierCategory {
 	id: string;
 	name: "IAS" | "SCPI" | "Immobilier" | "CIF";
