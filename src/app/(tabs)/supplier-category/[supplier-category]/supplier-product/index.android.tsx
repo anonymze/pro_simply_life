@@ -2,13 +2,16 @@ import { getSupplierCategoryQuery } from "@/api/queries/supplier-categories-quer
 import { Brochure } from "@/components/brochure";
 import CardSearchSupplier from "@/components/card/card-search-supplier";
 import CardSupplierProduct from "@/components/card/card-supplier-product";
+import { MyTouchableOpacity } from "@/components/my-pressable";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
-import { ALL_SCPI_ID, excludedProductSupplierIds, SCPI_CATEGORY_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { cn } from "@/utils/cn";
+import { CIF_ID, excludedProductSupplierIds, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { Picker } from "@expo/ui/jetpack-compose";
+import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
-import { Redirect, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import config from "tailwind.config";
@@ -19,7 +22,8 @@ export default function Page() {
 			"supplier-category": string;
 			"supplier-category-name": string;
 		}>();
-
+	const [currentIndex, setCurrentIndex] = React.useState(0);
+	const horizontalScrollRef = React.useRef<ScrollView>(null);
 
 	const scrollRef = React.useRef<ScrollView>(null);
 	const [search, setSearch] = React.useState("");
@@ -198,44 +202,161 @@ export default function Page() {
 					/>
 
 					{search.length < 3 ? (
-						<ScrollView
-							className="flex-1"
-							showsVerticalScrollIndicator={false}
-							contentContainerStyle={{ paddingBottom: 10 }}
-							style={{ backgroundColor: config.theme.extend.colors.background }}
-						>
-							<View className="mt-5 gap-2">
-								{data.product_suppliers.map((supplierProduct) => {
-									if (excludedProductSupplierIds.includes(supplierProduct.id)) return;
+						<>
+							{supplierCategoryId === CIF_ID ? (
+								<>
+									<LegendList
+										showsHorizontalScrollIndicator={false}
+										data={[
+											{
+												title: "Contact",
+												subtitle: "",
+											},
+											{
+												title: "Avec réduction d'impôt",
+												subtitle: "",
+											},
+										]}
+										horizontal
+										className="h-15 mt-4"
+										style={{ maxHeight: 48 }}
+										renderItem={({ item, index }) => {
+											const isActive = currentIndex === index;
+											return (
+												<MyTouchableOpacity
+													hitSlop={5}
+													className={cn(
+														"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
+														isActive ? "bg-primary" : "bg-darkGray",
+													)}
+													onPress={() => {
+														setCurrentIndex(index);
 
-									// let multipleSupplierProducts: SupplierProduct[] = [];
+														if (index === 0) {
+															horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
+														} else {
+															const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
+															horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
+														}
+													}}
+												>
+													<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
+														{item.title}
+													</Text>
+													{item.subtitle && (
+														<Text className={cn("text-xs", isActive ? "text-white" : "text-primary")}>
+															{item.subtitle}
+														</Text>
+													)}
+												</MyTouchableOpacity>
+											);
+										}}
+									/>
 
-									// if (supplierProduct.id === PRIVATE_EQUITY_ID) {
-									// 	multipleSupplierProducts = data.product_suppliers.filter(
-									// 		(product) => excludedProductSupplierIds.includes(product.id) && product.id !== OB_TER_ID,
-									// 	);
-									// }
+									<ScrollView
+										scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
+										horizontal
+										showsHorizontalScrollIndicator={false}
+										scrollEnabled={false}
+										decelerationRate={"fast"}
+										contentContainerStyle={{ gap: 16 }}
+									>
+										{/* Contact - All suppliers */}
+										<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
+											<ScrollView
+												className="flex-1"
+												showsVerticalScrollIndicator={false}
+												contentContainerStyle={{ paddingBottom: 10 }}
+												style={{ backgroundColor: config.theme.extend.colors.background }}
+											>
+												<View className="mt-5 gap-2">
+													{data.product_suppliers.map((supplierProduct) => {
+														if (excludedProductSupplierIds.includes(supplierProduct.id)) return null;
 
-									return (
-										<CardSupplierProduct
-											key={supplierProduct.id}
-											supplierProduct={supplierProduct}
-											// multipleSupplierProducts={multipleSupplierProducts}
-											link={{
-												pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
-												params: {
-													"supplier-category": supplierCategoryId,
-													"supplier-category-name": supplierCategoryName,
-													"supplier-product": supplierProduct.id,
-													"supplier-product-name": supplierProduct.name,
-													// "multiple-supplier-products": multipleSupplierProducts.map((product) => product.id).join(","),
-												},
-											}}
-										/>
-									);
-								})}
-							</View>
-						</ScrollView>
+														return (
+															<CardSupplierProduct
+																key={supplierProduct.id}
+																supplierProduct={supplierProduct}
+																link={{
+																	pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+																	params: {
+																		"supplier-category": supplierCategoryId,
+																		"supplier-category-name": supplierCategoryName,
+																		"supplier-product": supplierProduct.id,
+																		"supplier-product-name": supplierProduct.name,
+																	},
+																}}
+															/>
+														);
+													})}
+												</View>
+											</ScrollView>
+										</View>
+										{/* Avec réduction d'impôt - Only impot === 'yes' */}
+										<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
+											<ScrollView
+												className="flex-1"
+												showsVerticalScrollIndicator={false}
+												contentContainerStyle={{ paddingBottom: 10 }}
+												style={{ backgroundColor: config.theme.extend.colors.background }}
+											>
+												<View className="mt-5 gap-2">
+													{data.product_suppliers.map((supplierProduct) => {
+														if (excludedProductSupplierIds.includes(supplierProduct.id)) return null;
+														if (supplierProduct.impot !== "yes") return null;
+
+														return (
+															<CardSupplierProduct
+																key={supplierProduct.id}
+																supplierProduct={supplierProduct}
+																link={{
+																	pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+																	params: {
+																		"supplier-category": supplierCategoryId,
+																		"supplier-category-name": supplierCategoryName,
+																		"supplier-product": supplierProduct.id,
+																		"supplier-product-name": supplierProduct.name,
+																	},
+																}}
+															/>
+														);
+													})}
+												</View>
+											</ScrollView>
+										</View>
+									</ScrollView>
+								</>
+							) : (
+								<ScrollView
+									className="flex-1"
+									showsVerticalScrollIndicator={false}
+									contentContainerStyle={{ paddingBottom: 10 }}
+									style={{ backgroundColor: config.theme.extend.colors.background, marginTop: 16 }}
+								>
+									<View className="gap-2">
+										{data.product_suppliers.map((supplierProduct) => {
+											if (excludedProductSupplierIds.includes(supplierProduct.id)) return null;
+
+											return (
+												<CardSupplierProduct
+													key={supplierProduct.id}
+													supplierProduct={supplierProduct}
+													link={{
+														pathname: `/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier`,
+														params: {
+															"supplier-category": supplierCategoryId,
+															"supplier-category-name": supplierCategoryName,
+															"supplier-product": supplierProduct.id,
+															"supplier-product-name": supplierProduct.name,
+														},
+													}}
+												/>
+											);
+										})}
+									</View>
+								</ScrollView>
+							)}
+						</>
 					) : (
 						<>
 							{!filteredData?.length ? (
