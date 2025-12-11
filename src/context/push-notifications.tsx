@@ -1,5 +1,3 @@
-v
-arimport { queryClient } from "@/api/_queries";
 import { queryClient } from "@/api/_queries";
 import { updateAppUserToken } from "@/api/queries/app-user-queries";
 import { registerForPushNotificationsAsync } from "@/utils/register-push-notifications";
