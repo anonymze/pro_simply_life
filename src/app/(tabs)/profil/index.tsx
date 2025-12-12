@@ -81,10 +81,10 @@ export default function Page() {
 						) : (
 							appUserProfil?.files?.map((file) => {
 								const isNotOpenable =
-									!file.file.mimeType?.startsWith("application/") && !file.file.mimeType?.startsWith("image/");
+									!file.file.mimeType?.startsWith("application/pdf") && !file.file.mimeType?.startsWith("image/");
 								const isImage = file.file.mimeType?.startsWith("image/");
 
-								if (!isNotOpenable) {
+								if (isNotOpenable) {
 									return (
 										<BrochureExcel
 											key={file.id}
