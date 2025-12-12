@@ -84,7 +84,7 @@ export default function Page() {
 									!file.file.mimeType?.startsWith("application/") && !file.file.mimeType?.startsWith("image/");
 								const isImage = file.file.mimeType?.startsWith("image/");
 
-								if (isNotOpenable) {
+								if (!isNotOpenable) {
 									return (
 										<BrochureExcel
 											key={file.id}
