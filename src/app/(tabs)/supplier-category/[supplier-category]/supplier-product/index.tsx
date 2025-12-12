@@ -221,7 +221,7 @@ export default function Page() {
 										showsHorizontalScrollIndicator={false}
 										data={[
 											{
-												title: "Contact",
+												title: "Sans réduction d'impôt",
 												subtitle: "",
 											},
 											{
