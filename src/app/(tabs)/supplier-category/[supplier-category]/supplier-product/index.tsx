@@ -273,7 +273,7 @@ export default function Page() {
 										decelerationRate={"fast"}
 										contentContainerStyle={{ gap: 16 }}
 									>
-										{/* Contact - All suppliers */}
+										{/* Sans réduction d'impôt - Only impot !== 'yes' */}
 										<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 											<ScrollView
 												className="flex-1"
@@ -284,6 +284,7 @@ export default function Page() {
 												<View className="mt-5 gap-2">
 													{data.product_suppliers.map((supplierProduct) => {
 														if (excludedProductSupplierIds.includes(supplierProduct.id)) return null;
+														if (supplierProduct.impot === "yes") return null;
 
 														return (
 															<CardSupplierProduct
