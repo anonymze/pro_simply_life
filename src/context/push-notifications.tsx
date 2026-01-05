@@ -78,15 +78,19 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 						break;
 					case "supplier":
 						if (notifData.data.supplierProductId && notifData.data.supplierCategoryId && notifData.data.supplierId) {
-							router.push({
-								pathname:
-									"/(tabs)/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]",
-								params: {
-									"supplier-category": notifData.data.supplierCategoryId,
-									"supplier-product": notifData.data.supplierProductId,
-									supplier: notifData.data.supplierId,
-								},
-							});
+						router.push({
+							pathname:
+								"/supplier-category",
+						});
+						router.push({
+							pathname:
+								"/(tabs)/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]",
+							params: {
+								"supplier-category": notifData.data.supplierCategoryId,
+								"supplier-product": notifData.data.supplierProductId,
+								supplier: notifData.data.supplierId,
+							},
+						});
 						}
 						break;
 					case "selection":
