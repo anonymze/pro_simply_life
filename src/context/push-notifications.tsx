@@ -84,7 +84,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 								params: {
 									"supplier-category": notifData.data.supplierCategoryId,
 									"supplier-product": notifData.data.supplierProductId,
-									supplier: notifData.data.supplierIdw,
+									supplier: notifData.data.supplierId,
 								},
 							});
 						}
@@ -141,7 +141,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 							params: {
 								"supplier-category": notifData.data.supplierCategoryId,
 								"supplier-product": notifData.data.supplierProductId,
-								supplier: notifData.data.supplierIdw,
+								supplier: notifData.data.supplierId,
 							},
 						});
 					}
