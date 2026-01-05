@@ -14,8 +14,8 @@ type NotificationData =
 			type: "supplier";
 			data: {
 				supplierId: string;
-				supplierProductId: string | null;
-				supplierCategoryId: string | null;
+				supplierProductId: string;
+				supplierCategoryId: string;
 				[key: string]: any;
 			};
 	  }
@@ -67,41 +67,45 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 
 		// Check if app was opened from a notification (when app was completely closed)
 		Notifications.getLastNotificationResponseAsync().then((response) => {
-		if (response) {
-			const notifData = response.notification.request.content.data as NotificationData;
-			switch (notifData.type) {
-				case "message":
-					router.push(`/chat/${notifData.data.chatRoomId}`);
-					break;
-				case "private":
-					// router.push(`/private-equity/${notifData.data.privateEquityId}`);
-					break;
-				case "supplier":
-					// if (notifData.data.supplierProductId) {
-					// 	router.push(`/supplier/${notifData.data.supplierId}/product/${notifData.data.supplierProductId}`);
-					// } else if (notifData.data.supplierCategoryId) {
-					// 	router.push(`/supplier/${notifData.data.supplierId}/category/${notifData.data.supplierCategoryId}`);
-					// } else {
-					// 	router.push(`/supplier/${notifData.data.supplierId}`);
-					// }
-					break;
-				case "selection":
-					router.push(`/selection/${notifData.data.selectionId}`);
-					break;
-				case "fundesys":
-					router.push(`/fundesys/${notifData.data.fundesysId}`);
-					break;
-				case "fidnet":
-					router.push(`/fidnet/${notifData.data.fidnetId}`);
-					break;
-				case "agency":
-					router.push(`/event/${notifData.data.agencyLifeId}`);
-					break;
-				case "profil":
-					router.push(`/profil`);
-					break;
+			if (response) {
+				const notifData = response.notification.request.content.data as NotificationData;
+				switch (notifData.type) {
+					case "message":
+						router.push(`/chat/${notifData.data.chatRoomId}`);
+						break;
+					case "private":
+						// router.push(`/private-equity/${notifData.data.privateEquityId}`);
+						break;
+					case "supplier":
+						if (notifData.data.supplierProductId && notifData.data.supplierCategoryId && notifData.data.supplierId) {
+							router.push({
+								pathname:
+									"/(tabs)/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]",
+								params: {
+									"supplier-category": notifData.data.supplierCategoryId,
+									"supplier-product": notifData.data.supplierProductId,
+									supplier: notifData.data.supplierIdw,
+								},
+							});
+						}
+						break;
+					case "selection":
+						router.push(`/selection/${notifData.data.selectionId}`);
+						break;
+					case "fundesys":
+						router.push(`/fundesys/${notifData.data.fundesysId}`);
+						break;
+					case "fidnet":
+						router.push(`/fidnet/${notifData.data.fidnetId}`);
+						break;
+					case "agency":
+						router.push(`/event/${notifData.data.agencyLifeId}`);
+						break;
+					case "profil":
+						router.push(`/profil`);
+						break;
+				}
 			}
-		}
 		});
 
 		// Listen for token changes/updates
