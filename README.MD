@@ -211,4 +211,4 @@ clients excel à customiser
 
 SYSTEME DE NOTIFICATION SUR LES ENVELOPPES CIF QUI NOTIFIE QU'ON ARRIVE À LA FIN DE LA DATE DE L'ENVELOPPE
 
-mettre à jour fournisseur
+mettre à jour fournisseur notification

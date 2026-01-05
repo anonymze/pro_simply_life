@@ -137,6 +137,10 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 					if (notifData.data.supplierProductId && notifData.data.supplierCategoryId && notifData.data.supplierId) {
 						router.replace({
 							pathname:
+								"/supplier-category",
+						});
+						router.push({
+							pathname:
 								"/(tabs)/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]",
 							params: {
 								"supplier-category": notifData.data.supplierCategoryId,
