@@ -134,13 +134,17 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 					// router.replace(`/private-equity/${notifData.data.privateEquityId}`);
 					break;
 				case "supplier":
-					// if (notifData.data.supplierProductId) {
-					// 	router.replace(`/supplier/${notifData.data.supplierId}/product/${notifData.data.supplierProductId}`);
-					// } else if (notifData.data.supplierCategoryId) {
-					// 	router.replace(`/supplier/${notifData.data.supplierId}/category/${notifData.data.supplierCategoryId}`);
-					// } else {
-					// 	router.replace(`/supplier/${notifData.data.supplierId}`);
-					// }
+					if (notifData.data.supplierProductId && notifData.data.supplierCategoryId && notifData.data.supplierId) {
+						router.replace({
+							pathname:
+								"/(tabs)/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]",
+							params: {
+								"supplier-category": notifData.data.supplierCategoryId,
+								"supplier-product": notifData.data.supplierProductId,
+								supplier: notifData.data.supplierIdw,
+							},
+						});
+					}
 					break;
 				case "selection":
 					router.replace(`/selection/${notifData.data.selectionId}`);
