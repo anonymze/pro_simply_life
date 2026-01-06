@@ -85,7 +85,7 @@ export default function CardSupplier({
 											)}
 										/>
 										<Text className="text-xs text-backgroundChat">Montant enveloppe disponible</Text>
-										<Text className="ml-auto font-light text-sm text-primaryLight">
+										<Text className="ml-auto font-light text-xs text-primaryLight">
 											{supplier.enveloppe.amount.toLocaleString("fr-FR")}€
 										</Text>
 									</View>
@@ -94,7 +94,7 @@ export default function CardSupplier({
 										<Text className="ml-auto font-light text-sm text-primaryLight">
 											{" "}
 											{supplier.enveloppe.actualisation
-												? new Date(supplier.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+												? new Date(supplier.enveloppe.echeance ?? "").toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
 														year: "numeric",
