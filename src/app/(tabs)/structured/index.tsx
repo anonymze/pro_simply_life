@@ -5,6 +5,7 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { StructuredProduct } from "@/types/structured-product";
+import { cn } from "@/utils/cn";
 import { withQueryWrapper } from "@/utils/libs/react-query";
 import { Link } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
@@ -60,7 +61,7 @@ export default function Page() {
 								<Text className="mb-3 text-base font-semibold text-primary">À venir</Text>
 								{aVenir.map((product, index) => (
 									<View key={product.id}>
-										<Card structuredProduct={product} />
+										<Card disabled structuredProduct={product} />
 										{index < aVenir.length - 1 && <View className="h-2.5" />}
 									</View>
 								))}
@@ -73,10 +74,34 @@ export default function Page() {
 	)();
 }
 
-function Card({ structuredProduct }: { structuredProduct: StructuredProduct }) {
+function Card({ structuredProduct, disabled = false }: { structuredProduct: StructuredProduct, disabled?: boolean }) {
 	const onPress = React.useCallback(() => {
 		queryClient.setQueryData(["struct", structuredProduct.id], structuredProduct);
 	}, [structuredProduct]);
+
+	if (disabled) {
+		return (
+			<View className="w-full flex-row items-center gap-3 rounded-xl  bg-white p-2 opacity-80">
+				<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">
+					<ImagePlaceholder
+						transition={300}
+						contentFit="contain"
+						placeholder={structuredProduct.supplier.logo_mini?.blurhash}
+						source={structuredProduct.supplier.logo_mini?.url}
+						style={{ width: 26, height: 26, borderRadius: 4 }}
+					/>
+				</View>
+				<View className="flex-1">
+					<Text className="font-semibold text-lg text-primary">{structuredProduct.supplier.name}</Text>
+					<Text className={cn("text-sm text-primaryLight")}>{new Date(structuredProduct.start_comm).toLocaleDateString("fr-FR", {
+						day: "numeric",
+						month: "long",
+						year: "numeric",
+					})}</Text>
+				</View>
+			</View>
+		);
+	}
 
 	return (
 		<Link
@@ -102,7 +127,7 @@ function Card({ structuredProduct }: { structuredProduct: StructuredProduct }) {
 				</View>
 				<View className="flex-1">
 					<Text className="font-semibold text-lg text-primary">{structuredProduct.supplier.name}</Text>
-					<Text className="text-sm text-primaryLight">{structuredProduct.name}</Text>
+					<Text className={cn("text-sm text-primaryLight")}>{structuredProduct.name}</Text>
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</MyTouchableScaleOpacity>
