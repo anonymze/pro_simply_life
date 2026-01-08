@@ -62,7 +62,7 @@ export default function Page() {
 								<View
 									className="gap-1"
 									style={{
-										width: percentage > 100 ? `100%` : percentage < 0 ? 28 : `${percentage}%`,
+										width: percentage > 100 ? `100%` : percentage <= 10 ? 28 : `${percentage}%`,
 									}}
 								>
 									<Text className="text-center text-xs text-primaryLight">{Math.ceil(percentage)}%</Text>
