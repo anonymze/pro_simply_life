@@ -11,11 +11,11 @@ import { Link } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 
 export default function Page() {
-    const insets = useSafeAreaInsets();
+	const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
 			queryKey: ["structured"],
@@ -40,10 +40,7 @@ export default function Page() {
 				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<Title title="Produits structurés" className="mb-7" />
 
-					<ScrollView
-						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{ paddingBottom: 10 }}
-					>
+					<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
 						{enCours.length > 0 && (
 							<View className="mb-6">
 								<Text className="mb-3 text-base font-semibold text-primary">En cours</Text>
@@ -57,12 +54,12 @@ export default function Page() {
 						)}
 
 						{aVenir.length > 0 && (
-							<View>
+							<View className="mb-6">
 								<Text className="mb-3 text-base font-semibold text-primary">À venir</Text>
 								{aVenir.map((product, index) => (
 									<View key={product.id}>
-										<Card disabled structuredProduct={product} />
-										{index < aVenir.length - 1 && <View className="h-2.5" />}
+										<Card structuredProduct={product} />
+										{index < enCours.length - 1 && <View className="h-2.5" />}
 									</View>
 								))}
 							</View>
@@ -74,7 +71,7 @@ export default function Page() {
 	)();
 }
 
-function Card({ structuredProduct, disabled = false }: { structuredProduct: StructuredProduct, disabled?: boolean }) {
+function Card({ structuredProduct, disabled = false }: { structuredProduct: StructuredProduct; disabled?: boolean }) {
 	const onPress = React.useCallback(() => {
 		queryClient.setQueryData(["struct", structuredProduct.id], structuredProduct);
 	}, [structuredProduct]);
@@ -92,12 +89,14 @@ function Card({ structuredProduct, disabled = false }: { structuredProduct: Stru
 					/>
 				</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-primary">{structuredProduct.supplier.name}</Text>
-					<Text className={cn("text-sm text-primaryLight")}>{new Date(structuredProduct.start_comm).toLocaleDateString("fr-FR", {
-						day: "numeric",
-						month: "long",
-						year: "numeric",
-					})}</Text>
+					<Text className="text-lg font-semibold text-primary">{structuredProduct.supplier.name}</Text>
+					<Text className={cn("text-sm text-primaryLight")}>
+						{new Date(structuredProduct.start_comm).toLocaleDateString("fr-FR", {
+							day: "numeric",
+							month: "long",
+							year: "numeric",
+						})}
+					</Text>
 				</View>
 			</View>
 		);
@@ -126,7 +125,7 @@ function Card({ structuredProduct, disabled = false }: { structuredProduct: Stru
 					/>
 				</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-primary">{structuredProduct.supplier.name}</Text>
+					<Text className="text-lg font-semibold text-primary">{structuredProduct.supplier.name}</Text>
 					<Text className={cn("text-sm text-primaryLight")}>{structuredProduct.name}</Text>
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
