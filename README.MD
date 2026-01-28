@@ -206,3 +206,9 @@ Jeudi 18 décembre
 Notifé utilisateur qui n'a pas répondu à évènement 3 jours avant
 
 clients excel à customiser
+
+une applciation mobile guide du rotuard, et une gance qui s'appelle routard
+
+leclerc voage ?
+
+rg2a

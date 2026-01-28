@@ -53,9 +53,11 @@ export default function Page({ previousCategories = true }: { previousCategories
 		queryKey: ["private-supplier", privateEquityId],
 		queryFn: getPrivateEquityQuery,
 		enabled: !!privateEquityId,
-	});
+  });
 
-	if (!data || !appUser?.user) return null;
+  if (!data || !appUser?.user) return null;
+
+  const hasScpi = !!data?.other_information?.length && data?.other_information?.length > 1;
 
 	return (
 		<>
@@ -88,14 +90,15 @@ export default function Page({ previousCategories = true }: { previousCategories
 			</View>
 			<BackgroundLayout className="px-4">
 				{/* SCPI */}
-				{!!data?.other_information?.length && (
+				{hasScpi && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
 							{
 								title: "Contact",
 								subtitle: "",
-							},
+              },
+							// @ts-ignore
 							...data.other_information.map((info) => {
 								return {
 									title: info.scpi || "SCPI sans titre",
@@ -240,7 +243,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!data?.other_information?.length && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
+					{!hasScpi && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">
 							{data?.enveloppe && data.enveloppe.amount && (
 								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
