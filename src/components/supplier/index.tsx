@@ -53,20 +53,20 @@ export default function Page({ previousCategories = true }: { previousCategories
 		queryKey: ["private-supplier", privateEquityId],
 		queryFn: getPrivateEquityQuery,
 		enabled: !!privateEquityId,
-  });
+	});
 
-  if (!data || !appUser?.user) return null;
+	if (!data || !appUser?.user) return null;
 
-  const hasScpi = !!data?.other_information?.length && data?.other_information?.length > 1;
+	const hasScpi = !!data?.other_information?.length && data?.other_information?.length > 1;
 
 	return (
 		<>
 			<View className="items-center rounded-b-2xl bg-white pb-4">
 				{previousCategories && (
 					<View className="mb-4 flex-row items-center gap-2">
-						<Text className="font-semibold text-sm text-primary ">{supplierCategoryName}</Text>
+						<Text className="text-sm font-semibold text-primary ">{supplierCategoryName}</Text>
 						<ChevronRight size={14} color={config.theme.extend.colors.primary} />
-						<Text className="font-semibold text-sm text-primary">{supplierProductName}</Text>
+						<Text className="text-sm font-semibold text-primary">{supplierProductName}</Text>
 					</View>
 				)}
 				<ImagePlaceholder
@@ -77,7 +77,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ width: "95%", height: 60 }}
 				/>
 				<View className="mt-4 flex-row items-center gap-3">
-					<Text className="font-bold text-xl">{data.name}</Text>
+					<Text className="text-xl font-bold">{data.name}</Text>
 					{data.website && (
 						<TouchableOpacity
 							className="rounded-full bg-primaryUltraLight p-2.5"
@@ -97,7 +97,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							{
 								title: "Contact",
 								subtitle: "",
-              },
+							},
 							// @ts-ignore
 							...data.other_information.map((info) => {
 								return {
@@ -107,7 +107,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							}),
 						]}
 						horizontal
-						className="my-4 h-15"
+						className="h-15 my-4"
 						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 							return (
@@ -130,7 +130,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										}
 									}}
 								>
-									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+									<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
 										{item.title}
 									</Text>
 									{item.subtitle && (
@@ -156,7 +156,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							})),
 						]}
 						horizontal
-						className="my-4 h-15"
+						className="h-15 my-4"
 						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
@@ -180,7 +180,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										}
 									}}
 								>
-									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+									<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
 										{item?.title}
 									</Text>
 								</Pressable>
@@ -204,7 +204,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							},
 						]}
 						horizontal
-						className="my-4 h-15"
+						className="h-15 my-4"
 						renderItem={({ item, index }) => {
 							const isActive = currentIndex === index;
 
@@ -228,7 +228,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										}
 									}}
 								>
-									<Text className={cn("font-bold text-sm", isActive ? "text-white" : "text-primary")}>
+									<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
 										{item?.title}
 									</Text>
 								</Pressable>
@@ -276,13 +276,13 @@ export default function Page({ previousCategories = true }: { previousCategories
 											className={cn("size-2 rounded-full bg-green-600", data.enveloppe.amount <= 0 && "bg-production")}
 										/>
 										<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
-										<Text className="ml-auto font-light text-sm text-primaryLight">
+										<Text className="ml-auto text-sm font-light text-primaryLight">
 											{data.enveloppe.amount.toLocaleString("fr-FR")}€
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
-										<Text className="ml-auto font-light text-sm text-primaryLight">
+										<Text className="ml-auto text-sm font-light text-primaryLight">
 											{data.enveloppe.echeance
 												? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
 														day: "numeric",
@@ -294,7 +294,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
-										<Text className="ml-auto font-light text-sm text-primaryLight">
+										<Text className="ml-auto text-sm font-light text-primaryLight">
 											{data.enveloppe.reduction
 												? data.enveloppe.reduction.toLocaleString("fr-FR") + "%"
 												: "Non renseigné"}
@@ -302,7 +302,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
-										<Text className="ml-auto font-light text-sm text-primaryLight">
+										<Text className="ml-auto text-sm font-light text-primaryLight">
 											{data.enveloppe.actualisation
 												? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 														day: "numeric",
@@ -314,13 +314,13 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Commissions</Text>
-										<Text className="ml-auto font-light text-sm text-primaryLight">
+										<Text className="ml-auto text-sm font-light text-primaryLight">
 											{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-xs text-green-600">Commissions négociées Groupe Valorem</Text>
-										<Text className="ml-auto font-light text-xs text-green-600">
+										<Text className="ml-auto text-xs font-light text-green-600">
 											{data.enveloppe.commission_valorem ? data.enveloppe.commission_valorem + "%" : "Non renseigné"}
 										</Text>
 									</View>
@@ -360,7 +360,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mt-3 gap-2">
 										<Text className="text-sm text-backgroundChat">Remarques :</Text>
-										<Text className=" font-light text-sm text-primaryLight">{data.enveloppe.remarque}</Text>
+										<Text className=" text-sm font-light text-primaryLight">{data.enveloppe.remarque}</Text>
 									</View>
 								</View>
 							)}
@@ -445,6 +445,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									supplierProductId={supplierProductId}
 									phone={data.contact_info?.phone}
 									email={data.contact_info?.email}
+									website={data.website}
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
 									brochures={data.brochures}
@@ -559,13 +560,13 @@ export default function Page({ previousCategories = true }: { previousCategories
 												)}
 											/>
 											<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
-											<Text className="ml-auto font-light text-sm text-primaryLight">
+											<Text className="ml-auto text-sm font-light text-primaryLight">
 												{data.enveloppe.amount.toLocaleString("fr-FR")}€
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
-											<Text className="ml-auto font-light text-sm text-primaryLight">
+											<Text className="ml-auto text-sm font-light text-primaryLight">
 												{data.enveloppe.echeance
 													? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
 															day: "numeric",
@@ -577,7 +578,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
-											<Text className="ml-auto font-light text-sm text-primaryLight">
+											<Text className="ml-auto text-sm font-light text-primaryLight">
 												{data.enveloppe.reduction
 													? data.enveloppe.reduction.toLocaleString("fr-FR") + "%"
 													: "Non renseigné"}
@@ -585,7 +586,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
-											<Text className="ml-auto font-light text-sm text-primaryLight">
+											<Text className="ml-auto text-sm font-light text-primaryLight">
 												{data.enveloppe.actualisation
 													? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 															day: "numeric",
@@ -597,7 +598,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Commissions</Text>
-											<Text className="ml-auto font-light text-sm text-primaryLight">
+											<Text className="ml-auto text-sm font-light text-primaryLight">
 												{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
 											</Text>
 										</View>
@@ -637,7 +638,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										</View>
 										<View className="mt-3 gap-2">
 											<Text className="text-sm text-backgroundChat">Remarques :</Text>
-											<Text className=" font-light text-sm text-primaryLight">{data.enveloppe.remarque}</Text>
+											<Text className=" text-sm font-light text-primaryLight">{data.enveloppe.remarque}</Text>
 										</View>
 									</View>
 								)}
@@ -810,7 +811,7 @@ const Logs = ({ link, title }: { link: Href; title: string }) => {
 					<KeyRoundIcon size={20} color={config.theme.extend.colors.primary} />
 				</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-primary">{title}</Text>
+					<Text className="text-lg font-semibold text-primary">{title}</Text>
 				</View>
 				{/* <ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} /> */}
 			</TouchableOpacity>
@@ -855,7 +856,7 @@ const ContactInfo = ({
 				<View className="flex-row items-center justify-between gap-2">
 					<View className="shrink gap-2">
 						<Text className="text-sm text-primaryLight">Téléphone</Text>
-						<Text selectable className="font-semibold text-base text-primary">
+						<Text selectable className="text-base font-semibold text-primary">
 							{numbersString}
 						</Text>
 					</View>
@@ -874,7 +875,7 @@ const ContactInfo = ({
 				<View className="flex-row items-center justify-between gap-2">
 					<View className="shrink grow-0 gap-2">
 						<Text className="text-sm text-primaryLight">E-mail</Text>
-						<Text selectable className="font-semibold text-base text-primary">
+						<Text selectable className="text-base font-semibold text-primary">
 							{email}
 						</Text>
 					</View>
@@ -891,7 +892,7 @@ const ContactInfo = ({
 				<View className="flex-row items-center justify-between gap-2">
 					<View className="shrink grow-0 gap-2">
 						<Text className="text-sm text-primaryLight">Adresse du site internet</Text>
-						<Text selectable className="font-semibold text-base text-primary">
+						<Text selectable className="text-base font-semibold text-primary">
 							{website}
 						</Text>
 					</View>
@@ -959,39 +960,39 @@ const ScpiComponent = ({
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="font-semibold text-sm text-primaryLight">SCPI</Text>
-				<Text className="font-semibold text-sm text-primary">{information.scpi}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">SCPI</Text>
+				<Text className="text-sm font-semibold text-primary">{information.scpi}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Thématique</Text>
-				<Text className="font-semibold text-base text-primary">{information.theme}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Thématique</Text>
+				<Text className="text-base font-semibold text-primary">{information.theme}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex flex-row items-center justify-between">
-					<Text className="font-semibold text-sm text-primaryLight">Épargne</Text>
+					<Text className="text-sm font-semibold text-primaryLight">Épargne</Text>
 					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 						{information.epargne ? "Oui" : "Non"}
 					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Remarque</Text>
-				<Text className="font-semibold text-base text-primary">{information.annotation}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Remarque</Text>
+				<Text className="text-base font-semibold text-primary">{information.annotation}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Minimum de versement</Text>
-				<Text className="font-semibold text-base text-primary">{information.minimum_versement}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Frais de souscription</Text>
-				<Text className="font-semibold text-base text-primary">{information.subscription_fee}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
+				<Text className="text-base font-semibold text-primary">{information.subscription_fee}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Délai de jouissance</Text>
-				<Text className="font-semibold text-base text-primary">{information.duration}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Délai de jouissance</Text>
+				<Text className="text-base font-semibold text-primary">{information.duration}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Rentabilité N1</Text>
-				<Text className="font-semibold text-base text-primary">{information.rentability_n1}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Rentabilité N1</Text>
+				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-green-600">Commission pour le groupe Valorem</Text>
-				<Text className="font-semibold text-base text-green-600">{information.commission_offer_group_valorem}</Text>
+				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
+				<Text className="text-base font-semibold text-green-600">{information.commission_offer_group_valorem}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Commission pour l'offre publique</Text>
-				<Text className="font-semibold text-base text-primary">{information.commission_public_offer}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
+				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
 			</View>
 			{information.brochure && (
 				<Brochure
@@ -1045,8 +1046,8 @@ const FondComponent = ({
 					.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
 					.map(([key, value], idx, arr) => (
 						<React.Fragment key={key}>
-							<Text className="font-semibold text-sm text-primaryLight">{FOND_LABELS[key] || key}</Text>
-							<Text className="font-semibold text-sm text-primary">{value as string}</Text>
+							<Text className="text-sm font-semibold text-primaryLight">{FOND_LABELS[key] || key}</Text>
+							<Text className="text-sm font-semibold text-primary">{value as string}</Text>
 							{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
 						</React.Fragment>
 					))}
@@ -1085,44 +1086,44 @@ const PEAComponent = ({ information }: { information: Supplier["pea"] }) => {
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="font-semibold text-sm text-primaryLight">Banque dépositaire</Text>
-				<Text className="font-semibold text-sm text-primary">{information?.banque}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Banque dépositaire</Text>
+				<Text className="text-sm font-semibold text-primary">{information?.banque}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex flex-row items-center justify-between">
-					<Text className="font-semibold text-sm text-primaryLight">Titre vif</Text>
+					<Text className="text-sm font-semibold text-primaryLight">Titre vif</Text>
 					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 						{information?.title_vif === "yes" ? "Oui" : "Non"}
 					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex flex-row items-center justify-between">
-					<Text className="font-semibold text-sm text-primaryLight">Architecture ouverte</Text>
+					<Text className="text-sm font-semibold text-primaryLight">Architecture ouverte</Text>
 					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 						{information?.architecture_open === "yes" ? "Oui" : "Non"}
 					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Nombre de fonds</Text>
-				<Text className="font-semibold text-base text-primary">{information?.fonds}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Nombre de fonds</Text>
+				<Text className="text-base font-semibold text-primary">{information?.fonds}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex flex-row items-center justify-between">
-					<Text className="font-semibold text-sm text-primaryLight">Versement programmé</Text>
+					<Text className="text-sm font-semibold text-primaryLight">Versement programmé</Text>
 					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 						{information?.vp === "yes" ? "Oui" : "Non"}
 					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Retrocession gestion libre</Text>
-				<Text className="font-semibold text-base text-primary">{information?.retrocession_gestion_libre}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Retrocession gestion libre</Text>
+				<Text className="text-base font-semibold text-primary">{information?.retrocession_gestion_libre}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Retrocession gestion sous mandat</Text>
-				<Text className="font-semibold text-base text-primary">{information?.retrocession_gestion_mandat}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Retrocession gestion sous mandat</Text>
+				<Text className="text-base font-semibold text-primary">{information?.retrocession_gestion_mandat}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Coût passage d'ordre</Text>
-				<Text className="font-semibold text-base text-primary">{information?.passage_order}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Coût passage d'ordre</Text>
+				<Text className="text-base font-semibold text-primary">{information?.passage_order}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="font-semibold text-sm text-primaryLight">Interface</Text>
-				<Text className="font-semibold text-base text-primary">{information?.interface}</Text>
+				<Text className="text-sm font-semibold text-primaryLight">Interface</Text>
+				<Text className="text-base font-semibold text-primary">{information?.interface}</Text>
 			</View>
 		</View>
 	);
