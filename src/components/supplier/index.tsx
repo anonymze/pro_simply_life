@@ -57,7 +57,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 
 	if (!data || !appUser?.user) return null;
 
-	const hasScpi = !!data?.other_information?.length && data?.other_information?.length > 1;
+  const hasScpi = !!data?.other_information?.length && (data?.other_information[0].scpi || data?.other_information[0].theme);
 
 	return (
 		<>
