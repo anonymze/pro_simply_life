@@ -3,6 +3,7 @@ import { getSupplierQuery } from "@/api/queries/supplier-queries";
 import { Brochure } from "@/components/brochure";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
+import { Media } from "@/types/media";
 import { FOND_LABELS, PrivateEquity } from "@/types/private-equity";
 import { Supplier } from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
@@ -57,7 +58,8 @@ export default function Page({ previousCategories = true }: { previousCategories
 
 	if (!data || !appUser?.user) return null;
 
-  const hasScpi = !!data?.other_information?.length && (data?.other_information[0].scpi || data?.other_information[0].theme);
+	const hasScpi =
+		!!data?.other_information?.length && (data.other_information[0].scpi || data.other_information[0].theme);
 
 	return (
 		<>
@@ -376,6 +378,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								website={data.website}
 								brochures={data.brochures}
 								previousCategories={previousCategories}
+								photo={data.contact_info.photo}
 							/>
 
 							{userHierarchy[appUser.user.role] < 2 &&
@@ -450,6 +453,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									lastname={data.contact_info?.lastname}
 									brochures={data.brochures}
 									previousCategories
+									photo={data.contact_info.photo}
 								/>
 
 								{userHierarchy[appUser.user.role] < 2 &&
@@ -651,8 +655,10 @@ export default function Page({ previousCategories = true }: { previousCategories
 									email={data.contact_info?.email}
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
+									website={data.website}
 									brochures={data.brochures}
 									previousCategories
+									photo={data.contact_info.photo}
 								/>
 
 								{userHierarchy[appUser.user.role] < 2 &&
@@ -672,7 +678,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 															},
 														}
 													: {
-															pathname: "selection/[supplier]/logs/[logs]",
+															pathname: "/selection/[supplier]/logs/[logs]",
 															params: {
 																supplier: supplierId,
 																logs: JSON.stringify(data.connexion),
@@ -697,7 +703,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 													},
 												}
 											: {
-													pathname: "selection/[supplier]/perso/[perso]",
+													pathname: "/selection/[supplier]/perso/[perso]",
 													params: {
 														supplier: supplierId,
 														perso: "hey",
@@ -728,8 +734,10 @@ export default function Page({ previousCategories = true }: { previousCategories
 									email={data.contact_info?.email}
 									firstname={data.contact_info?.firstname}
 									lastname={data.contact_info?.lastname}
+									website={data.website}
 									brochures={data.brochures}
 									previousCategories
+									photo={data.contact_info.photo}
 								/>
 
 								{userHierarchy[appUser.user.role] < 2 &&
@@ -825,6 +833,7 @@ const ContactInfo = ({
 	firstname,
 	lastname,
 	website,
+	photo,
 	brochures,
 	previousCategories,
 	supplierCategoryId,
@@ -835,6 +844,7 @@ const ContactInfo = ({
 	supplierCategoryId: string | string[];
 	supplierProductId: string | string[];
 	supplierId: string | string[];
+	photo?: Media | null;
 	phone?: string | null;
 	email?: string | null;
 	firstname?: string | null;
@@ -848,10 +858,25 @@ const ContactInfo = ({
 	return (
 		<View className="gap-3">
 			<View className="gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="text-sm text-primaryLight">Prénom et Nom</Text>
-				<Text selectable className="font-semibold text-primary">
-					{firstname} {lastname?.toUpperCase()}
-				</Text>
+				<View className="flex-row items-center justify-between gap-2">
+					<View className="shrink gap-2">
+						<Text className="text-sm text-primaryLight">Prénom et nom</Text>
+						<Text selectable className="text-base font-semibold text-primary">
+							{firstname} {lastname?.toUpperCase()}
+						</Text>
+					</View>
+					{photo && (
+						<ImagePlaceholder
+							transition={300}
+							contentFit="cover"
+							placeholder={photo?.blurhash}
+							placeholderContentFit="cover"
+							source={photo?.url}
+							// contentPosition="top"
+							style={{ width: 90, height: 90, borderRadius: 8 }}
+						/>
+					)}
+				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex-row items-center justify-between gap-2">
 					<View className="shrink gap-2">

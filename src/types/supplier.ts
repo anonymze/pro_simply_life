@@ -13,7 +13,8 @@ export interface Supplier {
 				id?: string | null;
 		  }[]
 		| null;
-	contact_info: {
+  contact_info: {
+    photo?: Media | null;
 		lastname?: string | null;
 		firstname?: string | null;
 		email?: string | null;
