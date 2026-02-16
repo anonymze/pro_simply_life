@@ -35,7 +35,7 @@ export default function CardSupplier({
 		if (privateEquity) {
 			queryClient.setQueryData(["private-supplier", privateEquity.id], privateEquity);
 		}
-	}, [link, supplier, queryName]);
+  }, [link, supplier, queryName]);
 
 	return (
 		<Link href={link} push asChild>
@@ -50,62 +50,83 @@ export default function CardSupplier({
 
 					{enveloppe ? (
 						<>
-							{supplier.enveloppe?.amount ? (
-								<>
-									<View className="mt-3">
-										<View className="flex-row">
-											<View
-												className="gap-1"
-												// @ts-ignore
-												style={{
-													// minWidth: structuredProduct.max / structuredProduct.current,
-													width:
-														supplier.enveloppe.amount >= (supplier.enveloppe.global || DEFAULT_MAX_VALUE)
-															? "100%"
-															: supplier.enveloppe.amount / (supplier.enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
-																? "10%"
-																: (supplier.enveloppe.amount / (supplier.enveloppe.global || DEFAULT_MAX_VALUE)) * 100 +
-																	"%",
-												}}
-											>
+							{(() => {
+								if (!Array.isArray(supplier.enveloppes) || supplier.enveloppes.length === 0) {
+									return <Text className="text-xs text-primaryLight">Pas d'enveloppe</Text>;
+								}
+
+								const totalAmount = supplier.enveloppes.reduce((acc, env) => acc + (env.amount || 0), 0);
+
+								if (totalAmount === 0) {
+									return <Text className="text-xs text-primaryLight">Pas d'enveloppe</Text>;
+								}
+
+								if (supplier.enveloppes.length === 1) {
+									return (
+										<>
+											<View className="mt-3">
+												<View className="flex-row">
+													<View
+														className="gap-1"
+														// @ts-ignore
+														style={{
+															width:
+																supplier.enveloppes[0].amount! >= (supplier.enveloppes[0].global || DEFAULT_MAX_VALUE)
+																	? "100%"
+																	: supplier.enveloppes[0].amount! / (supplier.enveloppes[0].global || DEFAULT_MAX_VALUE) < 0.1
+																		? "10%"
+																		: (supplier.enveloppes[0].amount! / (supplier.enveloppes[0].global || DEFAULT_MAX_VALUE)) * 100 +
+																			"%",
+														}}
+													>
+														<View
+															className={cn(
+																"h-1.5 w-full rounded-full bg-green-600",
+																supplier.enveloppes[0].amount! <= 0 && "bg-production",
+															)}
+														/>
+													</View>
+												</View>
+											</View>
+											<View className="mt-3 flex-row items-center gap-2">
 												<View
 													className={cn(
-														"h-1.5 w-full rounded-full bg-green-600",
-														supplier.enveloppe.amount <= 0 && "bg-production",
+														"size-2 rounded-full bg-green-600",
+														supplier.enveloppes[0].amount! <= 0 && "bg-production",
 													)}
 												/>
+												<Text className="text-[11px] text-backgroundChat">Montant enveloppe disponible</Text>
+												<Text className="ml-auto font-light text-xs text-primaryLight">
+													{supplier.enveloppes[0].amount?.toLocaleString("fr-FR")}€
+												</Text>
 											</View>
-										</View>
-									</View>
-									<View className="mt-3 flex-row items-center gap-2">
-										<View
-											className={cn(
-												"size-2 rounded-full bg-green-600",
-												supplier.enveloppe.amount <= 0 && "bg-production",
-											)}
-										/>
-										<Text className="text-xs text-backgroundChat">Montant enveloppe disponible</Text>
+											<View className="mt-0 flex-row items-center gap-2">
+												<Text className="text-[11px] text-backgroundChat">Date d'echéance</Text>
+												<Text className="ml-auto font-light text-xs text-primaryLight">
+													{supplier.enveloppes[0].actualisation
+														? new Date(supplier.enveloppes[0].echeance ?? "").toLocaleDateString("fr-FR", {
+																day: "numeric",
+																month: "numeric",
+																year: "numeric",
+															})
+														: "Inconnu"}
+												</Text>
+											</View>
+										</>
+									);
+								}
+
+								return (
+									<>
+										<View className="mt-3 flex-row items-center gap-2">
+											<Text className="text-[11px] text-backgroundChat">Montant enveloppes cumulés</Text>
 										<Text className="ml-auto font-light text-xs text-primaryLight">
-											{supplier.enveloppe.amount.toLocaleString("fr-FR")}€
+											{totalAmount.toLocaleString("fr-FR")}€
 										</Text>
-									</View>
-									<View className="mt-0 flex-row items-center gap-2">
-										<Text className="text-xs text-backgroundChat">Date d'echéance </Text>
-										<Text className="ml-auto font-light text-sm text-primaryLight">
-											{" "}
-											{supplier.enveloppe.actualisation
-												? new Date(supplier.enveloppe.echeance ?? "").toLocaleDateString("fr-FR", {
-														day: "numeric",
-														month: "numeric",
-														year: "numeric",
-													})
-												: "Inconnu"}
-										</Text>
-									</View>
-								</>
-							) : (
-								<Text className="text-xs text-primaryLight">Pas d'enveloppe</Text>
-							)}
+										</View>
+									</>
+								);
+							})()}
 						</>
 					) : null}
 				</View>

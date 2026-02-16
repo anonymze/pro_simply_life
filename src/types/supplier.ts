@@ -35,22 +35,40 @@ export interface Supplier {
 		retrocession_gestion_mandat?: string | null;
 		passage_order?: string | null;
 		interface?: string | null;
-	};
-	enveloppe?: {
-		global?: number | null;
-		amount?: number | null;
-		reduction?: number | null;
-		echeance?: string | null;
-		actualisation?: string | null;
-		commission?: string | null;
-		commission_valorem?: string | null;
-		droits?: ("yes" | "no") | null;
-		agrement?: ("yes" | "no") | null;
-		assurance?: ("yes" | "no" | "maybe") | null;
-		investisseur?: ("yes" | "no") | null;
-		close?: ("yes" | "no") | null;
-		remarque?: string | null;
-	};
+  };
+  enveloppes?:
+    | {
+        global?: number | null;
+        amount?: number | null;
+        reduction?: number | null;
+        echeance?: string | null;
+        actualisation?: string | null;
+        commission?: string | null;
+        commission_valorem?: string | null;
+        droits?: ('yes' | 'no') | null;
+        agrement?: ('yes' | 'no') | null;
+        investisseur?: ('yes' | 'no') | null;
+        assurance?: ('yes' | 'no' | 'maybe') | null;
+        close?: ('yes' | 'no') | null;
+        remarque?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+	// enveloppe?: {
+	// 	global?: number | null;
+	// 	amount?: number | null;
+	// 	reduction?: number | null;
+	// 	echeance?: string | null;
+	// 	actualisation?: string | null;
+	// 	commission?: string | null;
+	// 	commission_valorem?: string | null;
+	// 	droits?: ("yes" | "no") | null;
+	// 	agrement?: ("yes" | "no") | null;
+	// 	assurance?: ("yes" | "no" | "maybe") | null;
+	// 	investisseur?: ("yes" | "no") | null;
+	// 	close?: ("yes" | "no") | null;
+	// 	remarque?: string | null;
+	// };
 	selection?: {
 		selection?: boolean | null;
 		category?: string | null;
