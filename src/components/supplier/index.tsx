@@ -247,8 +247,9 @@ export default function Page({ previousCategories = true }: { previousCategories
 				>
 					{!hasScpi && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">
-							{data?.enveloppe && data.enveloppe.amount && (
-								<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
+							{data?.enveloppes?.map((enveloppe, idx) =>
+								enveloppe.amount ? (
+									<View key={idx} className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
 									<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
 									<View className="mt-5">
 										<View className="flex-row">
@@ -257,17 +258,17 @@ export default function Page({ previousCategories = true }: { previousCategories
 												// @ts-ignore
 												style={{
 													width:
-														data.enveloppe.amount >= (data.enveloppe.global || DEFAULT_MAX_VALUE)
+														enveloppe.amount >= (enveloppe.global || DEFAULT_MAX_VALUE)
 															? "100%"
-															: data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
+															: enveloppe.amount / (enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
 																? "10%"
-																: (data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE)) * 100 + "%",
+																: (enveloppe.amount / (enveloppe.global || DEFAULT_MAX_VALUE)) * 100 + "%",
 												}}
 											>
 												<View
 													className={cn(
 														"h-1.5 w-full rounded-full bg-green-600",
-														data.enveloppe.amount <= 0 && "bg-production",
+														enveloppe.amount <= 0 && "bg-production",
 													)}
 												/>
 											</View>
@@ -275,18 +276,18 @@ export default function Page({ previousCategories = true }: { previousCategories
 									</View>
 									<View className="mb-3 mt-6 flex-row items-center gap-2">
 										<View
-											className={cn("size-2 rounded-full bg-green-600", data.enveloppe.amount <= 0 && "bg-production")}
+											className={cn("size-2 rounded-full bg-green-600", enveloppe.amount <= 0 && "bg-production")}
 										/>
 										<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
 										<Text className="ml-auto text-sm font-light text-primaryLight">
-											{data.enveloppe.amount.toLocaleString("fr-FR")}€
+											{enveloppe.amount.toLocaleString("fr-FR")}€
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
 										<Text className="ml-auto text-sm font-light text-primaryLight">
-											{data.enveloppe.echeance
-												? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
+											{enveloppe.echeance
+												? new Date(enveloppe.echeance).toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
 														year: "numeric",
@@ -297,16 +298,16 @@ export default function Page({ previousCategories = true }: { previousCategories
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
 										<Text className="ml-auto text-sm font-light text-primaryLight">
-											{data.enveloppe.reduction
-												? data.enveloppe.reduction.toLocaleString("fr-FR") + "%"
+											{enveloppe.reduction
+												? enveloppe.reduction.toLocaleString("fr-FR") + "%"
 												: "Non renseigné"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
 										<Text className="ml-auto text-sm font-light text-primaryLight">
-											{data.enveloppe.actualisation
-												? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+											{enveloppe.actualisation
+												? new Date(enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 														day: "numeric",
 														month: "numeric",
 														year: "numeric",
@@ -317,33 +318,33 @@ export default function Page({ previousCategories = true }: { previousCategories
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Commissions</Text>
 										<Text className="ml-auto text-sm font-light text-primaryLight">
-											{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
+											{enveloppe.commission ? enveloppe.commission + "%" : "Non renseigné"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-xs text-green-600">Commissions négociées Groupe Valorem</Text>
 										<Text className="ml-auto text-xs font-light text-green-600">
-											{data.enveloppe.commission_valorem ? data.enveloppe.commission_valorem + "%" : "Non renseigné"}
+											{enveloppe.commission_valorem ? enveloppe.commission_valorem + "%" : "Non renseigné"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Plein droit</Text>
 										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-											{data.enveloppe.droits === "yes" ? "Oui" : "Non"}
+											{enveloppe.droits === "yes" ? "Oui" : "Non"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Agrément</Text>
 										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-											{data.enveloppe.agrement === "yes" ? "Oui" : "Non"}
+											{enveloppe.agrement === "yes" ? "Oui" : "Non"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Garantie de bonne fin fiscale</Text>
 										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-											{data.enveloppe.assurance === "yes"
+											{enveloppe.assurance === "yes"
 												? "Oui"
-												: data.enveloppe.assurance === "maybe"
+												: enveloppe.assurance === "maybe"
 													? "Parfois"
 													: "Non"}
 										</Text>
@@ -351,21 +352,22 @@ export default function Page({ previousCategories = true }: { previousCategories
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
 										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-											{data.enveloppe.investisseur === "yes" ? "Oui" : "Non"}
+											{enveloppe.investisseur === "yes" ? "Oui" : "Non"}
 										</Text>
 									</View>
 									<View className="mt-3 flex-row items-center gap-2">
 										<Text className="text-sm text-backgroundChat">Clause de non retour</Text>
 										<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-											{data.enveloppe.close === "yes" ? "Oui" : "Non"}
+											{enveloppe.close === "yes" ? "Oui" : "Non"}
 										</Text>
 									</View>
 									<View className="mt-3 gap-2">
 										<Text className="text-sm text-backgroundChat">Remarques :</Text>
-										<Text className=" text-sm font-light text-primaryLight">{data.enveloppe.remarque}</Text>
+										<Text className=" text-sm font-light text-primaryLight">{enveloppe.remarque}</Text>
 									</View>
 								</View>
-							)}
+							) : null
+						)}
 
 							<ContactInfo
 								supplierId={supplierId}
@@ -530,8 +532,9 @@ export default function Page({ previousCategories = true }: { previousCategories
 							contentContainerStyle={{ gap: 16 }}
 						>
 							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
-								{data?.enveloppe && data.enveloppe.amount && (
-									<View className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
+								{data?.enveloppes?.map((enveloppe, idx) =>
+									enveloppe.amount ? (
+										<View key={idx} className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
 										<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
 										<View className="mt-5">
 											<View className="flex-row">
@@ -540,17 +543,17 @@ export default function Page({ previousCategories = true }: { previousCategories
 													// @ts-ignore
 													style={{
 														width:
-															data.enveloppe.amount >= (data.enveloppe.global || DEFAULT_MAX_VALUE)
+															enveloppe.amount >= (enveloppe.global || DEFAULT_MAX_VALUE)
 																? "100%"
-																: data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
+																: enveloppe.amount / (enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
 																	? "10%"
-																	: (data.enveloppe.amount / (data.enveloppe.global || DEFAULT_MAX_VALUE)) * 100 + "%",
+																	: (enveloppe.amount / (enveloppe.global || DEFAULT_MAX_VALUE)) * 100 + "%",
 													}}
 												>
 													<View
 														className={cn(
 															"h-1.5 w-full rounded-full bg-green-600",
-															data.enveloppe.amount <= 0 && "bg-production",
+															enveloppe.amount <= 0 && "bg-production",
 														)}
 													/>
 												</View>
@@ -560,19 +563,19 @@ export default function Page({ previousCategories = true }: { previousCategories
 											<View
 												className={cn(
 													"size-2 rounded-full bg-green-600",
-													data.enveloppe.amount <= 0 && "bg-production",
+													enveloppe.amount <= 0 && "bg-production",
 												)}
 											/>
 											<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
 											<Text className="ml-auto text-sm font-light text-primaryLight">
-												{data.enveloppe.amount.toLocaleString("fr-FR")}€
+												{enveloppe.amount.toLocaleString("fr-FR")}€
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
 											<Text className="ml-auto text-sm font-light text-primaryLight">
-												{data.enveloppe.echeance
-													? new Date(data.enveloppe.echeance).toLocaleDateString("fr-FR", {
+												{enveloppe.echeance
+													? new Date(enveloppe.echeance).toLocaleDateString("fr-FR", {
 															day: "numeric",
 															month: "numeric",
 															year: "numeric",
@@ -583,16 +586,16 @@ export default function Page({ previousCategories = true }: { previousCategories
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
 											<Text className="ml-auto text-sm font-light text-primaryLight">
-												{data.enveloppe.reduction
-													? data.enveloppe.reduction.toLocaleString("fr-FR") + "%"
+												{enveloppe.reduction
+													? enveloppe.reduction.toLocaleString("fr-FR") + "%"
 													: "Non renseigné"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
 											<Text className="ml-auto text-sm font-light text-primaryLight">
-												{data.enveloppe.actualisation
-													? new Date(data.enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+												{enveloppe.actualisation
+													? new Date(enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
 															day: "numeric",
 															month: "numeric",
 															year: "numeric",
@@ -603,27 +606,27 @@ export default function Page({ previousCategories = true }: { previousCategories
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Commissions</Text>
 											<Text className="ml-auto text-sm font-light text-primaryLight">
-												{data.enveloppe.commission ? data.enveloppe.commission + "%" : "Non renseigné"}
+												{enveloppe.commission ? enveloppe.commission + "%" : "Non renseigné"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Plein droit</Text>
 											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-												{data.enveloppe.droits === "yes" ? "Oui" : "Non"}
+												{enveloppe.droits === "yes" ? "Oui" : "Non"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Agrément</Text>
 											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-												{data.enveloppe.agrement === "yes" ? "Oui" : "Non"}
+												{enveloppe.agrement === "yes" ? "Oui" : "Non"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Garantie de bonne fin fiscale</Text>
 											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-												{data.enveloppe.assurance === "yes"
+												{enveloppe.assurance === "yes"
 													? "Oui"
-													: data.enveloppe.assurance === "maybe"
+													: enveloppe.assurance === "maybe"
 														? "Parfois"
 														: "Non"}
 											</Text>
@@ -631,21 +634,22 @@ export default function Page({ previousCategories = true }: { previousCategories
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
 											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-												{data.enveloppe.investisseur === "yes" ? "Oui" : "Non"}
+												{enveloppe.investisseur === "yes" ? "Oui" : "Non"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Clause de non retour</Text>
 											<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-												{data.enveloppe.close === "yes" ? "Oui" : "Non"}
+												{enveloppe.close === "yes" ? "Oui" : "Non"}
 											</Text>
 										</View>
 										<View className="mt-3 gap-2">
 											<Text className="text-sm text-backgroundChat">Remarques :</Text>
-											<Text className=" text-sm font-light text-primaryLight">{data.enveloppe.remarque}</Text>
+											<Text className=" text-sm font-light text-primaryLight">{enveloppe.remarque}</Text>
 										</View>
 									</View>
-								)}
+								) : null
+							)}
 
 								<ContactInfo
 									supplierId={supplierId}
