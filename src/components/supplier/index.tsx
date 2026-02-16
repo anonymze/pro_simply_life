@@ -250,7 +250,9 @@ export default function Page({ previousCategories = true }: { previousCategories
 							{data?.enveloppes?.map((enveloppe, idx) =>
 								enveloppe.amount ? (
 									<View key={idx} className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
-									<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
+									<Text className="text-md mt-5 font-semibold text-primary">
+										Taux de remplissage{(data.enveloppes?.length ?? 0) > 1 ? ` (enveloppe ${idx + 1})` : ""}
+									</Text>
 									<View className="mt-5">
 										<View className="flex-row">
 											<View
@@ -535,7 +537,9 @@ export default function Page({ previousCategories = true }: { previousCategories
 								{data?.enveloppes?.map((enveloppe, idx) =>
 									enveloppe.amount ? (
 										<View key={idx} className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
-										<Text className="text-md mt-5 font-semibold text-primary">Taux de remplissage actuel</Text>
+										<Text className="text-md mt-5 font-semibold text-primary">
+											Taux de remplissage{(data.enveloppes?.length ?? 0) > 1 ? ` (enveloppe ${idx + 1})` : ""}
+										</Text>
 										<View className="mt-5">
 											<View className="flex-row">
 												<View
