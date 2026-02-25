@@ -104,7 +104,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							...data.other_information.map((info) => {
 								return {
 									title: info.scpi || "SCPI sans titre",
-									subtitle: info.theme,
+									subtitle: "",
 								};
 							}),
 						]}
