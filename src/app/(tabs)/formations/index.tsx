@@ -36,14 +36,13 @@ export default function Page() {
 		<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 			<Title title="Formations" className="mb-6" />
 			<View className="overflow-hidden rounded-2xl bg-white shadow-sm shadow-defaultGray/10">
-				<View className="h-44 items-center justify-center bg-primaryUltraLight">
-					<View className="absolute left-3 top-3 rounded-full bg-backgroundChat px-3 py-1.5">
-						<Text className="text-sm font-semibold text-white">Mise à jour 2026</Text>
-					</View>
-				</View>
-
 				<View className="gap-4 p-4">
-					<Text className="font-bold text-xl text-primary">Déclaration des revenus 2026</Text>
+					<View className="gap-2">
+						<Text className="text-xl font-bold text-primary">Déclaration des revenus 2026</Text>
+						<View className="self-start rounded-full bg-backgroundChat px-3 py-1.5">
+							<Text className="text-sm font-semibold text-white">Mise à jour 2026</Text>
+						</View>
+					</View>
 
 					<View className="gap-2.5">
 						<View className="flex-row items-center gap-2">
@@ -62,7 +61,7 @@ export default function Page() {
 
 					<View className="flex-row items-center gap-2">
 						<GraduationCapIcon size={18} color={config.theme.extend.colors.primary} />
-						<Text className="font-bold text-lg text-primary">250 € HT</Text>
+						<Text className="text-lg font-bold text-primary">250 € HT</Text>
 					</View>
 
 					<View className="gap-2">
@@ -74,7 +73,7 @@ export default function Page() {
 								)
 							}
 						>
-							<Text className="font-semibold text-base text-white">S'inscrire maintenant</Text>
+							<Text className="text-base font-semibold text-white">S'inscrire maintenant</Text>
 						</MyTouchableOpacity>
 						<MyTouchableOpacity
 							className="items-center justify-center rounded-xl border border-defaultGray/20 p-4"
@@ -83,7 +82,7 @@ export default function Page() {
 							{loading ? (
 								<ActivityIndicator size="small" color={config.theme.extend.colors.primary} />
 							) : (
-								<Text className="font-semibold text-base text-primary">Voir le programme</Text>
+								<Text className="text-base font-semibold text-primary">Voir le programme</Text>
 							)}
 						</MyTouchableOpacity>
 					</View>
