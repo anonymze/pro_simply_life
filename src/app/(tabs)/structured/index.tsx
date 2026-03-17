@@ -19,7 +19,8 @@ export default function Page() {
 	return withQueryWrapper(
 		{
 			queryKey: ["structured"],
-			queryFn: getStructuredProductsQuery,
+      queryFn: getStructuredProductsQuery,
+
 		},
 		({ data }) => {
 			const today = new Date();

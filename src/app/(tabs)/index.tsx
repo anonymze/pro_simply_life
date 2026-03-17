@@ -18,11 +18,10 @@ import CardLink from "@/components/card/card-link";
 import CubeFillIcon from "@/components/svg/cude-fill-icon";
 
 import LampIconFill from "@/components/svg/lamp-fill-icon";
-import SportIconFill from "@/components/svg/sport-fill-icon";
+import FormationFillIcon from "@/components/svg/formation-fill-icon";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 import Title from "@/components/ui/title";
 import { User } from "@/types/user";
-import { USER_LEONIE_ID, USER_MATHIEU_ID } from "@/utils/helper";
 import { Image } from "expo-image";
 import { Linking, ScrollView, Text, View } from "react-native";
 // import type { Math } from "react-native-math";
@@ -80,7 +79,6 @@ export default function Page() {
 				<Title title="Fonctionnalités" />
 				<View className="flex-row flex-wrap justify-between gap-y-4 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
 					{links.map((link) => {
-						if (id !== USER_LEONIE_ID && id !== USER_MATHIEU_ID && link.link === "/(tabs)/sports") return;
 						return (
 							<View key={link.title} className="w-[32%] items-center ">
 								<CardLink
@@ -319,10 +317,10 @@ const links: {
 		backgroundIcon: "bg-[#ffffff]",
 	},
 	{
-		icon: <SportIconFill color={config.theme.extend.colors.primary} width={42} height={42} />,
-		title: "Sport & Patrimoine",
-		description: "Sport",
-		link: "/(tabs)/sports",
+		icon: <FormationFillIcon color={config.theme.extend.colors.primary} width={42} height={42} />,
+		title: "Formations",
+		description: "formation",
+		link: "/(tabs)/formations",
 		backgroundIcon: "bg-[#FEF3C7]",
 	},
 ];

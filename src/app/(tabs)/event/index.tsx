@@ -49,7 +49,8 @@ export default function Page() {
 			queryKey: [
 				"events",
 				{
-					sort: "event_start",
+          "-sort": "event_start",
+					limit: 40
 				},
 			],
 			queryFn: getEventsQuery,

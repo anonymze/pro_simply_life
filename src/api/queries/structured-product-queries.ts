@@ -8,7 +8,8 @@ export async function getStructuredProductsQuery({ queryKey }: { queryKey: Query
 	const [, filter] = queryKey;
 	const today = new Date().toISOString().split('T')[0];
 	const response = await api.get<PaginatedResponse<StructuredProduct>>(`/api/structured`, {
-		params: {
+    params: {
+      limit: 40,
 			where: {
 				end_comm: {
 					greater_than_equal: today

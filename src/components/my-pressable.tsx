@@ -8,7 +8,6 @@ const PressableScaleOpacity = createAnimatedPressable((progress) => {
 	"worklet";
 	return {
 		transform: [
-			{ rotate: `${progress * 0.3}deg` },
 			{
 				translateX: progress * 2,
 			},

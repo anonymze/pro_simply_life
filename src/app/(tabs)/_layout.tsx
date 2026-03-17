@@ -99,9 +99,9 @@ export default function AppLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="sports"
+				name="formations"
 				options={{
-					title: "sports",
+					title: "formations",
 					headerShown: false,
 					href: null,
 				}}

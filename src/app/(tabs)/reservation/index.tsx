@@ -48,7 +48,7 @@ export default function Page() {
     const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
-			queryKey: ["reservations", { limit: 99 }],
+			queryKey: ["reservations", { limit: 40, "-sort": "day_reservation",  }],
 			queryFn: getReservationsQuery,
 		},
 		({ data }) => {
