@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { CalendarIcon, ClockIcon, GraduationCapIcon, UserIcon } from "lucide-react-native";
 import { useState } from "react";
-import { ActivityIndicator, Alert, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 
@@ -36,6 +36,7 @@ export default function Page() {
 	return (
 		<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 			<Title title="Formations" className="mb-6" />
+			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
 			<View className="overflow-hidden rounded-2xl bg-white shadow-sm shadow-defaultGray/10">
 				<Image
 					source={{
@@ -96,6 +97,7 @@ export default function Page() {
 					</View>
 				</View>
 			</View>
+			</ScrollView>
 		</BackgroundLayout>
 	);
 }
