@@ -2,6 +2,7 @@ import { MyTouchableOpacity } from "@/components/my-pressable";
 import Title from "@/components/ui/title";
 import BackgroundLayout from "@/layouts/background-layout";
 import { downloadFile, getFile } from "@/utils/download";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { CalendarIcon, ClockIcon, GraduationCapIcon, UserIcon } from "lucide-react-native";
@@ -36,6 +37,13 @@ export default function Page() {
 		<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 			<Title title="Formations" className="mb-6" />
 			<View className="overflow-hidden rounded-2xl bg-white shadow-sm shadow-defaultGray/10">
+				<Image
+					source={{
+						uri: "https://simply-life-admin.fr/api/media/file/Capture%20d%E2%80%99e%CC%81cran%202026-03-17%20a%CC%80%2016.04.06.png",
+					}}
+					style={{ width: "100%", height: 176 }}
+					contentFit="cover"
+				/>
 				<View className="gap-4 p-4">
 					<View className="gap-2">
 						<Text className="text-xl font-bold text-primary">Déclaration des revenus 2026</Text>
