@@ -144,7 +144,7 @@ const SupplierListComponent = ({
 // Type labels mapping
 const PRIVATE_EQUITY_TYPE_LABELS: Record<PrivateEquity["type"], string> = {
 	capital: "Capital investissement",
-	dettes: "Dettes privées obligatoires",
+	dettes: "Dettes privées obligataires",
 	assurance: "Éligibles assurances vies",
 };
 

@@ -74,7 +74,7 @@ export const needImportantVersion = () => {
 };
 
 export const excludedProductSupplierIds = [
-	// dettes privées obligatoires
+	// dettes privées obligataires
 	"46c9b876-9b9b-4779-b8ff-e4af9d56914e",
 	// capital investissement
 	"2b78beef-9304-4ea2-aa2a-22ab551a22ae",
