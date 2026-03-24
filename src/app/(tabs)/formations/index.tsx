@@ -16,7 +16,7 @@ import config from "tailwind.config";
 
 const presenceLabel: Record<string, string> = {
 	presentiel: "En présentiel",
-	en_ligne: "En ligne",
+	en_ligne: "En visio",
 };
 
 export default function Page() {
