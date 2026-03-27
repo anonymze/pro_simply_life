@@ -12,10 +12,9 @@ import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import Animated, { withSpring, withTiming } from "react-native-reanimated";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 import { withUniwind } from "uniwind";
-
 
 const TouchableOpacityAnimated = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -45,10 +44,10 @@ LocaleConfig.defaultLocale = "fr";
 const StyledCalendar = withUniwind(Calendar);
 
 export default function Page() {
-    const insets = useSafeAreaInsets();
+	const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
-			queryKey: ["reservations", { limit: 40, "-sort": "day_reservation",  }],
+			queryKey: ["reservations", { limit: 40, "-sort": "day_reservation" }],
 			queryFn: getReservationsQuery,
 		},
 		({ data }) => {
@@ -152,7 +151,7 @@ export default function Page() {
 
 						{!!reservationsByDate.length && (
 							<View className="mt-4 gap-2 rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
-								<Text className="font-semibold text-xl text-primary">Créneaux réservés</Text>
+								<Text className="text-xl font-semibold text-primary">Créneaux réservés</Text>
 								{reservationsByDate.map((reservation) => (
 									<Link
 										href={{
@@ -174,11 +173,7 @@ export default function Page() {
 												<View
 													className={cn(
 														"h-16 w-2 rounded-full",
-														reservation.desk === "1"
-															? "bg-secondary"
-															: reservation.desk === "2"
-																? "bg-[#FFEAD5]"
-																: "bg-[#E4F5D7]",
+														reservation.desk === "2" ? "bg-secondary" : "bg-[#E4F5D7]",
 													)}
 												/>
 												<View className="flex-1 gap-2">
@@ -211,34 +206,34 @@ export default function Page() {
 					</ScrollView>
 
 					{selectedDate && (
-							<TouchableOpacityAnimated
-								onPress={() => {
-									router.push({
-										pathname: "/(tabs)/reservation/[date]",
-										params: {
-											date: selectedDate,
-										},
-									});
-								}}
-								entering={() => {
-									"worklet";
-									return {
-										initialValues: {
-											transform: [{ translateY: 100 }],
-											opacity: 0,
-										},
-										animations: {
-											transform: [{ translateY: withSpring(0, { damping: 90, stiffness: 1000 }) }],
-											opacity: withTiming(1, { duration: 300 }),
-										},
-									};
-								}}
-								className="absolute bottom-5 left-0 right-0 mx-5 flex-row items-center justify-center gap-2 rounded-xl bg-primary p-3"
-							>
-								<Calendar1Icon size={20} color={"#fff"} />
-								<Text className="text-center font-semibold text-lg text-white">Réserver un bureau</Text>
-							</TouchableOpacityAnimated>
-						)}
+						<TouchableOpacityAnimated
+							onPress={() => {
+								router.push({
+									pathname: "/(tabs)/reservation/[date]",
+									params: {
+										date: selectedDate,
+									},
+								});
+							}}
+							entering={() => {
+								"worklet";
+								return {
+									initialValues: {
+										transform: [{ translateY: 100 }],
+										opacity: 0,
+									},
+									animations: {
+										transform: [{ translateY: withSpring(0, { damping: 90, stiffness: 1000 }) }],
+										opacity: withTiming(1, { duration: 300 }),
+									},
+								};
+							}}
+							className="absolute bottom-5 left-0 right-0 mx-5 flex-row items-center justify-center gap-2 rounded-xl bg-primary p-3"
+						>
+							<Calendar1Icon size={20} color={"#fff"} />
+							<Text className="text-center text-lg font-semibold text-white">Réserver un bureau</Text>
+						</TouchableOpacityAnimated>
+					)}
 				</BackgroundLayout>
 			);
 		},

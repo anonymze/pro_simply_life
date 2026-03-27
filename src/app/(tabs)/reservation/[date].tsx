@@ -56,7 +56,6 @@ export default function Page() {
 	const userInfos = getStorageUserInfos();
 
 	const bureauData = [
-		{ title: "Bureau 1", value: "1" },
 		{ title: "Bureau 2", value: "2" },
 		{ title: "Salle de réunion", value: "3" },
 	];

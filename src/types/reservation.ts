@@ -6,7 +6,7 @@ export interface Reservation {
   id: string;
   title: string;
   app_user: User;
-  desk: '1' | '2' | '3';
+  desk: '2' | '3';
   invitations?:
     | {
         email: string;
