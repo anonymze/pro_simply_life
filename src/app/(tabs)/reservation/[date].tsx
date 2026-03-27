@@ -1,7 +1,7 @@
 import { queryClient } from "@/api/_queries";
 import { createReservationQuery } from "@/api/queries/reservation-queries";
 import BackgroundLayout from "@/layouts/background-layout";
-import { Reservation } from "@/types/reservation";
+import { labels, Reservation } from "@/types/reservation";
 import { PaginatedResponse } from "@/types/response";
 import { cn } from "@/utils/cn";
 import { getStorageUserInfos } from "@/utils/store";
@@ -55,10 +55,9 @@ export default function Page() {
 	const [dropdownKey, setDropdownKey] = useState(0);
 	const userInfos = getStorageUserInfos();
 
-	const bureauData = [
-		{ title: "Bureau 2", value: "2" },
-		{ title: "Salle de réunion", value: "3" },
-	];
+	const bureauData = Object.entries(labels)
+		.filter(([key]) => key !== "1")
+		.map(([key, title]) => ({ title, value: key }));
 
 	const mutation = useMutation({
 		mutationFn: createReservationQuery,
