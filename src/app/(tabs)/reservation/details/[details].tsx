@@ -4,9 +4,8 @@ import { ActivityIndicator, Alert, Platform, Text, TouchableOpacity, View } from
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import BackgroundLayout from "@/layouts/background-layout";
-import { labels, Reservation } from "@/types/reservation";
+import { labels } from "@/types/reservation";
 import EmployeesIcon from "@/components/emloyees-icon";
-import { PaginatedResponse } from "@/types/response";
 import { getStorageUserInfos } from "@/utils/store";
 import { queryClient } from "@/api/_queries";
 import Title from "@/components/ui/title";
@@ -20,16 +19,13 @@ export default function Page() {
 	const deleteReservation = useMutation({
 		mutationFn: deleteReservationQuery,
 		onSuccess: () => {
-			queryClient.setQueryData(["reservations", { limit: 99 }], (old: PaginatedResponse<Reservation>) => {
-				return {
-					...old,
-					docs: old.docs.filter((res) => res.id !== reservationId),
-				};
-			});
-			// queryClient.invalidateQueries({ queryKey: ["reservation", reservationId] });
-			router.back();
+			queryClient.invalidateQueries({ queryKey: ["reservations"] });
+			setTimeout(() => {
+				router.back();
+			}, 500);
 		},
 		onError: (error) => {
+			console.error("Delete error:", error);
 			Alert.alert("Erreur", "La réservation n'existe plus ou vous n'êtes pas autorisé à la supprimer.");
 			router.back();
 		},
