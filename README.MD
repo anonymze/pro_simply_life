@@ -198,3 +198,5 @@ nouveau client -> entrer des informations ou retrouver les informations des form
 //
 pré rempli commissions //  evènements groupe valorem par personnes (selectionnés)
 //
+
+enveloppe ouverte si montant 0

@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 import { Href, Link } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { DimensionValue, Text, View } from "react-native";
 import config from "tailwind.config";
 import { MyTouchableScaleOpacity } from "../my-pressable";
 
@@ -29,13 +29,13 @@ export default function CardSupplier({
 	queryName?: string;
 }) {
 	const onPress = React.useCallback(() => {
-		const params = typeof link === 'object' ? link.params : undefined;
+		const params = typeof link === "object" ? link.params : undefined;
 		queryClient.setQueryData([queryName, params?.["supplier"]], supplier);
 
 		if (privateEquity) {
 			queryClient.setQueryData(["private-supplier", privateEquity.id], privateEquity);
 		}
-  }, [link, supplier, queryName]);
+	}, [link, supplier, queryName]);
 
 	return (
 		<Link href={link} push asChild>
@@ -45,66 +45,40 @@ export default function CardSupplier({
 			>
 				<View className="size-14 items-center justify-center rounded-lg bg-defaultGray/10">{icon}</View>
 				<View className="flex-1">
-					<Text className="font-semibold text-lg text-primary">{supplier.name}</Text>
+					<Text className="text-lg font-semibold text-primary">{supplier.name}</Text>
 					{description && <Text className="text-md text-primary">{description}</Text>}
 
-					{enveloppe ? (
-						<>
-							{(() => {
-								if (!Array.isArray(supplier.enveloppes) || supplier.enveloppes.length === 0) {
-									return <Text className="text-xs text-primaryLight">Pas d'enveloppe</Text>;
-								}
+					{enveloppe &&
+						(() => {
+							if (!Array.isArray(supplier.enveloppes) || supplier.enveloppes.length === 0) {
+								return <Text className="text-xs text-primaryLight">Enveloppe ouverte</Text>;
+							}
 
-								const totalAmount = supplier.enveloppes.reduce((acc, env) => acc + (env.amount || 0), 0);
+							const hasAnyAmount = supplier.enveloppes.some((env) => env.amount != null);
 
-								if (totalAmount === 0) {
-									return <Text className="text-xs text-primaryLight">Pas d'enveloppe</Text>;
-								}
+							if (!hasAnyAmount) {
+								return <Text className="text-xs text-primaryLight">Enveloppe ouverte</Text>;
+							}
 
-								if (supplier.enveloppes.length === 1) {
+							if (supplier.enveloppes.length === 1) {
+								const env = supplier.enveloppes[0];
+								const amount = env.amount ?? 0;
+								const global = env.global || DEFAULT_MAX_VALUE;
+								const ratio = amount / global;
+								const widthPercent: DimensionValue = amount >= global ? "100%" : ratio < 0.1 ? "10%" : `${ratio * 100}%`;
+
+								if (amount === 0) {
 									return (
-										<>
-											<View className="mt-3">
-												<View className="flex-row">
-													<View
-														className="gap-1"
-														// @ts-ignore
-														style={{
-															width:
-																supplier.enveloppes[0].amount! >= (supplier.enveloppes[0].global || DEFAULT_MAX_VALUE)
-																	? "100%"
-																	: supplier.enveloppes[0].amount! / (supplier.enveloppes[0].global || DEFAULT_MAX_VALUE) < 0.1
-																		? "10%"
-																		: (supplier.enveloppes[0].amount! / (supplier.enveloppes[0].global || DEFAULT_MAX_VALUE)) * 100 +
-																			"%",
-														}}
-													>
-														<View
-															className={cn(
-																"h-1.5 w-full rounded-full bg-green-600",
-																supplier.enveloppes[0].amount! <= 0 && "bg-production",
-															)}
-														/>
-													</View>
-												</View>
-											</View>
+										<View>
 											<View className="mt-3 flex-row items-center gap-2">
-												<View
-													className={cn(
-														"size-2 rounded-full bg-green-600",
-														supplier.enveloppes[0].amount! <= 0 && "bg-production",
-													)}
-												/>
-												<Text className="text-[11px] text-backgroundChat">Montant enveloppe disponible</Text>
-												<Text className="ml-auto font-light text-xs text-primaryLight">
-													{supplier.enveloppes[0].amount?.toLocaleString("fr-FR")}€
-												</Text>
+												<View className="size-2 rounded-full bg-green-600" />
+												<Text className="text-[11px] text-backgroundChat">Enveloppe ouverte</Text>
 											</View>
 											<View className="mt-0 flex-row items-center gap-2">
 												<Text className="text-[11px] text-backgroundChat">Date d'echéance</Text>
-												<Text className="ml-auto font-light text-xs text-primaryLight">
-													{supplier.enveloppes[0].actualisation
-														? new Date(supplier.enveloppes[0].echeance ?? "").toLocaleDateString("fr-FR", {
+												<Text className="ml-auto text-xs font-light text-primaryLight">
+													{env.echeance
+														? new Date(env.echeance).toLocaleDateString("fr-FR", {
 																day: "numeric",
 																month: "numeric",
 																year: "numeric",
@@ -112,23 +86,53 @@ export default function CardSupplier({
 														: "Inconnu"}
 												</Text>
 											</View>
-										</>
+										</View>
 									);
 								}
 
 								return (
-									<>
-										<View className="mt-3 flex-row items-center gap-2">
-											<Text className="text-[11px] text-backgroundChat">Montant enveloppes cumulés</Text>
-										<Text className="ml-auto font-light text-xs text-primaryLight">
-											{totalAmount.toLocaleString("fr-FR")}€
-										</Text>
+									<View>
+										<View className="mt-3">
+											<View className="flex-row">
+												<View className="gap-1" style={{ width: widthPercent }}>
+													<View className="h-1.5 w-full rounded-full bg-green-600" />
+												</View>
+											</View>
 										</View>
-									</>
+										<View className="mt-3 flex-row items-center gap-2">
+											<View className="size-2 rounded-full bg-green-600" />
+											<Text className="text-[11px] text-backgroundChat">Montant enveloppe disponible</Text>
+											<Text className="ml-auto text-xs font-light text-primaryLight">
+												{amount.toLocaleString("fr-FR")}€
+											</Text>
+										</View>
+										<View className="mt-0 flex-row items-center gap-2">
+											<Text className="text-[11px] text-backgroundChat">Date d'echéance</Text>
+											<Text className="ml-auto text-xs font-light text-primaryLight">
+												{env.echeance
+													? new Date(env.echeance).toLocaleDateString("fr-FR", {
+															day: "numeric",
+															month: "numeric",
+															year: "numeric",
+														})
+													: "Inconnu"}
+											</Text>
+										</View>
+									</View>
 								);
-							})()}
-						</>
-					) : null}
+							}
+
+							const totalAmount = supplier.enveloppes.reduce((acc, env) => acc + (env.amount ?? 0), 0);
+
+							return (
+								<View className="mt-3 flex-row items-center gap-2">
+									<Text className="text-[11px] text-backgroundChat">Montant enveloppes cumulés</Text>
+									<Text className="ml-auto text-xs font-light text-primaryLight">
+										{totalAmount.toLocaleString("fr-FR")}€
+									</Text>
+								</View>
+							);
+						})()}
 				</View>
 				<ArrowRight size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</MyTouchableScaleOpacity>

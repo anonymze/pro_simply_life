@@ -60,7 +60,7 @@ export default function Page() {
 						width: "100%",
 						height: "100%",
 					}}
-					allowsFullscreen
+					fullscreenOptions={{ enable: true }}
 					nativeControls
 					// onFullscreenEnter={handleFullscreenEnter}
 					// onFullscreenExit={handleFullscreenExit}

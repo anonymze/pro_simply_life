@@ -6,6 +6,7 @@ export interface Supplier {
 	website?: string | null;
 	logo_mini?: Media | null;
 	logo_full?: Media | null;
+	video?: Media;
 	brochures?:
 		| {
 				name: string;
