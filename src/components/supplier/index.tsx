@@ -1043,6 +1043,12 @@ const ScpiComponent = ({
 						{information.epargne ? "Oui" : "Non"}
 					</Text>
 				</View>
+				<View className="flex flex-row items-center justify-between">
+					<Text className="text-sm font-semibold text-primaryLight">Nue Propriété</Text>
+					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+						{information.nue ? "Oui" : "Non"}
+					</Text>
+				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="text-sm font-semibold text-primaryLight">Remarque</Text>
 				<Text className="text-base font-semibold text-primary">{information.annotation}</Text>

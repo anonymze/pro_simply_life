@@ -83,6 +83,7 @@ export interface Supplier {
 				brochure?: Media | null;
 				annotation?: string | null;
 				epargne?: boolean | null;
+				nue?: boolean | null;
 				minimum_versement?: string | null;
 				subscription_fee?: string | null;
 				duration?: string | null;
