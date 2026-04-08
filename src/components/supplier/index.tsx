@@ -1063,9 +1063,6 @@ const ScpiComponent = ({
 					</Text>
 				</View>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Remarque</Text>
-				<Text className="text-base font-semibold text-primary">{information.annotation}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
 				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
@@ -1083,6 +1080,11 @@ const ScpiComponent = ({
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
 				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="mt-3 gap-2">
+					<Text className="text-sm text-backgroundChat">Remarques :</Text>
+					<Text className="text-sm font-light text-primaryLight">{information.annotation}</Text>
+				</View>
 			</View>
 			{information.brochure && (
 				<Brochure
