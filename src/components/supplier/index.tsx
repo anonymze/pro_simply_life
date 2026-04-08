@@ -13,14 +13,24 @@ import { PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { getStorageUserInfos } from "@/utils/store";
 import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
+import { useEvent } from "expo";
 import * as Clipboard from "expo-clipboard";
 import { Href, Link, useLocalSearchParams } from "expo-router";
-import { useEvent } from "expo";
 import { useVideoPlayer, VideoView } from "expo-video";
 import * as WebBrowser from "expo-web-browser";
 import { ChevronRight, CopyIcon, KeyRoundIcon, LinkIcon, MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
-import { ActivityIndicator, Alert, DimensionValue, Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+	ActivityIndicator,
+	Alert,
+	DimensionValue,
+	Linking,
+	Pressable,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import config from "tailwind.config";
 
 const DEFAULT_MAX_VALUE = 5_000_000;
@@ -69,9 +79,11 @@ export default function Page({ previousCategories = true }: { previousCategories
 		setIsVideoLoading(true);
 		const filename = videoUrl.split("/").pop() ?? "video.mp4";
 
-		downloadFile(videoUrl, filename, "video/mp4").then((file) => {
-			player.replaceAsync(file.uri);
-		}).catch((e) => console.error("Video load error:", e));
+		downloadFile(videoUrl, filename, "video/mp4")
+			.then((file) => {
+				player.replaceAsync(file.uri);
+			})
+			.catch((e) => console.error("Video load error:", e));
 	}, [videoUrl]);
 
 	const { data: privateEquity } = useQuery({
@@ -84,7 +96,6 @@ export default function Page({ previousCategories = true }: { previousCategories
 
 	const hasScpi =
 		!!data?.other_information?.length && (data.other_information[0].scpi || data.other_information[0].theme);
-
 
 	return (
 		<>
@@ -278,7 +289,8 @@ export default function Page({ previousCategories = true }: { previousCategories
 								const amount = enveloppe.amount;
 								const global = enveloppe.global || DEFAULT_MAX_VALUE;
 								const ratio = amount / global;
-								const widthPercent: DimensionValue = amount >= global ? "100%" : ratio < 0.1 ? "10%" : `${ratio * 100}%`;
+								const widthPercent: DimensionValue =
+									amount >= global ? "100%" : ratio < 0.1 ? "10%" : `${ratio * 100}%`;
 
 								return (
 									<View key={idx} className="rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
@@ -962,12 +974,12 @@ const ContactInfo = ({
 				</View>
 			</View>
 			{videoUrl && player && (
-        <View className="aspect-video items-center justify-center overflow-hidden rounded-xl">
-      				{isVideoLoading && (
-					<View className="absolute inset-0 z-10 items-center justify-center bg-black/50">
-						<ActivityIndicator size="large" color="#fff" />
-					</View>
-				)}
+				<View className="aspect-video items-center justify-center overflow-hidden rounded-xl">
+					{isVideoLoading && (
+						<View className="absolute inset-0 z-10 items-center justify-center bg-black/50">
+							<ActivityIndicator size="large" color="#fff" />
+						</View>
+					)}
 					<VideoView
 						player={player}
 						style={{
@@ -1043,6 +1055,7 @@ const ScpiComponent = ({
 						{information.epargne ? "Oui" : "Non"}
 					</Text>
 				</View>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<View className="flex flex-row items-center justify-between">
 					<Text className="text-sm font-semibold text-primaryLight">Nue Propriété</Text>
 					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
