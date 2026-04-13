@@ -9,7 +9,7 @@ import { Supplier } from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { downloadFile } from "@/utils/download";
-import { PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { ALL_SCPI_ID, CLUB_DEALS_ID, PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { getStorageUserInfos } from "@/utils/store";
 import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
@@ -94,8 +94,8 @@ export default function Page({ previousCategories = true }: { previousCategories
 
 	if (!data || !appUser?.user) return null;
 
-	const hasScpi =
-		!!data?.other_information?.length && (data.other_information[0].scpi || data.other_information[0].theme);
+	const isScpi = supplierProductId === ALL_SCPI_ID;
+	const isClubDeals = supplierProductId === CLUB_DEALS_ID;
 
 	return (
 		<>
@@ -128,7 +128,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 			</View>
 			<BackgroundLayout className="px-4">
 				{/* SCPI */}
-				{hasScpi && (
+				{isScpi && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -281,9 +281,21 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					{!hasScpi && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
+					{!isScpi && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">
-							{data?.enveloppes?.map((enveloppe, idx) => {
+							{isClubDeals
+								? data?.enveloppes_club_deals?.map((clubDeal, idx) => (
+										<ClubDealComponent
+											key={idx}
+											information={clubDeal}
+											supplierCategoryId={supplierCategoryId}
+											supplierProductId={supplierProductId}
+											supplierId={supplierId}
+											previousCategories={previousCategories}
+											updatedAt={data.updatedAt}
+										/>
+									))
+								: data?.enveloppes?.map((enveloppe, idx) => {
 								if (enveloppe.amount == null) return null;
 
 								const amount = enveloppe.amount;
@@ -336,7 +348,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
 											<Text className="ml-auto text-sm font-light text-primaryLight">
-												{enveloppe.reduction ? enveloppe.reduction.toLocaleString("fr-FR") + "%" : "Non renseigné"}
+												{enveloppe.reduction ? enveloppe.reduction.toLocaleString("fr-FR") : "Non renseigné"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
@@ -354,13 +366,13 @@ export default function Page({ previousCategories = true }: { previousCategories
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-sm text-backgroundChat">Commissions</Text>
 											<Text className="ml-auto text-sm font-light text-primaryLight">
-												{enveloppe.commission ? enveloppe.commission + "%" : "Non renseigné"}
+												{enveloppe.commission ?? "Non renseigné"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
 											<Text className="text-xs text-green-600">Commissions négociées Groupe Valorem</Text>
 											<Text className="ml-auto text-xs font-light text-green-600">
-												{enveloppe.commission_valorem ? enveloppe.commission_valorem + "%" : "Non renseigné"}
+												{enveloppe.commission_valorem ?? "Non renseigné"}
 											</Text>
 										</View>
 										<View className="mt-3 flex-row items-center gap-2">
@@ -620,7 +632,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 											<View className="mt-3 flex-row items-center gap-2">
 												<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
 												<Text className="ml-auto text-sm font-light text-primaryLight">
-													{enveloppe.reduction ? enveloppe.reduction.toLocaleString("fr-FR") + "%" : "Non renseigné"}
+													{enveloppe.reduction ? enveloppe.reduction.toLocaleString("fr-FR") : "Non renseigné"}
 												</Text>
 											</View>
 											<View className="mt-3 flex-row items-center gap-2">
@@ -638,7 +650,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 											<View className="mt-3 flex-row items-center gap-2">
 												<Text className="text-sm text-backgroundChat">Commissions</Text>
 												<Text className="ml-auto text-sm font-light text-primaryLight">
-													{enveloppe.commission ? enveloppe.commission + "%" : "Non renseigné"}
+													{enveloppe.commission ?? "Non renseigné"}
 												</Text>
 											</View>
 											<View className="mt-3 flex-row items-center gap-2">
@@ -1087,6 +1099,117 @@ const ScpiComponent = ({
 				</View>
 			</View>
 			{information.brochure && (
+				<Brochure
+					brochure={information.brochure}
+					updatedAt={updatedAt}
+					link={
+						previousCategories
+							? {
+									pathname:
+										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+									params: {
+										"supplier-category": supplierCategoryId as string,
+										"supplier-product": supplierProductId as string,
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
+									},
+								}
+							: {
+									pathname: "/selection/[supplier]/pdf/[pdf]",
+									params: {
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
+									},
+								}
+					}
+				/>
+			)}
+		</View>
+	);
+};
+
+const ClubDealComponent = ({
+	information,
+	supplierCategoryId,
+	supplierProductId,
+	previousCategories,
+	supplierId,
+	updatedAt,
+}: {
+	information: NonNullable<Supplier["enveloppes_club_deals"]>[number];
+	supplierCategoryId: string | string[];
+	supplierProductId: string | string[];
+	supplierId: string | string[];
+	previousCategories: boolean;
+	updatedAt: string;
+}) => {
+	const amount = information.amount ?? 0;
+	const global = information.global || DEFAULT_MAX_VALUE;
+	const ratio = amount / global;
+	const widthPercent: DimensionValue = amount >= global ? "100%" : ratio < 0.1 ? "10%" : `${ratio * 100}%`;
+
+	return (
+		<View className="gap-2">
+			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				{amount > 0 && (
+					<>
+						<Text className="text-md font-semibold text-primary">Taux de remplissage</Text>
+						<View className="mt-2">
+							<View className="flex-row">
+								<View className="gap-1" style={{ width: widthPercent }}>
+									<View className="h-1.5 w-full rounded-full bg-green-600" />
+								</View>
+							</View>
+						</View>
+						<View className="mb-3 mt-3 flex-row items-center gap-2">
+							<View className="size-2 rounded-full bg-green-600" />
+							<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
+							<Text className="ml-auto text-sm font-light text-primaryLight">
+								{amount.toLocaleString("fr-FR")}€
+							</Text>
+						</View>
+						<View className="my-2 h-px w-full bg-defaultGray/15" />
+					</>
+				)}
+				{information.amount != null && amount === 0 && (
+					<>
+						<View className="mb-3 flex-row items-center gap-2">
+							<View className="size-2 rounded-full bg-green-600" />
+							<Text className="text-backgroundChat">Enveloppe ouverte</Text>
+						</View>
+						<View className="my-2 h-px w-full bg-defaultGray/15" />
+					</>
+				)}
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
+				<Text className="text-base font-semibold text-primary">{information.subscription_fee}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="text-sm font-semibold text-primaryLight">Durée</Text>
+				<Text className="text-base font-semibold text-primary">{information.duration}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="text-sm font-semibold text-primaryLight">Opération</Text>
+				<Text className="text-base font-semibold text-primary">{information.operation}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="text-sm font-semibold text-primaryLight">Rentabilité</Text>
+				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="text-sm font-semibold text-primaryLight">Ventilation des versements au client</Text>
+				<Text className="text-base font-semibold text-primary">{information.ventilation}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
+				<Text className="text-base font-semibold text-green-600">{information.commission_offer_group_valorem}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
+				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
+				<View className="my-2 h-px w-full bg-defaultGray/15" />
+				<View className="mt-3 gap-2">
+					<Text className="text-sm text-backgroundChat">Remarques :</Text>
+					<Text className="text-sm font-light text-primaryLight">{information.annotation}</Text>
+				</View>
+			</View>
+			{information.brochure && typeof information.brochure === "object" && (
 				<Brochure
 					brochure={information.brochure}
 					updatedAt={updatedAt}

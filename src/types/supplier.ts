@@ -14,8 +14,8 @@ export interface Supplier {
 				id?: string | null;
 		  }[]
 		| null;
-  contact_info: {
-    photo?: Media | null;
+	contact_info: {
+		photo?: Media | null;
 		lastname?: string | null;
 		firstname?: string | null;
 		email?: string | null;
@@ -36,25 +36,45 @@ export interface Supplier {
 		retrocession_gestion_mandat?: string | null;
 		passage_order?: string | null;
 		interface?: string | null;
-  };
-  enveloppes?:
-    | {
-        global?: number | null;
-        amount?: number | null;
-        reduction?: number | null;
-        echeance?: string | null;
-        actualisation?: string | null;
-        commission?: string | null;
-        commission_valorem?: string | null;
-        droits?: ('yes' | 'no') | null;
-        agrement?: ('yes' | 'no') | null;
-        investisseur?: ('yes' | 'no') | null;
-        assurance?: ('yes' | 'no' | 'maybe') | null;
-        close?: ('yes' | 'no') | null;
-        remarque?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+	};
+	enveloppes_club_deals?:
+		| {
+				global?: number | null;
+				amount?: number | null;
+				/**
+				 * Le fichier doit être au format PDF.
+				 */
+				brochure?: (string | null) | Media;
+				minimum_versement?: string | null;
+				subscription_fee?: string | null;
+				duration?: string | null;
+				operation?: string | null;
+				rentability_n1?: string | null;
+				ventilation?: ("mensuel" | "trimestriel" | "semestriel" | "annuel") | null;
+				commission_offer_group_valorem?: string | null;
+				commission_public_offer?: string | null;
+				annotation?: string | null;
+				id?: string | null;
+		  }[]
+		| null;
+	enveloppes?:
+		| {
+				global?: number | null;
+				amount?: number | null;
+				reduction?: number | null;
+				echeance?: string | null;
+				actualisation?: string | null;
+				commission?: string | null;
+				commission_valorem?: string | null;
+				droits?: ("yes" | "no") | null;
+				agrement?: ("yes" | "no") | null;
+				investisseur?: ("yes" | "no") | null;
+				assurance?: ("yes" | "no" | "maybe") | null;
+				close?: ("yes" | "no") | null;
+				remarque?: string | null;
+				id?: string | null;
+		  }[]
+		| null;
 	// enveloppe?: {
 	// 	global?: number | null;
 	// 	amount?: number | null;
@@ -113,12 +133,12 @@ export interface Supplier {
 }
 
 export interface SupplierProduct {
-  id: string;
-  name: string;
-  suppliers: Supplier[];
-  impot?: 'yes' | 'no';
-  updatedAt: string;
-  createdAt: string;
+	id: string;
+	name: string;
+	suppliers: Supplier[];
+	impot?: "yes" | "no";
+	updatedAt: string;
+	createdAt: string;
 }
 export interface SupplierCategory {
 	id: string;
