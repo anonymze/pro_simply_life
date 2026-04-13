@@ -96,6 +96,10 @@ export default function Page({ previousCategories = true }: { previousCategories
 
 	const isScpi = supplierProductId === ALL_SCPI_ID;
 	const isClubDeals = supplierProductId === CLUB_DEALS_ID;
+	const hasTabs =
+		(isScpi && !!data?.other_information?.length) ||
+		!!privateEquity?.fond?.length ||
+		supplierProductId === PEA_ID;
 
 	return (
 		<>
@@ -128,7 +132,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 			</View>
 			<BackgroundLayout className="px-4">
 				{/* SCPI */}
-				{isScpi && (
+				{isScpi && !!data?.other_information?.length && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -279,7 +283,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
-					contentContainerStyle={{ paddingBottom: 10 }}
+					contentContainerStyle={{ paddingBottom: 10, paddingTop: isScpi && !hasTabs ? 16 : 0 }}
 				>
 					{!isScpi && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">

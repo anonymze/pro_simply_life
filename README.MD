@@ -200,3 +200,8 @@ pré rempli commissions //  evènements groupe valorem par personnes (selectionn
 //
 
 enveloppe ouverte si montant 0
+
+
+FAIRE LES BARRESSS COMME GIRARDIN pour lers enveloppes
+
+OPAL DANS DETTES PRIVEES OBLIGATAIRES, MANQUE LE SUPPLIER
