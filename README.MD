@@ -173,7 +173,3 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 </dict>
-
-FAIRE LES BARRESSS COMME GIRARDIN pour lers enveloppes
-
-OPAL DANS DETTES PRIVEES OBLIGATAIRES, MANQUE LE SUPPLIER
