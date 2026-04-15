@@ -1200,10 +1200,8 @@ const ClubDealComponent = ({
 				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="text-sm font-semibold text-primaryLight">Distribution au client</Text>
-				<Text className="text-base font-semibold text-primary">
-					{information.ventilation
-						? information.ventilation.charAt(0).toUpperCase() + information.ventilation.to.slice(1)
-						: ""}
+				<Text className="text-base font-semibold text-primary capitalize">
+					{information.ventilation}
 				</Text>
 				<View className="my-2 h-px w-full bg-defaultGray/15" />
 				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>

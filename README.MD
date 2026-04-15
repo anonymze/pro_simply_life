@@ -173,3 +173,8 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 </dict>
+
+
+GESTURE EVEENTS DROITE ET GAUCHE
+
+thémtique de la réunion avant le détail dans les deux listes
