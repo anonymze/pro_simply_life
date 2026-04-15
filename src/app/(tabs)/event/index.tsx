@@ -50,7 +50,7 @@ export default function Page() {
 				"events",
 				{
           "-sort": "event_start",
-					limit: 40
+					limit: 30
 				},
 			],
 			queryFn: getEventsQuery,
@@ -61,12 +61,16 @@ export default function Page() {
 
 			const events = React.useMemo(
 				() =>
-					data?.docs.reduce((acc: Record<string, any>, event) => {
-						acc[event.event_start.split("T")[0]] = {
-							marked: true,
-							dotColor: config.theme.extend.colors.pink,
-							event,
-						};
+					data?.docs.reduce((acc: Record<string, { marked: boolean; dotColor: string; events: Event[] }>, event) => {
+						const date = event.event_start.split("T")[0];
+						if (!acc[date]) {
+							acc[date] = {
+								marked: true,
+								dotColor: config.theme.extend.colors.pink,
+								events: [],
+							};
+						}
+						acc[date].events.push(event);
 						return acc;
 					}, {}),
 				[data],
@@ -171,7 +175,7 @@ export default function Page() {
 									...events,
 									[selectedDate]: {
 										selected: true,
-										marked: !!events[selectedDate],
+										marked: !!events[selectedDate]?.events.length,
 										disableTouchEvent: true,
 										dotColor: config.theme.extend.colors.pink,
 										customStyles: {
@@ -195,9 +199,11 @@ export default function Page() {
 								contentContainerStyle={{ paddingBottom: 16 }}
 								className="mt-4"
 							>
-								{events[selectedDate] && events[selectedDate].event ? (
+								{events[selectedDate]?.events.length ? (
 									<View className="gap-3">
-										<CardEvent event={events[selectedDate].event} />
+										{events[selectedDate].events.map((event) => (
+											<CardEvent key={event.id} event={event} />
+										))}
 									</View>
 								) : null}
 							</ScrollView>

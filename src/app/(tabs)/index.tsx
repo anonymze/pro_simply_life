@@ -34,19 +34,19 @@ export default function Page() {
 	const { toast } = useSonnerRN();
 	const insets = useSafeAreaInsets();
 	// const notification = useNotification();
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
 			"events",
 			{
 				sort: "event_start",
+				limit: 10,
+				"where[event_start][greater_than_equal]": today.toISOString(),
 			},
 		],
 		queryFn: getEventsQuery,
-		select: (data) => {
-			const today = new Date();
-			today.setHours(0, 0, 0, 0);
-			return data.docs?.filter((event) => new Date(event.event_start) >= today);
-		},
 	});
 
 	const { userJSON } = useLocalSearchParams<{ userJSON: string }>();
@@ -166,7 +166,7 @@ export default function Page() {
 				</View>
 				<Carousel
 					data={
-						upcomingEvents || [
+						upcomingEvents?.docs || [
 							{
 								id: "1",
 								createdAt: new Date().toISOString(),
