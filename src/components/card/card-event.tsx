@@ -95,6 +95,7 @@ export default function CardEvent({
 										<Text className="font-semibold text-xs text-primaryLight">{eventLabel[event.type]}</Text>
 									</View>
 									<Text className="font-bold text-base text-primary">{truncateText(event.title, 40)}</Text>
+									{event.annotation ? <Text className="text-xs text-primaryLight">{event.annotation}</Text> : null}
 									<View className="flex-row items-center gap-2">
 										<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
 										<Text className="text-lg text-primaryLight">

@@ -115,8 +115,10 @@ export default function Page() {
 						scrollViewRef={scrollRef as React.RefObject<ScrollView>}
 						horizontal
 						showsHorizontalScrollIndicator={false}
-						scrollEnabled={false}
+						pagingEnabled
 						decelerationRate={"fast"}
+						snapToInterval={SCREEN_DIMENSIONS.width - 32 + 16}
+						snapToAlignment="start"
 						contentContainerStyle={{ gap: 16 }}
 					>
 						<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
@@ -247,6 +249,7 @@ const CardEvent = ({ event }: { event: Event }) => {
 						<Text className="text-md font-semibold text-primaryLight">{eventLabel[event.type]}</Text>
 					</View>
 					<Text className="my-1.5 font-bold text-lg text-primary">{truncateText(event.title, 40)}</Text>
+					{event.annotation ? <Text className="text-xs text-primaryLight">{event.annotation}</Text> : null}
 					<View className="flex-row items-center gap-2">
 						<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
 						<Text className="text-lg text-primaryLight">
