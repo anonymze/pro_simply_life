@@ -17,6 +17,7 @@ export default function CardSupplier({
 	link,
 	description,
 	enveloppe = false,
+	clubDeals = false,
 	privateEquity,
 	queryName = "supplier",
 }: {
@@ -26,6 +27,7 @@ export default function CardSupplier({
 	description?: string | null;
 	privateEquity?: PrivateEquity;
 	enveloppe?: boolean;
+	clubDeals?: boolean;
 	queryName?: string;
 }) {
 	const onPress = React.useCallback(() => {
@@ -48,20 +50,22 @@ export default function CardSupplier({
 					<Text className="text-lg font-semibold text-primary">{supplier.name}</Text>
 					{description && <Text className="text-md text-primary">{description}</Text>}
 
-					{enveloppe &&
+					{(enveloppe || clubDeals) &&
 						(() => {
-							if (!Array.isArray(supplier.enveloppes) || supplier.enveloppes.length === 0) {
-								return <Text className="text-xs text-primaryLight">Enveloppe ouverte</Text>;
+							const enveloppes = clubDeals ? supplier.enveloppes_club_deals : supplier.enveloppes;
+
+							if (!Array.isArray(enveloppes) || enveloppes.length === 0) {
+								return null;
 							}
 
-							const hasAnyAmount = supplier.enveloppes.some((env) => env.amount != null);
+							const hasAnyAmount = enveloppes.some((env) => env.amount != null);
 
 							if (!hasAnyAmount) {
-								return <Text className="text-xs text-primaryLight">Enveloppe ouverte</Text>;
+								return null;
 							}
 
-							if (supplier.enveloppes.length === 1) {
-								const env = supplier.enveloppes[0];
+							if (enveloppes.length === 1) {
+								const env = enveloppes[0];
 								const amount = env.amount ?? 0;
 								const global = env.global || DEFAULT_MAX_VALUE;
 								const ratio = amount / global;
@@ -74,18 +78,20 @@ export default function CardSupplier({
 												<View className="size-2 rounded-full bg-green-600" />
 												<Text className="text-[11px] text-backgroundChat">Enveloppe ouverte</Text>
 											</View>
-											<View className="mt-0 flex-row items-center gap-2">
-												<Text className="text-[11px] text-backgroundChat">Date d'echéance</Text>
-												<Text className="ml-auto text-xs font-light text-primaryLight">
-													{env.echeance
-														? new Date(env.echeance).toLocaleDateString("fr-FR", {
-																day: "numeric",
-																month: "numeric",
-																year: "numeric",
-															})
-														: "Inconnu"}
-												</Text>
-											</View>
+											{!clubDeals && "echeance" in env && (
+												<View className="mt-0 flex-row items-center gap-2">
+													<Text className="text-[11px] text-backgroundChat">Date d'echéance</Text>
+													<Text className="ml-auto text-xs font-light text-primaryLight">
+														{env.echeance
+															? new Date(env.echeance).toLocaleDateString("fr-FR", {
+																	day: "numeric",
+																	month: "numeric",
+																	year: "numeric",
+																})
+															: "Inconnu"}
+													</Text>
+												</View>
+											)}
 										</View>
 									);
 								}
@@ -106,23 +112,25 @@ export default function CardSupplier({
 												{amount.toLocaleString("fr-FR")}€
 											</Text>
 										</View>
-										<View className="mt-0 flex-row items-center gap-2">
-											<Text className="text-[11px] text-backgroundChat">Date d'echéance</Text>
-											<Text className="ml-auto text-xs font-light text-primaryLight">
-												{env.echeance
-													? new Date(env.echeance).toLocaleDateString("fr-FR", {
-															day: "numeric",
-															month: "numeric",
-															year: "numeric",
-														})
-													: "Inconnu"}
-											</Text>
-										</View>
+										{!clubDeals && "echeance" in env && (
+											<View className="mt-0 flex-row items-center gap-2">
+												<Text className="text-[11px] text-backgroundChat">Date d'echéance</Text>
+												<Text className="ml-auto text-xs font-light text-primaryLight">
+													{env.echeance
+														? new Date(env.echeance).toLocaleDateString("fr-FR", {
+																day: "numeric",
+																month: "numeric",
+																year: "numeric",
+															})
+														: "Inconnu"}
+												</Text>
+											</View>
+										)}
 									</View>
 								);
 							}
 
-							const totalAmount = supplier.enveloppes.reduce((acc, env) => acc + (env.amount ?? 0), 0);
+							const totalAmount = enveloppes.reduce((acc, env) => acc + (env.amount ?? 0), 0);
 
 							return (
 								<View className="mt-3 flex-row items-center gap-2">

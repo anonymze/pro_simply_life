@@ -64,7 +64,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 	});
 
 	const videoUrl = data?.video?.url ?? null;
-	const [isVideoLoading, setIsVideoLoading] = React.useState(true);
+	const [isVideoLoading, setIsVideoLoading] = React.useState(false);
 	const player = useVideoPlayer(null);
 
 	const { status: videoStatus } = useEvent(player, "statusChange", { status: player.status });

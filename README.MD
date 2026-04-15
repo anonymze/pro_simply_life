@@ -1,7 +1,5 @@
 # SIMPLY LIFE
 
-TODO : icones app -> messages table cascade + chatrooms cascade
-
 # QUICK TUTO NOTIFICATIONS
 
 ANDOIRD : register android project on firebase -> generate new private key in service accounts (firebase file) -> setup the SHA-1 in general
@@ -175,32 +173,6 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 </dict>
-
-webrtc ? for sharing files for chat
-
-background agent -> doc / tests / continue control code (errors ?) / auto git commit / better auto completion code / suggest better file organization
-
-ONGLET GERARDIN + fix relation user -> commission quand on supprimer user
-
-sport & patrimoine
-
-système de formulaire pour un client avec tout tas d'informations à entrer + document ID à entrer pour des clients lors d'un rdv (cgp), donénes liés à l'utilisatrurt qui a créé le formulaire
-nouveau client -> entrer des informations ou retrouver les informations des formulaires
-
-// accepter évènement
-// visio ou précense
-// intervenants
-// theme, société qui intervient et son nom
-// 18 entre 10h et 11h
-// excel organigramme
-
-
-//
-pré rempli commissions //  evènements groupe valorem par personnes (selectionnés)
-//
-
-enveloppe ouverte si montant 0
-
 
 FAIRE LES BARRESSS COMME GIRARDIN pour lers enveloppes
 
