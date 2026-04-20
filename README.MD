@@ -175,6 +175,4 @@ http://localhost:8081/\_expo/atlas
 </dict>
 
 
-GESTURE EVEENTS DROITE ET GAUCHE
-
-thémtique de la réunion avant le détail dans les deux listes
+PARTICIPANTS DIRECT DEPUIS PAGE D'ACUCEIL BUGGÉÉÉ
