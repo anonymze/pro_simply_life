@@ -185,16 +185,7 @@ export default function Page() {
 						return data.map((item) => (
 							<CardEvent
 								isLoading={isLoadingEvents}
-								event={{
-									createdAt: item.createdAt,
-									updatedAt: item.updatedAt,
-									id: item.id,
-									event_start: item.event_start,
-									event_end: item.event_end,
-									title: item.title,
-									type: item.type,
-									annotation: item.annotation,
-								}}
+								event={item}
 								key={item.id}
 								width={cardWidth}
 							/>

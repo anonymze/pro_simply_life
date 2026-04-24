@@ -57,6 +57,7 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [selectedDate, setSelectedDate] = useState("");
+			const [selectedIndex, setSelectedIndex] = useState(0);
 			const scrollRef = React.useRef<ScrollView | null>(null);
 
 			const events = React.useMemo(
@@ -103,8 +104,9 @@ export default function Page() {
 								// }}
 								variant="segmented"
 								options={["Agenda", "Liste"]}
-								selectedIndex={null}
+								selectedIndex={selectedIndex}
 								onOptionSelected={({ nativeEvent: { index } }) => {
+									setSelectedIndex(index);
 									if (index === 0) {
 										scrollRef.current?.scrollTo({ x: 0, animated: true });
 									} else {
@@ -124,6 +126,11 @@ export default function Page() {
 						snapToInterval={SCREEN_DIMENSIONS.width - 32 + 16}
 						snapToAlignment="start"
 						contentContainerStyle={{ gap: 16 }}
+						scrollEventThrottle={16}
+						onScroll={(e) => {
+							const idx = Math.round(e.nativeEvent.contentOffset.x / (SCREEN_DIMENSIONS.width - 32 + 16));
+							setSelectedIndex((prev) => (prev === idx ? prev : idx));
+						}}
 					>
 						<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 							<StyledCalendar
@@ -254,7 +261,7 @@ const CardEvent = ({ event }: { event: Event }) => {
 					<View className="mt-1 self-start rounded-[0.5rem] bg-darkGray px-2 py-1.5">
 						<Text className="text-md font-semibold text-primaryLight">{eventLabel[event.type]}</Text>
 					</View>
-					<Text className="mt-1 font-bold text-lg text-primary">{truncateText(event.title, 40)}</Text>
+					<Text numberOfLines={2} className="mt-1 font-bold text-lg text-primary">{event.title}</Text>
 					{event.annotation ? <Text className="text-xs text-primaryLight">{event.annotation}</Text> : null}
 					<View className="flex-row items-center gap-2">
 						<ClockIcon size={24} fill={config.theme.extend.colors.primaryLight} color={"#fff"} />
