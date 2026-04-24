@@ -57,8 +57,8 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [selectedDate, setSelectedDate] = useState("");
-			const [selectedIndex, setSelectedIndex] = useState(0);
 			const scrollRef = React.useRef<ScrollView | null>(null);
+			const pickerRef = React.useRef<{ setIndex: (i: number) => void }>(null);
 
 			const events = React.useMemo(
 				() =>
@@ -95,26 +95,16 @@ export default function Page() {
 				<BackgroundLayout className="px-4" style={{ paddingTop: insets.top }}>
 					<View className="iems-center flex-row justify-between">
 						<Title title="Évènements agence" />
-						<Host style={{ width: 150, marginTop: 6 }}>
-							<Picker
-								// style={{
-								// 	width: 128,
-								// 	alignSelf: "center",
-								// 	marginTop: 8,
-								// }}
-								variant="segmented"
-								options={["Agenda", "Liste"]}
-								selectedIndex={selectedIndex}
-								onOptionSelected={({ nativeEvent: { index } }) => {
-									setSelectedIndex(index);
-									if (index === 0) {
-										scrollRef.current?.scrollTo({ x: 0, animated: true });
-									} else {
-										scrollRef.current?.scrollToEnd();
-									}
-								}}
-							/>
-						</Host>
+						<SegmentedPicker
+							ref={pickerRef}
+							onChange={(index) => {
+								if (index === 0) {
+									scrollRef.current?.scrollTo({ x: 0, animated: true });
+								} else {
+									scrollRef.current?.scrollToEnd();
+								}
+							}}
+						/>
 					</View>
 
 					<ScrollView
@@ -129,7 +119,7 @@ export default function Page() {
 						scrollEventThrottle={16}
 						onScroll={(e) => {
 							const idx = Math.round(e.nativeEvent.contentOffset.x / (SCREEN_DIMENSIONS.width - 32 + 16));
-							setSelectedIndex((prev) => (prev === idx ? prev : idx));
+							pickerRef.current?.setIndex(idx);
 						}}
 					>
 						<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
@@ -238,6 +228,27 @@ export default function Page() {
 		},
 	)();
 }
+
+const SegmentedPicker = React.forwardRef<
+	{ setIndex: (i: number) => void },
+	{ onChange: (i: number) => void }
+>(({ onChange }, ref) => {
+	const [index, setIndexState] = React.useState(0);
+	React.useImperativeHandle(ref, () => ({ setIndex: (i: number) => setIndexState((p) => (p === i ? p : i)) }), []);
+	return (
+		<Host style={{ width: 150, marginTop: 6 }}>
+			<Picker
+				variant="segmented"
+				options={["Agenda", "Liste"]}
+				selectedIndex={index}
+				onOptionSelected={({ nativeEvent: { index: i } }) => {
+					setIndexState(i);
+					onChange(i);
+				}}
+			/>
+		</Host>
+	);
+});
 
 const CardEvent = ({ event }: { event: Event }) => {
 	const onPress = React.useCallback(() => {
