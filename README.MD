@@ -173,6 +173,3 @@ http://localhost:8081/\_expo/atlas
 </dict>
 </dict>
 </dict>
-
-
-PARTICIPANTS DIRECT DEPUIS PAGE D'ACUCEIL BUGGÉÉÉ

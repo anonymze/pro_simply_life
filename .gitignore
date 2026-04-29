@@ -22,7 +22,7 @@ android/
 # custom
 .history/
 .vscode/
-x/
+.x/
 .idea/
 .claude/
 
