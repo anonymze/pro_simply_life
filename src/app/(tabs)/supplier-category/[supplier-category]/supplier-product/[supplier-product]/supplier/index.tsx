@@ -12,8 +12,9 @@ import { CLUB_DEALS_ID, GIRARDIN_INDUSTRIEL_ID, PRIVATE_EQUITY_ID, SCREEN_DIMENS
 import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
+import { MailIcon, PhoneIcon } from "lucide-react-native";
 import React from "react";
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import config from "tailwind.config";
 
 export default function Page() {
@@ -142,6 +143,38 @@ const SupplierListComponent = ({
 	);
 };
 
+const REFERENT_NAME = "David DUGUANT";
+const REFERENT_PHONE = "0783185728";
+const REFERENT_EMAIL = "dugandpatrimoine@gmail.com";
+
+const ReferentCard = () => {
+	return (
+		<View className="mb-4 flex-row items-center gap-2 rounded-xl border border-defaultGray/10 bg-white px-3 py-2">
+			<View className="shrink gap-0.5">
+				<Text className="text-xs text-primaryLight">Référent</Text>
+				<Text selectable className="text-sm font-semibold text-primary">
+					{REFERENT_NAME}
+				</Text>
+			</View>
+			<View className="ml-auto flex-row items-center gap-4">
+				<TouchableOpacity
+					onLongPress={() => Linking.openURL(`sms:${REFERENT_PHONE}`)}
+					onPress={() => Linking.openURL(`tel:${REFERENT_PHONE}`)}
+					className="rounded-full bg-primaryUltraLight p-2.5"
+				>
+					<PhoneIcon size={14} color={config.theme.extend.colors.primary} />
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => Linking.openURL(`mailto:${REFERENT_EMAIL}`)}
+					className="rounded-full bg-primaryUltraLight p-2.5"
+				>
+					<MailIcon size={14} color={config.theme.extend.colors.primary} />
+				</TouchableOpacity>
+			</View>
+		</View>
+	);
+};
+
 // Type labels mapping
 const PRIVATE_EQUITY_TYPE_LABELS: Record<PrivateEquity["type"], string> = {
 	capital: "Capital investissement",
@@ -197,6 +230,8 @@ const PrivateEquityComponent = ({
 
 	return (
 		<>
+			<ReferentCard />
+
 			<LegendList
 				showsHorizontalScrollIndicator={false}
 				data={orderedTypes}
