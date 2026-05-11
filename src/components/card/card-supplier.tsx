@@ -50,6 +50,16 @@ export default function CardSupplier({
 					<Text className="text-lg font-semibold text-primary">{supplier.name}</Text>
 					{description && <Text className="text-md text-primary">{description}</Text>}
 
+					{privateEquity?.disponible_a_partir_de != null && (
+						<View className="mt-3 flex-row items-center gap-2">
+							<View className="size-2 rounded-full bg-green-600" />
+							<Text className="text-[11px] text-backgroundChat">À partir de</Text>
+							<Text className="ml-auto text-xs font-light text-primaryLight">
+								{privateEquity.disponible_a_partir_de.toLocaleString("fr-FR")}€
+							</Text>
+						</View>
+					)}
+
 					{(enveloppe || clubDeals) &&
 						(() => {
 							const enveloppes = clubDeals ? supplier.enveloppes_club_deals : supplier.enveloppes;

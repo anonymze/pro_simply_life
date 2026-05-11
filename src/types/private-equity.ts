@@ -32,6 +32,7 @@ export interface PrivateEquity {
 	id: string;
 	type: "capital" | "dettes" | "assurance";
 	supplier?: Supplier;
+	disponible_a_partir_de?: number | null;
 	fond?:
 		| {
 				name: string;
