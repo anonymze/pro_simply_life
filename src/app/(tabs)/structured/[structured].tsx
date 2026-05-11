@@ -145,6 +145,15 @@ export default function Page() {
 						<Text selectable className="font-semibold text-primary">
 							{structuredProduct.mature}
 						</Text>
+						{structuredProduct.minimum_versement ? (
+							<>
+								<View className="my-2 h-px w-full bg-defaultGray/15" />
+								<Text className="text-sm text-primaryLight">Minimum de versement</Text>
+								<Text selectable className="font-semibold text-primary">
+									{structuredProduct.minimum_versement}
+								</Text>
+							</>
+						) : null}
 						<View className="my-2 h-px w-full bg-defaultGray/15" />
 						<Text className="text-sm text-primaryLight">Coupon de remboursement anticipé</Text>
 						<Text selectable className="font-semibold text-primary">

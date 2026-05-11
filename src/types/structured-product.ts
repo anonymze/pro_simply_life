@@ -13,6 +13,7 @@ export interface StructuredProduct {
 	constatation: string;
 	sousjacent: string;
 	mature: string;
+	minimum_versement?: string | null;
 	coupon: string;
 	frequency: string;
 	refund: string;

@@ -222,6 +222,14 @@ const PrivateEquityComponent = ({
 		{} as Record<PrivateEquity["type"], PrivateEquity[]>,
 	);
 
+	for (const type of Object.keys(groupedByType) as PrivateEquity["type"][]) {
+		groupedByType[type].sort((a, b) => {
+			const nameA = typeof a.supplier === "string" ? "" : a.supplier?.name ?? "";
+			const nameB = typeof b.supplier === "string" ? "" : b.supplier?.name ?? "";
+			return nameA.localeCompare(nameB, "fr", { sensitivity: "base" });
+		});
+	}
+
 	// Get ordered types (capital, dettes, assurance)
 	const orderedTypes = (["capital", "dettes", "assurance"] as const).filter(
 		(type) => groupedByType[type] && groupedByType[type].length > 0,
