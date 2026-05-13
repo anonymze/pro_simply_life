@@ -92,12 +92,19 @@ export default function Page({ previousCategories = true }: { previousCategories
 		enabled: !!privateEquityId,
 	});
 
+	// Hide fonds whose end_date_product is in the past
+	const visibleFonds = React.useMemo(() => {
+		const fonds = privateEquity?.fond ?? [];
+		const now = Date.now();
+		return fonds.filter((f) => !f.end_date_product || new Date(f.end_date_product).getTime() >= now);
+	}, [privateEquity]);
+
 	if (!data || !appUser?.user) return null;
 
 	const isScpi = supplierProductId === ALL_SCPI_ID;
 	const isClubDeals = supplierProductId === CLUB_DEALS_ID;
 	const hasTabs =
-		(isScpi && !!data?.other_information?.length) || !!privateEquity?.fond?.length || supplierProductId === PEA_ID;
+		(isScpi && !!data?.other_information?.length) || !!visibleFonds.length || supplierProductId === PEA_ID;
 
 	return (
 		<>
@@ -183,7 +190,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 				)}
 
 				{/* PRIVATE EQUITY */}
-				{!!privateEquity?.fond?.length && (
+				{!!visibleFonds.length && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -191,7 +198,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								title: "Contact",
 								subtitle: "",
 							},
-							...privateEquity.fond.map((fond) => ({
+							...visibleFonds.map((fond) => ({
 								title: fond.name,
 							})),
 						]}
@@ -283,7 +290,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 					style={{ backgroundColor: config.theme.extend.colors.background }}
 					contentContainerStyle={{ paddingBottom: 10, paddingTop: isScpi && !hasTabs ? 16 : 0 }}
 				>
-					{!isScpi && !privateEquity?.fond?.length && supplierProductId !== PEA_ID ? (
+					{!isScpi && !visibleFonds.length && supplierProductId !== PEA_ID ? (
 						<View className="mt-4 gap-4">
 							{isClubDeals
 								? data?.enveloppes_club_deals?.map((clubDeal, idx) => (
@@ -487,7 +494,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								}
 							/>
 						</View>
-					) : !!privateEquity?.fond?.length ? (
+					) : !!visibleFonds.length ? (
 						<ScrollView
 							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
 							horizontal
@@ -562,7 +569,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 									}
 								/>
 							</View>
-							{privateEquity.fond.map((fond, idx) => (
+							{visibleFonds.map((fond, idx) => (
 								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
 									<FondComponent
 										previousCategories={previousCategories}
@@ -1265,13 +1272,24 @@ const FondComponent = ({
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 				{Object.entries(information)
 					.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
-					.map(([key, value], idx, arr) => (
-						<React.Fragment key={key}>
-							<Text className="text-sm font-semibold text-primaryLight">{FOND_LABELS[key] || key}</Text>
-							<Text className="text-sm font-semibold text-primary">{value as string}</Text>
-							{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
-						</React.Fragment>
-					))}
+					.map(([key, value], idx, arr) => {
+						const display =
+							key === "end_date_product"
+								? new Date(value as string).toLocaleDateString("fr-FR", {
+										day: "numeric",
+										month: "numeric",
+										year: "numeric",
+									})
+								: (value as string);
+
+						return (
+							<React.Fragment key={key}>
+								<Text className="text-sm font-semibold text-primaryLight">{FOND_LABELS[key] || key}</Text>
+								<Text className="text-sm font-semibold text-primary">{display}</Text>
+								{idx < arr.length - 1 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+							</React.Fragment>
+						);
+					})}
 			</View>
 			{information.brochure && (
 				<Brochure

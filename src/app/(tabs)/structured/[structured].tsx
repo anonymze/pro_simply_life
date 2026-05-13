@@ -177,6 +177,11 @@ export default function Page() {
 						<Text selectable className="font-semibold text-primary">
 							{structuredProduct.capital}
 						</Text>
+						<View className="my-2 h-px w-full bg-defaultGray/15" />
+						<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
+						<Text selectable className="font-semibold text-green-600">
+							{structuredProduct.commission_offer_group_valorem}
+						</Text>
 					</View>
 
 					{structuredProduct.offers?.length ? (

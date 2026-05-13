@@ -19,6 +19,7 @@ export interface StructuredProduct {
 	refund: string;
 	capital: string;
 	airbag: string;
+	commission_offer_group_valorem?: string | null;
 	updatedAt: string;
 	createdAt: string;
 	offers?:

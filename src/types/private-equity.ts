@@ -19,6 +19,7 @@ export const FOND_LABELS: Record<string, string> = {
 	duration_minimum: "Durée minimum",
 	duration_prolongation: "Durée prolongation",
 	duration_appel_found: "Durée appel fonds",
+	end_date_product: "Date de fin du produit",
 	these_investissement: "Thèse d'investissement",
 	retro_subscription: "Rétro souscription",
 	"150_0_b_ter": "150-0 B ter",
@@ -32,7 +33,7 @@ export interface PrivateEquity {
 	id: string;
 	type: "capital" | "dettes" | "assurance";
 	supplier?: Supplier;
-	disponible_a_partir_de?: number | null;
+	disponible_a_partir_de?: string | null;
 	fond?:
 		| {
 				name: string;
@@ -53,6 +54,7 @@ export interface PrivateEquity {
 				duration_minimum?: string | null;
 				duration_prolongation?: string | null;
 				duration_appel_found?: string | null;
+				end_date_product?: string | null;
 				these_investissement?: string | null;
 				retro_subscription?: string | null;
 				"150_0_b_ter"?: string | null;

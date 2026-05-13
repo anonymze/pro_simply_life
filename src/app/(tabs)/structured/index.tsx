@@ -10,7 +10,7 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import { Link } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { DimensionValue, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 
@@ -128,6 +128,43 @@ function Card({ structuredProduct, disabled = false }: { structuredProduct: Stru
 				<View className="flex-1">
 					<Text className="text-lg font-semibold text-primary">{structuredProduct.supplier.name}</Text>
 					<Text className={cn("text-sm text-primaryLight")}>{structuredProduct.name}</Text>
+					{(() => {
+						const max = structuredProduct.max;
+						const current = structuredProduct.current;
+						if (!max) return null;
+						const filledRatio = (max - current) / max;
+						const widthPercent: DimensionValue =
+							filledRatio >= 1 ? "100%" : filledRatio < 0.1 ? "10%" : `${filledRatio * 100}%`;
+
+						return (
+							<View>
+								<View className="mt-3">
+									<View className="flex-row">
+										<View className="gap-1" style={{ width: widthPercent }}>
+											<View
+												className={cn(
+													"h-1.5 w-full rounded-full bg-green-600",
+													current <= 0 && "bg-production",
+												)}
+											/>
+										</View>
+									</View>
+								</View>
+								<View className="mt-3 flex-row items-center gap-2">
+									<View
+										className={cn(
+											"size-2 rounded-full bg-green-600",
+											current <= 0 && "bg-production",
+										)}
+									/>
+									<Text className="text-[11px] text-backgroundChat">Solde enveloppe</Text>
+									<Text className="ml-auto text-xs font-light text-primaryLight">
+										{current.toLocaleString("fr-FR")}€
+									</Text>
+								</View>
+							</View>
+						);
+					})()}
 				</View>
 				<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 			</MyTouchableScaleOpacity>
