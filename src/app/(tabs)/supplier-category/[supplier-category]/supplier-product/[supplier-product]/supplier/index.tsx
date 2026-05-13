@@ -143,7 +143,7 @@ const SupplierListComponent = ({
 	);
 };
 
-const REFERENT_NAME = "David DUGUANT";
+const REFERENT_NAME = "David DUGAND";
 const REFERENT_PHONE = "0783185728";
 const REFERENT_EMAIL = "dugandpatrimoine@gmail.com";
 
