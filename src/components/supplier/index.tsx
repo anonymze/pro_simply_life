@@ -1271,16 +1271,16 @@ const FondComponent = ({
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 				{Object.entries(information)
-					.filter(([key, value]) => key !== "brochure" && key !== "id" && value)
+					.filter(([key]) => key !== "brochure" && key !== "id")
 					.map(([key, value], idx, arr) => {
 						const display =
-							key === "end_date_product"
+							key === "end_date_product" && value
 								? new Date(value as string).toLocaleDateString("fr-FR", {
 										day: "numeric",
 										month: "numeric",
 										year: "numeric",
 									})
-								: (value as string);
+								: ((value as string) ?? "");
 
 						return (
 							<React.Fragment key={key}>
