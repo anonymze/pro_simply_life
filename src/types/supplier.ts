@@ -105,6 +105,7 @@ export interface Supplier {
 				epargne?: boolean | null;
 				nue?: boolean | null;
 				minimum_versement?: string | null;
+				minimum_versement_programme?: string | null;
 				subscription_fee?: string | null;
 				duration?: string | null;
 				rentability_n1?: string | null;
