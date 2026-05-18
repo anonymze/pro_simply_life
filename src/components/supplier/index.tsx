@@ -1065,54 +1065,115 @@ const ScpiComponent = ({
 	previousCategories: boolean;
 	updatedAt: string;
 }) => {
+	const items: React.ReactNode[] = [];
+
+	if (information.scpi != null)
+		items.push(
+			<View key="scpi">
+				<Text className="text-sm font-semibold text-primaryLight">SCPI</Text>
+				<Text className="text-sm font-semibold text-primary">{information.scpi}</Text>
+			</View>,
+		);
+
+	if (information.theme != null)
+		items.push(
+			<View key="theme">
+				<Text className="text-sm font-semibold text-primaryLight">Thématique</Text>
+				<Text className="text-base font-semibold text-primary">{information.theme}</Text>
+			</View>,
+		);
+
+	items.push(
+		<View key="epargne" className="flex flex-row items-center justify-between">
+			<Text className="text-sm font-semibold text-primaryLight">Épargne</Text>
+			<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+				{information.epargne ? "Oui" : "Non"}
+			</Text>
+		</View>,
+	);
+
+	items.push(
+		<View key="nue" className="flex flex-row items-center justify-between">
+			<Text className="text-sm font-semibold text-primaryLight">Nue Propriété</Text>
+			<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+				{information.nue ? "Oui" : "Non"}
+			</Text>
+		</View>,
+	);
+
+	if (information.minimum_versement != null)
+		items.push(
+			<View key="minimum_versement">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
+			</View>,
+		);
+
+	if (information.minimum_versement_programme != null)
+		items.push(
+			<View key="minimum_versement_programme">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement programmé</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement_programme}</Text>
+			</View>,
+		);
+
+	if (information.subscription_fee != null)
+		items.push(
+			<View key="subscription_fee">
+				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
+				<Text className="text-base font-semibold text-primary">{information.subscription_fee}</Text>
+			</View>,
+		);
+
+	if (information.duration != null)
+		items.push(
+			<View key="duration">
+				<Text className="text-sm font-semibold text-primaryLight">Délai de jouissance</Text>
+				<Text className="text-base font-semibold text-primary">{information.duration}</Text>
+			</View>,
+		);
+
+	if (information.rentability_n1 != null)
+		items.push(
+			<View key="rentability_n1">
+				<Text className="text-sm font-semibold text-primaryLight">Rentabilité N1</Text>
+				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
+			</View>,
+		);
+
+	if (information.commission_offer_group_valorem != null)
+		items.push(
+			<View key="commission_offer_group_valorem">
+				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
+				<Text className="text-base font-semibold text-green-600">{information.commission_offer_group_valorem}</Text>
+			</View>,
+		);
+
+	if (information.commission_public_offer != null)
+		items.push(
+			<View key="commission_public_offer">
+				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
+				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
+			</View>,
+		);
+
+	if (information.annotation != null)
+		items.push(
+			<View key="annotation" className="mt-3 gap-2">
+				<Text className="text-sm text-backgroundChat">Remarques :</Text>
+				<Text className="text-sm font-light text-primaryLight">{information.annotation}</Text>
+			</View>,
+		);
+
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="text-sm font-semibold text-primaryLight">SCPI</Text>
-				<Text className="text-sm font-semibold text-primary">{information.scpi}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Thématique</Text>
-				<Text className="text-base font-semibold text-primary">{information.theme}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="flex flex-row items-center justify-between">
-					<Text className="text-sm font-semibold text-primaryLight">Épargne</Text>
-					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-						{information.epargne ? "Oui" : "Non"}
-					</Text>
-				</View>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="flex flex-row items-center justify-between">
-					<Text className="text-sm font-semibold text-primaryLight">Nue Propriété</Text>
-					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-						{information.nue ? "Oui" : "Non"}
-					</Text>
-				</View>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
-				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement programmé</Text>
-				<Text className="text-base font-semibold text-primary">{information.minimum_versement_programme}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
-				<Text className="text-base font-semibold text-primary">{information.subscription_fee}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Délai de jouissance</Text>
-				<Text className="text-base font-semibold text-primary">{information.duration}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Rentabilité N1</Text>
-				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
-				<Text className="text-base font-semibold text-green-600">{information.commission_offer_group_valorem}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
-				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="mt-3 gap-2">
-					<Text className="text-sm text-backgroundChat">Remarques :</Text>
-					<Text className="text-sm font-light text-primaryLight">{information.annotation}</Text>
-				</View>
+				{items.map((item, idx) => (
+					<React.Fragment key={idx}>
+						{idx > 0 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+						{item}
+					</React.Fragment>
+				))}
 			</View>
 			{information.brochure && (
 				<Brochure
