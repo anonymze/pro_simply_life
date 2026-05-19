@@ -104,11 +104,12 @@ export default function Page({ previousCategories = true }: { previousCategories
 	const isClubDeals = supplierProductId === CLUB_DEALS_ID;
 	const isPEA = supplierProductId === PEA_ID;
 	const hasEnveloppes = !!data?.enveloppes?.some((e) => e.amount != null);
+	const hasEnveloppesClubDeals = !!data?.enveloppes_club_deals?.some((e) => e.amount != null);
 	const hasOtherInfo = !!data?.other_information?.length;
 	const hasFonds = visibleFonds.length > 0;
 
 	// priority cascade for the main view (only one matches)
-	const showEnveloppesView = isClubDeals || hasEnveloppes;
+	const showEnveloppesView = (isClubDeals && hasEnveloppesClubDeals) || hasEnveloppes;
 	const showFondsView = !showEnveloppesView && hasFonds;
 	const showPEAView = !showEnveloppesView && !showFondsView && isPEA;
 	const showOtherInfoView = !showEnveloppesView && !showFondsView && !showPEAView;
@@ -157,7 +158,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 							// @ts-ignore
 							...data.other_information.map((info) => {
 								return {
-									title: info.scpi || "SCPI sans titre",
+									title: info.scpi || "Produit sans titre",
 									subtitle: "",
 								};
 							}),
