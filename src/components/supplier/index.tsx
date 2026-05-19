@@ -9,7 +9,7 @@ import { Supplier } from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { downloadFile } from "@/utils/download";
-import { ALL_SCPI_ID, CLUB_DEALS_ID, PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { CLUB_DEALS_ID, PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
 import { getStorageUserInfos } from "@/utils/store";
 import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
@@ -101,10 +101,19 @@ export default function Page({ previousCategories = true }: { previousCategories
 
 	if (!data || !appUser?.user) return null;
 
-	const isScpi = supplierProductId === ALL_SCPI_ID;
 	const isClubDeals = supplierProductId === CLUB_DEALS_ID;
-	const hasTabs =
-		(isScpi && !!data?.other_information?.length) || !!visibleFonds.length || supplierProductId === PEA_ID;
+	const isPEA = supplierProductId === PEA_ID;
+	const hasEnveloppes = !!data?.enveloppes?.some((e) => e.amount != null);
+	const hasOtherInfo = !!data?.other_information?.length;
+	const hasFonds = visibleFonds.length > 0;
+
+	// priority cascade for the main view (only one matches)
+	const showEnveloppesView = isClubDeals || hasEnveloppes;
+	const showFondsView = !showEnveloppesView && hasFonds;
+	const showPEAView = !showEnveloppesView && !showFondsView && isPEA;
+	const showOtherInfoView = !showEnveloppesView && !showFondsView && !showPEAView;
+
+	const hasTabs = showFondsView || showPEAView || (showOtherInfoView && hasOtherInfo);
 
 	return (
 		<>
@@ -137,7 +146,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 			</View>
 			<BackgroundLayout className="px-4">
 				{/* SCPI */}
-				{isScpi && !!data?.other_information?.length && (
+				{showOtherInfoView && hasOtherInfo && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -190,7 +199,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 				)}
 
 				{/* PRIVATE EQUITY */}
-				{!!visibleFonds.length && (
+				{showFondsView && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -237,7 +246,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 				)}
 
 				{/* PEA */}
-				{supplierProductId === PEA_ID && (
+				{showPEAView && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
 						data={[
@@ -288,9 +297,9 @@ export default function Page({ previousCategories = true }: { previousCategories
 					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
-					contentContainerStyle={{ paddingBottom: 10, paddingTop: isScpi && !hasTabs ? 16 : 0 }}
+					contentContainerStyle={{ paddingBottom: 10, paddingTop: showOtherInfoView && !hasOtherInfo ? 16 : 0 }}
 				>
-					{!isScpi && !visibleFonds.length && supplierProductId !== PEA_ID ? (
+					{showEnveloppesView ? (
 						<View className="mt-4 gap-4">
 							{isClubDeals
 								? data?.enveloppes_club_deals?.map((clubDeal, idx) => (
@@ -494,7 +503,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								}
 							/>
 						</View>
-					) : !!visibleFonds.length ? (
+					) : showFondsView ? (
 						<ScrollView
 							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
 							horizontal
@@ -582,7 +591,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</View>
 							))}
 						</ScrollView>
-					) : supplierProductId === PEA_ID ? (
+					) : showPEAView ? (
 						<ScrollView
 							ref={horizontalScrollRef}
 							horizontal
