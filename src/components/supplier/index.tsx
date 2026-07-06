@@ -5,11 +5,22 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import BackgroundLayout from "@/layouts/background-layout";
 import { Media } from "@/types/media";
 import { FOND_LABELS, PrivateEquity } from "@/types/private-equity";
-import { Supplier } from "@/types/supplier";
+import {
+	Supplier,
+	SupplierBlockAssuranceVie,
+	SupplierBlockCapitalisation,
+	SupplierBlockCif,
+	SupplierBlockClubDeals,
+	SupplierBlockCrypto,
+	SupplierBlockPea,
+	SupplierBlockPer,
+	SupplierBlockScpi,
+	SupplierInformationBlock,
+} from "@/types/supplier";
 import { userHierarchy } from "@/types/user";
 import { cn } from "@/utils/cn";
 import { downloadFile } from "@/utils/download";
-import { CLUB_DEALS_ID, PEA_ID, SCREEN_DIMENSIONS } from "@/utils/helper";
+import { SCREEN_DIMENSIONS } from "@/utils/helper";
 import { getStorageUserInfos } from "@/utils/store";
 import { LegendList } from "@legendapp/list";
 import { useQuery } from "@tanstack/react-query";
@@ -34,6 +45,28 @@ import {
 import config from "tailwind.config";
 
 const DEFAULT_MAX_VALUE = 5_000_000;
+
+// regle client : seuls les champs remplis apparaissent dans l'appli
+const hasValue = (v: unknown): boolean => v != null && v !== "";
+
+const BLOCK_TYPE_LABELS: Record<SupplierInformationBlock["blockType"], string> = {
+	assurance_vie: "Assurance Vie / Luxembourg",
+	per: "PER",
+	capitalisation: "Contrat de Capitalisation",
+	crypto: "Crypto",
+	scpi: "SCPI",
+	pea: "PEA",
+	cif: "Girardin Industriel",
+	club_deals: "Club Deals",
+};
+
+// titre d'onglet : nom de la fiche -> blockName -> intitule du type
+const ficheTabTitle = (block: SupplierInformationBlock): string => {
+	const name = block.blockType === "scpi" ? block.scpi : "name" in block ? block.name : null;
+	if (name != null && name !== "") return name;
+	if (block.blockName != null && block.blockName !== "") return block.blockName;
+	return BLOCK_TYPE_LABELS[block.blockType];
+};
 
 export default function Page({ previousCategories = true }: { previousCategories?: boolean }) {
 	const appUser = getStorageUserInfos();
@@ -99,22 +132,45 @@ export default function Page({ previousCategories = true }: { previousCategories
 		return fonds.filter((f) => !f.end_date_product || new Date(f.end_date_product).getTime() >= now);
 	}, [privateEquity]);
 
+	// atterrissage sur l'onglet enveloppes (girardin / club deals) quand il existe
+	const landingAppliedRef = React.useRef(false);
+	React.useEffect(() => {
+		if (!data || landingAppliedRef.current) return;
+		landingAppliedRef.current = true;
+
+		if (visibleFonds.length > 0) return;
+
+		const hasEnveloppeBlocks = (data.other_information_blocks ?? []).some(
+			(b) => b.blockType === "cif" || b.blockType === "club_deals",
+		);
+		if (hasEnveloppeBlocks) {
+			setCurrentIndex(1);
+			requestAnimationFrame(() => {
+				horizontalScrollRef.current?.scrollTo({ x: SCREEN_DIMENSIONS.width - 28 + 16, animated: false });
+			});
+		}
+	}, [data, visibleFonds]);
+
 	if (!data || !appUser?.user) return null;
 
-	const isClubDeals = supplierProductId === CLUB_DEALS_ID;
-	const isPEA = supplierProductId === PEA_ID;
-	const hasEnveloppes = !!data?.enveloppes?.some((e) => e.amount != null);
-	const hasEnveloppesClubDeals = !!data?.enveloppes_club_deals?.some((e) => e.amount != null);
-	const hasOtherInfo = !!data?.other_information?.length;
-	const hasFonds = visibleFonds.length > 0;
+	const blocks = data.other_information_blocks ?? [];
+	const girardinBlocks = blocks.filter((b): b is SupplierBlockCif => b.blockType === "cif");
+	const clubDealsBlocks = blocks.filter((b): b is SupplierBlockClubDeals => b.blockType === "club_deals");
+	const ficheBlocks = blocks.filter(
+		(b): b is Exclude<SupplierInformationBlock, SupplierBlockCif | SupplierBlockClubDeals> =>
+			b.blockType !== "cif" && b.blockType !== "club_deals",
+	);
 
-	// priority cascade for the main view (only one matches)
-	const showEnveloppesView = (isClubDeals && hasEnveloppesClubDeals) || hasEnveloppes;
-	const showFondsView = !showEnveloppesView && hasFonds;
-	const showPEAView = !showEnveloppesView && !showFondsView && isPEA;
-	const showOtherInfoView = !showEnveloppesView && !showFondsView && !showPEAView;
+	// vue fonds private equity inchangee, sinon un onglet par fiche produit
+	const showFondsView = visibleFonds.length > 0;
 
-	const hasTabs = showFondsView || showPEAView || (showOtherInfoView && hasOtherInfo);
+	const tabs = [
+		{ title: "Contact" },
+		...(girardinBlocks.length > 0 ? [{ title: "Girardin Industriel" }] : []),
+		...(clubDealsBlocks.length > 0 ? [{ title: "Club Deals" }] : []),
+		...ficheBlocks.map((b) => ({ title: ficheTabTitle(b) })),
+	];
+	const hasTabs = showFondsView || tabs.length > 1;
 
 	return (
 		<>
@@ -146,23 +202,11 @@ export default function Page({ previousCategories = true }: { previousCategories
 				</View>
 			</View>
 			<BackgroundLayout className="px-4">
-				{/* SCPI */}
-				{showOtherInfoView && hasOtherInfo && (
+				{/* onglets fiches produit */}
+				{!showFondsView && tabs.length > 1 && (
 					<LegendList
 						showsHorizontalScrollIndicator={false}
-						data={[
-							{
-								title: "Contact",
-								subtitle: "",
-							},
-							// @ts-ignore
-							...data.other_information.map((info) => {
-								return {
-									title: info.scpi || "Produit sans titre",
-									subtitle: "",
-								};
-							}),
-						]}
+						data={tabs}
 						horizontal
 						className="h-15 my-4"
 						renderItem={({ item, index }) => {
@@ -190,9 +234,6 @@ export default function Page({ previousCategories = true }: { previousCategories
 									<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
 										{item.title}
 									</Text>
-									{item.subtitle && (
-										<Text className={cn("text-xs", isActive ? "text-white" : "text-primary")}>{item.subtitle}</Text>
-									)}
 								</Pressable>
 							);
 						}}
@@ -246,265 +287,14 @@ export default function Page({ previousCategories = true }: { previousCategories
 					/>
 				)}
 
-				{/* PEA */}
-				{showPEAView && (
-					<LegendList
-						showsHorizontalScrollIndicator={false}
-						data={[
-							{
-								title: "Contact",
-								subtitle: "",
-							},
-							{
-								title: "PEA",
-								subtitle: "",
-							},
-						]}
-						horizontal
-						className="h-15 my-4"
-						renderItem={({ item, index }) => {
-							const isActive = currentIndex === index;
-
-							return (
-								<Pressable
-									hitSlop={5}
-									className={cn(
-										"mr-3.5 flex h-12 items-center justify-center rounded-lg px-3.5",
-										isActive ? "bg-primary" : "bg-darkGray",
-									)}
-									onPress={() => {
-										setCurrentIndex(index);
-
-										if (index === 0) {
-											horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
-											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-										} else {
-											const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
-											horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
-											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
-										}
-									}}
-								>
-									<Text className={cn("text-sm font-bold", isActive ? "text-white" : "text-primary")}>
-										{item?.title}
-									</Text>
-								</Pressable>
-							);
-						}}
-					/>
-				)}
-
 				<ScrollView
 					ref={verticalScrollRef}
 					showsVerticalScrollIndicator={false}
 					style={{ backgroundColor: config.theme.extend.colors.background }}
-					contentContainerStyle={{ paddingBottom: 10, paddingTop: showOtherInfoView && !hasOtherInfo ? 16 : 0 }}
+					contentContainerStyle={{ paddingBottom: 10, paddingTop: !hasTabs ? 16 : 0 }}
 				>
-					{showEnveloppesView ? (
-						<View className="mt-4 gap-4">
-							{isClubDeals
-								? data?.enveloppes_club_deals?.map((clubDeal, idx) => (
-										<ClubDealComponent
-											key={idx}
-											information={clubDeal}
-											supplierCategoryId={supplierCategoryId}
-											supplierProductId={supplierProductId}
-											supplierId={supplierId}
-											previousCategories={previousCategories}
-											updatedAt={data.updatedAt}
-										/>
-									))
-								: data?.enveloppes?.map((enveloppe, idx) => {
-										if (enveloppe.amount == null) return null;
 
-										const amount = enveloppe.amount;
-										const global = enveloppe.global || DEFAULT_MAX_VALUE;
-										const ratio = amount / global;
-										const widthPercent: DimensionValue =
-											amount >= global ? "100%" : ratio < 0.1 ? "10%" : `${ratio * 100}%`;
-
-										return (
-											<View key={idx} className="rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10">
-												{amount > 0 && (
-													<Text className="text-md mt-5 font-semibold text-primary">
-														Taux de remplissage{(data.enveloppes?.length ?? 0) > 1 ? ` (enveloppe ${idx + 1})` : ""}
-													</Text>
-												)}
-												{amount > 0 && (
-													<View className="mt-5">
-														<View className="flex-row">
-															<View className="gap-1" style={{ width: widthPercent }}>
-																<View className="h-1.5 w-full rounded-full bg-green-600" />
-															</View>
-														</View>
-													</View>
-												)}
-												<View className="mb-3 mt-6 flex-row items-center gap-2">
-													<View className="size-2 rounded-full bg-green-600" />
-													{amount === 0 ? (
-														<Text className="text-backgroundChat">Enveloppe ouverte</Text>
-													) : (
-														<>
-															<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
-															<Text className="ml-auto text-sm font-light text-primaryLight">
-																{amount.toLocaleString("fr-FR")}€
-															</Text>
-														</>
-													)}
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
-													<Text className="ml-auto text-sm font-light text-primaryLight">
-														{enveloppe.echeance
-															? new Date(enveloppe.echeance).toLocaleDateString("fr-FR", {
-																	day: "numeric",
-																	month: "numeric",
-																	year: "numeric",
-																})
-															: "Non renseigné"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
-													<Text className="ml-auto text-sm font-light text-primaryLight">
-														{enveloppe.reduction ? enveloppe.reduction.toLocaleString("fr-FR") : "Non renseigné"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
-													<Text className="ml-auto text-sm font-light text-primaryLight">
-														{enveloppe.actualisation
-															? new Date(enveloppe.actualisation).toLocaleDateString("fr-FR", {
-																	day: "numeric",
-																	month: "numeric",
-																	year: "numeric",
-																})
-															: "Non renseigné"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Commissions</Text>
-													<Text className="ml-auto text-sm font-light text-primaryLight">
-														{enveloppe.commission ?? "Non renseigné"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-xs text-green-600">Commissions négociées Groupe Valorem</Text>
-													<Text className="ml-auto text-xs font-light text-green-600">
-														{enveloppe.commission_valorem ?? "Non renseigné"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Plein droit</Text>
-													<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-														{enveloppe.droits === "yes" ? "Oui" : "Non"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Agrément</Text>
-													<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-														{enveloppe.agrement === "yes" ? "Oui" : "Non"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Garantie de bonne fin fiscale</Text>
-													<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-														{enveloppe.assurance === "yes"
-															? "Oui"
-															: enveloppe.assurance === "maybe"
-																? "Parfois"
-																: "Non"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
-													<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-														{enveloppe.investisseur === "yes" ? "Oui" : "Non"}
-													</Text>
-												</View>
-												<View className="mt-3 flex-row items-center gap-2">
-													<Text className="text-sm text-backgroundChat">Clause de non retour</Text>
-													<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-														{enveloppe.close === "yes" ? "Oui" : "Non"}
-													</Text>
-												</View>
-												<View className="mt-3 gap-2">
-													<Text className="text-sm text-backgroundChat">Remarques :</Text>
-													<Text className="text-sm font-light text-primaryLight">{enveloppe.remarque}</Text>
-												</View>
-											</View>
-										);
-									})}
-
-							<ContactInfo
-								supplierId={supplierId}
-								supplierCategoryId={supplierCategoryId}
-								supplierProductId={supplierProductId}
-								phone={data.contact_info?.phone}
-								email={data.contact_info?.email}
-								firstname={data.contact_info?.firstname}
-								lastname={data.contact_info?.lastname}
-								website={data.website}
-								brochures={data.brochures}
-								previousCategories={previousCategories}
-								photo={data.contact_info.photo}
-								player={player}
-								videoUrl={videoUrl}
-								isVideoLoading={isVideoLoading}
-							/>
-
-							{userHierarchy[appUser.user.role] < 2 &&
-								(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-									<Logs
-										title="Identifiants généraux"
-										link={
-											previousCategories
-												? {
-														pathname:
-															"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-														params: {
-															"supplier-category": supplierCategoryId,
-															"supplier-product": supplierProductId,
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-												: {
-														pathname: "/selection/[supplier]/logs/[logs]",
-														params: {
-															supplier: supplierId,
-															logs: JSON.stringify(data.connexion),
-														},
-													}
-										}
-									/>
-								)}
-
-							<Logs
-								title="Identifiants personnels"
-								link={
-									previousCategories
-										? {
-												pathname:
-													"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
-												params: {
-													"supplier-category": supplierCategoryId,
-													"supplier-product": supplierProductId,
-													supplier: supplierId,
-													perso: "hey",
-												},
-											}
-										: {
-												pathname: "/selection/[supplier]/perso/[perso]",
-												params: {
-													supplier: supplierId,
-													perso: "hey",
-												},
-											}
-								}
-							/>
-						</View>
-					) : showFondsView ? (
+					{showFondsView ? (
 						<ScrollView
 							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
 							horizontal
@@ -592,7 +382,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</View>
 							))}
 						</ScrollView>
-					) : showPEAView ? (
+					) : (
 						<ScrollView
 							ref={horizontalScrollRef}
 							horizontal
@@ -602,272 +392,266 @@ export default function Page({ previousCategories = true }: { previousCategories
 							contentContainerStyle={{ gap: 16 }}
 						>
 							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
-								{data?.enveloppes?.map((enveloppe, idx) =>
-									enveloppe.amount ? (
-										<View key={idx} className="rounded-2xl  bg-white p-4 shadow-sm shadow-defaultGray/10">
-											<Text className="text-md mt-5 font-semibold text-primary">
-												Taux de remplissage{(data.enveloppes?.length ?? 0) > 1 ? ` (enveloppe ${idx + 1})` : ""}
-											</Text>
-											<View className="mt-5">
-												<View className="flex-row">
-													<View
-														className="gap-1"
-														// @ts-ignore
-														style={{
-															width:
-																enveloppe.amount >= (enveloppe.global || DEFAULT_MAX_VALUE)
-																	? "100%"
-																	: enveloppe.amount / (enveloppe.global || DEFAULT_MAX_VALUE) < 0.1
-																		? "10%"
-																		: (enveloppe.amount / (enveloppe.global || DEFAULT_MAX_VALUE)) * 100 + "%",
-														}}
-													>
-														<View
-															className={cn(
-																"h-1.5 w-full rounded-full bg-green-600",
-																enveloppe.amount <= 0 && "bg-production",
-															)}
-														/>
+								<ContactInfo
+									supplierId={supplierId}
+									supplierCategoryId={supplierCategoryId}
+									supplierProductId={supplierProductId}
+									phone={data.contact_info?.phone}
+									email={data.contact_info?.email}
+									firstname={data.contact_info?.firstname}
+									lastname={data.contact_info?.lastname}
+									website={data.website}
+									brochures={data.brochures}
+									previousCategories={previousCategories}
+									photo={data.contact_info.photo}
+									player={player}
+									videoUrl={videoUrl}
+									isVideoLoading={isVideoLoading}
+								/>
+
+								{userHierarchy[appUser.user.role] < 2 &&
+									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
+										<Logs
+											title="Identifiants généraux"
+											link={
+												previousCategories
+													? {
+															pathname:
+																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
+															params: {
+																"supplier-category": supplierCategoryId,
+																"supplier-product": supplierProductId,
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+													: {
+															pathname: "/selection/[supplier]/logs/[logs]",
+															params: {
+																supplier: supplierId,
+																logs: JSON.stringify(data.connexion),
+															},
+														}
+											}
+										/>
+									)}
+
+								<Logs
+									title="Identifiants personnels"
+									link={
+										previousCategories
+											? {
+													pathname:
+														"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
+													params: {
+														"supplier-category": supplierCategoryId,
+														"supplier-product": supplierProductId,
+														supplier: supplierId,
+														perso: "hey",
+													},
+												}
+											: {
+													pathname: "/selection/[supplier]/perso/[perso]",
+													params: {
+														supplier: supplierId,
+														perso: "hey",
+													},
+												}
+									}
+								/>
+							</View>
+
+							{girardinBlocks.length > 0 && (
+								<View className="gap-4" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
+									{girardinBlocks.map((enveloppe, idx) => {
+										if (enveloppe.amount == null) return null;
+
+										const amount = enveloppe.amount;
+										const global = enveloppe.global || DEFAULT_MAX_VALUE;
+										const ratio = amount / global;
+										const widthPercent: DimensionValue =
+											amount >= global ? "100%" : ratio < 0.1 ? "10%" : `${ratio * 100}%`;
+
+										return (
+											<View
+												key={enveloppe.id ?? idx}
+												className="rounded-2xl bg-white p-4 shadow-sm shadow-defaultGray/10"
+											>
+												{amount > 0 && (
+													<Text className="text-md mt-5 font-semibold text-primary">
+														Taux de remplissage{girardinBlocks.length > 1 ? ` (enveloppe ${idx + 1})` : ""}
+													</Text>
+												)}
+												{amount > 0 && (
+													<View className="mt-5">
+														<View className="flex-row">
+															<View className="gap-1" style={{ width: widthPercent }}>
+																<View className="h-1.5 w-full rounded-full bg-green-600" />
+															</View>
+														</View>
 													</View>
+												)}
+												<View className="mb-3 mt-6 flex-row items-center gap-2">
+													<View className="size-2 rounded-full bg-green-600" />
+													{amount === 0 ? (
+														<Text className="text-backgroundChat">Enveloppe ouverte</Text>
+													) : (
+														<>
+															<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
+															<Text className="ml-auto text-sm font-light text-primaryLight">
+																{amount.toLocaleString("fr-FR")}€
+															</Text>
+														</>
+													)}
 												</View>
-											</View>
-											<View className="mb-3 mt-6 flex-row items-center gap-2">
-												<View
-													className={cn("size-2 rounded-full bg-green-600", enveloppe.amount <= 0 && "bg-production")}
-												/>
-												<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
-												<Text className="ml-auto text-sm font-light text-primaryLight">
-													{enveloppe.amount.toLocaleString("fr-FR")}€
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
-												<Text className="ml-auto text-sm font-light text-primaryLight">
-													{enveloppe.echeance
-														? new Date(enveloppe.echeance).toLocaleDateString("fr-FR", {
+												{enveloppe.echeance != null && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Echéance de l'enveloppe</Text>
+														<Text className="ml-auto text-sm font-light text-primaryLight">
+															{new Date(enveloppe.echeance).toLocaleDateString("fr-FR", {
 																day: "numeric",
 																month: "numeric",
 																year: "numeric",
-															})
-														: "Non renseigné"}
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
-												<Text className="ml-auto text-sm font-light text-primaryLight">
-													{enveloppe.reduction ? enveloppe.reduction.toLocaleString("fr-FR") : "Non renseigné"}
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
-												<Text className="ml-auto text-sm font-light text-primaryLight">
-													{enveloppe.actualisation
-														? new Date(enveloppe.actualisation ?? "").toLocaleDateString("fr-FR", {
+															})}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.reduction) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Réduction d'impôt</Text>
+														<Text className="ml-auto text-sm font-light text-primaryLight">{enveloppe.reduction}</Text>
+													</View>
+												)}
+												{enveloppe.actualisation != null && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Date d'actualisation</Text>
+														<Text className="ml-auto text-sm font-light text-primaryLight">
+															{new Date(enveloppe.actualisation).toLocaleDateString("fr-FR", {
 																day: "numeric",
 																month: "numeric",
 																year: "numeric",
-															})
-														: "Non renseigné"}
-												</Text>
+															})}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.commission) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Commissions</Text>
+														<Text className="ml-auto text-sm font-light text-primaryLight">{enveloppe.commission}</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.commission_valorem) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-xs text-green-600">Commissions négociées Groupe Valorem</Text>
+														<Text className="ml-auto text-xs font-light text-green-600">
+															{enveloppe.commission_valorem}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.droits) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Plein droit</Text>
+														<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+															{enveloppe.droits === "yes" ? "Oui" : "Non"}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.agrement) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Agrément</Text>
+														<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+															{enveloppe.agrement === "yes" ? "Oui" : "Non"}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.assurance) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Garantie de bonne fin fiscale</Text>
+														<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+															{enveloppe.assurance === "yes"
+																? "Oui"
+																: enveloppe.assurance === "maybe"
+																	? "Parfois"
+																	: "Non"}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.investisseur) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
+														<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+															{enveloppe.investisseur === "yes" ? "Oui" : "Non"}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.close) && (
+													<View className="mt-3 flex-row items-center gap-2">
+														<Text className="text-sm text-backgroundChat">Clause de non retour</Text>
+														<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+															{enveloppe.close === "yes" ? "Oui" : "Non"}
+														</Text>
+													</View>
+												)}
+												{hasValue(enveloppe.remarque) && (
+													<View className="mt-3 gap-2">
+														<Text className="text-sm text-backgroundChat">Remarques :</Text>
+														<Text className="text-sm font-light text-primaryLight">{enveloppe.remarque}</Text>
+													</View>
+												)}
 											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Commissions</Text>
-												<Text className="ml-auto text-sm font-light text-primaryLight">
-													{enveloppe.commission ?? "Non renseigné"}
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Plein droit</Text>
-												<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-													{enveloppe.droits === "yes" ? "Oui" : "Non"}
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Agrément</Text>
-												<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-													{enveloppe.agrement === "yes" ? "Oui" : "Non"}
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Garantie de bonne fin fiscale</Text>
-												<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-													{enveloppe.assurance === "yes" ? "Oui" : enveloppe.assurance === "maybe" ? "Parfois" : "Non"}
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Garantie individuelle investisseur</Text>
-												<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-													{enveloppe.investisseur === "yes" ? "Oui" : "Non"}
-												</Text>
-											</View>
-											<View className="mt-3 flex-row items-center gap-2">
-												<Text className="text-sm text-backgroundChat">Clause de non retour</Text>
-												<Text className="ml-auto rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-													{enveloppe.close === "yes" ? "Oui" : "Non"}
-												</Text>
-											</View>
-											<View className="mt-3 gap-2">
-												<Text className="text-sm text-backgroundChat">Remarques :</Text>
-												<Text className=" text-sm font-light text-primaryLight">{enveloppe.remarque}</Text>
-											</View>
-										</View>
-									) : null,
-								)}
+										);
+									})}
+								</View>
+							)}
 
-								<ContactInfo
-									supplierId={supplierId}
-									supplierCategoryId={supplierCategoryId}
-									supplierProductId={supplierProductId}
-									phone={data.contact_info?.phone}
-									email={data.contact_info?.email}
-									firstname={data.contact_info?.firstname}
-									lastname={data.contact_info?.lastname}
-									website={data.website}
-									brochures={data.brochures}
-									previousCategories
-									photo={data.contact_info.photo}
-								/>
+							{clubDealsBlocks.length > 0 && (
+								<View className="gap-4" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
+									{clubDealsBlocks.map((clubDeal, idx) => (
+										<ClubDealComponent
+											key={clubDeal.id ?? idx}
+											information={clubDeal}
+											supplierCategoryId={supplierCategoryId}
+											supplierProductId={supplierProductId}
+											supplierId={supplierId}
+											previousCategories={previousCategories}
+											updatedAt={data.updatedAt}
+										/>
+									))}
+								</View>
+							)}
 
-								{userHierarchy[appUser.user.role] < 2 &&
-									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-										<Logs
-											title="Identifiants généraux"
-											link={
-												previousCategories
-													? {
-															pathname:
-																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-															params: {
-																"supplier-category": supplierCategoryId,
-																"supplier-product": supplierProductId,
-																supplier: supplierId,
-																logs: JSON.stringify(data.connexion),
-															},
-														}
-													: {
-															pathname: "/selection/[supplier]/logs/[logs]",
-															params: {
-																supplier: supplierId,
-																logs: JSON.stringify(data.connexion),
-															},
-														}
-											}
+							{ficheBlocks.map((block, idx) => (
+								<View key={block.id ?? idx} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
+									{block.blockType === "scpi" ? (
+										<ScpiComponent
+											previousCategories={previousCategories}
+											information={block}
+											supplierCategoryId={supplierCategoryId}
+											supplierId={supplierId}
+											supplierProductId={supplierProductId}
+											updatedAt={data.updatedAt}
+										/>
+									) : block.blockType === "pea" ? (
+										<PEAComponent information={block} />
+									) : block.blockType === "crypto" ? (
+										<CryptoComponent
+											previousCategories={previousCategories}
+											information={block}
+											supplierCategoryId={supplierCategoryId}
+											supplierId={supplierId}
+											supplierProductId={supplierProductId}
+											updatedAt={data.updatedAt}
+										/>
+									) : (
+										<ContratComponent
+											previousCategories={previousCategories}
+											information={block}
+											supplierCategoryId={supplierCategoryId}
+											supplierId={supplierId}
+											supplierProductId={supplierProductId}
+											updatedAt={data.updatedAt}
 										/>
 									)}
-
-								<Logs
-									title="Identifiants personnels"
-									link={
-										previousCategories
-											? {
-													pathname:
-														"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
-													params: {
-														"supplier-category": supplierCategoryId,
-														"supplier-product": supplierProductId,
-														supplier: supplierId,
-														perso: "hey",
-													},
-												}
-											: {
-													pathname: "/selection/[supplier]/perso/[perso]",
-													params: {
-														supplier: supplierId,
-														perso: "hey",
-													},
-												}
-									}
-								/>
-							</View>
-							<View style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
-								<PEAComponent information={data?.pea} />
-							</View>
-						</ScrollView>
-					) : (
-						<ScrollView
-							scrollViewRef={horizontalScrollRef as React.RefObject<ScrollView>}
-							horizontal
-							showsHorizontalScrollIndicator={false}
-							scrollEnabled={false}
-							decelerationRate={"fast"}
-							contentContainerStyle={{ gap: 16 }}
-						>
-							<View className="gap-2" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
-								<ContactInfo
-									supplierId={supplierId}
-									supplierCategoryId={supplierCategoryId}
-									supplierProductId={supplierProductId}
-									phone={data.contact_info?.phone}
-									email={data.contact_info?.email}
-									firstname={data.contact_info?.firstname}
-									lastname={data.contact_info?.lastname}
-									website={data.website}
-									brochures={data.brochures}
-									previousCategories
-									photo={data.contact_info.photo}
-								/>
-
-								{userHierarchy[appUser.user.role] < 2 &&
-									(data.connexion?.email || data.connexion?.password || data.connexion?.remarques) && (
-										<Logs
-											title="Identifiants généraux"
-											link={
-												previousCategories
-													? {
-															pathname:
-																"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/logs/[logs]",
-															params: {
-																"supplier-category": supplierCategoryId,
-																"supplier-product": supplierProductId,
-																supplier: supplierId,
-																logs: JSON.stringify(data.connexion),
-															},
-														}
-													: {
-															pathname: "/selection/[supplier]/logs/[logs]",
-															params: {
-																supplier: supplierId,
-																logs: JSON.stringify(data.connexion),
-															},
-														}
-											}
-										/>
-									)}
-
-								<Logs
-									title="Identifiants personnels"
-									link={
-										previousCategories
-											? {
-													pathname:
-														"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/perso/[perso]",
-													params: {
-														"supplier-category": supplierCategoryId,
-														"supplier-product": supplierProductId,
-														supplier: supplierId,
-														perso: "hey",
-													},
-												}
-											: {
-													pathname: "/selection/[supplier]/perso/[perso]",
-													params: {
-														supplier: supplierId,
-														perso: "hey",
-													},
-												}
-									}
-								/>
-							</View>
-							{data.other_information?.map((information, idx) => (
-								<View key={idx} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
-									<ScpiComponent
-										previousCategories={previousCategories}
-										information={information}
-										supplierCategoryId={supplierCategoryId}
-										supplierId={supplierId}
-										supplierProductId={supplierProductId}
-										updatedAt={data.updatedAt}
-									/>
 								</View>
 							))}
 						</ScrollView>
@@ -1068,7 +852,7 @@ const ScpiComponent = ({
 	supplierId,
 	updatedAt,
 }: {
-	information: NonNullable<Supplier["other_information"]>[number];
+	information: SupplierBlockScpi;
 	supplierCategoryId: string | string[];
 	supplierProductId: string | string[];
 	supplierId: string | string[];
@@ -1077,7 +861,7 @@ const ScpiComponent = ({
 }) => {
 	const items: React.ReactNode[] = [];
 
-	if (information.scpi != null)
+	if (hasValue(information.scpi))
 		items.push(
 			<View key="scpi">
 				<Text className="text-sm font-semibold text-primaryLight">SCPI</Text>
@@ -1085,7 +869,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.theme != null)
+	if (hasValue(information.theme))
 		items.push(
 			<View key="theme">
 				<Text className="text-sm font-semibold text-primaryLight">Thématique</Text>
@@ -1093,25 +877,27 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	items.push(
-		<View key="epargne" className="flex flex-row items-center justify-between">
-			<Text className="text-sm font-semibold text-primaryLight">Épargne</Text>
-			<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-				{information.epargne ? "Oui" : "Non"}
-			</Text>
-		</View>,
-	);
+	if (hasValue(information.epargne))
+		items.push(
+			<View key="epargne" className="flex flex-row items-center justify-between">
+				<Text className="text-sm font-semibold text-primaryLight">Épargne</Text>
+				<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+					{information.epargne ? "Oui" : "Non"}
+				</Text>
+			</View>,
+		);
 
-	items.push(
-		<View key="nue" className="flex flex-row items-center justify-between">
-			<Text className="text-sm font-semibold text-primaryLight">Nue Propriété</Text>
-			<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-				{information.nue ? "Oui" : "Non"}
-			</Text>
-		</View>,
-	);
+	if (hasValue(information.nue))
+		items.push(
+			<View key="nue" className="flex flex-row items-center justify-between">
+				<Text className="text-sm font-semibold text-primaryLight">Nue Propriété</Text>
+				<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+					{information.nue ? "Oui" : "Non"}
+				</Text>
+			</View>,
+		);
 
-	if (information.minimum_versement != null)
+	if (hasValue(information.minimum_versement))
 		items.push(
 			<View key="minimum_versement">
 				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
@@ -1119,7 +905,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.minimum_versement_programme != null)
+	if (hasValue(information.minimum_versement_programme))
 		items.push(
 			<View key="minimum_versement_programme">
 				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement programmé</Text>
@@ -1127,7 +913,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.subscription_fee != null)
+	if (hasValue(information.subscription_fee))
 		items.push(
 			<View key="subscription_fee">
 				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
@@ -1135,7 +921,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.duration != null)
+	if (hasValue(information.duration))
 		items.push(
 			<View key="duration">
 				<Text className="text-sm font-semibold text-primaryLight">Délai de jouissance</Text>
@@ -1143,7 +929,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.rentability_n1 != null)
+	if (hasValue(information.rentability_n1))
 		items.push(
 			<View key="rentability_n1">
 				<Text className="text-sm font-semibold text-primaryLight">Rentabilité N1</Text>
@@ -1151,7 +937,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.commission_offer_group_valorem != null)
+	if (hasValue(information.commission_offer_group_valorem))
 		items.push(
 			<View key="commission_offer_group_valorem">
 				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
@@ -1159,7 +945,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.commission_public_offer != null)
+	if (hasValue(information.commission_public_offer))
 		items.push(
 			<View key="commission_public_offer">
 				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
@@ -1167,7 +953,7 @@ const ScpiComponent = ({
 			</View>,
 		);
 
-	if (information.annotation != null)
+	if (hasValue(information.annotation))
 		items.push(
 			<View key="annotation" className="mt-3 gap-2">
 				<Text className="text-sm text-backgroundChat">Remarques :</Text>
@@ -1185,7 +971,7 @@ const ScpiComponent = ({
 					</React.Fragment>
 				))}
 			</View>
-			{information.brochure && (
+			{information.brochure && typeof information.brochure === "object" && (
 				<Brochure
 					brochure={information.brochure}
 					updatedAt={updatedAt}
@@ -1223,7 +1009,7 @@ const ClubDealComponent = ({
 	supplierId,
 	updatedAt,
 }: {
-	information: NonNullable<Supplier["enveloppes_club_deals"]>[number];
+	information: SupplierBlockClubDeals;
 	supplierCategoryId: string | string[];
 	supplierProductId: string | string[];
 	supplierId: string | string[];
@@ -1235,66 +1021,116 @@ const ClubDealComponent = ({
 	const ratio = amount / global;
 	const widthPercent: DimensionValue = amount >= global ? "100%" : ratio < 0.1 ? "10%" : `${ratio * 100}%`;
 
+	const items: React.ReactNode[] = [];
+
+	if (amount > 0)
+		items.push(
+			<View key="taux">
+				<Text className="text-md font-semibold text-primary">Taux de remplissage</Text>
+				<View className="mt-2">
+					<View className="flex-row">
+						<View className="gap-1" style={{ width: widthPercent }}>
+							<View className="h-1.5 w-full rounded-full bg-green-600" />
+						</View>
+					</View>
+				</View>
+				<View className="mt-3 flex-row items-center gap-2">
+					<View className="size-2 rounded-full bg-green-600" />
+					<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
+					<Text className="ml-auto text-sm font-light text-primaryLight">{amount.toLocaleString("fr-FR")}€</Text>
+				</View>
+			</View>,
+		);
+
+	if (information.amount != null && amount === 0)
+		items.push(
+			<View key="enveloppe_ouverte" className="flex-row items-center gap-2">
+				<View className="size-2 rounded-full bg-green-600" />
+				<Text className="text-backgroundChat">Enveloppe ouverte</Text>
+			</View>,
+		);
+
+	if (hasValue(information.minimum_versement))
+		items.push(
+			<View key="minimum_versement">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.subscription_fee))
+		items.push(
+			<View key="subscription_fee">
+				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
+				<Text className="text-base font-semibold text-primary">{information.subscription_fee}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.duration))
+		items.push(
+			<View key="duration">
+				<Text className="text-sm font-semibold text-primaryLight">Durée</Text>
+				<Text className="text-base font-semibold text-primary">{information.duration}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.operation))
+		items.push(
+			<View key="operation">
+				<Text className="text-sm font-semibold text-primaryLight">Opération</Text>
+				<Text className="text-base font-semibold text-primary">{information.operation}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.rentability_n1))
+		items.push(
+			<View key="rentability_n1">
+				<Text className="text-sm font-semibold text-primaryLight">Rentabilité</Text>
+				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.ventilation))
+		items.push(
+			<View key="ventilation">
+				<Text className="text-sm font-semibold text-primaryLight">Distribution au client</Text>
+				<Text className="text-base font-semibold text-primary capitalize">{information.ventilation}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.commission_offer_group_valorem))
+		items.push(
+			<View key="commission_offer_group_valorem">
+				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
+				<Text className="text-base font-semibold text-green-600">{information.commission_offer_group_valorem}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.commission_public_offer))
+		items.push(
+			<View key="commission_public_offer">
+				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
+				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.annotation))
+		items.push(
+			<View key="annotation" className="mt-3 gap-2">
+				<Text className="text-sm text-backgroundChat">Remarques :</Text>
+				<Text className="text-sm font-light text-primaryLight">{information.annotation}</Text>
+			</View>,
+		);
+
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				{amount > 0 && (
-					<>
-						<Text className="text-md font-semibold text-primary">Taux de remplissage</Text>
-						<View className="mt-2">
-							<View className="flex-row">
-								<View className="gap-1" style={{ width: widthPercent }}>
-									<View className="h-1.5 w-full rounded-full bg-green-600" />
-								</View>
-							</View>
-						</View>
-						<View className="mb-3 mt-3 flex-row items-center gap-2">
-							<View className="size-2 rounded-full bg-green-600" />
-							<Text className="text-backgroundChat">Montant enveloppe disponible</Text>
-							<Text className="ml-auto text-sm font-light text-primaryLight">{amount.toLocaleString("fr-FR")}€</Text>
-						</View>
-						<View className="my-2 h-px w-full bg-defaultGray/15" />
-					</>
-				)}
-				{information.amount != null && amount === 0 && (
-					<>
-						<View className="mb-3 flex-row items-center gap-2">
-							<View className="size-2 rounded-full bg-green-600" />
-							<Text className="text-backgroundChat">Enveloppe ouverte</Text>
-						</View>
-						<View className="my-2 h-px w-full bg-defaultGray/15" />
-					</>
-				)}
-				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement</Text>
-				<Text className="text-base font-semibold text-primary">{information.minimum_versement}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
-				<Text className="text-base font-semibold text-primary">{information.subscription_fee}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Durée</Text>
-				<Text className="text-base font-semibold text-primary">{information.duration}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Opération</Text>
-				<Text className="text-base font-semibold text-primary">{information.operation}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Rentabilité</Text>
-				<Text className="text-base font-semibold text-primary">{information.rentability_n1}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Distribution au client</Text>
-				<Text className="text-base font-semibold text-primary capitalize">
-					{information.ventilation}
-				</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-green-600">Commission pour le groupe Valorem</Text>
-				<Text className="text-base font-semibold text-green-600">{information.commission_offer_group_valorem}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Commission pour l'offre publique</Text>
-				<Text className="text-base font-semibold text-primary">{information.commission_public_offer}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="mt-3 gap-2">
-					<Text className="text-sm text-backgroundChat">Remarques :</Text>
-					<Text className="text-sm font-light text-primaryLight">{information.annotation}</Text>
-				</View>
+				{items.map((item, idx) => (
+					<React.Fragment key={idx}>
+						{idx > 0 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+						{item}
+					</React.Fragment>
+				))}
 			</View>
 			{information.brochure && typeof information.brochure === "object" && (
 				<Brochure
@@ -1346,6 +1182,7 @@ const FondComponent = ({
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
 				{Object.entries(information)
 					.filter(([key]) => key !== "brochure" && key !== "id")
+					.filter(([, value]) => hasValue(value))
 					.map(([key, value], idx, arr) => {
 						const display =
 							key === "end_date_product" && value
@@ -1395,49 +1232,315 @@ const FondComponent = ({
 	);
 };
 
-const PEAComponent = ({ information }: { information: Supplier["pea"] }) => {
+const PEAComponent = ({ information }: { information: SupplierBlockPea }) => {
+	const items: React.ReactNode[] = [];
+
+	if (hasValue(information?.banque))
+		items.push(
+			<View key="banque">
+				<Text className="text-sm font-semibold text-primaryLight">Banque dépositaire</Text>
+				<Text className="text-sm font-semibold text-primary">{information?.banque}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.title_vif))
+		items.push(
+			<View key="title_vif" className="flex flex-row items-center justify-between">
+				<Text className="text-sm font-semibold text-primaryLight">Titre vif</Text>
+				<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+					{information?.title_vif === "yes" ? "Oui" : "Non"}
+				</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.architecture_open))
+		items.push(
+			<View key="architecture_open" className="flex flex-row items-center justify-between">
+				<Text className="text-sm font-semibold text-primaryLight">Architecture ouverte</Text>
+				<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+					{information?.architecture_open === "yes" ? "Oui" : "Non"}
+				</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.fonds))
+		items.push(
+			<View key="fonds">
+				<Text className="text-sm font-semibold text-primaryLight">Nombre de fonds</Text>
+				<Text className="text-base font-semibold text-primary">{information?.fonds}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.vp))
+		items.push(
+			<View key="vp" className="flex flex-row items-center justify-between">
+				<Text className="text-sm font-semibold text-primaryLight">Versement programmé</Text>
+				<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
+					{information?.vp === "yes" ? "Oui" : "Non"}
+				</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.retrocession_gestion_libre))
+		items.push(
+			<View key="retrocession_gestion_libre">
+				<Text className="text-sm font-semibold text-primaryLight">Retrocession gestion libre</Text>
+				<Text className="text-base font-semibold text-primary">{information?.retrocession_gestion_libre}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.retrocession_gestion_mandat))
+		items.push(
+			<View key="retrocession_gestion_mandat">
+				<Text className="text-sm font-semibold text-primaryLight">Retrocession gestion sous mandat</Text>
+				<Text className="text-base font-semibold text-primary">{information?.retrocession_gestion_mandat}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.passage_order))
+		items.push(
+			<View key="passage_order">
+				<Text className="text-sm font-semibold text-primaryLight">Coût passage d'ordre</Text>
+				<Text className="text-base font-semibold text-primary">{information?.passage_order}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.interface))
+		items.push(
+			<View key="interface">
+				<Text className="text-sm font-semibold text-primaryLight">Interface</Text>
+				<Text className="text-base font-semibold text-primary">{information?.interface}</Text>
+			</View>,
+		);
+
 	return (
 		<View className="gap-2">
 			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
-				<Text className="text-sm font-semibold text-primaryLight">Banque dépositaire</Text>
-				<Text className="text-sm font-semibold text-primary">{information?.banque}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="flex flex-row items-center justify-between">
-					<Text className="text-sm font-semibold text-primaryLight">Titre vif</Text>
-					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-						{information?.title_vif === "yes" ? "Oui" : "Non"}
-					</Text>
-				</View>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="flex flex-row items-center justify-between">
-					<Text className="text-sm font-semibold text-primaryLight">Architecture ouverte</Text>
-					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-						{information?.architecture_open === "yes" ? "Oui" : "Non"}
-					</Text>
-				</View>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Nombre de fonds</Text>
-				<Text className="text-base font-semibold text-primary">{information?.fonds}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<View className="flex flex-row items-center justify-between">
-					<Text className="text-sm font-semibold text-primaryLight">Versement programmé</Text>
-					<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
-						{information?.vp === "yes" ? "Oui" : "Non"}
-					</Text>
-				</View>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Retrocession gestion libre</Text>
-				<Text className="text-base font-semibold text-primary">{information?.retrocession_gestion_libre}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Retrocession gestion sous mandat</Text>
-				<Text className="text-base font-semibold text-primary">{information?.retrocession_gestion_mandat}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Coût passage d'ordre</Text>
-				<Text className="text-base font-semibold text-primary">{information?.passage_order}</Text>
-				<View className="my-2 h-px w-full bg-defaultGray/15" />
-				<Text className="text-sm font-semibold text-primaryLight">Interface</Text>
-				<Text className="text-base font-semibold text-primary">{information?.interface}</Text>
+				{items.map((item, idx) => (
+					<React.Fragment key={idx}>
+						{idx > 0 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+						{item}
+					</React.Fragment>
+				))}
 			</View>
+		</View>
+	);
+};
+
+const ContratComponent = ({
+	information,
+	supplierCategoryId,
+	supplierProductId,
+	previousCategories,
+	supplierId,
+	updatedAt,
+}: {
+	information: SupplierBlockAssuranceVie | SupplierBlockPer | SupplierBlockCapitalisation;
+	supplierCategoryId: string | string[];
+	supplierProductId: string | string[];
+	supplierId: string | string[];
+	previousCategories: boolean;
+	updatedAt: string;
+}) => {
+	const items: React.ReactNode[] = [];
+
+	if (hasValue(information.name))
+		items.push(
+			<View key="name">
+				<Text className="text-sm font-semibold text-primaryLight">Nom du contrat</Text>
+				<Text className="text-sm font-semibold text-primary">{information.name}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.minimum_versement_initial))
+		items.push(
+			<View key="minimum_versement_initial">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement initial</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement_initial}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.minimum_versement_libre))
+		items.push(
+			<View key="minimum_versement_libre">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement libre</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement_libre}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.minimum_versement_programme))
+		items.push(
+			<View key="minimum_versement_programme">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement programmé</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement_programme}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.frais_souscription))
+		items.push(
+			<View key="frais_souscription">
+				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
+				<Text className="text-base font-semibold text-primary">{information.frais_souscription}</Text>
+			</View>,
+		);
+
+	if ("personne_physique_morale" in information && hasValue(information.personne_physique_morale))
+		items.push(
+			<View key="personne_physique_morale">
+				<Text className="text-sm font-semibold text-primaryLight">Personne Physique et/ou Personne Morale</Text>
+				<Text className="text-base font-semibold text-primary">{information.personne_physique_morale}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.frais_arbitrage))
+		items.push(
+			<View key="frais_arbitrage">
+				<Text className="text-sm font-semibold text-primaryLight">Frais d'arbitrage</Text>
+				<Text className="text-base font-semibold text-primary">{information.frais_arbitrage}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.bonus_fournisseur))
+		items.push(
+			<View key="bonus_fournisseur">
+				<Text className="text-sm font-semibold text-primaryLight">Bonus fournisseur</Text>
+				<Text className="text-base font-semibold text-primary">{information.bonus_fournisseur}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.commission_groupe_valorem))
+		items.push(
+			<View key="commission_groupe_valorem">
+				<Text className="text-sm font-semibold text-green-600">Sur commission Groupe Valorem</Text>
+				<Text className="text-base font-semibold text-green-600">{information.commission_groupe_valorem}</Text>
+			</View>,
+		);
+
+	return (
+		<View className="gap-2">
+			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				{items.map((item, idx) => (
+					<React.Fragment key={idx}>
+						{idx > 0 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+						{item}
+					</React.Fragment>
+				))}
+			</View>
+			{information.brochure && typeof information.brochure === "object" && (
+				<Brochure
+					brochure={information.brochure}
+					updatedAt={updatedAt}
+					link={
+						previousCategories
+							? {
+									pathname:
+										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+									params: {
+										"supplier-category": supplierCategoryId as string,
+										"supplier-product": supplierProductId as string,
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
+									},
+								}
+							: {
+									pathname: "/selection/[supplier]/pdf/[pdf]",
+									params: {
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
+									},
+								}
+					}
+				/>
+			)}
+		</View>
+	);
+};
+
+const CryptoComponent = ({
+	information,
+	supplierCategoryId,
+	supplierProductId,
+	previousCategories,
+	supplierId,
+	updatedAt,
+}: {
+	information: SupplierBlockCrypto;
+	supplierCategoryId: string | string[];
+	supplierProductId: string | string[];
+	supplierId: string | string[];
+	previousCategories: boolean;
+	updatedAt: string;
+}) => {
+	const items: React.ReactNode[] = [];
+
+	if (hasValue(information.minimum_versement_initial_mandat))
+		items.push(
+			<View key="minimum_versement_initial_mandat">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement initial par mandat</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement_initial_mandat}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.minimum_versement_libre_mandat))
+		items.push(
+			<View key="minimum_versement_libre_mandat">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement libre par mandat</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement_libre_mandat}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.minimum_versement_programme_mandat))
+		items.push(
+			<View key="minimum_versement_programme_mandat">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement programmé par mandat</Text>
+				<Text className="text-base font-semibold text-primary">{information.minimum_versement_programme_mandat}</Text>
+			</View>,
+		);
+
+	if (hasValue(information.frais_souscription))
+		items.push(
+			<View key="frais_souscription">
+				<Text className="text-sm font-semibold text-primaryLight">Frais de souscription</Text>
+				<Text className="text-base font-semibold text-primary">{information.frais_souscription}</Text>
+			</View>,
+		);
+
+	return (
+		<View className="gap-2">
+			<View className="flex-1 gap-2 rounded-xl border border-defaultGray/10 bg-white p-4">
+				{items.map((item, idx) => (
+					<React.Fragment key={idx}>
+						{idx > 0 && <View className="my-2 h-px w-full bg-defaultGray/15" />}
+						{item}
+					</React.Fragment>
+				))}
+			</View>
+			{information.brochure && typeof information.brochure === "object" && (
+				<Brochure
+					brochure={information.brochure}
+					updatedAt={updatedAt}
+					link={
+						previousCategories
+							? {
+									pathname:
+										"/supplier-category/[supplier-category]/supplier-product/[supplier-product]/supplier/[supplier]/pdf/[pdf]",
+									params: {
+										"supplier-category": supplierCategoryId as string,
+										"supplier-product": supplierProductId as string,
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
+									},
+								}
+							: {
+									pathname: "/selection/[supplier]/pdf/[pdf]",
+									params: {
+										supplier: supplierId as string,
+										pdf: information.brochure.filename || "",
+									},
+								}
+					}
+				/>
+			)}
 		</View>
 	);
 };

@@ -113,6 +113,7 @@ export interface Supplier {
 				commission_public_offer?: string | null;
 		  }[]
 		| null;
+	other_information_blocks?: SupplierInformationBlock[] | null;
 	fond?:
 		| {
 				id?: string | null;
@@ -132,6 +133,134 @@ export interface Supplier {
 	updatedAt: string;
 	createdAt: string;
 }
+
+interface SupplierBlockBase {
+	id?: string | null;
+	blockName?: string | null;
+}
+
+interface SupplierBlockLegacyMarkers {
+	legacy_source?: string | null;
+	legacy_source_id?: string | null;
+}
+
+interface SupplierBlockContratFields extends SupplierBlockBase {
+	name?: string | null;
+	brochure?: (string | null) | Media;
+	minimum_versement_initial?: string | null;
+	minimum_versement_libre?: string | null;
+	minimum_versement_programme?: string | null;
+	frais_souscription?: string | null;
+	frais_arbitrage?: string | null;
+	bonus_fournisseur?: string | null;
+	commission_groupe_valorem?: string | null;
+}
+
+export interface SupplierBlockAssuranceVie extends SupplierBlockContratFields {
+	blockType: "assurance_vie";
+	personne_physique_morale?: string | null;
+}
+
+export interface SupplierBlockPer extends SupplierBlockContratFields {
+	blockType: "per";
+}
+
+export interface SupplierBlockCapitalisation extends SupplierBlockContratFields {
+	blockType: "capitalisation";
+	personne_physique_morale?: string | null;
+}
+
+export interface SupplierBlockCrypto
+	extends SupplierBlockBase,
+		SupplierBlockLegacyMarkers {
+	blockType: "crypto";
+	brochure?: (string | null) | Media;
+	minimum_versement_initial_mandat?: string | null;
+	minimum_versement_libre_mandat?: string | null;
+	minimum_versement_programme_mandat?: string | null;
+	frais_souscription?: string | null;
+}
+
+export interface SupplierBlockScpi
+	extends SupplierBlockBase,
+		SupplierBlockLegacyMarkers {
+	blockType: "scpi";
+	scpi?: string | null;
+	theme?: string | null;
+	brochure?: (string | null) | Media;
+	epargne?: boolean | null;
+	nue?: boolean | null;
+	minimum_versement?: string | null;
+	minimum_versement_programme?: string | null;
+	subscription_fee?: string | null;
+	duration?: string | null;
+	rentability_n1?: string | null;
+	commission_offer_group_valorem?: string | null;
+	commission_public_offer?: string | null;
+	annotation?: string | null;
+}
+
+export interface SupplierBlockPea
+	extends SupplierBlockBase,
+		SupplierBlockLegacyMarkers {
+	blockType: "pea";
+	banque?: string | null;
+	title_vif?: ("yes" | "no") | null;
+	architecture_open?: ("yes" | "no") | null;
+	fonds?: string | null;
+	vp?: ("yes" | "no") | null;
+	retrocession_gestion_libre?: string | null;
+	retrocession_gestion_mandat?: string | null;
+	passage_order?: string | null;
+	interface?: string | null;
+}
+
+export interface SupplierBlockCif
+	extends SupplierBlockBase,
+		SupplierBlockLegacyMarkers {
+	blockType: "cif";
+	global?: number | null;
+	amount?: number | null;
+	reduction?: string | null;
+	echeance?: string | null;
+	actualisation?: string | null;
+	commission?: string | null;
+	commission_valorem?: string | null;
+	droits?: ("yes" | "no") | null;
+	agrement?: ("yes" | "no") | null;
+	investisseur?: ("yes" | "no") | null;
+	assurance?: ("yes" | "no" | "maybe") | null;
+	close?: ("yes" | "no") | null;
+	remarque?: string | null;
+}
+
+export interface SupplierBlockClubDeals
+	extends SupplierBlockBase,
+		SupplierBlockLegacyMarkers {
+	blockType: "club_deals";
+	global?: number | null;
+	amount?: number | null;
+	brochure?: (string | null) | Media;
+	minimum_versement?: string | null;
+	subscription_fee?: string | null;
+	duration?: string | null;
+	operation?: string | null;
+	rentability_n1?: string | null;
+	ventilation?: ("mensuel" | "trimestriel" | "semestriel" | "annuel") | null;
+	commission_offer_group_valorem?: string | null;
+	commission_public_offer?: string | null;
+	annotation?: string | null;
+}
+
+export type SupplierInformationBlock =
+	| SupplierBlockAssuranceVie
+	| SupplierBlockPer
+	| SupplierBlockCapitalisation
+	| SupplierBlockCrypto
+	| SupplierBlockScpi
+	| SupplierBlockPea
+	| SupplierBlockCif
+	| SupplierBlockClubDeals;
 
 export interface SupplierProduct {
 	id: string;

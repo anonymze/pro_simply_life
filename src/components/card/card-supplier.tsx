@@ -1,6 +1,6 @@
 import { queryClient } from "@/api/_queries";
 import { PrivateEquity } from "@/types/private-equity";
-import { Supplier } from "@/types/supplier";
+import { Supplier, SupplierBlockCif, SupplierBlockClubDeals } from "@/types/supplier";
 import { cn } from "@/utils/cn";
 import { Href, Link } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
@@ -62,9 +62,15 @@ export default function CardSupplier({
 
 					{(enveloppe || clubDeals) &&
 						(() => {
-							const enveloppes = clubDeals ? supplier.enveloppes_club_deals : supplier.enveloppes;
+							const enveloppes: (SupplierBlockCif | SupplierBlockClubDeals)[] = clubDeals
+								? (supplier.other_information_blocks ?? []).filter(
+										(b): b is SupplierBlockClubDeals => b.blockType === "club_deals",
+									)
+								: (supplier.other_information_blocks ?? []).filter(
+										(b): b is SupplierBlockCif => b.blockType === "cif",
+									);
 
-							if (!Array.isArray(enveloppes) || enveloppes.length === 0) {
+							if (enveloppes.length === 0) {
 								return null;
 							}
 
