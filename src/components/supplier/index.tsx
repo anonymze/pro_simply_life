@@ -861,14 +861,6 @@ const ScpiComponent = ({
 }) => {
 	const items: React.ReactNode[] = [];
 
-	if (hasValue(information.scpi))
-		items.push(
-			<View key="scpi">
-				<Text className="text-sm font-semibold text-primaryLight">SCPI</Text>
-				<Text className="text-sm font-semibold text-primary">{information.scpi}</Text>
-			</View>,
-		);
-
 	if (hasValue(information.theme))
 		items.push(
 			<View key="theme">
@@ -1343,14 +1335,6 @@ const ContratComponent = ({
 	updatedAt: string;
 }) => {
 	const items: React.ReactNode[] = [];
-
-	if (hasValue(information.name))
-		items.push(
-			<View key="name">
-				<Text className="text-sm font-semibold text-primaryLight">Nom du contrat</Text>
-				<Text className="text-sm font-semibold text-primary">{information.name}</Text>
-			</View>,
-		);
 
 	if (hasValue(information.minimum_versement_initial))
 		items.push(
