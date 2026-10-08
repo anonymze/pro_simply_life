@@ -4,6 +4,7 @@ import { QueryKey } from "@tanstack/react-query";
 
 import { api } from "../_config";
 
+// l
 export async function getAppUsersQuery({ queryKey }: { queryKey: QueryKey }) {
 	const [, role] = queryKey;
 	const response = await api.get<PaginatedResponse<User>>("/api/app-users", {

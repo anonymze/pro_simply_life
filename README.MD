@@ -12,7 +12,7 @@ this whole configuration for ios is done automaticly when you create your first 
 
 ## Development
 
-eas update --channel preview
+!! eas update --channel preview !!
 npx expo prebuild --clean
 eas build --profile development --platform android
 
