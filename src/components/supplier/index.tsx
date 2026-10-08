@@ -62,9 +62,10 @@ const BLOCK_TYPE_LABELS: Record<SupplierInformationBlock["blockType"], string> =
 
 // titre d'onglet : nom de la fiche -> blockName -> intitule du type
 const ficheTabTitle = (block: SupplierInformationBlock): string => {
+	if (block.blockType === "club_deals") return block.name?.trim() || BLOCK_TYPE_LABELS.club_deals;
 	const name = block.blockType === "scpi" ? block.scpi : "name" in block ? block.name : null;
 	if (name != null && name !== "") return name;
-	if (block.blockName != null && block.blockName !== "") return block.blockName;
+	if (block.blockName?.trim()) return block.blockName.trim();
 	return BLOCK_TYPE_LABELS[block.blockType];
 };
 
@@ -146,7 +147,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 		if (hasEnveloppeBlocks) {
 			setCurrentIndex(1);
 			requestAnimationFrame(() => {
-				horizontalScrollRef.current?.scrollTo({ x: SCREEN_DIMENSIONS.width - 28 + 16, animated: false });
+				horizontalScrollRef.current?.scrollTo({ x: SCREEN_DIMENSIONS.width - 32 + 16, animated: false });
 			});
 		}
 	}, [data, visibleFonds]);
@@ -167,7 +168,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 	const tabs = [
 		{ title: "Contact" },
 		...(girardinBlocks.length > 0 ? [{ title: "Girardin Industriel" }] : []),
-		...(clubDealsBlocks.length > 0 ? [{ title: "Club Deals" }] : []),
+		...clubDealsBlocks.map((b) => ({ title: ficheTabTitle(b) })),
 		...ficheBlocks.map((b) => ({ title: ficheTabTitle(b) })),
 	];
 	const hasTabs = showFondsView || tabs.length > 1;
@@ -225,7 +226,7 @@ export default function Page({ previousCategories = true }: { previousCategories
 											horizontalScrollRef.current?.scrollTo({ x: 0, animated: true });
 											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 										} else {
-											const scrollX = index * (SCREEN_DIMENSIONS.width - 28 + 16);
+											const scrollX = index * (SCREEN_DIMENSIONS.width - 32 + 16);
 											horizontalScrollRef.current?.scrollTo({ x: scrollX, animated: true });
 											verticalScrollRef.current?.scrollTo({ y: 0, animated: true });
 										}
@@ -604,21 +605,18 @@ export default function Page({ previousCategories = true }: { previousCategories
 								</View>
 							)}
 
-							{clubDealsBlocks.length > 0 && (
-								<View className="gap-4" style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
-									{clubDealsBlocks.map((clubDeal, idx) => (
-										<ClubDealComponent
-											key={clubDeal.id ?? idx}
-											information={clubDeal}
-											supplierCategoryId={supplierCategoryId}
-											supplierProductId={supplierProductId}
-											supplierId={supplierId}
-											previousCategories={previousCategories}
-											updatedAt={data.updatedAt}
-										/>
-									))}
+							{clubDealsBlocks.map((clubDeal, idx) => (
+								<View key={clubDeal.id ?? idx} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
+									<ClubDealComponent
+										information={clubDeal}
+										supplierCategoryId={supplierCategoryId}
+										supplierProductId={supplierProductId}
+										supplierId={supplierId}
+										previousCategories={previousCategories}
+										updatedAt={data.updatedAt}
+									/>
 								</View>
-							)}
+							))}
 
 							{ficheBlocks.map((block, idx) => (
 								<View key={block.id ?? idx} style={{ width: SCREEN_DIMENSIONS.width - 32 }}>
@@ -1270,6 +1268,38 @@ const PEAComponent = ({ information }: { information: SupplierBlockPea }) => {
 				<Text className="rounded-lg bg-backgroundChat px-2 py-1.5 font-semibold text-white">
 					{information?.vp === "yes" ? "Oui" : "Non"}
 				</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.minimum_versement_initial))
+		items.push(
+			<View key="minimum_versement_initial">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement initial</Text>
+				<Text className="text-base font-semibold text-primary">{information?.minimum_versement_initial}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.minimum_versement_libre))
+		items.push(
+			<View key="minimum_versement_libre">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement libre</Text>
+				<Text className="text-base font-semibold text-primary">{information?.minimum_versement_libre}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.minimum_versement_programme))
+		items.push(
+			<View key="minimum_versement_programme">
+				<Text className="text-sm font-semibold text-primaryLight">Minimum de versement programmé</Text>
+				<Text className="text-base font-semibold text-primary">{information?.minimum_versement_programme}</Text>
+			</View>,
+		);
+
+	if (hasValue(information?.frais_gestion))
+		items.push(
+			<View key="frais_gestion">
+				<Text className="text-sm font-semibold text-primaryLight">Frais de gestion</Text>
+				<Text className="text-base font-semibold text-primary">{information?.frais_gestion}</Text>
 			</View>,
 		);
 

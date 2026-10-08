@@ -26,11 +26,15 @@ export async function createEventStatusQuery(params: {
 	app_user: string;
 	agency_life: string;
 	status: EventStatus["status"];
+	presence_mode?: EventStatus["presence_mode"];
+	meal?: EventStatus["meal"];
 }) {
 	const response = await api.post("/api/agency-life-status", {
 		app_user: params.app_user,
 		agency_life: params.agency_life,
 		status: params.status,
+		presence_mode: params.presence_mode,
+		meal: params.meal,
 	});
 	return response.data;
 }
@@ -40,11 +44,15 @@ export async function updateEventStatusQuery(params: {
 	agency_life: string;
 	status: EventStatus["status"];
 	agencyLifeStatus: EventStatus["id"];
+	presence_mode?: EventStatus["presence_mode"];
+	meal?: EventStatus["meal"];
 }) {
 	const response = await api.patch(`/api/agency-life-status/${params.agencyLifeStatus}`, {
 		status: params.status,
 		app_user: params.app_user,
 		agency_life: params.agency_life,
+		presence_mode: params.presence_mode,
+		meal: params.meal,
 	});
 	return response.data;
 }

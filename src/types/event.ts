@@ -10,7 +10,15 @@ export interface Event {
 	}>;
 	annotation?: string | null;
 	address?: string | null;
-	type: "general" | "sport" | "seminaire" | "food" | "birthday" | "meeting";
+	type:
+		| "general"
+		| "sport"
+		| "seminaire"
+		| "food"
+		| "birthday"
+		| "meeting"
+		| "reunion_agence"
+		| "reunion_bonne_pratique";
 	event_start: string;
 	event_end: string;
 	updatedAt: string;
@@ -25,6 +33,8 @@ export const eventLabel: Record<Event["type"], string> = {
 	food: "Restaurant",
 	birthday: "Anniversaire",
 	meeting: "Réunion",
+	reunion_agence: "Réunion d'agence",
+	reunion_bonne_pratique: "Réunion bonne pratique",
 } as const;
 
 export interface EventStatus {
@@ -32,6 +42,8 @@ export interface EventStatus {
   app_user: AppUser;
   agency_life: Event;
   status: 'yes' | 'no';
+  presence_mode?: ('presentiel' | 'visio') | null;
+  meal?: ('yes' | 'no') | null;
   updatedAt: string;
   createdAt: string;
 }

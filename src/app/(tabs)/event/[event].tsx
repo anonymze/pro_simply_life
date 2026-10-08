@@ -106,7 +106,14 @@ export default function Page() {
 				...old,
 				docs:
 					old?.docs?.map((doc: any) =>
-						doc.id === variables.agencyLifeStatus ? { ...doc, status: variables.status } : doc,
+						doc.id === variables.agencyLifeStatus
+							? {
+									...doc,
+									status: variables.status,
+									...(variables.presence_mode !== undefined ? { presence_mode: variables.presence_mode } : {}),
+									...(variables.meal !== undefined ? { meal: variables.meal } : {}),
+								}
+							: doc,
 					) || [],
 			}));
 
@@ -257,6 +264,8 @@ export default function Page() {
 													agency_life: eventId.toString(),
 													app_user: appUser.user.id,
 													status: "no",
+													presence_mode: null,
+													meal: null,
 													});
 												} else {
 													mutation.mutate({
@@ -277,6 +286,86 @@ export default function Page() {
 											</Text>
 										</MyTouchableOpacity>
 									</View>
+									{(data.type === "reunion_agence" || data.type === "reunion_bonne_pratique") &&
+										status?.docs[0]?.status === "yes" &&
+										status.docs[0].id !== "temp-id" && (
+											<>
+												<Text className="font-bold text-lg text-primary">Serez-vous en présentiel ou en visio ?</Text>
+												<View className="flex-row gap-3">
+													{(["presentiel", "visio"] as const).map((mode) => (
+														<MyTouchableOpacity
+															key={mode}
+															className={cn(
+																"flex-1 items-center justify-center rounded-2xl p-4",
+																status.docs[0]?.presence_mode === mode ? "bg-primary" : "bg-white",
+															)}
+															onPress={() => {
+																if (!status.docs[0]?.id) return;
+																mutationPatch.mutate({
+																	agencyLifeStatus: status.docs[0].id,
+																	agency_life: eventId.toString(),
+																	app_user: appUser.user.id,
+																	status: "yes",
+																	presence_mode: mode,
+																	...(mode === "visio" ? { meal: null } : {}),
+																});
+															}}
+														>
+															<Text
+																className={cn(
+																	"font-semibold text-lg",
+																	status.docs[0]?.presence_mode === mode ? "text-white" : "text-primary",
+																)}
+															>
+																{mode === "presentiel" ? "Présentiel" : "Visio"}
+															</Text>
+														</MyTouchableOpacity>
+													))}
+												</View>
+											</>
+										)}
+									{data.type === "reunion_agence" &&
+										status?.docs[0]?.status === "yes" &&
+										status.docs[0].presence_mode === "presentiel" &&
+										status.docs[0].id !== "temp-id" && (
+											<>
+												<Text className="font-bold text-lg text-primary">Souhaitez-vous manger avec l'équipe ?</Text>
+												<View className="flex-row gap-3">
+													{(["yes", "no"] as const).map((meal) => (
+														<MyTouchableOpacity
+															key={meal}
+															className={cn(
+																"flex-1 items-center justify-center rounded-2xl p-4",
+																status.docs[0]?.meal === meal
+																	? meal === "yes"
+																		? "bg-green-500"
+																		: "bg-red-500"
+																	: "bg-white",
+															)}
+															onPress={() => {
+																if (!status.docs[0]?.id) return;
+																mutationPatch.mutate({
+																	agencyLifeStatus: status.docs[0].id,
+																	agency_life: eventId.toString(),
+																	app_user: appUser.user.id,
+																	status: "yes",
+																	meal: meal,
+																});
+															}}
+														>
+															<Text
+																className={cn(
+																	"font-semibold text-lg",
+																	status.docs[0]?.meal === meal ? "text-white" : "text-primary",
+																)}
+															>
+																{meal === "yes" ? "Oui" : "Non"}
+															</Text>
+														</MyTouchableOpacity>
+													))}
+												</View>
+											</>
+										)}
 								</>
 							)}
 						</View>

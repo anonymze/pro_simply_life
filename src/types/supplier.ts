@@ -209,6 +209,10 @@ export interface SupplierBlockPea
 	architecture_open?: ("yes" | "no") | null;
 	fonds?: string | null;
 	vp?: ("yes" | "no") | null;
+	minimum_versement_initial?: string | null;
+	minimum_versement_libre?: string | null;
+	minimum_versement_programme?: string | null;
+	frais_gestion?: string | null;
 	retrocession_gestion_libre?: string | null;
 	retrocession_gestion_mandat?: string | null;
 	passage_order?: string | null;
@@ -238,6 +242,7 @@ export interface SupplierBlockClubDeals
 	extends SupplierBlockBase,
 		SupplierBlockLegacyMarkers {
 	blockType: "club_deals";
+	name?: string | null;
 	global?: number | null;
 	amount?: number | null;
 	brochure?: (string | null) | Media;
