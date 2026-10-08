@@ -21,6 +21,7 @@ export interface Event {
 		| "reunion_bonne_pratique";
 	event_start: string;
 	event_end: string;
+	teams_enabled?: boolean;
 	updatedAt: string;
 	createdAt: string;
 

@@ -132,6 +132,13 @@ export default function Page() {
 	if (!data || !appUser?.user?.id) return null;
 
 	const sameDay = data.event_start.split("T")[0] === data.event_end.split("T")[0];
+	const startsIn = Date.parse(data.event_start) - Date.now();
+	const teamsNotice =
+		startsIn <= 0
+			? "La réunion a commencé. Aucun nouveau lien ne sera envoyé par email."
+			: startsIn > 24 * 60 * 60 * 1000
+				? "Vous recevrez le lien Teams par email la veille de la réunion."
+				: "Pour les inscriptions de dernière minute, le lien Teams est envoyé par email après votre inscription.";
 
 	return (
 		<BackgroundLayout className={cn("px-4 pb-4", Platform.OS === "ios" ? "pt-0" : "pt-2")}>
@@ -322,6 +329,12 @@ export default function Page() {
 														</MyTouchableOpacity>
 													))}
 												</View>
+												{data.teams_enabled &&
+													status.docs[0].presence_mode === "visio" &&
+													!mutation.isPending &&
+													!mutationPatch.isPending && (
+														<Text className="text-sm leading-5 text-primary">{teamsNotice}</Text>
+													)}
 											</>
 										)}
 									{data.type === "reunion_agence" &&
