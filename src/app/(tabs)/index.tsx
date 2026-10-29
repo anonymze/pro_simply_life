@@ -1,4 +1,5 @@
 import { getEventsQuery } from "@/api/queries/event-queries";
+import { getFinancingCreditsQuery } from "@/api/queries/financing-credit-queries";
 import CardEvent from "@/components/card/card-event";
 import Carousel from "@/components/carousel";
 import ProfileDashboard from "@/components/profile-dashboard";
@@ -36,6 +37,11 @@ export default function Page() {
 	// const notification = useNotification();
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
+
+	useQuery({
+		queryKey: ["financing-credit"],
+		queryFn: getFinancingCreditsQuery,
+	});
 
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
