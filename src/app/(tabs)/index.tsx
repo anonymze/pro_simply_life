@@ -156,6 +156,9 @@ export default function Page() {
 						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 					</MyTouchableScaleOpacity>
 				</Link>
+
+				<Title title="Financement / Crédit" />
+
 				<View className="mb-4 mt-7 flex-row items-center justify-between">
 					<Title title="Évènements agence" className="mb-0 mt-0" />
 					<Link href="/(tabs)/event" asChild>
