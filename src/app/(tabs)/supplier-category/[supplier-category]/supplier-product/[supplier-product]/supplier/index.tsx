@@ -40,12 +40,10 @@ export default function Page() {
 		enabled: !!supplierProductId,
 	});
 
-	if (!data) return null;
-
 	// sort and group suppliers by first letter
 	const groupedSuppliers = React.useMemo(
 		() =>
-			data.suppliers
+			(data?.suppliers ?? [])
 				.slice()
 				.sort((a, b) => a.name.localeCompare(b.name, "fr"))
 				.reduce(
@@ -55,10 +53,12 @@ export default function Page() {
 						acc[letter].push(supplier);
 						return acc;
 					},
-					{} as Record<string, typeof data.suppliers>,
+					{} as Record<string, Supplier[]>,
 				),
 		[data],
 	);
+
+	if (!data) return null;
 
 	return (
 		<BackgroundLayout className="px-4 pt-4">
