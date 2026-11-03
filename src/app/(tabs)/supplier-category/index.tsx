@@ -10,13 +10,23 @@ import { withQueryWrapper } from "@/utils/libs/react-query";
 import CifFillIcon from "@/components/svg/cif-icon";
 import InputSearch from "@/components/ui/input-search";
 import Title from "@/components/ui/title";
+import { Landmark } from "lucide-react-native";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import config from "tailwind.config";
 
+const FINANCING_CATEGORY = "Financement / Crédit";
+const CATEGORY_PRESENTATION = {
+	IAS: { background: "#E0F2FE", Icon: HeartFillIcon },
+	CIF: { background: "#EBE9FE", Icon: CifFillIcon },
+	SCPI: { background: "#E4F5D7", Icon: BuildingDoubleFillIcon },
+	Immobilier: { background: "#FCE7F6", Icon: ImmobilierFillIcon },
+	[FINANCING_CATEGORY]: { background: "#FEF3C7", Icon: Landmark },
+};
+
 export default function Page() {
-    const insets = useSafeAreaInsets();
+	const insets = useSafeAreaInsets();
 	return withQueryWrapper(
 		{
 			queryKey: ["supplier-categories"],
@@ -24,6 +34,11 @@ export default function Page() {
 		},
 		({ data }) => {
 			const [search, setSearch] = React.useState("");
+			const supplierCategories = React.useMemo(
+				() =>
+					[...data.docs].sort((a, b) => Number(a.name === FINANCING_CATEGORY) - Number(b.name === FINANCING_CATEGORY)),
+				[data.docs],
+			);
 
 			// flatten all suppliers from all categories
 			const allSuppliers = React.useMemo(() => {
@@ -70,41 +85,27 @@ export default function Page() {
 							showsVerticalScrollIndicator={false}
 							style={{ backgroundColor: config.theme.extend.colors.background, marginTop: 16 }}
 						>
-							<View className="flex-row flex-wrap">
-								{data?.docs?.map((supplierCategory) => (
-									<View key={supplierCategory.id} className="w-1/2 p-2">
-										<CardSupplierCategory
-											backgroundIcon={
-												supplierCategory.name === "IAS"
-													? "#E0F2FE"
-													: supplierCategory.name === "SCPI"
-														? "#E4F5D7"
-														: supplierCategory.name === "Immobilier"
-															? "#FCE7F6"
-															: "#EBE9FE"
-											}
-											supplierCategory={supplierCategory}
-											icon={
-												supplierCategory.name === "IAS" ? (
-													<HeartFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
-												) : supplierCategory.name === "SCPI" ? (
-													<BuildingDoubleFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
-												) : supplierCategory.name === "Immobilier" ? (
-													<ImmobilierFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
-												) : (
-													<CifFillIcon width={45} height={45} color={config.theme.extend.colors.primary} />
-												)
-											}
-											link={{
-												pathname: `/supplier-category/[supplier-category]/supplier-product`,
-												params: {
-													"supplier-category": supplierCategory.id,
-													"supplier-category-name": supplierCategory.name,
-												},
-											}}
-										/>
-									</View>
-								))}
+							<View className="flex-row flex-wrap justify-center">
+								{supplierCategories.map((supplierCategory) => {
+									const { background, Icon } =
+										CATEGORY_PRESENTATION[supplierCategory.name] ?? CATEGORY_PRESENTATION.CIF;
+									return (
+										<View key={supplierCategory.id} className="w-1/2 p-2">
+											<CardSupplierCategory
+												backgroundIcon={background}
+												supplierCategory={supplierCategory}
+												icon={<Icon width={45} height={45} color={config.theme.extend.colors.primary} />}
+												link={{
+													pathname: `/supplier-category/[supplier-category]/supplier-product`,
+													params: {
+														"supplier-category": supplierCategory.id,
+														"supplier-category-name": supplierCategory.name,
+													},
+												}}
+											/>
+										</View>
+									);
+								})}
 							</View>
 						</ScrollView>
 					) : (

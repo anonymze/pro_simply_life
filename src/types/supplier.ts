@@ -277,7 +277,7 @@ export interface SupplierProduct {
 }
 export interface SupplierCategory {
 	id: string;
-	name: "IAS" | "SCPI" | "Immobilier" | "CIF";
+	name: "IAS" | "SCPI" | "Immobilier" | "CIF" | "Financement / Crédit";
 	product_suppliers: SupplierProduct[];
 	offers?:
 		| {

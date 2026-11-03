@@ -1,5 +1,4 @@
 import { getEventsQuery } from "@/api/queries/event-queries";
-import { getFinancingCreditsQuery } from "@/api/queries/financing-credit-queries";
 import CardEvent from "@/components/card/card-event";
 import Carousel from "@/components/carousel";
 import ProfileDashboard from "@/components/profile-dashboard";
@@ -37,11 +36,6 @@ export default function Page() {
 	// const notification = useNotification();
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
-
-	useQuery({
-		queryKey: ["financing-credit"],
-		queryFn: getFinancingCreditsQuery,
-	});
 
 	const { data: upcomingEvents, isLoading: isLoadingEvents } = useQuery({
 		queryKey: [
@@ -162,8 +156,6 @@ export default function Page() {
 						<ArrowRightIcon size={18} color={config.theme.extend.colors.defaultGray} style={{ marginRight: 10 }} />
 					</MyTouchableScaleOpacity>
 				</Link>
-
-				<Title title="Financement / Crédit" />
 
 				<View className="mb-4 mt-7 flex-row items-center justify-between">
 					<Title title="Évènements agence" className="mb-0 mt-0" />
